@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
@@ -14,7 +16,12 @@ void main() async{
   di.dependencies();
   //SocketApi.init();
 
-  // Get.put(NetworkController());
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+      systemNavigationBarColor: Colors.white,
+      systemNavigationBarIconBrightness: Brightness.dark
+  ));
 
   runApp(const MyApp());
 /*   runApp(DevicePreview(
@@ -23,7 +30,18 @@ void main() async{
          //====================
     const MyApp(), // Wrap your app
    ));*/
-  const MyApp();
+  //const MyApp();
+
+}
+
+void configLoading() {
+  EasyLoading.instance
+    ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+    ..loadingStyle = EasyLoadingStyle.dark
+    ..backgroundColor = AppColors.brinkPink
+    ..indicatorColor = AppColors.brinkPink
+    ..textColor = AppColors.brinkPink
+    ..maskColor = Colors.white.withOpacity(0.8);
 }
 
 class MyApp extends StatelessWidget {
@@ -36,7 +54,7 @@ class MyApp extends StatelessWidget {
       designSize: const Size(393, 852),
       child: GetMaterialApp(
         theme: ThemeData(
-            scaffoldBackgroundColor: AppColors.black,
+            scaffoldBackgroundColor: AppColors.white,
             appBarTheme: const AppBarTheme(
               //surfaceTintColor: AppColors.brinkPink,
                 toolbarHeight: 65,

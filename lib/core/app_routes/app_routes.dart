@@ -1,8 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:get/get.dart';
+import 'package:tractivity_app/view/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:tractivity_app/view/screens/splash_screen/splash_screen.dart';
+
 ///=========================App Routes=========================
 class AppRoutes {
+
   static const String splashScreen = "/SplashScreen";
   static const String homeScreen = "/HomeScreen";
   static const String onboardingScreen = "/OnboardingScreen";
@@ -37,9 +40,14 @@ class AppRoutes {
 
 
   static List<GetPage> routes = [
+
     ///===========================Authentication==========================
+
     GetPage(name: splashScreen, page: () => SplashScreen()),
- /*   GetPage(name: homeScreen, page: () => HomeScreen()),
+
+    GetPage(name: onboardingScreen, page: () => OnboardingScreen()),
+
+ /*  GetPage(name: homeScreen, page: () => HomeScreen()),
     GetPage(name: onboardingScreen, page: () => OnboardingScreen()),
     GetPage(name: loginScreen, page: () => LoginScreen()),
     GetPage(name: signupScreen, page: () => SignupScreen()),
@@ -47,10 +55,6 @@ class AppRoutes {
     GetPage(name: forgotPassword, page: () => ForgotPassword()),
     GetPage(name: friendScreen, page: () => FriendScreen()),
     GetPage(name: friendProfileScreen, page: () => FriendProfileScreen()),*/
-
-
-
-
 
   ];
 }
