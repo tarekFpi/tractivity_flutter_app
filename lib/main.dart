@@ -5,9 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/core/dependency/dependency_injection.dart';
-import 'service/socket_service.dart';
 import 'utils/app_colors/app_colors.dart';
-import 'view/components/device_utils/device_utils.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
