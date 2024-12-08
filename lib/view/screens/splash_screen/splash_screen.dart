@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, prefer_const_constructors_in_immutables
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -6,6 +6,7 @@ import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/view/components/custom_image/custom_image.dart';
 import '../../../utils/app_images/app_images.dart';
+
 
 class SplashScreen extends StatefulWidget {
   SplashScreen({super.key});
@@ -41,14 +42,12 @@ class _SplashScreenState extends State<SplashScreen> {
     //final size = MediaQuery.sizeOf(context);
     return Scaffold(
       backgroundColor: AppColors.white,
-
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-
             CustomImage(imageSrc: AppImages.splashImage)
           ],
         ),
