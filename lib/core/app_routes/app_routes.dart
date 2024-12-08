@@ -5,7 +5,6 @@ import 'package:tractivity_app/view/screens/splash_screen/splash_screen.dart';
 
 ///=========================App Routes=========================
 class AppRoutes {
-
   static const String splashScreen = "/SplashScreen";
   static const String homeScreen = "/HomeScreen";
   static const String onboardingScreen = "/OnboardingScreen";
