@@ -22,15 +22,19 @@ class LoginScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
             Center(
                 child: CustomText(
-                    text: AppStrings.alternet,
+                    text: AppStrings.serveOut,
                     fontSize: 32,
+                    color: Colors.black,
                     fontWeight: FontWeight.w600,
                     bottom: 40.h)),
+
             CustomText(
               text: AppStrings.signin,
               fontSize: 24,
+              color: Colors.black,
               fontWeight: FontWeight.w600,
               bottom: 30.h,
             ),
