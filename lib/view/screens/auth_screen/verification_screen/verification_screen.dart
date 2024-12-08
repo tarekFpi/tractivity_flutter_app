@@ -1,3 +1,4 @@
+/*
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -67,7 +68,7 @@ class VerificationScreen extends StatelessWidget {
            ),
             ///============ Login Button ============
             CustomButton(onTap: (){
-              Get.toNamed(AppRoutes.forgotPassword);
+             // Get.toNamed(AppRoutes.forgotPassword);
             }, title: AppStrings.confirm,),
 
 
@@ -77,3 +78,4 @@ class VerificationScreen extends StatelessWidget {
     );
   }
 }
+*/

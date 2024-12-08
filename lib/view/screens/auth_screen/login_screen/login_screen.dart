@@ -1,3 +1,4 @@
+/*
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -63,7 +64,7 @@ class LoginScreen extends StatelessWidget {
             ///============ Fortgot Password ============
             GestureDetector(
               onTap: () {
-                Get.toNamed(AppRoutes.verificationMailScreen);
+              //  Get.toNamed(AppRoutes.verificationMailScreen);
               },
               child: Align(
                 alignment: Alignment.topRight,
@@ -111,9 +112,9 @@ class LoginScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CustomImage(imageSrc: AppIcons.apple, height: 50,width: 50,),
+                CustomImage(imageSrc: AppIcons.setting, height: 50,width: 50,),
                 SizedBox(width: 30.w,),
-                CustomImage(imageSrc: AppIcons.google, height: 50,width: 50,),
+                CustomImage(imageSrc: AppIcons.setting, height: 50,width: 50,),
               ],
             ),
             SizedBox(height: 20,),
@@ -129,7 +130,7 @@ class LoginScreen extends StatelessWidget {
                 SizedBox(width: 10.w,),
                 GestureDetector(
                   onTap: (){
-                    Get.toNamed(AppRoutes.signupScreen);
+                   // Get.toNamed(AppRoutes.signupScreen);
                   },
                   child: CustomText(
                     text: AppStrings.singUpText,
@@ -147,3 +148,4 @@ class LoginScreen extends StatelessWidget {
     );
   }
 }
+*/

@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class CustomTabSelector extends StatelessWidget {
   final List<String> tabs;
-  final List<String> numberList;
+ // final List<String> numberList;
   final int selectedIndex;
   final ValueChanged<int> onTabSelected;
   final Color selectedColor;
@@ -22,7 +22,8 @@ class CustomTabSelector extends StatelessWidget {
     required this.unselectedColor,
     this.textColor,
     this.isTextColorActive = false,
-    this.isPadding = true, required this.numberList,
+    this.isPadding = true,
+    //required this.numberList,
   });
 
   @override
@@ -59,7 +60,7 @@ class CustomTabSelector extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  Text(
+                  /*Text(
                     numberList[index],
                     style: GoogleFonts.poppins(
                       color: selectedIndex == index
@@ -70,7 +71,7 @@ class CustomTabSelector extends StatelessWidget {
                       fontSize: 22,
                       fontWeight: FontWeight.w500,
                     ),
-                  ),
+                  ),*/
                   Text(
                     tabs[index],
                     style: GoogleFonts.poppins(

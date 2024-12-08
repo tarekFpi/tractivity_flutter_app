@@ -84,76 +84,15 @@ class   AppStrings {
   static const String messages = "Messages";
   static const String profile = "Profile";
   ///===================================================
-  static const String letsGo = "LET’S GO";
-  static const String serveOut = "ServeOut";
-  static const String welcomeToAlterNet = "Welcome to AlterNET!";
-  static const String orSignInWith = "or sign in with";
-  static const String friendsWorkflow = "Friends Workflow";
-  static const String searchForSomeone = "Search for someone";
-  static const String friendProfile = "Friend Profile";
-  static const String venues = "Venues";
-  static const String posts = "Posts";
-  static const String followers = "Followers";
-  static const String following = "Following";
-  static const String notifications = "Notifications";
-  static const String chats = "Chats";
-  static const String editProfile = "Edit Profile";
-  static const String dateOfBirth = "Your Date Of Birth";
-  static const String typeYourDate = "Type Your Date Of Birth";
-  static const String gender = "Selected Gender";
-  static const String saveSetting = "SAVE SETTINGS";
+
+  static const String explore = "Explore";
+  static const String events = "Events";
+  static const String volunteer = "Volunteer";
+  static const String profession = "Profession";
+  static const String address = "Address";
+  static const String profileSetting = "ProfileSetting";
+  static const String aboutus = "Aboutus";
   static const String setting = "Setting";
-  static const String noDontDelete = "NO,DON’T DELETE";
-  static const String aboutus = "About Us";
-  static const String profileSetting = "Profile Setting";
-  static const String meetUpList = "Meet Ups List";
-  static const String meetUp = "Meet Ups";
-  static const String promos = "Promos";
-  static const String bars = "Bars";
-  static const String club = "Club";
-  static const String restaurants = "Restaurants";
-  static const String peopleLinked = "People Linked!";
-  static const String activeLinkUps = "Active Link Ups!";
-  static const String askToJoin = "ASK TO JOIN";
-  static const String leave = "LEAVE";
-  static const String directions = "Directions";
-  static const String contact = "Contact";
-  static const String website = "Website";
-  static const String share = "Share";
-  static const String meetupSettings = "Meetup Settings";
-  static const String inviteSomeoneToTheMeetUp = "Invited someone to the Meet Up";
-  static const String removeSomeoneFromTheMeetUp = "Remove someone from the Meet Up";
-  static const String changeMeetUpPlace = "Change Meet Up place";
-  static const String changeMeetUpTime = "Change Meet Up time";
-  static const String endThisMeetUp = "End this Meet Up";
-  static const String individual = "Invite Friend";
-  static const String individualText = "INVITE A FRIEND";
-  static const String postLinkUp = "POST LINK UP";
-  static const String joinLinkUp = "JOIN LINK UP";
-  static const String howMany = "How Many?";
-  static const String location = "location";
-  static const String iconImage = "ICON/ IMAGE";
-  static const String time = "Time";
-  static const String openInvite = "Open/ Invite Only";
-  static const String addDescription = "Add description...";
-  static const String description = "Description";
-  static const String category = "Category";
-  static const String awesome = "Awesome!";
-  static const String tellMore = "TELL MORE FRIENDS";
-  static const String done = "DONE";
-  static const String pinList = "PIN LIST";
-  static const String activePins = "Active PINS";
-  static const String nonActivePins = "Non Active PINS";
-  static const String groupedPins = "Grouped PINS";
-  static const String pinCreation = "PIN Creation";
-  static const String pinDetails = "PIN Details";
-  static const String pinTitle = "PIN Title....";
-  static const String subtitle  = "Subtitle....";
-
-  static const String areYouSure = "Are you sure you want to delete account?";
-  static const String areYouSureTtiele = "All information previously linked to your account will be lost.";
-
-
 
 
 }
