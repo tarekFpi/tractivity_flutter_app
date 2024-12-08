@@ -26,11 +26,12 @@ class ForgotPassword extends StatelessWidget {
             children: [
               Center(
                   child: CustomText(
-                    text: AppStrings.alternet,
+                    text: AppStrings.serveOut,
                     fontSize: 32,
                     fontWeight: FontWeight.w600,
                     bottom: 40.h,
                   )),
+
               Align(
                 alignment: Alignment.topLeft,
                 child: CustomText(
@@ -40,6 +41,7 @@ class ForgotPassword extends StatelessWidget {
                   bottom: 20.h,
                 ),
               ),
+
               Container(
                 height: 1.h,
                 width: double.infinity,
