@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
+import 'package:tractivity_app/view/components/custom_image/custom_image.dart';
 import '../../../utils/app_images/app_images.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -24,11 +26,33 @@ class _SplashScreenState extends State<SplashScreen> {
     });
   }
 
+  void configLoading() {
+    EasyLoading.instance
+      ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+      ..loadingStyle = EasyLoadingStyle.dark
+      ..backgroundColor = AppColors.brinkPink
+      ..indicatorColor = AppColors.brinkPink
+      ..textColor = AppColors.brinkPink
+      ..maskColor = Colors.white.withOpacity(0.8);
+  }
+
   @override
   Widget build(BuildContext context) {
     //final size = MediaQuery.sizeOf(context);
     return Scaffold(
-      backgroundColor: AppColors.red,
+      backgroundColor: AppColors.white,
+
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+
+            CustomImage(imageSrc: AppImages.splashImage)
+          ],
+        ),
+      ),
     );
   }
 }
