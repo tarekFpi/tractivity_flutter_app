@@ -21,7 +21,7 @@ class VerificationScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             CustomText(
-                text: AppStrings.alternet,
+                text: AppStrings.serveOut,
                 fontSize: 32,
                 fontWeight: FontWeight.w600,
                 bottom: 20.h),

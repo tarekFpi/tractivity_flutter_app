@@ -85,7 +85,7 @@ class   AppStrings {
   static const String profile = "Profile";
   ///===================================================
   static const String letsGo = "LET’S GO";
-  static const String alternet = "ALTERNET";
+  static const String serveOut = "ServeOut";
   static const String welcomeToAlterNet = "Welcome to AlterNET!";
   static const String orSignInWith = "or sign in with";
   static const String friendsWorkflow = "Friends Workflow";

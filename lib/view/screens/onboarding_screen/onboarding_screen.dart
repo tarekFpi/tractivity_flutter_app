@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_images/app_images.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
@@ -24,7 +26,7 @@ class OnboardingScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
 
-           // CustomImage(imageSrc: AppImages.onboarding),
+           /// CustomImage(imageSrc: AppImages.onboarding),
 
             CustomText(
               text: AppStrings.welcomeToAlterNet,
@@ -34,7 +36,8 @@ class OnboardingScreen extends StatelessWidget {
             ),
             CustomButton(
               onTap: () {
-               // Get.toNamed(AppRoutes.loginScreen);
+
+               Get.toNamed(AppRoutes.loginScreen);
               },
               title: AppStrings.letsGo,
             )
