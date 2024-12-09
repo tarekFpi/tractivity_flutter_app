@@ -1,5 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:get/get.dart';
+import 'package:tractivity_app/view/screens/chat_screen/chat_screen.dart';
+import 'package:tractivity_app/view/screens/chat_screen/inner_widget/message_screen.dart';
+import 'package:tractivity_app/view/screens/chat_screen/massage_list_screen.dart';
+import 'package:tractivity_app/view/screens/create_team_screen/add_events_screen/add_events_screen.dart';
+import 'package:tractivity_app/view/screens/create_team_screen/all_member_screen/all_member_screen.dart';
+import 'package:tractivity_app/view/screens/create_team_screen/create_team_screen.dart';
+import 'package:tractivity_app/view/screens/create_team_screen/history_screeen/history_screeen.dart';
 import 'package:tractivity_app/view/screens/auth_screen/forgot_password/forgot_password.dart';
 import 'package:tractivity_app/view/screens/auth_screen/login_screen/login_screen.dart';
 import 'package:tractivity_app/view/screens/auth_screen/verification_mail_screen/verification_mail_screen.dart';
@@ -33,6 +40,13 @@ class AppRoutes {
   static const String privacyPolicyScreen = "/PrivacyPolicyScreen";
   static const String termsConditionScreen = "/TermsConditionScreen";
   static const String friendScreen = "/FriendScreen";
+  static const String createTeamScreen = "/CreateTeamScreen";
+  static const String allMemberScreen = "/AllMemberScreen";
+  static const String addEventsScreen = "/AddEventsScreen";
+  static const String historyScreeen = "/HistoryScreeen";
+  static const String massageListScreen = "/MassageListScreen";
+  static const String messageScreen = "/MessageScreen";
+  static const String chatScreen = "/ChatScreen";
   static const String signupScreen = "/SignupScreen";
   static const String verificationMailScreen = "/VerificationMailScreen";
   static const String verificationScreen = "/VerificationScreen";
@@ -45,7 +59,7 @@ class AppRoutes {
     ///===========================Authentication==========================
     GetPage(name: splashScreen, page: () => SplashScreen()),
     GetPage(name: onboardingScreen, page: () => OnboardingScreen()),
-    GetPage(name: loginScreen, page: () => LoginScreen()),
+   // GetPage(name: loginScreen, page: () => LoginScreen()),
     GetPage(name: signupScreen, page: () => SignupScreen()),
 
     GetPage(name: verificationMailScreen, page: () => VerificationMailScreen()),
@@ -60,6 +74,14 @@ class AppRoutes {
     GetPage(name: aboutUsScreen, page: () => AboutUsScreen()),
     GetPage(name: privacyPolicyScreen, page: () => PrivacyPolicyScreen()),
     GetPage(name: termsConditionScreen, page: () => TermsConditionScreen()),
+    GetPage(name: friendScreen, page: () => FriendScreen()),
+    GetPage(name: createTeamScreen, page: () => CreateTeamScreen()),
+    GetPage(name: allMemberScreen, page: () => AllMemberScreen()),
+    GetPage(name: addEventsScreen, page: () => AddEventsScreen()),
+    GetPage(name: historyScreeen, page: () => HistoryScreeen()),
+    GetPage(name: massageListScreen, page: () => MassageListScreen()),
+    GetPage(name: messageScreen, page: () => MessageScreen()),
+    GetPage(name: chatScreen, page: () => ChatScreen()),
     GetPage(name: homeScreen, page: () => HomeScreen()),
 
 
