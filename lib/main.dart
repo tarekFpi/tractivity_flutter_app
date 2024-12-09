@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         defaultTransition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 200),
-        initialRoute: AppRoutes.eventsProfileScreen,
+        initialRoute: AppRoutes.friendScreen,
         navigatorKey: Get.key,
         getPages: AppRoutes.routes,
       ),

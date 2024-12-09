@@ -79,10 +79,11 @@ class   AppStrings {
 
   ///========================== Nav Bar =====================//
 
-  static const String world = "World";
-  static const String social = "Social";
+  static const String home = "Home";
+  static const String friend = "Friend";
   static const String messages = "Messages";
   static const String profile = "Profile";
+  static const String team = "Team";
   ///===================================================
 
   static const String explore = "Explore";

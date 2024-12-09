@@ -10,6 +10,7 @@ class AppIcons {
   static const String mail = "$basePath/mail.svg";
   static const String person = "$basePath/person.svg";
   static const String users = "$basePath/users.svg";
+  static const String pencilalt = "$basePath/pencil-alt.svg";
 
 
 

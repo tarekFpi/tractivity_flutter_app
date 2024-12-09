@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:get/get.dart';
 import 'package:tractivity_app/view/screens/auth_screen/login_screen/login_screen.dart';
+import 'package:tractivity_app/view/screens/friend_screen/friend_screen.dart';
 import 'package:tractivity_app/view/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/events_profile_screen.dart';
 import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/setting_screen/about_us_screen.dart';
@@ -26,6 +27,7 @@ class AppRoutes {
   static const String aboutUsScreen = "/AboutUsScreen";
   static const String privacyPolicyScreen = "/PrivacyPolicyScreen";
   static const String termsConditionScreen = "/TermsConditionScreen";
+  static const String friendScreen = "/FriendScreen";
 
 
 
@@ -45,6 +47,7 @@ class AppRoutes {
     GetPage(name: aboutUsScreen, page: () => AboutUsScreen()),
     GetPage(name: privacyPolicyScreen, page: () => PrivacyPolicyScreen()),
     GetPage(name: termsConditionScreen, page: () => TermsConditionScreen()),
+    GetPage(name: friendScreen, page: () => FriendScreen()),
 
 
   ];
