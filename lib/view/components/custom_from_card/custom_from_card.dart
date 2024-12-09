@@ -48,9 +48,10 @@ class CustomFormCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+
         CustomText(
           text: title,
-          color: titleColor ?? AppColors.white,
+          color: titleColor ?? AppColors.black,
           fontWeight: FontWeight.w600,
           fontSize: fontSize ?? 16.w,
           bottom: 12.h,
@@ -64,12 +65,13 @@ class CustomFormCard extends StatelessWidget {
           hintStyle: GoogleFonts.roboto(
               fontWeight: FontWeight.w400,
               fontSize: 18,
-              color: AppColors.white_50),
+              color: AppColors.grey_1),
           suffixIcon: suffixIcon,
           isPassword: isPassword,
           textEditingController: controller,
           inputTextStyle: GoogleFonts.poppins(color: AppColors.black),
-          fillColor: hasBackgroundColor ? AppColors.black_80 : AppColors.white,
+         // fillColor: hasBackgroundColor ? AppColors.black_80 : AppColors.white,
+         fillColor: AppColors.white,
           fieldBorderColor: AppColors.black_03,
           keyboardType: keyboardType ?? (isPassword ? TextInputType.visiblePassword : TextInputType.text),
           onTap: onTap,

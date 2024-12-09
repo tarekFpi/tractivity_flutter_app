@@ -25,6 +25,7 @@ class SignupScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
               CustomText(
                 text: AppStrings.singUpText,
                 fontSize: 24,
@@ -37,7 +38,9 @@ class SignupScreen extends StatelessWidget {
                 color: AppColors.white_50,
               ),
               SizedBox(height: 30.h,),
-              /// profile image======
+
+              ///====================== profile image===================
+
               Center(
                 child: Stack(
                   children: [
@@ -171,6 +174,7 @@ class SignupScreen extends StatelessWidget {
               SizedBox(
                 height: 30.h,
               ),
+
               CustomButton(
                 onTap: () {
                   Get.toNamed(AppRoutes.loginScreen);
