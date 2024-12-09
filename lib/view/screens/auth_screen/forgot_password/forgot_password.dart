@@ -53,14 +53,16 @@ class ForgotPassword extends StatelessWidget {
 
           Column(
             children: [
-              ///============ Email ============
+
+              ///============ Email ==================
               CustomFormCard(
                   title: AppStrings.newPassword,
                   hintText: AppStrings.password,
                   hasBackgroundColor: true,
                   isPassword: true,
                   controller: TextEditingController()),
-              ///============ Password ============
+
+              ///============ Password =================
               CustomFormCard(
                   title: AppStrings.confirmPassword,
                   hintText: AppStrings.enterYourPassword,
@@ -69,12 +71,11 @@ class ForgotPassword extends StatelessWidget {
                   controller: TextEditingController()),
             ],
           ),
-            ///============ Login Button ============
+
+            ///============ Login Button =================
             CustomButton(onTap: (){
               Get.toNamed(AppRoutes.loginScreen);
             }, title: AppStrings.updatePasswordText,),
-
-
 
           ],
         ),
