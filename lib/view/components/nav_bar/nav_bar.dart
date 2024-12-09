@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:tractivity_app/view/screens/chat_screen/chat_screen.dart';
+import 'package:tractivity_app/view/screens/chat_screen/inner_widget/message_screen.dart';
+import 'package:tractivity_app/view/screens/chat_screen/massage_list_screen.dart';
+import 'package:tractivity_app/view/screens/create_team_screen/create_team_screen.dart';
+import 'package:tractivity_app/view/screens/friend_screen/friend_screen.dart';
 import '../../../utils/app_colors/app_colors.dart';
 import '../../../utils/app_icons/app_icons.dart';
 import '../../../utils/app_strings/app_strings.dart';
@@ -126,13 +131,13 @@ class _UserNavBarState extends State<NavBar> {
          // Get.offAll(() => HomeScreen());
           break;
         case 1:
-        //  Get.to(() => TimeScreen());
+          Get.to(() => FriendScreen());
           break;
         case 2:
-        //  Get.to(() => SpecialGoalScreen());
+         Get.to(() => MassageListScreen());
           break;
         case 3:
-         // Get.to(() => RecordScreen());
+          Get.to(() => CreateTeamScreen());
           break;
       }
     }

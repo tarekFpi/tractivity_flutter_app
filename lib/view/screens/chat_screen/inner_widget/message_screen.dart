@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:tractivity_app/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:tractivity_app/view/components/custom_text_field/custom_text_field.dart';
@@ -29,17 +30,17 @@ class MessageScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 0,
-        surfaceTintColor: AppColors.black,
-        elevation: 5,
-        shadowColor: AppColors.black,
+        surfaceTintColor: AppColors.white,
+        elevation: 1,
+        shadowColor: AppColors.white,
         centerTitle: false,
-        backgroundColor: AppColors.black_80,
+        backgroundColor: AppColors.white_50,
         leading: Row(
           children: [
             IconButton(
               icon: const Icon(
                 Icons.arrow_back_ios,
-                color: AppColors.white,
+                color: AppColors.black,
               ),
               onPressed: () => Navigator.pop(context),
             ),
@@ -75,20 +76,23 @@ class MessageScreen extends StatelessWidget {
                   text: AppStrings.profile,
                   fontSize: 22,
                   fontWeight: FontWeight.w700,
-                  color: AppColors.white),
+                  color: AppColors.black),
               CustomText(
                 text: "Active Now",
                 fontSize: 14,
                 fontWeight: FontWeight.w700,
-                color: AppColors.white.withOpacity(0.5),
+                color: AppColors.black.withOpacity(0.5),
               ),
             ]),
           ],
         ),
            actions: [
           IconButton(
+            color: AppColors.black,
             icon: Icon(Icons.more_vert),
-            onPressed: () {},
+            onPressed: () {
+              //Get.toNamed(AppRoutes.moreScreen);
+            },
           ),
           /*IconButton(
             icon: CustomImage(imageSrc: AppIcons.personIcon),

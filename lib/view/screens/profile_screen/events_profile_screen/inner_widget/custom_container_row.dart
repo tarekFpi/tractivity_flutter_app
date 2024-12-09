@@ -116,6 +116,13 @@ class CustomContainerRow extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 20,vertical: 8),
+                decoration: BoxDecoration(
+                  color: AppColors.primary,
+                  borderRadius: BorderRadius.circular(10),
+                ),child: CustomText(text: AppStrings.explore, fontSize: 14,fontWeight: FontWeight.w500,color: AppColors.black,),
+              )
 
             ],
           )

@@ -10,13 +10,9 @@ class EventsController extends GetxController{
   ].obs;
 
 
-/*  final List<String> imageList = [
-    AppConstants.profileImage,
-    AppConstants.profileImage,
-    AppConstants.profileImage,
-    AppConstants.profileImage,
-    AppConstants.profileImage,
-    AppConstants.profileImage,
-    AppConstants.profileImage,
-  ];*/
+  final List<String> friendList = [
+   AppStrings.seeAllFriends,
+   AppStrings.inviteFriends,
+   AppStrings.request,
+  ];
 }
