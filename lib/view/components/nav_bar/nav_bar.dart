@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:tractivity_app/view/screens/friend_screen/friend_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/home_screen.dart';
 import '../../../utils/app_colors/app_colors.dart';
 import '../../../utils/app_icons/app_icons.dart';
@@ -133,10 +134,10 @@ class _UserNavBarState extends State<NavBar> {
           Get.offAll(() => HomeScreen());
           break;
         case 1:
-        //  Get.to(() => TimeScreen());
+         Get.to(() => FriendScreen());
           break;
         case 2:
-        //  Get.to(() => SpecialGoalScreen());
+         // Get.to(() => Message());
           break;
         case 3:
          // Get.to(() => RecordScreen());
