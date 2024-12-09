@@ -44,24 +44,27 @@ class CustomRoyelDropdown extends StatelessWidget {
         width: width,
         padding: EdgeInsets.only(left: 10.w),
         decoration: BoxDecoration(
-          border: isBorder
+          borderRadius: BorderRadius.circular(15.0),
+          border: Border.all(
+              color: Colors.black, style: BorderStyle.solid, width: 1),
+        /*  border: isBorder
               ? Border.all(color: textColor, width: borderWidth ?? .05)
-              : null,
-          borderRadius: BorderRadius.circular(borderRadius ?? 8),
-          color: fillColor,
+              : null,*/
+         color: fillColor,
         ),
         child: DropdownButton<String>(
+
           padding: EdgeInsets.only(right: 20),
           hint: CustomText(
               text: title,
               fontSize: fontSize ?? 18.sp,
-              color: textColor,
+              color: Colors.black,
               fontWeight: FontWeight.w500,
               right: 15.w,
           ),
           borderRadius: BorderRadius.circular(10),
           elevation: 2,
-          dropdownColor: AppColors.black_80,
+         dropdownColor: AppColors.white,
           icon: const Icon(
             Icons.keyboard_arrow_down_rounded,
             color: AppColors.white,
@@ -73,16 +76,16 @@ class CustomRoyelDropdown extends StatelessWidget {
             color: Colors.white,
             fontSize: 12.w,
           ),
-         // value: customController.cetagoryList.value,
+         /// value: customController.cetagoryList.value,
           onChanged: (String? newValue) {
-            //customController.currentCetagory.value = newValue!;
+            ///customController.currentCetagory.value = newValue!;
           },
           items: customController.cetagoryList.map((String item) {
             return DropdownMenuItem<String>(
               value: item,
               child: CustomText(
                 text: item,
-                color: AppColors.white,
+                color: AppColors.black,
                 fontSize: 15.w,
                 fontWeight: FontWeight.w500,
               ),

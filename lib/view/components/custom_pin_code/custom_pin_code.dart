@@ -16,6 +16,7 @@ class CustomPinCode extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 30, right: 30),
       child: PinCodeTextField(
+        textStyle: TextStyle(color: Colors.white),
         keyboardType: TextInputType.number,
         appContext: context,
         length: 4,
@@ -28,13 +29,13 @@ class CustomPinCode extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           fieldHeight: 65,
           fieldWidth: size.width * 0.15,
-          inactiveColor: AppColors.black_80,
-          activeColor: AppColors.black_80,
-          activeFillColor: AppColors.black_80,
-          inactiveFillColor: AppColors.black_80,
-          selectedFillColor: AppColors.black_80,
-          disabledColor: AppColors.black_80,
-          selectedColor: AppColors.black_80,
+          inactiveColor: AppColors.black,
+          activeColor: AppColors.black,
+          activeFillColor: AppColors.black,
+          inactiveFillColor: AppColors.black,
+          selectedFillColor: AppColors.black,
+          disabledColor: AppColors.black,
+          selectedColor: AppColors.black,
         ),
       ),
     );
