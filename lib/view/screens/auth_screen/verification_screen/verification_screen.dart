@@ -1,4 +1,4 @@
-/*
+
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,6 +9,7 @@ import 'package:tractivity_app/utils/app_strings/app_strings.dart';
 import 'package:tractivity_app/view/components/custom_button/custom_button.dart';
 import 'package:tractivity_app/view/components/custom_pin_code/custom_pin_code.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
+
 class VerificationScreen extends StatelessWidget {
   const VerificationScreen({super.key});
 
@@ -41,9 +42,11 @@ class VerificationScreen extends StatelessWidget {
                  fontWeight: FontWeight.w400,
                  maxLines: 2,
                  bottom: 30.h,
-                 color: AppColors.white_50,
+                 color: AppColors.black,
                ),
+
                CustomPinCode(controller: TextEditingController()),
+
                SizedBox(height: 20.h,),
                Row(
                  crossAxisAlignment: CrossAxisAlignment.center,
@@ -68,7 +71,7 @@ class VerificationScreen extends StatelessWidget {
            ),
             ///============ Login Button ============
             CustomButton(onTap: (){
-             // Get.toNamed(AppRoutes.forgotPassword);
+               Get.toNamed(AppRoutes.forgotPassword);
             }, title: AppStrings.confirm,),
 
 
@@ -78,4 +81,4 @@ class VerificationScreen extends StatelessWidget {
     );
   }
 }
-*/
+
