@@ -41,7 +41,7 @@ class LoginScreen extends StatelessWidget {
             Container(
               height: 1.h,
               width: double.infinity,
-              color: AppColors.white_50,
+              color: AppColors.grey_2,
             ),
             SizedBox(
               height: 20,
@@ -49,12 +49,15 @@ class LoginScreen extends StatelessWidget {
 
             ///============ Email ============
             CustomFormCard(
+              //  titleColor: Colors.white,
                 title: AppStrings.email,
                 hintText: AppStrings.enterYourEmail,
                 hasBackgroundColor: true,
                 controller: TextEditingController()),
+
             ///============ Password ============
             CustomFormCard(
+                titleColor: Colors.black,
                 title: AppStrings.password,
                 hintText: AppStrings.enterYourPassword,
                 hasBackgroundColor: true,
@@ -71,7 +74,7 @@ class LoginScreen extends StatelessWidget {
                   text: AppStrings.forgotPassword,
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
-                  color: AppColors.red,
+                  color: AppColors.primary,
                   bottom: 30.h,
                 ),
               ),
@@ -89,20 +92,20 @@ class LoginScreen extends StatelessWidget {
                 Container(
                   height: 1.h,
                   width: 110.w,
-                  color: AppColors.white_50,
+                  color: AppColors.grey_2,
                 ),
                 CustomText(
                   text: AppStrings.orSignInWith,
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
-                  color: AppColors.white_50,
+                  color: AppColors.black,
                   left: 5.w,
                   right: 5.w,
                 ),
                 Container(
                   height: 1.h,
                   width: 110.w,
-                  color: AppColors.white_50,
+                  color: AppColors.grey_2,
                 ),
               ],
             ),
@@ -124,12 +127,13 @@ class LoginScreen extends StatelessWidget {
                   text: AppStrings.dontHaveAccount,
                   fontSize: 15,
                   fontWeight: FontWeight.w400,
-                  color: AppColors.white_50,
+                  color: AppColors.black,
                 ),
-                SizedBox(width: 10.w,),
+                SizedBox(width: 10.w),
+
                 GestureDetector(
                   onTap: (){
-                    Get.toNamed(AppRoutes.signupScreen);
+                  //  Get.toNamed(AppRoutes.signupScreen);
                   },
                   child: CustomText(
                     text: AppStrings.singUpText,
