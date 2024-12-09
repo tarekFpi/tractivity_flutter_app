@@ -22,7 +22,7 @@ class CustomTextField extends StatefulWidget {
     this.validator,
     this.hintText,
     this.hintStyle,
-    this.fillColor = AppColors.black_80,
+    this.fillColor = AppColors.lightWhite,
     this.suffixIcon,
     this.suffixIconColor,
     this.fieldBorderRadius = 16,
@@ -104,7 +104,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             GoogleFonts.poppins(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
-                color: AppColors.white_50),
+                color: AppColors.black_80),
         fillColor: widget.fillColor,
         filled: true,
         prefixIcon: widget.prefixIcon,

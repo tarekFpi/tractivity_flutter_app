@@ -160,6 +160,20 @@ class   AppStrings {
   static const String events = "Events";
   static const String volunteer = "Volunteer";
   static const String address = "Address";
+  //static const String profileSetting = "ProfileSetting";
+  //static const String aboutus = "Aboutus";
+  //static const String setting = "Setting";
+  static const String seeAllFriends = "See All Friends List";
+  static const String inviteFriends = "Invite Friends";
+  static const String request = "Request";
+  //static const String searchForSomeone = "Search For Someone";
+  static const String createTeam = "Create Team";
+  static const String teamName = "Team Name";
+  static const String addMember = "Add Member";
+  static const String addEvent = "Add Event";
+  //static const String done = "Done";
+  static const String allMember = "All Member";
+  static const String history = "History";
 
 
 
