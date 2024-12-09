@@ -1,4 +1,3 @@
-/*
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,8 +12,17 @@ import 'package:tractivity_app/view/components/custom_from_card/custom_from_card
 import 'package:tractivity_app/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 
-class SignupScreen extends StatelessWidget {
+class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
+
+  @override
+  State<SignupScreen> createState() => _SignupScreenState();
+}
+
+class _SignupScreenState extends State<SignupScreen> {
+  bool valuefirst = false;
+
+  String checkValueStatues = "";
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +34,6 @@ class SignupScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               CustomText(
                 text: AppStrings.singUpText,
                 fontSize: 24,
@@ -38,7 +45,9 @@ class SignupScreen extends StatelessWidget {
                 width: MediaQuery.sizeOf(context).width,
                 color: AppColors.white_50,
               ),
-              SizedBox(height: 30.h,),
+              SizedBox(
+                height: 30.h,
+              ),
 
               ///====================== profile image===================
 
@@ -52,19 +61,6 @@ class SignupScreen extends StatelessWidget {
                       width: 120.w,
                       boxShape: BoxShape.circle,
                     ),
-                    */
-/*   Container(
-                      height: 120.h,
-                      width: 120.w,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: FileImage(
-                              ),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),*//*
 
                     Positioned(
                       bottom: 5,
@@ -94,7 +90,77 @@ class SignupScreen extends StatelessWidget {
 
               /// =====Profile Name List =========
               SizedBox(
-                height: 20.h,
+                height: 12.h,
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Radio(
+                        value: "Volunteer",
+                        fillColor:
+                        MaterialStateColor.resolveWith((states) => AppColors.primary),
+                        groupValue: checkValueStatues,
+                        onChanged: (String? value) {
+                          setState(() {
+                            checkValueStatues = value!;
+                          });
+                        },
+                      ),
+                      CustomText(
+                        text: "Volunteer",
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Radio(
+                        value: "Organizer",
+                        groupValue: checkValueStatues,
+                        fillColor:
+                        MaterialStateColor.resolveWith((states) => AppColors.primary),
+                        onChanged: (value) {
+                          setState(() {
+                            checkValueStatues = value!;
+                          });
+                        },
+                      ),
+                      CustomText(
+                        text: "Organizer",
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Radio(
+                        value: "Administrator",
+                        groupValue: checkValueStatues,
+                        fillColor:
+                        MaterialStateColor.resolveWith((states) => AppColors.primary),
+                        onChanged: (value) {
+                          setState(() {
+                            checkValueStatues = value!;
+                          });
+                        },
+                      ),
+
+                      CustomText(
+                        text: "Administrator",
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ],
+                  ),
+                ],
               ),
 
               ///============ First Name ============
@@ -106,14 +172,7 @@ class SignupScreen extends StatelessWidget {
 
               ///============ Last Name ============
               CustomFormCard(
-                  title: AppStrings.yourLastName,
-                  hintText: AppStrings.enterYourName,
-                  hasBackgroundColor: true,
-                  controller: TextEditingController()),
-
-              ///============ User Name ============
-              CustomFormCard(
-                  title: AppStrings.userName,
+                  title: AppStrings.profession,
                   hintText: AppStrings.enterYourName,
                   hasBackgroundColor: true,
                   controller: TextEditingController()),
@@ -125,39 +184,20 @@ class SignupScreen extends StatelessWidget {
                   hasBackgroundColor: true,
                   controller: TextEditingController()),
 
-              ///============ phoneNumber ============
+              ///============ email ============
               CustomFormCard(
                   title: AppStrings.email,
                   hintText: AppStrings.enterYourEmail,
                   hasBackgroundColor: true,
                   controller: TextEditingController()),
 
-              ///============ Date of Birth ============
+              ///============ Location ============
               CustomFormCard(
-                  title: AppStrings.dateOfBirth,
-                  hintText: AppStrings.typeYourDate,
+                  title: AppStrings.location,
+                  hintText: AppStrings.enterYourLocation,
                   hasBackgroundColor: true,
                   controller: TextEditingController()),
 
-              ///============ Gender ============
-              Align(
-                alignment: Alignment.topLeft,
-                child: CustomText(
-                  text: AppStrings.gender,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.white,
-                  bottom: 10.h,
-                ),
-              ),
-              CustomRoyelDropdown(
-                fillColor: AppColors.black_80,
-                textColor: AppColors.white,
-                title: AppStrings.gender,
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
               ///============ password ============
               CustomFormCard(
                   title: AppStrings.password,
@@ -174,10 +214,53 @@ class SignupScreen extends StatelessWidget {
                   isPassword: true,
                   controller: TextEditingController()),
 
-              SizedBox(
-                height: 30.h,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Checkbox(
+                    //  tristate: true,  // Example with tristate
+                    value: valuefirst,
+                    checkColor: Colors.yellow,
+                    activeColor: Colors.grey,
+                    onChanged: (bool? newValue) {
+                      setState(() {
+                        valuefirst = newValue!;
+                      });
+                    },
+                  ),
+                  Text.rich(
+                    TextSpan(
+                        text: 'I agree with ',
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w400),
+                        children: [
+                          TextSpan(
+                            text: 'terms',
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.orange),
+                          ),
+                          TextSpan(
+                            text: ' of service and',
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.w400),
+                          ),
+                          TextSpan(
+                            text: ' privacy policy',
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.orange),
+                          ),
+                        ]),
+                  ),
+                ],
               ),
 
+              SizedBox(
+                height: 8,
+              ),
               CustomButton(
                 onTap: () {
                   Get.toNamed(AppRoutes.loginScreen);
@@ -191,4 +274,3 @@ class SignupScreen extends StatelessWidget {
     );
   }
 }
-*/

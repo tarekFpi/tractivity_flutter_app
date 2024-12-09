@@ -12,6 +12,9 @@ class AppIcons {
   static const String users = "$basePath/users.svg";
   static const String pencilalt = "$basePath/pencil-alt.svg";
 
+  static const String google = "$basePath/google_icon.svg";
+  static const String apple = "$basePath/apple_icon.svg";
+
 
 
 
