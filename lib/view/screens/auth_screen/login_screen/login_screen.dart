@@ -1,4 +1,4 @@
-/*
+
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,8 +12,17 @@ import 'package:tractivity_app/view/components/custom_from_card/custom_from_card
 import 'package:tractivity_app/view/components/custom_image/custom_image.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+
+  bool valuefirst = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -42,95 +51,135 @@ class LoginScreen extends StatelessWidget {
             Container(
               height: 1.h,
               width: double.infinity,
-              color: AppColors.white_50,
+              color: AppColors.grey_2,
             ),
             SizedBox(
               height: 20,
             ),
 
-            ///============ Email ============
+            ///============ Email ==============
             CustomFormCard(
+              //  titleColor: Colors.white,
                 title: AppStrings.email,
                 hintText: AppStrings.enterYourEmail,
                 hasBackgroundColor: true,
                 controller: TextEditingController()),
+
             ///============ Password ============
             CustomFormCard(
+                titleColor: Colors.black,
                 title: AppStrings.password,
                 hintText: AppStrings.enterYourPassword,
                 hasBackgroundColor: true,
                 isPassword: true,
                 controller: TextEditingController()),
-            ///============ Fortgot Password ============
-            GestureDetector(
-              onTap: () {
-              //  Get.toNamed(AppRoutes.verificationMailScreen);
-              },
-              child: Align(
-                alignment: Alignment.topRight,
-                child: CustomText(
-                  text: AppStrings.forgotPassword,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.red,
-                  bottom: 30.h,
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+
+                Row(
+                  children: [
+                    Checkbox(
+                      //  tristate: true,  // Example with tristate
+                      value: valuefirst,
+                      checkColor: Colors.yellow,
+                      activeColor: Colors.grey,
+                      onChanged: (bool? newValue) {
+                        setState(() {
+                          valuefirst = newValue!;
+                        });
+                      },
+                    ),
+
+                    CustomText(
+                      text: "Remember me",
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.primary,
+                    )
+                  ],
                 ),
-              ),
+
+                ///============ Forgot Password ============
+                GestureDetector(
+                  onTap: () {
+                    Get.toNamed(AppRoutes.verificationMailScreen);
+                  },
+                  child: CustomText(
+                    text: AppStrings.forgotPassword,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.primary,
+
+                  ),
+                ),
+              ],
             ),
+
+
             SizedBox(height: 20.h,),
             ///============ Login Button ============
             CustomButton(onTap: (){
               Get.toNamed(AppRoutes.homeScreen);
             }, title: AppStrings.logIn,),
+
             SizedBox(height: 30.h,),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+
                 Container(
                   height: 1.h,
                   width: 110.w,
-                  color: AppColors.white_50,
+                  color: AppColors.grey_2,
                 ),
                 CustomText(
                   text: AppStrings.orSignInWith,
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
-                  color: AppColors.white_50,
+                  color: AppColors.black,
                   left: 5.w,
                   right: 5.w,
                 ),
                 Container(
                   height: 1.h,
                   width: 110.w,
-                  color: AppColors.white_50,
+                  color: AppColors.grey_2,
                 ),
               ],
             ),
             SizedBox(height: 30.h,),
+
             ///============ Social Login ============
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CustomImage(imageSrc: AppIcons.setting, height: 50,width: 50,),
-                SizedBox(width: 30.w,),
-                CustomImage(imageSrc: AppIcons.setting, height: 50,width: 50,),
+
+                CustomImage(imageSrc: AppIcons.apple, height: 32,width: 32,),
+                SizedBox(width: 32.w,),
+                CustomImage(imageSrc: AppIcons.google, height: 32,width: 32,),
               ],
             ),
             SizedBox(height: 20,),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+
                 CustomText(
                   text: AppStrings.dontHaveAccount,
                   fontSize: 15,
                   fontWeight: FontWeight.w400,
-                  color: AppColors.white_50,
+                  color: AppColors.black,
                 ),
-                SizedBox(width: 10.w,),
+                SizedBox(width: 10.w),
+
                 GestureDetector(
                   onTap: (){
-                   // Get.toNamed(AppRoutes.signupScreen);
+                    Get.toNamed(AppRoutes.signupScreen);
                   },
                   child: CustomText(
                     text: AppStrings.singUpText,
@@ -148,4 +197,4 @@ class LoginScreen extends StatelessWidget {
     );
   }
 }
-*/
+

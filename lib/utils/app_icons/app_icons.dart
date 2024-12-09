@@ -13,6 +13,9 @@ class AppIcons {
   static const String pencilalt = "$basePath/pencil-alt.svg";
   static const String time = "$basePath/time.svg";
 
+  static const String google = "$basePath/google_icon.svg";
+  static const String apple = "$basePath/apple_icon.svg";
+
 
 
 

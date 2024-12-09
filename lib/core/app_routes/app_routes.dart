@@ -7,7 +7,14 @@ import 'package:tractivity_app/view/screens/create_team_screen/add_events_screen
 import 'package:tractivity_app/view/screens/create_team_screen/all_member_screen/all_member_screen.dart';
 import 'package:tractivity_app/view/screens/create_team_screen/create_team_screen.dart';
 import 'package:tractivity_app/view/screens/create_team_screen/history_screeen/history_screeen.dart';
+import 'package:tractivity_app/view/screens/auth_screen/forgot_password/forgot_password.dart';
+import 'package:tractivity_app/view/screens/auth_screen/login_screen/login_screen.dart';
+import 'package:tractivity_app/view/screens/auth_screen/verification_mail_screen/verification_mail_screen.dart';
+import 'package:tractivity_app/view/screens/auth_screen/verification_screen/verification_screen.dart';
 import 'package:tractivity_app/view/screens/friend_screen/friend_screen.dart';
+import 'package:tractivity_app/view/screens/auth_screen/signup_screen/signup_screen.dart';
+import 'package:tractivity_app/view/screens/home_screen/home_screen.dart';
+import 'package:tractivity_app/view/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/events_profile_screen.dart';
 import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/setting_screen/about_us_screen.dart';
 import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/setting_screen/privacy_policy_screen.dart';
@@ -40,6 +47,10 @@ class AppRoutes {
   static const String massageListScreen = "/MassageListScreen";
   static const String messageScreen = "/MessageScreen";
   static const String chatScreen = "/ChatScreen";
+  static const String signupScreen = "/SignupScreen";
+  static const String verificationMailScreen = "/VerificationMailScreen";
+  static const String verificationScreen = "/VerificationScreen";
+  static const String forgotPassword = "/ForgotPassword";
 
 
 
@@ -47,13 +58,17 @@ class AppRoutes {
 
     ///===========================Authentication==========================
     GetPage(name: splashScreen, page: () => SplashScreen()),
-   // GetPage(name: onboardingScreen, page: () => OnboardingScreen()),
-    //GetPage(name: loginScreen, page: () => LoginScreen()),
+    GetPage(name: onboardingScreen, page: () => OnboardingScreen()),
+   // GetPage(name: loginScreen, page: () => LoginScreen()),
+    GetPage(name: signupScreen, page: () => SignupScreen()),
+
+    GetPage(name: verificationMailScreen, page: () => VerificationMailScreen()),
+    GetPage(name: verificationScreen, page: () => VerificationScreen()),
+    GetPage(name: forgotPassword, page: () => ForgotPassword()),
 
 
 
-
-    ///===========================Mededi==========================
+    ///=========================== Mehedi ==========================
     GetPage(name: eventsProfileScreen, page: () => EventsProfileScreen()),
     GetPage(name: settingScreen, page: () => SettingScreen()),
     GetPage(name: aboutUsScreen, page: () => AboutUsScreen()),
@@ -67,6 +82,16 @@ class AppRoutes {
     GetPage(name: massageListScreen, page: () => MassageListScreen()),
     GetPage(name: messageScreen, page: () => MessageScreen()),
     GetPage(name: chatScreen, page: () => ChatScreen()),
+    GetPage(name: homeScreen, page: () => HomeScreen()),
+
+
+
+
+
+
+
+
+
 
 
   ];
