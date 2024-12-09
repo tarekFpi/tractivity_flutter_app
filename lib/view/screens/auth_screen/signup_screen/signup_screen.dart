@@ -1,3 +1,4 @@
+/*
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -51,7 +52,8 @@ class SignupScreen extends StatelessWidget {
                       width: 120.w,
                       boxShape: BoxShape.circle,
                     ),
-                    /*   Container(
+                    */
+/*   Container(
                       height: 120.h,
                       width: 120.w,
                       decoration: BoxDecoration(
@@ -62,7 +64,8 @@ class SignupScreen extends StatelessWidget {
                           fit: BoxFit.cover,
                         ),
                       ),
-                    ),*/
+                    ),*//*
+
                     Positioned(
                       bottom: 5,
                       right: 0,
@@ -188,3 +191,4 @@ class SignupScreen extends StatelessWidget {
     );
   }
 }
+*/

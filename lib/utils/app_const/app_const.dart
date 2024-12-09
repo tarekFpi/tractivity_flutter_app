@@ -32,6 +32,7 @@ class AppConstants {
   static String bdFlag = 'https://flagcdn.com/w320/bd.png';
   static String pkFlag = 'https://flagcdn.com/w320/pk.png';
   static String resturentImage = 'https://images.pexels.com/photos/941861/pexels-photo-941861.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
+  static String unkown = 'https://b3115804.smushcdn.com/3115804/wp-content/uploads/2021/05/unknown-person-icon.png?lossy=2&strip=1&webp=1';
 }
 
 enum Status { loading, error, completed, internetError }

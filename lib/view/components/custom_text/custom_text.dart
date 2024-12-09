@@ -13,7 +13,7 @@ class CustomText extends StatelessWidget {
     this.bottom = 0,
     this.fontSize = 12,
     this.fontWeight = FontWeight.w300,
-    this.color = Colors.white,
+    this.color = Colors.black,
     required this.text,
     this.overflow = TextOverflow.ellipsis,
     this.decoration,

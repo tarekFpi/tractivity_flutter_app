@@ -79,10 +79,11 @@ class   AppStrings {
 
   ///========================== Nav Bar =====================//
 
-  static const String world = "World";
-  static const String social = "Social";
+  static const String home = "Home";
+  static const String friend = "Friend";
   static const String messages = "Messages";
   static const String profile = "Profile";
+  static const String team = "Team";
   ///===================================================
   static const String letsGo = "LET’S GO";
   static const String serveOut = "ServeOut";
@@ -154,6 +155,14 @@ class   AppStrings {
   static const String areYouSureTtiele = "All information previously linked to your account will be lost.";
 
 
+  static const String explore = "Explore";
+  static const String events = "Events";
+  static const String volunteer = "Volunteer";
+  static const String profession = "Profession";
+  static const String address = "Address";
+  static const String profileSetting = "ProfileSetting";
+  static const String aboutus = "Aboutus";
+  static const String setting = "Setting";
 
 
 }
