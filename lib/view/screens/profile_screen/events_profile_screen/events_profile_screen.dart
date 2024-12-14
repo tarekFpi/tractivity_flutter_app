@@ -97,11 +97,11 @@ class _EventsProfileScreenState extends State<EventsProfileScreen> {
                   children: List.generate(2, (index) {
                 return CustomContainerRow();
               })),
-            if (eventsController.currentIndex.value == 1)
+            if(eventsController.currentIndex.value == 1)
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ///========== volunteer
+                  ///========== volunteer =========
                   Row(
                     children: [
                       Container(
@@ -121,7 +121,7 @@ class _EventsProfileScreenState extends State<EventsProfileScreen> {
                       )
                     ],
                   ),
-                  ///========== full name
+                  ///========== full name =========
                   CustomText(
                     top: 10,
                     text: AppStrings.fullName,
@@ -134,7 +134,7 @@ class _EventsProfileScreenState extends State<EventsProfileScreen> {
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
                   ),
-                  ///========== profession
+                  ///========== profession =========
                   CustomText(
                     top: 10,
                     text: AppStrings.profession,
@@ -147,7 +147,7 @@ class _EventsProfileScreenState extends State<EventsProfileScreen> {
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
                   ),
-                  ///========== phoneNumber
+                  ///========== phoneNumber =========
                   CustomText(
                     top: 10,
                     text: AppStrings.phoneNumber,
@@ -160,7 +160,7 @@ class _EventsProfileScreenState extends State<EventsProfileScreen> {
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
                   ),
-                  ///========== email
+                  ///========== email =================
                   CustomText(
                     top: 10,
                     text: AppStrings.email,
@@ -173,7 +173,8 @@ class _EventsProfileScreenState extends State<EventsProfileScreen> {
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
                   ),
-                  ///========== address
+
+                  ///========== address ===============
                   CustomText(
                     top: 10,
                     text: AppStrings.address,
@@ -182,7 +183,7 @@ class _EventsProfileScreenState extends State<EventsProfileScreen> {
                     bottom: 10,
                   ),
                   CustomText(
-                    text: "Dhanmondi, Dhaka, Bangladesh",
+                    text: "Diamond, Dhaka, Bangladesh",
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
                   ),
