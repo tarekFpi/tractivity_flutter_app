@@ -12,10 +12,8 @@ import '../../../utils/app_colors/app_colors.dart';
 import '../../../utils/app_icons/app_icons.dart';
 import '../../../utils/app_strings/app_strings.dart';
 import '../custom_text/custom_text.dart';
-
 class NavBar extends StatefulWidget {
   final int currentIndex;
-
   const NavBar({required this.currentIndex, super.key});
 
   @override
