@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
@@ -116,12 +117,18 @@ class CustomContainerRow extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 20,vertical: 8),
-                decoration: BoxDecoration(
-                  color: AppColors.primary,
-                  borderRadius: BorderRadius.circular(10),
-                ),child: CustomText(text: AppStrings.explore, fontSize: 14,fontWeight: FontWeight.w500,color: AppColors.black,),
+              InkWell(
+                onTap: (){
+
+                  Get.toNamed(AppRoutes.exploreEventScreen);
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20,vertical: 8),
+                  decoration: BoxDecoration(
+                    color: AppColors.primary,
+                    borderRadius: BorderRadius.circular(10),
+                  ),child: CustomText(text: AppStrings.explore, fontSize: 14,fontWeight: FontWeight.w500,color: AppColors.black,),
+                ),
               )
 
             ],

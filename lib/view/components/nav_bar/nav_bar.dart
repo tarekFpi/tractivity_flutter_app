@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:tractivity_app/view/screens/chat_screen/chat_screen.dart';
-import 'package:tractivity_app/view/screens/chat_screen/inner_widget/message_screen.dart';
 import 'package:tractivity_app/view/screens/chat_screen/massage_list_screen.dart';
 import 'package:tractivity_app/view/screens/create_team_screen/create_team_screen.dart';
 import 'package:tractivity_app/view/screens/friend_screen/friend_screen.dart';
+import 'package:tractivity_app/view/screens/home_screen/home_screen.dart';
+import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/events_profile_screen.dart';
 import '../../../utils/app_colors/app_colors.dart';
 import '../../../utils/app_icons/app_icons.dart';
 import '../../../utils/app_strings/app_strings.dart';
@@ -80,15 +80,21 @@ class _UserNavBarState extends State<NavBar> {
                   elevation: 100,
                   shadowColor: AppColors.primary,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100.r),
+                    borderRadius: BorderRadius.only(
+                        topLeft:Radius.circular(50),
+                        topRight: Radius.circular(50)
+                    ),
                   ),
                   color: Colors.transparent,
                   child: Container(
-                    height: 45.h,
-                    width: 45.w,
+                    height: 60.h,
+                    width: 50.w,
                     decoration: BoxDecoration(
                       color: AppColors.primary,
-                      borderRadius: BorderRadius.circular(18.r),
+                      borderRadius: BorderRadius.only(
+                          topLeft:Radius.circular(50),
+                        topRight: Radius.circular(50)
+                      ),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
@@ -128,13 +134,14 @@ class _UserNavBarState extends State<NavBar> {
     if (index != bottomNavIndex) {
       switch (index) {
         case 0:
-         // Get.offAll(() => HomeScreen());
+        Get.offAll(() => HomeScreen());
+        //  Get.offAll(() => EventsProfileScreen());
           break;
         case 1:
           Get.to(() => FriendScreen());
           break;
         case 2:
-         Get.to(() => MassageListScreen());
+          Get.to(() => MassageListScreen());
           break;
         case 3:
           Get.to(() => CreateTeamScreen());

@@ -14,8 +14,11 @@ import 'package:tractivity_app/view/screens/auth_screen/verification_screen/veri
 import 'package:tractivity_app/view/screens/friend_screen/friend_screen.dart';
 import 'package:tractivity_app/view/screens/auth_screen/signup_screen/signup_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/home_screen.dart';
+import 'package:tractivity_app/view/screens/notification/notification_screen.dart';
 import 'package:tractivity_app/view/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/events_profile_screen.dart';
+import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/explore_event_screen.dart';
+
 import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/setting_screen/about_us_screen.dart';
 import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/setting_screen/privacy_policy_screen.dart';
 import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/setting_screen/setting_screen.dart';
@@ -28,6 +31,7 @@ class AppRoutes {
   static const String homeScreen = "/HomeScreen";
   static const String onboardingScreen = "/OnboardingScreen";
   static const String loginScreen = "/LoginScreen";
+
 
 
 
@@ -51,6 +55,8 @@ class AppRoutes {
   static const String verificationMailScreen = "/VerificationMailScreen";
   static const String verificationScreen = "/VerificationScreen";
   static const String forgotPassword = "/ForgotPassword";
+  static const String exploreEventScreen = "/ExploreEventScreen";
+  static const String notificationScreen = "/NotificationScreen";
 
 
 
@@ -59,7 +65,7 @@ class AppRoutes {
     ///===========================Authentication==========================
     GetPage(name: splashScreen, page: () => SplashScreen()),
     GetPage(name: onboardingScreen, page: () => OnboardingScreen()),
-   // GetPage(name: loginScreen, page: () => LoginScreen()),
+    GetPage(name: loginScreen, page: () => LoginScreen()),
     GetPage(name: signupScreen, page: () => SignupScreen()),
 
     GetPage(name: verificationMailScreen, page: () => VerificationMailScreen()),
@@ -83,15 +89,8 @@ class AppRoutes {
     GetPage(name: messageScreen, page: () => MessageScreen()),
     GetPage(name: chatScreen, page: () => ChatScreen()),
     GetPage(name: homeScreen, page: () => HomeScreen()),
-
-
-
-
-
-
-
-
-
+    GetPage(name: exploreEventScreen, page: () => ExploreEventScreen()),
+    GetPage(name: notificationScreen, page: () => NotificationScreen()),
 
 
   ];

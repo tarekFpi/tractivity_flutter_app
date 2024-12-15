@@ -15,6 +15,10 @@ class AppIcons {
 
   static const String google = "$basePath/google_icon.svg";
   static const String apple = "$basePath/apple_icon.svg";
+  static const String icon1 = "$basePath/icon1.svg";
+  static const String notification = "$basePath/notification.svg";
+  static const String userIcons = "$basePath/user_icons.svg";
+  static const String eventIcons = "$basePath/event_icons.svg";
 
 
 

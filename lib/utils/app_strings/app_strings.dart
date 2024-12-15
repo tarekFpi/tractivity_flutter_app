@@ -92,6 +92,7 @@ class   AppStrings {
   static const String orSignInWith = "or sign in with";
   static const String friendsWorkflow = "Friends Workflow";
   static const String searchForSomeone = "Search for someone";
+  static const String searchEvent = "Search for Event";
   static const String friendProfile = "Friend Profile";
   static const String venues = "Venues";
   static const String posts = "Posts";
