@@ -175,6 +175,8 @@ class   AppStrings {
   //static const String done = "Done";
   static const String allMember = "All Member";
   static const String history = "History";
+  static const String exploreEvent = "Explore Event";
+  static const String completeEvent = "Complete Events";
 
 
 

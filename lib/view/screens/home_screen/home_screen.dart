@@ -11,6 +11,7 @@ import 'package:tractivity_app/utils/app_icons/app_icons.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
 import 'package:tractivity_app/view/components/custom_button/custom_button.dart';
 import 'package:tractivity_app/view/components/custom_from_card/custom_from_card.dart';
+import 'package:tractivity_app/view/components/custom_image/custom_image.dart';
 import 'package:tractivity_app/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tractivity_app/view/components/custom_royel_appbar/custom_royel_appbar.dart';
 import 'package:tractivity_app/view/components/custom_tab_selected/custom_tab_selected.dart';
@@ -28,30 +29,53 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          key: _scaffoldKey,
-       drawer: HomeSideDrawer(),
-      drawerScrimColor: Colors.black,
-      appBar: CustomRoyelAppbar(
+      key: _scaffoldKey,
+      drawer: HomeSideDrawer(),
+      //drawerScrimColor: Colors.black,
+      appBar: AppBar(
+        leading: Builder(builder: (context) {
+          return IconButton(
+              onPressed: () => Scaffold.of(context).openDrawer(),
+              icon: Icon(
+                Icons.menu,
+                color: AppColors.primary,
+              ));
+        }),
+        title: Text(
+          "ServeOut",
+          style: TextStyle(
+              color: AppColors.black,
+              fontSize: 30,
+              fontWeight: FontWeight.w600),
+        ),
+        actions: [
+          IconButton(onPressed: (){
+            Get.toNamed(AppRoutes.notificationScreen);
+          }, icon: Icon(Icons.notifications_active_outlined,color: AppColors.black,),)
+        ],
+      ),
+
+      /*CustomRoyelAppbar(
+        leftIcon: CustomImage(imageSrc: AppIcons.menu),
+       // leftIcon: true,
         titleName: "ServeOut",
         rightIcon: AppIcons.notification,
         rightOnTap: (){
          Get.toNamed(AppRoutes.notificationScreen);
         },
-      ),
+      ),*/
       body: Padding(
-        padding: const EdgeInsets.only(top: 0,left: 12,right: 12),
+        padding: const EdgeInsets.only(top: 0, left: 12, right: 12),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               SizedBox(
                 height: 12.h,
               ),
@@ -118,8 +142,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: double.infinity,
                 height: 140,
                 decoration: BoxDecoration(
-                    color: Colors.blueAccent.withOpacity(0.2),
-                    border: Border.all(color: Colors.blueAccent,),
+                  color: Colors.blueAccent.withOpacity(0.2),
+                  border: Border.all(
+                    color: Colors.blueAccent,
+                  ),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Padding(
@@ -137,9 +163,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                           ),
-
                           CustomButton(
-                            onTap: () {},
+                            onTap: () {
+                              Get.toNamed(AppRoutes.exoloreEventScreen);
+                            },
                             title: "Explore",
                             width: 90.w,
                             height: 32.h,
@@ -151,7 +178,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ],
                       ),
-
                       SvgPicture.asset(
                         AppIcons.icon1,
                         height: 100,
