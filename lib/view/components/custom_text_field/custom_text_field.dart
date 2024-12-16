@@ -89,7 +89,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           GoogleFonts.roboto(
               fontSize: 16,
               fontWeight: FontWeight.w400,
-              color: AppColors.red),
+              color: AppColors.grey002),
       onChanged: widget.onChanged,
       maxLines: widget.maxLines,
       obscureText: widget.isPassword ? obscureText : false,

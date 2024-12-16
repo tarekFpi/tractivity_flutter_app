@@ -7,6 +7,7 @@ import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_icons/app_icons.dart';
 import 'package:tractivity_app/view/components/custom_royel_appbar/custom_royel_appbar.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
+import 'package:tractivity_app/view/screens/notification/notification_alert.dart';
 
 import '../../components/custom_button/custom_button.dart';
 
@@ -34,7 +35,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
-              CustomText(
+              const CustomText(
                 text: "Event invitation",
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
@@ -112,12 +113,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 ],
               ),
 
-
               const SizedBox(
                 height: 26,
               ),
 
-              CustomText(
+              const CustomText(
                 text: "Event invitation",
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
@@ -132,7 +132,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   return Padding(
                     padding: const EdgeInsets.only(top: 16),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
 
@@ -178,13 +178,57 @@ class _NotificationScreenState extends State<NotificationScreen> {
                               fontSize: 14,
                             ),
                           ],
-                        )
+                        ),
+
+
+                        InkWell(
+                          onTap: (){
+
+                            showDialog(
+                              context: context,
+                              builder: (ctx) => AlertDialog(
+                                backgroundColor: Colors.white,
+                                insetPadding: EdgeInsets.all(8),
+                                contentPadding: EdgeInsets.all(8),
+                                //   clipBehavior: Clip.antiAliasWithSaveLayer,
+                                title: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+
+                                    CustomText(
+                                      text: "Notification",
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.black_80,
+                                    ),
+
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: InkWell(
+                                        onTap: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Icon(
+                                          Icons.close,
+                                          size: 32,
+                                          color: Colors.black,
+                                        )),
+                                  )
+                                ],),
+                                content: SizedBox(
+                                  width: MediaQuery.sizeOf(context).width,
+                                  child: AlertNotification(),
+                                ),
+                              ),
+                            );
+
+                          },
+                            child: Icon(Icons.more_vert))
                       ],
                     ),
                   );
                 }),
               ),
-
             ],
           ),
         ),

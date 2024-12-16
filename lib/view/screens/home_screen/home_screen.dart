@@ -102,15 +102,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
               ///============ search ======================================
 
-              Card(
-                elevation: 1.55,
-                child: CustomTextField(
-                    hintText: AppStrings.searchEvent,
-                    suffixIcon: Icon(
-                      Icons.search,
-                      color: AppColors.black_60,
-                    )),
-              ),
+              CustomTextField(
+                  hintText: AppStrings.searchEvent,
+                  fillColor: AppColors.neutral02,
+                  suffixIcon: Icon(
+                    Icons.search,
+                    color: AppColors.black_60,
+                  )),
 
               SizedBox(
                 height: 12.h,
@@ -130,12 +128,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-
                           CustomText(
                             text: "Complete Event \n Details",
                             fontSize: 14.sp,
