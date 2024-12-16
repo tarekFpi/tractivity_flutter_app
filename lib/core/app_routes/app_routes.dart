@@ -13,6 +13,8 @@ import 'package:tractivity_app/view/screens/auth_screen/verification_mail_screen
 import 'package:tractivity_app/view/screens/auth_screen/verification_screen/verification_screen.dart';
 import 'package:tractivity_app/view/screens/friend_screen/friend_screen.dart';
 import 'package:tractivity_app/view/screens/auth_screen/signup_screen/signup_screen.dart';
+import 'package:tractivity_app/view/screens/home_screen/exolore_event_screen/event_member_details_screen/event_member_details_screen.dart';
+import 'package:tractivity_app/view/screens/home_screen/exolore_event_screen/exolore_event_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/home_screen.dart';
 import 'package:tractivity_app/view/screens/notification/notification_screen.dart';
 import 'package:tractivity_app/view/screens/onboarding_screen/onboarding_screen.dart';
@@ -57,6 +59,8 @@ class AppRoutes {
   static const String forgotPassword = "/ForgotPassword";
   static const String exploreEventScreen = "/ExploreEventScreen";
   static const String notificationScreen = "/NotificationScreen";
+  static const String exoloreEventScreen = "/ExoloreEventScreen";
+  static const String eventMemberDetailsScreen = "/EventMemberDetailsScreen";
 
 
 
@@ -91,6 +95,8 @@ class AppRoutes {
     GetPage(name: homeScreen, page: () => HomeScreen()),
     GetPage(name: exploreEventScreen, page: () => ExploreEventScreen()),
     GetPage(name: notificationScreen, page: () => NotificationScreen()),
+    GetPage(name: exoloreEventScreen, page: () => ExoloreEventScreen()),
+    GetPage(name: eventMemberDetailsScreen, page: () => EventMemberDetailsScreen()),
 
 
   ];

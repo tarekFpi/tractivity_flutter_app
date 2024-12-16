@@ -10,8 +10,12 @@ import 'package:tractivity_app/view/components/custom_netwrok_image/custom_netwo
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 
 
-class CustomContainerRow extends StatelessWidget {
-  CustomContainerRow({super.key});
+class CustomExploreContainer extends StatelessWidget {
+  final String? image;
+  final String? title;
+  final String? location;
+  final String? leaderName;
+  CustomExploreContainer({super.key, this.image, this.title, this.location, this.leaderName});
 
 
   @override
@@ -21,7 +25,7 @@ class CustomContainerRow extends StatelessWidget {
       child: Row(
         children: [
           CustomNetworkImage(
-            imageUrl: AppConstants.profileImage,
+            imageUrl: image!,
             height: 170.h,
             width: 170.h,
             borderRadius: BorderRadius.circular(10),
@@ -36,7 +40,7 @@ class CustomContainerRow extends StatelessWidget {
                 width: 150.w,
                 child: CustomText(
                   textAlign: TextAlign.start,
-                  text: "Cox’s Bazar Beach Helping Peolple",
+                  text: title!,
                   maxLines: 3,
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
@@ -52,7 +56,7 @@ class CustomContainerRow extends StatelessWidget {
                     size: 20,
                   ),
                   CustomText(
-                    text: "Dhaka, Bangladesh",
+                    text: location!,
                     fontSize: 12,
                     color: AppColors.black_80,
                     fontWeight: FontWeight.w400,
@@ -62,50 +66,24 @@ class CustomContainerRow extends StatelessWidget {
               SizedBox(
                 height: 5,
               ),
-              ///================= Time
+
+             ///================= Leader
               Row(
                 children: [
-                  Icon(
-                    Icons.access_time,
+                  CustomNetworkImage(imageUrl: AppConstants.profileImage, height: 30, width: 30, boxShape: BoxShape.circle,),
+                  CustomText(
+                    text: leaderName!,
+                    fontSize: 14,
                     color: AppColors.black,
-                    size: 20,
+                    fontWeight: FontWeight.w600,
+                    right: 10.w,
+                    left: 10.w,
                   ),
                   CustomText(
-                    text: "12/12/2024",
-                    fontSize: 12,
-                    color: AppColors.black_80,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Row(
-                children: [
-                  Row(
-                    children: List.generate(
-                      3,(index) {
-                        return Align(
-                          widthFactor: .8,
-                          child: CustomNetworkImage(
-                            imageUrl: AppConstants.profileImage,
-                            height: 30,
-                            width: 30,
-                            boxShape: BoxShape.circle,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  CustomText(
-                    text: "+30 people",
-                    fontSize: 12,
-                    color: AppColors.black_80,
-                    fontWeight: FontWeight.w400,
+                    text: "Leader",
+                    fontSize: 14,
+                    color: AppColors.blue,
+                    fontWeight: FontWeight.w600,
                   ),
                 ],
               ),
