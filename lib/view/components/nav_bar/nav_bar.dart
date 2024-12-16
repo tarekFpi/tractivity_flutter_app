@@ -7,15 +7,12 @@ import 'package:tractivity_app/view/screens/chat_screen/massage_list_screen.dart
 import 'package:tractivity_app/view/screens/create_team_screen/create_team_screen.dart';
 import 'package:tractivity_app/view/screens/friend_screen/friend_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/home_screen.dart';
-import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/events_profile_screen.dart';
 import '../../../utils/app_colors/app_colors.dart';
 import '../../../utils/app_icons/app_icons.dart';
 import '../../../utils/app_strings/app_strings.dart';
 import '../custom_text/custom_text.dart';
-
 class NavBar extends StatefulWidget {
   final int currentIndex;
-
   const NavBar({required this.currentIndex, super.key});
 
   @override
@@ -135,7 +132,6 @@ class _UserNavBarState extends State<NavBar> {
       switch (index) {
         case 0:
         Get.offAll(() => HomeScreen());
-        //  Get.offAll(() => EventsProfileScreen());
           break;
         case 1:
           Get.to(() => FriendScreen());
