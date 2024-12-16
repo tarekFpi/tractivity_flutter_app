@@ -11,9 +11,10 @@ import 'package:tractivity_app/view/components/custom_netwrok_image/custom_netwo
 import 'package:tractivity_app/view/components/custom_tab_selected/custom_tab_selected.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/events_controller/events_controller.dart';
+
+
 class CustomContainerRow extends StatelessWidget {
   CustomContainerRow({super.key});
-
 
 
   @override
@@ -89,8 +90,8 @@ class CustomContainerRow extends StatelessWidget {
                 children: [
                   Row(
                     children: List.generate(
-                      3,
-                          (index) {
+                      3,(index) {
+
                         return Align(
                           widthFactor: .8,
                           child: CustomNetworkImage(
