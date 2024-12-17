@@ -28,24 +28,23 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          key: _scaffoldKey,
-       drawer: HomeSideDrawer(),
+      key: _scaffoldKey,
+      drawer: HomeSideDrawer(),
       drawerScrimColor: Colors.black,
       appBar: CustomRoyelAppbar(
         titleName: "ServeOut",
         rightIcon: AppIcons.notification,
-        rightOnTap: (){
-         Get.toNamed(AppRoutes.notificationScreen);
+        rightOnTap: () {
+          Get.toNamed(AppRoutes.notificationScreen);
         },
       ),
       body: Padding(
-        padding: const EdgeInsets.only(top: 0,left: 12,right: 12),
+        padding: const EdgeInsets.only(top: 0, left: 12, right: 12),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -103,23 +102,24 @@ class _HomeScreenState extends State<HomeScreen> {
               ///============ search ======================================
 
               CustomTextField(
-                  hintText: AppStrings.searchEvent,
-                  fillColor: AppColors.neutral02,
-                  suffixIcon: Icon(
-                    Icons.search,
-                    color: AppColors.black_60,
-                  )),
-
+                hintText: AppStrings.searchEvent,
+                fillColor: AppColors.neutral02,
+                suffixIcon: Icon(
+                  Icons.search,
+                  color: AppColors.black_60,
+                ),
+              ),
               SizedBox(
                 height: 12.h,
               ),
-
               Container(
                 width: double.infinity,
                 height: 140,
                 decoration: BoxDecoration(
-                    color: Colors.blueAccent.withOpacity(0.2),
-                    border: Border.all(color: Colors.blueAccent,),
+                  color: Colors.blueAccent.withOpacity(0.2),
+                  border: Border.all(
+                    color: Colors.blueAccent,
+                  ),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Padding(
@@ -137,7 +137,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                           ),
-
                           CustomButton(
                             onTap: () {},
                             title: "Explore",
@@ -151,7 +150,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ],
                       ),
-
                       SvgPicture.asset(
                         AppIcons.icon1,
                         height: 100,
@@ -209,7 +207,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-
       bottomNavigationBar: NavBar(
         currentIndex: 0,
       ),
