@@ -159,6 +159,9 @@ class   AppStrings {
 
   static const String explore = "Explore";
   static const String events = "Events";
+  static const String organizer = "Organizer";
+  static const String create = "Create";
+  static const String delivery = "Delivery";
   static const String volunteer = "Volunteer";
   static const String address = "Address";
   //static const String profileSetting = "ProfileSetting";
@@ -166,6 +169,8 @@ class   AppStrings {
   //static const String setting = "Setting";
   static const String seeAllFriends = "See All Friends List";
   static const String inviteFriends = "Invite Friends";
+  static const String inviteMission = "Invite Mission";
+  static const String eventList = "Event List";
   static const String request = "Request";
   //static const String searchForSomeone = "Search For Someone";
   static const String createTeam = "Create Team";
@@ -175,6 +180,10 @@ class   AppStrings {
   //static const String done = "Done";
   static const String allMember = "All Member";
   static const String history = "History";
+  static const String exploreEvent = "Explore Event";
+  static const String completeEvent = "Complete Events";
+  static const String recentEvents = "Recent Events";
+
 
 
 

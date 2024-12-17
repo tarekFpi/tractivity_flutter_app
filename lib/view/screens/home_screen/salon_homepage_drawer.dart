@@ -51,11 +51,31 @@ class HomeSideDrawer extends StatelessWidget {
                           Navigator.pop(context);
                         //  Get.toNamed(AppRoutes.salonProfileScreen);
                         }),
-
-
-
-
-                    ///====================== settings ======================>
+                    ///====================== Volunteer ======================>
+                    customRow(
+                        title: "Volunteer",
+                        icon: Icons.settings,
+                        onTap: () {
+                          Navigator.pop(context);
+                          Get.toNamed(AppRoutes.homeScreen);
+                        }),
+                    ///====================== Organizer ======================>
+                    customRow(
+                        title: "Organizer",
+                        icon: Icons.settings,
+                        onTap: () {
+                          Navigator.pop(context);
+                          Get.toNamed(AppRoutes.organizerHomeScreen);
+                        }),
+                    ///====================== Administrator ======================>
+                    customRow(
+                        title: "Administrator",
+                        icon: Icons.settings,
+                        onTap: () {
+                          Navigator.pop(context);
+                          Get.toNamed(AppRoutes.adminstratorHomeScreen);
+                        }),
+                   /* ///====================== settings ======================>
                     customRow(
                         title: "settings",
                         icon: Icons.settings,
@@ -112,7 +132,7 @@ class HomeSideDrawer extends StatelessWidget {
                         onTap: () {
                           Navigator.pop(context);
                           Get.offNamed(AppRoutes.loginScreen);
-                        }),
+                        }),*/
                   ],
                 ),
               ),

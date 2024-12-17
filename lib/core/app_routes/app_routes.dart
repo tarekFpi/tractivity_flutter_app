@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:get/get.dart';
+import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrator_home_screen.dart';
 import 'package:tractivity_app/view/screens/chat_screen/chat_screen.dart';
 import 'package:tractivity_app/view/screens/chat_screen/inner_widget/message_screen.dart';
 import 'package:tractivity_app/view/screens/chat_screen/massage_list_screen.dart';
@@ -13,9 +14,13 @@ import 'package:tractivity_app/view/screens/auth_screen/verification_mail_screen
 import 'package:tractivity_app/view/screens/auth_screen/verification_screen/verification_screen.dart';
 import 'package:tractivity_app/view/screens/friend_screen/friend_screen.dart';
 import 'package:tractivity_app/view/screens/auth_screen/signup_screen/signup_screen.dart';
+import 'package:tractivity_app/view/screens/home_screen/exolore_event_screen/event_member_details_screen/event_member_details_screen.dart';
+import 'package:tractivity_app/view/screens/home_screen/exolore_event_screen/exolore_event_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/home_screen.dart';
 import 'package:tractivity_app/view/screens/notification/notification_screen.dart';
 import 'package:tractivity_app/view/screens/onboarding_screen/onboarding_screen.dart';
+import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_home_screen.dart';
+import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_invite_mission_screen/organizer_invite_mission_screen.dart';
 import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/events_profile_screen.dart';
 import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/explore_event_screen.dart';
 
@@ -57,6 +62,11 @@ class AppRoutes {
   static const String forgotPassword = "/ForgotPassword";
   static const String exploreEventScreen = "/ExploreEventScreen";
   static const String notificationScreen = "/NotificationScreen";
+  static const String exoloreEventScreen = "/ExoloreEventScreen";
+  static const String eventMemberDetailsScreen = "/EventMemberDetailsScreen";
+  static const String organizerHomeScreen = "/OrganizerHomeScreen";
+  static const String organizerInviteMissionScreen = "/OrganizerInviteMissionScreen";
+  static const String adminstratorHomeScreen = "/AdminstratorHomeScreen";
 
 
 
@@ -91,6 +101,11 @@ class AppRoutes {
     GetPage(name: homeScreen, page: () => HomeScreen()),
     GetPage(name: exploreEventScreen, page: () => ExploreEventScreen()),
     GetPage(name: notificationScreen, page: () => NotificationScreen()),
+    GetPage(name: exoloreEventScreen, page: () => ExoloreEventScreen()),
+    GetPage(name: eventMemberDetailsScreen, page: () => EventMemberDetailsScreen()),
+    GetPage(name: organizerHomeScreen, page: () => OrganizerHomeScreen()),
+    GetPage(name: organizerInviteMissionScreen, page: () => OrganizerInviteMissionScreen()),
+    GetPage(name: adminstratorHomeScreen, page: () => AdminstratorHomeScreen()),
 
 
   ];

@@ -1,5 +1,4 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -8,9 +7,7 @@ import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
 import 'package:tractivity_app/view/components/custom_netwrok_image/custom_network_image.dart';
-import 'package:tractivity_app/view/components/custom_tab_selected/custom_tab_selected.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
-import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/events_controller/events_controller.dart';
 
 
 class CustomContainerRow extends StatelessWidget {
@@ -46,7 +43,6 @@ class CustomContainerRow extends StatelessWidget {
                   bottom: 5,
                 ),
               ),
-
               ///================= Location
               Row(
                 children: [
@@ -66,7 +62,6 @@ class CustomContainerRow extends StatelessWidget {
               SizedBox(
                 height: 5,
               ),
-
               ///================= Time
               Row(
                 children: [
@@ -91,7 +86,6 @@ class CustomContainerRow extends StatelessWidget {
                   Row(
                     children: List.generate(
                       3,(index) {
-
                         return Align(
                           widthFactor: .8,
                           child: CustomNetworkImage(
@@ -120,7 +114,6 @@ class CustomContainerRow extends StatelessWidget {
               ),
               InkWell(
                 onTap: (){
-
                   Get.toNamed(AppRoutes.exploreEventScreen);
                 },
                 child: Container(
