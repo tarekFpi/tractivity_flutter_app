@@ -59,16 +59,6 @@ class _HomeScreenState extends State<HomeScreen> {
           }, icon: Icon(Icons.notifications_active_outlined,color: AppColors.black,),)
         ],
       ),
-
-      /*CustomRoyelAppbar(
-        leftIcon: CustomImage(imageSrc: AppIcons.menu),
-       // leftIcon: true,
-        titleName: "ServeOut",
-        rightIcon: AppIcons.notification,
-        rightOnTap: (){
-         Get.toNamed(AppRoutes.notificationScreen);
-        },
-      ),*/
       body: Padding(
         padding: const EdgeInsets.only(top: 0, left: 12, right: 12),
         child: SingleChildScrollView(
