@@ -7,6 +7,7 @@ import 'package:tractivity_app/view/screens/chat_screen/massage_list_screen.dart
 import 'package:tractivity_app/view/screens/create_team_screen/create_team_screen.dart';
 import 'package:tractivity_app/view/screens/friend_screen/friend_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/home_screen.dart';
+import 'package:tractivity_app/view/screens/home_screen/join_event_screen/join_event_screen.dart';
 import '../../../utils/app_colors/app_colors.dart';
 import '../../../utils/app_icons/app_icons.dart';
 import '../../../utils/app_strings/app_strings.dart';
@@ -140,7 +141,7 @@ class _UserNavBarState extends State<NavBar> {
           Get.to(() => MassageListScreen());
           break;
         case 3:
-          Get.to(() => CreateTeamScreen());
+          Get.to(() => JoinEventScreen());
           break;
       }
     }

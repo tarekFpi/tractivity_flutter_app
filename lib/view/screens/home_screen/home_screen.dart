@@ -18,6 +18,7 @@ import 'package:tractivity_app/view/components/custom_tab_selected/custom_tab_se
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:tractivity_app/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tractivity_app/view/components/nav_bar/nav_bar.dart';
+import 'package:tractivity_app/view/screens/home_screen/exolore_event_screen/inner_widget/custom_explore_container.dart';
 import 'package:tractivity_app/view/screens/home_screen/salon_homepage_drawer.dart';
 import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/inner_widget/custom_container_row.dart';
 
@@ -153,19 +154,37 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                           ),
-                          CustomButton(
-                            onTap: () {
-                              Get.toNamed(AppRoutes.exoloreEventScreen);
-                            },
-                            title: "Explore",
-                            width: 90.w,
-                            height: 32.h,
-                            textColor: AppColors.black,
-                            fillColor: AppColors.white,
-                            isBorder: true,
-                            fontSize: 14,
-                            borderWidth: .5,
-                          ),
+                         Row(
+                           children: [
+                             CustomButton(
+                               onTap: () {
+                                 Get.toNamed(AppRoutes.exoloreEventScreen);
+                               },
+                               title: "Explore",
+                               width: 90.w,
+                               height: 32.h,
+                               textColor: AppColors.black,
+                               fillColor: AppColors.white,
+                               isBorder: true,
+                               fontSize: 14,
+                               borderWidth: .5,
+                             ),
+                             SizedBox(width: 8.h,),
+                             CustomButton(
+                               onTap: () {
+                                 Get.toNamed(AppRoutes.exoloreEventScreen);
+                               },
+                               title: "Donation",
+                               width: 90.w,
+                               height: 32.h,
+                               textColor: AppColors.black,
+                               fillColor: AppColors.white,
+                               isBorder: true,
+                               fontSize: 14,
+                               borderWidth: .5,
+                             ),
+                           ],
+                         )
                         ],
                       ),
                       SvgPicture.asset(
@@ -192,11 +211,17 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
 
               Column(
-                  children: List.generate(2, (index) {
-                return CustomContainerRow();
-              })),
+                  children: List.generate(1, (index) {
+                    return CustomExploreContainer(
+                      image: AppConstants.profileImage,
+                      title: "Cox’s Bazar Beach Helping Peolple",
+                      location: "Cox’s Bazar, Bangladesh",
+                      leaderName: "Mehedi",
+                    );
+                  })
+              ),
 
-              Row(
+              /*Row(
                 children: [
                   CustomText(
                     text: "Complete Event",
@@ -220,7 +245,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Column(
                   children: List.generate(2, (index) {
                 return CustomContainerRow();
-              })),
+              })),*/
             ],
           ),
         ),
