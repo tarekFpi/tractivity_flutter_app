@@ -1,4 +1,5 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -9,14 +10,21 @@ import 'package:tractivity_app/utils/app_strings/app_strings.dart';
 import 'package:tractivity_app/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 
-
 class CustomExploreContainer extends StatelessWidget {
   final String? image;
   final String? title;
   final String? location;
   final String? leaderName;
-  CustomExploreContainer({super.key, this.image, this.title, this.location, this.leaderName});
+  final bool? showDeliveryButtton;
 
+  CustomExploreContainer({
+    super.key,
+    this.image,
+    this.title,
+    this.location,
+    this.leaderName,
+    this.showDeliveryButtton = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +55,7 @@ class CustomExploreContainer extends StatelessWidget {
                   bottom: 5,
                 ),
               ),
-              ///================= Location
+              // Location
               Row(
                 children: [
                   Icon(
@@ -66,11 +74,15 @@ class CustomExploreContainer extends StatelessWidget {
               SizedBox(
                 height: 5,
               ),
-
-             ///================= Leader
+              // Leader
               Row(
                 children: [
-                  CustomNetworkImage(imageUrl: AppConstants.profileImage, height: 30, width: 30, boxShape: BoxShape.circle,),
+                  CustomNetworkImage(
+                    imageUrl: AppConstants.profileImage,
+                    height: 30,
+                    width: 30,
+                    boxShape: BoxShape.circle,
+                  ),
                   CustomText(
                     text: leaderName!,
                     fontSize: 14,
@@ -90,19 +102,51 @@ class CustomExploreContainer extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              InkWell(
-                onTap: (){
-                  Get.toNamed(AppRoutes.exploreEventScreen);
-                },
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20,vertical: 8),
-                  decoration: BoxDecoration(
-                    color: AppColors.primary,
-                    borderRadius: BorderRadius.circular(10),
-                  ),child: CustomText(text: AppStrings.explore, fontSize: 14,fontWeight: FontWeight.w500,color: AppColors.black,),
-                ),
-              )
-
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Get.toNamed(AppRoutes.exploreEventScreen);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: AppColors.primary,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: CustomText(
+                        text: AppStrings.explore,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.black,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 5.w),
+                  if (showDeliveryButtton!)
+                    InkWell(
+                      onTap: () {
+                        Get.toNamed(AppRoutes.exploreEventScreen);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: AppColors.primary,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: CustomText(
+                          text: AppStrings.delivery,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.black,
+                        ),
+                      ),
+                    )
+                  else
+                    SizedBox(),
+                ],
+              ),
             ],
           )
         ],
