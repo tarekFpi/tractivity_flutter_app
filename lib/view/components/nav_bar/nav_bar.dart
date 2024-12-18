@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:tractivity_app/view/screens/chat_screen/massage_list_screen.dart';
 import 'package:tractivity_app/view/screens/create_team_screen/create_team_screen.dart';
 import 'package:tractivity_app/view/screens/friend_screen/friend_screen.dart';
+import 'package:tractivity_app/view/screens/home_screen/exolore_event_screen/exolore_event_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/home_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/join_event_screen/join_event_screen.dart';
 import '../../../utils/app_colors/app_colors.dart';

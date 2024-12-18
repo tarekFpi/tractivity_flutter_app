@@ -20,9 +20,17 @@ class   AppStrings {
   static const String enterYourName = "Enter  profession";
   static const String enterYourLocation = "Enter Your Location";
   static const String enterYourEmail = "Enter Your Email";
+  static const String enterCountry = "Enter Country";
+  static const String enterDay = "MM / YY";
+  static const String enterFristName = "Enter Frist Name";
+  static const String enterLastName = "Enter Last Name";
+  static const String enterState = "Enter State";
+  static const String enterSecurity = "Security Code";
   static const String password = "Password";
   static const String newPassword = "New Password";
   static const String enterYourPassword = "Enter Your Password";
+  static const String enterSummary = "Enter Your Summary";
+  static const String enterNumber = "1234 1234 1234 1234";
   static const String rememberMe = "Remember me";
   static const String forgotPassword = "Forgot Password?";
   static const String signin = "Sign In!";
@@ -84,7 +92,7 @@ class   AppStrings {
   static const String friend = "Friend";
   static const String messages = "Messages";
   static const String profile = "Profile";
-  static const String team = "Team";
+  static const String team = "Join Event";
   ///===================================================
   static const String letsGo = "LET’S GO";
   static const String serveOut = "ServeOut";
@@ -136,6 +144,14 @@ class   AppStrings {
   static const String howMany = "How Many?";
   static const String location = "Location";
   static const String email = "Email";
+  static const String summary = "Summary";
+  static const String card = "Card number";
+  static const String firstName = "First Name";
+  static const String country = "Country";
+  static const String expiration = "Expiration date ";
+  static const String state = "State";
+  static const String security = "Security code";
+  static const String lastName = "Last Name";
   static const String iconImage = "ICON/ IMAGE";
   static const String time = "Time";
   static const String openInvite = "Open/ Invite Only";
@@ -181,6 +197,7 @@ class   AppStrings {
   static const String allMember = "All Member";
   static const String history = "History";
   static const String exploreEvent = "Explore Event";
+  static const String donation = "Donation";
   static const String completeEvent = "Complete Events";
   static const String recentEvents = "Recent Events";
   static const String inviteEvent = "Invite Event";

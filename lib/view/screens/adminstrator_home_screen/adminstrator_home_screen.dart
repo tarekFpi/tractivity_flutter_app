@@ -8,7 +8,7 @@ import 'package:tractivity_app/view/components/custom_netwrok_image/custom_netwo
 import 'package:tractivity_app/view/components/custom_tab_selected/custom_tab_single_text.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:tractivity_app/view/components/nav_bar/adminstrator_navbar.dart';
-import 'package:tractivity_app/view/screens/home_screen/salon_homepage_drawer.dart';
+import 'package:tractivity_app/view/screens/home_screen/homepage_drawer.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_controller/organizer_controller.dart';
 class AdminstratorHomeScreen extends StatefulWidget {
   const AdminstratorHomeScreen({super.key});
