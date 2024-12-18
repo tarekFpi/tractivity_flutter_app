@@ -231,7 +231,7 @@ class _ExploreEventScreenState extends State<ExploreEventScreen> {
                 children: [
                   CustomButton(
                     onTap: () {
-                      Get.toNamed(AppRoutes.eventMemberDetailsScreen);
+                      Get.toNamed(AppRoutes.userEventProfile);
                     },
                     title: "Details",
                     width: 80.w,
