@@ -12,7 +12,7 @@ import 'package:tractivity_app/view/components/custom_tab_selected/custom_tab_si
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:tractivity_app/view/components/nav_bar/organizer_navbar.dart';
 import 'package:tractivity_app/view/screens/home_screen/exolore_event_screen/inner_widget/custom_explore_container.dart';
-import 'package:tractivity_app/view/screens/home_screen/salon_homepage_drawer.dart';
+import 'package:tractivity_app/view/screens/home_screen/homepage_drawer.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_controller/organizer_controller.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_invite_mission_screen/%20inner_widget/custom_invite_mission_container.dart';
 

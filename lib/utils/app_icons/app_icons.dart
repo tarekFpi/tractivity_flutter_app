@@ -22,6 +22,7 @@ class AppIcons {
   static const String dowanload = "$basePath/dowanload.svg";
   static const String clipboardList = "$basePath/clipboardList.svg";
   static const String userAdd = "$basePath/userAdd.svg";
+  static const String cardImage = "$basePath/card.svg";
 
 
 

@@ -43,7 +43,7 @@ class CustomContainerRow extends StatelessWidget {
                   bottom: 5,
                 ),
               ),
-              ///================= Location
+              ///================= Location ==============
               Row(
                 children: [
                   Icon(
@@ -59,10 +59,12 @@ class CustomContainerRow extends StatelessWidget {
                   ),
                 ],
               ),
+
               SizedBox(
                 height: 5,
               ),
-              ///================= Time
+
+              ///================= Time ================
               Row(
                 children: [
                   Icon(
