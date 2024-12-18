@@ -17,7 +17,7 @@ import 'package:tractivity_app/view/components/custom_tab_selected/custom_tab_se
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:tractivity_app/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tractivity_app/view/components/nav_bar/nav_bar.dart';
-import 'package:tractivity_app/view/screens/home_screen/salon_homepage_drawer.dart';
+import 'package:tractivity_app/view/screens/home_screen/homepage_drawer.dart';
 import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/inner_widget/custom_container_row.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -28,20 +28,36 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
-      drawer: HomeSideDrawer(),
-      drawerScrimColor: Colors.black,
-      appBar: CustomRoyelAppbar(
-        titleName: "ServeOut",
-        rightIcon: AppIcons.notification,
-        rightOnTap: () {
-          Get.toNamed(AppRoutes.notificationScreen);
-        },
+          key: _scaffoldKey,
+       drawer: HomeSideDrawer(),
+     // drawerScrimColor: Colors.black,
+      appBar:  AppBar(
+        leading: Builder(builder: (context) {
+          return IconButton(
+              onPressed: () => Scaffold.of(context).openDrawer(),
+              icon: Icon(
+                Icons.menu,
+                color: AppColors.primary,
+              ));
+        }),
+        title: Text(
+          "ServeOut",
+          style: TextStyle(
+              color: AppColors.black,
+              fontSize: 30,
+              fontWeight: FontWeight.w600),
+        ),
+        actions: [
+          IconButton(onPressed: (){
+            Get.toNamed(AppRoutes.notificationScreen);
+          }, icon: Icon(Icons.notifications_active_outlined,color: AppColors.black,),)
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 0, left: 12, right: 12),
@@ -50,7 +66,6 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               SizedBox(
                 height: 12.h,
               ),
@@ -102,16 +117,17 @@ class _HomeScreenState extends State<HomeScreen> {
               ///============ search ======================================
 
               CustomTextField(
-                hintText: AppStrings.searchEvent,
-                fillColor: AppColors.neutral02,
-                suffixIcon: Icon(
-                  Icons.search,
-                  color: AppColors.black_60,
-                ),
-              ),
+                  hintText: AppStrings.searchEvent,
+                  fillColor: AppColors.neutral02,
+                  suffixIcon: Icon(
+                    Icons.search,
+                    color: AppColors.black_60,
+                  )),
+
               SizedBox(
                 height: 12.h,
               ),
+
               Container(
                 width: double.infinity,
                 height: 140,
@@ -132,13 +148,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+
                           CustomText(
                             text: "Complete Event \n Details",
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
+                            color: AppColors.blue,
                           ),
+
+                      Row(
+                        children: [
                           CustomButton(
-                            onTap: () {},
+                            onTap: () {
+                              Get.toNamed(AppRoutes.exoloreEventScreen);
+                            },
                             title: "Explore",
                             width: 90.w,
                             height: 32.h,
@@ -148,6 +171,26 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontSize: 14,
                             borderWidth: .5,
                           ),
+
+                          SizedBox(
+                            width: 8,
+                          ),
+                          CustomButton(
+                            onTap: () {
+
+                              Get.toNamed(AppRoutes.donationScreen);
+                            },
+                            title: "Donation",
+                            width: 90.w,
+                            height: 32.h,
+                            textColor: AppColors.black,
+                            fillColor: AppColors.white,
+                            isBorder: true,
+                            fontSize: 14,
+                            borderWidth: .5,
+                          ),
+                        ],
+                      )
                         ],
                       ),
                       SvgPicture.asset(
@@ -207,6 +250,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+
       bottomNavigationBar: NavBar(
         currentIndex: 0,
       ),

@@ -3,44 +3,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:tractivity_app/view/screens/chat_screen/massage_list_screen.dart';
-import 'package:tractivity_app/view/screens/create_team_screen/create_team_screen.dart';
 import 'package:tractivity_app/view/screens/friend_screen/friend_screen.dart';
-import 'package:tractivity_app/view/screens/home_screen/exolore_event_screen/exolore_event_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/home_screen.dart';
+import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_home_screen.dart';
+import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_invite_mission_screen/organizer_invite_mission_screen.dart';
 import '../../../utils/app_colors/app_colors.dart';
 import '../../../utils/app_icons/app_icons.dart';
 import '../../../utils/app_strings/app_strings.dart';
 import '../custom_text/custom_text.dart';
-class NavBar extends StatefulWidget {
+class OrganizerNavbar extends StatefulWidget {
   final int currentIndex;
-  const NavBar({required this.currentIndex, super.key});
+  const OrganizerNavbar({required this.currentIndex, super.key});
 
   @override
-  State<NavBar> createState() => _UserNavBarState();
+  State<OrganizerNavbar> createState() => _UserNavBarState();
 }
 
-class _UserNavBarState extends State<NavBar> {
+class _UserNavBarState extends State<OrganizerNavbar> {
   late int bottomNavIndex;
 
   final List<String> selectedIcon = [
     AppIcons.home,
-    AppIcons.users,
-    AppIcons.mail,
-    AppIcons.pencilalt,
+    AppIcons.userAdd,
+
   ];
   final List<String> unselectedIcon = [
     AppIcons.home,
-    AppIcons.users,
-    AppIcons.mail,
-    AppIcons.pencilalt,
+    AppIcons.userAdd,
+
   ];
 
   final List<String> userNavText = [
     AppStrings.home,
-    AppStrings.friend,
-    AppStrings.messages,
-    AppStrings.team,
+    AppStrings.organizer,
+
   ];
 
   @override
@@ -65,7 +61,7 @@ class _UserNavBarState extends State<NavBar> {
       alignment: Alignment.center,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: List.generate(
           selectedIcon.length,
               (index) => InkWell(
@@ -91,7 +87,7 @@ class _UserNavBarState extends State<NavBar> {
                       color: AppColors.primary,
                       borderRadius: BorderRadius.only(
                           topLeft:Radius.circular(50),
-                        topRight: Radius.circular(50)
+                          topRight: Radius.circular(50)
                       ),
                     ),
                     child: Padding(
@@ -132,17 +128,17 @@ class _UserNavBarState extends State<NavBar> {
     if (index != bottomNavIndex) {
       switch (index) {
         case 0:
-        Get.offAll(() => HomeScreen());
+          Get.offAll(() => OrganizerHomeScreen());
           break;
         case 1:
-          Get.to(() => FriendScreen());
+          Get.to(() => OrganizerInviteMissionScreen());
           break;
-        case 2:
+     /*   case 2:
           Get.to(() => MassageListScreen());
           break;
         case 3:
-          Get.to(() => ExoloreEventScreen());
-          break;
+          Get.to(() => CreateTeamScreen());
+          break;*/
       }
     }
   }
