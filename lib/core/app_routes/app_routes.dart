@@ -18,6 +18,8 @@ import 'package:tractivity_app/view/screens/home_screen/donation_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/exolore_event_screen/event_member_details_screen/event_member_details_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/exolore_event_screen/exolore_event_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/home_screen.dart';
+import 'package:tractivity_app/view/screens/home_screen/join_event_screen/join_event_screen.dart';
+import 'package:tractivity_app/view/screens/home_screen/user_event_profile/user_event_profile.dart';
 import 'package:tractivity_app/view/screens/notification/notification_screen.dart';
 import 'package:tractivity_app/view/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_home_screen.dart';
@@ -69,6 +71,8 @@ class AppRoutes {
   static const String organizerHomeScreen = "/OrganizerHomeScreen";
   static const String organizerInviteMissionScreen = "/OrganizerInviteMissionScreen";
   static const String adminstratorHomeScreen = "/AdminstratorHomeScreen";
+  static const String userEventProfile = "/UserEventProfile";
+  static const String joinEventScreen = "/JoinEventScreen";
 
 
 
@@ -108,7 +112,10 @@ class AppRoutes {
     GetPage(name: organizerHomeScreen, page: () => OrganizerHomeScreen()),
     GetPage(name: organizerInviteMissionScreen, page: () => OrganizerInviteMissionScreen()),
     GetPage(name: adminstratorHomeScreen, page: () => AdminstratorHomeScreen()),
+
     GetPage(name: donationScreen, page: () => DonationScreen()),
+    GetPage(name: userEventProfile, page: () => UserEventProfile()),
+    GetPage(name: joinEventScreen, page: () => JoinEventScreen()),
 
 
   ];

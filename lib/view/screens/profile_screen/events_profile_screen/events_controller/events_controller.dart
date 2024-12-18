@@ -6,7 +6,10 @@ class EventsController extends GetxController{
   RxList<String> nameList = [
     AppStrings.events,
     AppStrings.profile,
-
+  ].obs;
+  RxList<String> joinEvenNameList = [
+    AppStrings.inviteEvent,
+    AppStrings.eventListText,
   ].obs;
 
 

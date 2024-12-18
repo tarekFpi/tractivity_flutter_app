@@ -9,8 +9,9 @@ class CustomFriendsList extends StatelessWidget {
   final String? name;
   final String? userName;
   final String? reversText;
-  final Function()? onTap;
-  const CustomFriendsList({super.key,required this.image, this.name, this.userName, this.onTap, this.reversText});
+  //final Function()? onTap;
+  final Function()? nameOnTap;
+  const CustomFriendsList({super.key,required this.image, this.name, this.userName,this.reversText, this.nameOnTap});
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +21,7 @@ class CustomFriendsList extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           GestureDetector(
-            onTap: (){
-              //Get.toNamed(AppRoutes.friendProfileScreen);
-            },
+            onTap: nameOnTap,
             child: Row(
               children: [
                 CustomNetworkImage(

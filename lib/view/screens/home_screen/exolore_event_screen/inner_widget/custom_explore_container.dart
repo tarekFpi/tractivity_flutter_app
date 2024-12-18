@@ -16,6 +16,8 @@ class CustomExploreContainer extends StatelessWidget {
   final String? location;
   final String? leaderName;
   final bool? showDeliveryButtton;
+  final String? btnOne;
+  final String? btnTwo;
 
   CustomExploreContainer({
     super.key,
@@ -23,7 +25,7 @@ class CustomExploreContainer extends StatelessWidget {
     this.title,
     this.location,
     this.leaderName,
-    this.showDeliveryButtton = false,
+    this.showDeliveryButtton = false, this.btnOne, this.btnTwo,
   });
 
   @override
@@ -116,7 +118,7 @@ class CustomExploreContainer extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: CustomText(
-                        text: AppStrings.explore,
+                        text: btnOne?? "Explore",
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: AppColors.black,
@@ -136,7 +138,7 @@ class CustomExploreContainer extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: CustomText(
-                          text: AppStrings.delivery,
+                          text:btnTwo ?? AppStrings.delivery,
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                           color: AppColors.black,

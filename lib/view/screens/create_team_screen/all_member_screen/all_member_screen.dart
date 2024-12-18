@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
@@ -31,6 +33,9 @@ class AllMemberScreen extends StatelessWidget {
               Column(
                   children: List.generate(6, (index) {
                     return CustomFriendsList(
+                      nameOnTap: (){
+                        Get.toNamed(AppRoutes.eventsProfileScreen);
+                      },
                       image: AppConstants.profileImage,
                       name: "Mehedi Hassan",
                       userName: "@mehedi",
