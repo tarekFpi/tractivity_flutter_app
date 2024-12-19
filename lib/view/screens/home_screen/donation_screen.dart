@@ -142,12 +142,18 @@ class _DonationScreenState extends State<DonationScreen> {
               ),
 
               ///============ Card number  ============
-              CustomFormCard(
+       /*       CustomFormCard(
                   title: AppStrings.card,
                   hintText: AppStrings.enterNumber,
                   hasBackgroundColor: true,
-                  controller: TextEditingController()),
+                  controller: TextEditingController()),*/
 
+              CustomText(
+                text: AppStrings.card,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                bottom: 8,
+              ),
               const SizedBox(
                 height: 8,
               ),
@@ -166,13 +172,17 @@ class _DonationScreenState extends State<DonationScreen> {
                       Flexible(
                         child: CustomTextField(
                           fillColor: AppColors.white,
-                          hintText: "tarek",
+                          hintText: "1234 1234 1234 1234",
                         ),
                       ),
                       CustomImage(imageSrc: AppIcons.cardImage)
                     ],
                   ),
                 ),
+              ),
+
+              const SizedBox(
+                height: 8,
               ),
               Row(
                 children: [
