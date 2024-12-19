@@ -2,11 +2,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/view/components/custom_button/custom_button.dart';
 import 'package:tractivity_app/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
+import 'package:tractivity_app/view/screens/adminstrator_home_screen/alert_dialog_event.dart';
 class CustomInviteMissionContainer extends StatelessWidget {
   const CustomInviteMissionContainer({super.key});
 
@@ -78,9 +82,29 @@ class CustomInviteMissionContainer extends StatelessWidget {
                   fontWeight: FontWeight.w400,
                   bottom: 8.h,
                 ),
-                CustomButton(onTap: (){}, title: "Approved",height: 30,width: 70,fontSize: 12,),
+                CustomButton(onTap: (){
+                  //OrganizerApprovedScreen
+
+                  Get.toNamed(AppRoutes.organizerApprovedScreen);
+
+                }, title: "Approved",height: 30,width: 70,fontSize: 12,),
                 SizedBox(height: 10.h,),
-                CustomButton(onTap: (){}, title: "Delete",height: 30,width: 70,fontSize: 12,),
+                CustomButton(onTap: (){
+                  showDialog(
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                      backgroundColor: Colors.white,
+                      insetPadding: EdgeInsets.all(8),
+                      contentPadding: EdgeInsets.all(8),
+                      title: SizedBox(),
+                      content: SizedBox(
+                        width: MediaQuery.sizeOf(context).width,
+                        child: AlertDialogEvent(title: "Are you sure you want to \n delete ?",discription: "",),
+                      ),
+                    ),
+                  );
+
+                }, title: "Delete",height: 30,width: 70,fontSize: 12,),
               ],
             )
 

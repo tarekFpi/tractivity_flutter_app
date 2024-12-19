@@ -134,7 +134,7 @@ class _DonationScreenState extends State<DonationScreen> {
                   controller: TextEditingController()),
 
               ///============ Recurring Monthly Gift  ============
-              CustomText(
+              const CustomText(
                 text: "Recurring Monthly Gift",
                 fontSize: 18,
                 fontWeight: FontWeight.w600,

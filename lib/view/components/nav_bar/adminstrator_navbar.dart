@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:tractivity_app/view/screens/adminstrator_home_screen/administratior_create.dart';
+import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrator_home_screen.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_home_screen.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_invite_mission_screen/organizer_invite_mission_screen.dart';
 import '../../../utils/app_colors/app_colors.dart';
@@ -18,6 +20,7 @@ class AdminstratorNavbar extends StatefulWidget {
 }
 
 class _UserNavBarState extends State<AdminstratorNavbar> {
+
   late int bottomNavIndex;
 
   final List<String> selectedIcon = [
@@ -126,10 +129,10 @@ class _UserNavBarState extends State<AdminstratorNavbar> {
     if (index != bottomNavIndex) {
       switch (index) {
         case 0:
-          Get.offAll(() => OrganizerHomeScreen());
+          Get.offAll(() => AdminstratorHomeScreen());
           break;
         case 1:
-          Get.to(() => OrganizerInviteMissionScreen());
+          Get.to(() => AdministratiorCreateScreen());
           break;
       /*   case 2:
           Get.to(() => MassageListScreen());

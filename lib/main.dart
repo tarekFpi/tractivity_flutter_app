@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/core/dependency/dependency_injection.dart';
 import 'utils/app_colors/app_colors.dart';
@@ -20,6 +21,8 @@ void main() async{
       systemNavigationBarColor: Colors.white,
       systemNavigationBarIconBrightness: Brightness.dark
   ));
+
+  await GetStorage.init();
 
   runApp(const MyApp());
 
@@ -64,7 +67,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         defaultTransition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 200),
-        initialRoute: AppRoutes.homeScreen,
+        initialRoute: AppRoutes.splashScreen,
         navigatorKey: Get.key,
         getPages: AppRoutes.routes,
       ),

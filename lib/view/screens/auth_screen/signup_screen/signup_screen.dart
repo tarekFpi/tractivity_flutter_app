@@ -93,76 +93,85 @@ class _SignupScreenState extends State<SignupScreen> {
                 height: 12.h,
               ),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Radio(
-                        value: "Volunteer",
-                        fillColor:
-                        MaterialStateColor.resolveWith((states) => AppColors.primary),
-                        groupValue: checkValueStatues,
-                        onChanged: (String? value) {
-                          setState(() {
-                            checkValueStatues = value!;
-                          });
-                        },
-                      ),
-                      CustomText(
-                        text: "Volunteer",
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Radio(
-                        value: "Organizer",
-                        groupValue: checkValueStatues,
-                        fillColor:
-                        MaterialStateColor.resolveWith((states) => AppColors.primary),
-                        onChanged: (value) {
-                          setState(() {
-                            checkValueStatues = value!;
-                          });
-                        },
-                      ),
-                      CustomText(
-                        text: "Organizer",
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Radio(
-                        value: "Administrator",
-                        groupValue: checkValueStatues,
-                        fillColor:
-                        MaterialStateColor.resolveWith((states) => AppColors.primary),
-                        onChanged: (value) {
-                          setState(() {
-                            checkValueStatues = value!;
-                          });
-                        },
-                      ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
 
-                      CustomText(
-                        text: "Administrator",
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ],
-                  ),
-                ],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Radio(
+                          value: "Volunteer",
+                          fillColor:
+                          MaterialStateColor.resolveWith((states) => AppColors.primary),
+                          groupValue: checkValueStatues,
+                          onChanged: (String? value) {
+                            setState(() {
+                              checkValueStatues = value!;
+                            });
+                          },
+                        ),
+                        CustomText(
+                          text: "Volunteer",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ],
+                    ),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Radio(
+                          value: "Organizer",
+                          groupValue: checkValueStatues,
+                          fillColor:
+                          MaterialStateColor.resolveWith((states) => AppColors.primary),
+                          onChanged: (value) {
+                            setState(() {
+                              checkValueStatues = value!;
+                            });
+                          },
+                        ),
+                        CustomText(
+                          text: "Organizer",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ],
+                    ),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+
+                        Radio(
+                          value: "Administrator",
+                          groupValue: checkValueStatues,
+                          fillColor:
+                          MaterialStateColor.resolveWith((states) => AppColors.primary),
+                          onChanged: (value) {
+                            setState(() {
+                              checkValueStatues = value!;
+                            });
+                          },
+                        ),
+
+                        CustomText(
+                          text: "Administrator",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
 
+              SizedBox(
+                height: 12.h,
+              ),
               ///============ First Name ============
               CustomFormCard(
                   title: AppStrings.yourFirstName,
@@ -228,32 +237,34 @@ class _SignupScreenState extends State<SignupScreen> {
                       });
                     },
                   ),
-                  Text.rich(
-                    TextSpan(
-                        text: 'I agree with ',
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w400),
-                        children: [
-                          TextSpan(
-                            text: 'terms',
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.orange),
-                          ),
-                          TextSpan(
-                            text: ' of service and',
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w400),
-                          ),
-                          TextSpan(
-                            text: ' privacy policy',
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.orange),
-                          ),
-                        ]),
+                  Flexible(
+                    child: Text.rich(
+                      TextSpan(
+                          text: 'I agree with ',
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.w400),
+                          children: [
+                            TextSpan(
+                              text: 'terms',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.orange),
+                            ),
+                            TextSpan(
+                              text: ' of service and',
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.w400),
+                            ),
+                            TextSpan(
+                              text: ' privacy policy',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.orange),
+                            ),
+                          ]),
+                    ),
                   ),
                 ],
               ),

@@ -13,4 +13,13 @@ class OrganizerController extends GetxController{
   ].obs;
 
 
+  RxInt adminstratior_currentIndex = 0.obs;
+
+  RxList<String> adminstratiorNameList = [
+    "Organization List",
+   "Mission List",
+  ].obs;
+
+
+
 }

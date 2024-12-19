@@ -11,7 +11,9 @@ import 'package:tractivity_app/view/components/custom_button/custom_button.dart'
 import 'package:tractivity_app/view/components/custom_royel_appbar/custom_royel_appbar.dart';
 import 'package:tractivity_app/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tractivity_app/view/screens/friend_screen/inner_widget/custom_friend_list.dart';
+
 class AllMemberScreen extends StatelessWidget {
+
   const AllMemberScreen({super.key});
 
   @override

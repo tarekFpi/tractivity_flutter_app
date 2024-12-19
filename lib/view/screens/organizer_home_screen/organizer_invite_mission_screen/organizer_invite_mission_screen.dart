@@ -93,6 +93,7 @@ class _OrganizerInviteMissionScreenState
                 },
                 selectedColor: AppColors.primary,
                 unselectedColor: AppColors.grey_1),
+
             SizedBox(
               height: 20,
             ),

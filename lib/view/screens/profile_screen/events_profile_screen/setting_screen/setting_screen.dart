@@ -19,65 +19,68 @@ class SettingScreen extends StatelessWidget {
           leftIcon: true,
           titleName: AppStrings.setting,
         ),
-        body: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-          child: Container(
-            height: MediaQuery.sizeOf(context).height / 2.5,
-            width: MediaQuery.sizeOf(context).width,
-            decoration: BoxDecoration(
-              color: AppColors.white_50,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 20, top: 40),
-              child: Column(
-                children: [
-                  ///======= Profile Person====
-                  CustomSettingRow(
-                      onTap: (){
-                       // Get.toNamed(AppRoutes.editPersonProfileScreen);
-                      },
-                      text: AppStrings.profileSetting,
-                      icon: Icons.person),
-                  ///======= aboutus ====
-                  CustomSettingRow(
-                      onTap: (){
-                        Get.toNamed(AppRoutes.aboutUsScreen);
-                      },
-                      text: AppStrings.aboutus,
-                      icon: Icons.info_outline),
-                  ///======= privacyPolicy ====
-                  CustomSettingRow(
-                      onTap: (){
-                       Get.toNamed(AppRoutes.privacyPolicyScreen);
-                      },
-                      text: AppStrings.privacyPolicy,
-                      icon: Icons.privacy_tip_outlined),
-                  ///======= termsAndConditions ====
-                  CustomSettingRow(
-                      onTap: (){
-                        Get.toNamed(AppRoutes.termsConditionScreen);
-                      },
-                      text: AppStrings.termsAndConditions,
-                      icon: Icons.align_vertical_bottom_outlined),
-                  ///======= termsAndConditions ====
-                  CustomSettingRow(
-                      onTap: (){
-                        //Get.toNamed(AppRoutes.loginScreen);
-                      },
-                      text: AppStrings.logOut,
-                      icon: Icons.logout),
-                  SizedBox(height: 30.h,),
-                  ///======= termsAndConditions ====
-                  CustomSettingRow(
-                      onTap: (){
-                      //  settingController.showPopup();
-                      },
-                      text: AppStrings.deleteAccount,
-                      color: AppColors.primary,
-                      textColor: AppColors.primary,
-                      icon: Icons.delete_sweep_outlined),
-                ],
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+            child: Container(
+             /// height: MediaQuery.sizeOf(context).height / 2.5,
+              width: MediaQuery.sizeOf(context).width,
+              decoration: BoxDecoration(
+                color: AppColors.white_50,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20, top: 40),
+                child: Column(
+                  children: [
+
+                    ///======= Profile Person====
+                    CustomSettingRow(
+                        onTap: (){
+                         // Get.toNamed(AppRoutes.editPersonProfileScreen);
+                        },
+                        text: AppStrings.profileSetting,
+                        icon: Icons.person),
+                    ///======= aboutus ====
+                    CustomSettingRow(
+                        onTap: (){
+                          Get.toNamed(AppRoutes.aboutUsScreen);
+                        },
+                        text: AppStrings.aboutus,
+                        icon: Icons.info_outline),
+                    ///======= privacyPolicy ====
+                    CustomSettingRow(
+                        onTap: (){
+                         Get.toNamed(AppRoutes.privacyPolicyScreen);
+                        },
+                        text: AppStrings.privacyPolicy,
+                        icon: Icons.privacy_tip_outlined),
+                    ///======= termsAndConditions ====
+                    CustomSettingRow(
+                        onTap: (){
+                          Get.toNamed(AppRoutes.termsConditionScreen);
+                        },
+                        text: AppStrings.termsAndConditions,
+                        icon: Icons.align_vertical_bottom_outlined),
+                    ///======= termsAndConditions ====
+                    CustomSettingRow(
+                        onTap: (){
+                          //Get.toNamed(AppRoutes.loginScreen);
+                        },
+                        text: AppStrings.logOut,
+                        icon: Icons.logout),
+                    SizedBox(height: 30.h,),
+                    ///======= termsAndConditions ====
+                    CustomSettingRow(
+                        onTap: (){
+                        //  settingController.showPopup();
+                        },
+                        text: AppStrings.deleteAccount,
+                        color: AppColors.primary,
+                        textColor: AppColors.primary,
+                        icon: Icons.delete_sweep_outlined),
+                  ],
+                ),
               ),
             ),
           ),

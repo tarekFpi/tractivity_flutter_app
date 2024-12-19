@@ -1,14 +1,17 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
+import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_icons/app_icons.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
 import 'package:tractivity_app/view/components/custom_image/custom_image.dart';
+import 'package:tractivity_app/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 
 class HomeSideDrawer extends StatelessWidget {
@@ -25,16 +28,33 @@ class HomeSideDrawer extends StatelessWidget {
       width: MediaQuery.of(context).size.width / 1.3,
       child: Column(
         children: [
-          ///================================ APP LOGO ==============================///
-          Container(
-            height: 122,
-            alignment: Alignment.bottomCenter,
-            color: AppColors.white,
-            child: CustomImage(
-              imageSrc: AppIcons.userIcons,
-              // imageColor: AppColors.white,
-            ),
+
+          SizedBox(
+            height: 42,
           ),
+
+          ///================================ APP LOGO ==============================///
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CustomNetworkImage(
+                imageUrl: AppConstants.profileImage,
+                height: 64,
+                width: 64,
+                boxShape: BoxShape.circle,
+                border: Border.all(color: AppColors.primary, width: 3),
+              ),
+              SizedBox(
+                height: 12,
+              ),
+              CustomText(
+                text: "Mehedi Bin Ab. Salam",
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+              ),
+            ],
+          ),
+
 
           Expanded(
             child: SingleChildScrollView(
@@ -49,12 +69,12 @@ class HomeSideDrawer extends StatelessWidget {
                         icon: Icons.person,
                         onTap: () {
                           Navigator.pop(context);
-                        //  Get.toNamed(AppRoutes.salonProfileScreen);
+                         Get.toNamed(AppRoutes.eventsProfileScreen);
                         }),
                     ///====================== Volunteer ======================>
                     customRow(
                         title: "Volunteer",
-                        icon: Icons.settings,
+                        icon: Icons.volunteer_activism_outlined,
                         onTap: () {
                           Navigator.pop(context);
                           Get.toNamed(AppRoutes.homeScreen);
@@ -62,7 +82,7 @@ class HomeSideDrawer extends StatelessWidget {
                     ///====================== Organizer ======================>
                     customRow(
                         title: "Organizer",
-                        icon: Icons.settings,
+                        icon: Icons.opacity_rounded,
                         onTap: () {
                           Navigator.pop(context);
                           Get.toNamed(AppRoutes.organizerHomeScreen);
@@ -70,12 +90,13 @@ class HomeSideDrawer extends StatelessWidget {
                     ///====================== Administrator ======================>
                     customRow(
                         title: "Administrator",
-                        icon: Icons.settings,
+                        icon: Icons.admin_panel_settings,
                         onTap: () {
                           Navigator.pop(context);
                           Get.toNamed(AppRoutes.adminstratorHomeScreen);
                         }),
-                   /* ///====================== settings ======================>
+
+                    ///====================== settings ======================>
                     customRow(
                         title: "settings",
                         icon: Icons.settings,
@@ -118,7 +139,7 @@ class HomeSideDrawer extends StatelessWidget {
                         icon: Icons.task_rounded,
                         onTap: () {
                           Navigator.pop(context);
-                       //   Get.toNamed(AppRoutes.termsConditionsScreen);
+                        Get.toNamed(AppRoutes.termsConditionScreen);
                         }),
 
                     const Divider(
@@ -132,7 +153,7 @@ class HomeSideDrawer extends StatelessWidget {
                         onTap: () {
                           Navigator.pop(context);
                           Get.offNamed(AppRoutes.loginScreen);
-                        }),*/
+                        }),
                   ],
                 ),
               ),
