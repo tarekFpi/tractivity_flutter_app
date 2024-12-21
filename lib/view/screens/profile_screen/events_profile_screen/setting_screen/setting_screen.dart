@@ -37,10 +37,11 @@ class SettingScreen extends StatelessWidget {
                     ///======= Profile Person====
                     CustomSettingRow(
                         onTap: (){
-                         // Get.toNamed(AppRoutes.editPersonProfileScreen);
+                         Get.toNamed(AppRoutes.editPersonProfileScreen);
                         },
                         text: AppStrings.profileSetting,
                         icon: Icons.person),
+
                     ///======= aboutus ====
                     CustomSettingRow(
                         onTap: (){
@@ -49,31 +50,37 @@ class SettingScreen extends StatelessWidget {
                         text: AppStrings.aboutus,
                         icon: Icons.info_outline),
                     ///======= privacyPolicy ====
+
                     CustomSettingRow(
                         onTap: (){
                          Get.toNamed(AppRoutes.privacyPolicyScreen);
                         },
                         text: AppStrings.privacyPolicy,
                         icon: Icons.privacy_tip_outlined),
+
                     ///======= termsAndConditions ====
+
                     CustomSettingRow(
                         onTap: (){
                           Get.toNamed(AppRoutes.termsConditionScreen);
                         },
                         text: AppStrings.termsAndConditions,
                         icon: Icons.align_vertical_bottom_outlined),
+
                     ///======= termsAndConditions ====
+
                     CustomSettingRow(
                         onTap: (){
-                          //Get.toNamed(AppRoutes.loginScreen);
+                         Get.toNamed(AppRoutes.loginScreen);
                         },
                         text: AppStrings.logOut,
                         icon: Icons.logout),
                     SizedBox(height: 30.h,),
+
                     ///======= termsAndConditions ====
                     CustomSettingRow(
                         onTap: (){
-                        //  settingController.showPopup();
+                        /// settingController.showPopup();
                         },
                         text: AppStrings.deleteAccount,
                         color: AppColors.primary,

@@ -29,6 +29,7 @@ import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_home
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_invite_mission_screen/organize_map.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_invite_mission_screen/organizer_approved.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_invite_mission_screen/organizer_invite_mission_screen.dart';
+import 'package:tractivity_app/view/screens/profile_screen/edit_profile_screen.dart';
 import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/events_profile_screen.dart';
 import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/explore_event_screen.dart';
 
@@ -83,6 +84,7 @@ class AppRoutes {
   static const String organizerApprovedScreen = "/OrganizerApprovedScreen";
   static const String organizeMapScreen = "/OrganizeMapScreen";
   static const String addMemberScreen = "/AddMemberScreen";
+  static const String editPersonProfileScreen = "/EditPersonProfileScreen";
 
 
 
@@ -132,6 +134,8 @@ class AppRoutes {
     GetPage(name: organizerApprovedScreen, page: () => OrganizerApprovedScreen()),
     GetPage(name: organizeMapScreen, page: () => OrganizeMapScreen()),
     GetPage(name: addMemberScreen, page: () => InviteMemberScreen()),
+
+    GetPage(name: editPersonProfileScreen, page: () => EditPersonProfileScreen()),
 
 
 
