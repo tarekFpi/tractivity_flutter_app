@@ -55,6 +55,13 @@ dependencies:
   socket_io_client: ^3.0.1
   flutter_easyloading: ^3.0.5
   fluentui_system_icons: ^1.1.265
+  get_storage: ^2.1.1
+  fluentui_icons: ^1.0.0
+  geocoding: ^2.1.0
+  location: ^7.0.1
+  google_maps_flutter: ^2.2.1
+  geolocator: ^13.0.2
+
 
 dev_dependencies:
   flutter_test:

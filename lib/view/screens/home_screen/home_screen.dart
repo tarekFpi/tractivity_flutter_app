@@ -4,23 +4,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
-import 'package:tractivity_app/main.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_icons/app_icons.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
 import 'package:tractivity_app/view/components/custom_button/custom_button.dart';
-import 'package:tractivity_app/view/components/custom_from_card/custom_from_card.dart';
 import 'package:tractivity_app/view/components/custom_netwrok_image/custom_network_image.dart';
-import 'package:tractivity_app/view/components/custom_royel_appbar/custom_royel_appbar.dart';
-import 'package:tractivity_app/view/components/custom_tab_selected/custom_tab_selected.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:tractivity_app/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tractivity_app/view/components/nav_bar/nav_bar.dart';
 import 'package:tractivity_app/view/screens/home_screen/homepage_drawer.dart';
 import 'package:tractivity_app/view/screens/home_screen/exolore_event_screen/inner_widget/custom_explore_container.dart';
-import 'package:tractivity_app/view/screens/home_screen/salon_homepage_drawer.dart';
-import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/inner_widget/custom_container_row.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
@@ -36,10 +30,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          key: _scaffoldKey,
-       drawer: HomeSideDrawer(),
-     // drawerScrimColor: Colors.black,
-      appBar:  AppBar(
+      key: _scaffoldKey,
+      drawer: HomeSideDrawer(),
+      // drawerScrimColor: Colors.black,
+      appBar: AppBar(
         leading: Builder(builder: (context) {
           return IconButton(
               onPressed: () => Scaffold.of(context).openDrawer(),
@@ -56,9 +50,15 @@ class _HomeScreenState extends State<HomeScreen> {
               fontWeight: FontWeight.w600),
         ),
         actions: [
-          IconButton(onPressed: (){
-            Get.toNamed(AppRoutes.notificationScreen);
-          }, icon: Icon(Icons.notifications_active_outlined,color: AppColors.black,),)
+          IconButton(
+            onPressed: () {
+              Get.toNamed(AppRoutes.notificationScreen);
+            },
+            icon: Icon(
+              Icons.notifications_active_outlined,
+              color: AppColors.black,
+            ),
+          )
         ],
       ),
       body: Padding(
@@ -68,6 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
               SizedBox(
                 height: 12.h,
               ),
@@ -117,7 +118,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
 
               ///============ search ======================================
-
               CustomTextField(
                   hintText: AppStrings.searchEvent,
                   fillColor: AppColors.neutral02,
@@ -150,80 +150,46 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-
                           CustomText(
                             text: "Complete Event \n Details",
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                             color: AppColors.blue,
                           ),
-                      Row(
-                        children: [
-                          CustomButton(
-                            onTap: () {
-                              Get.toNamed(AppRoutes.exoloreEventScreen);
-                            },
-                            title: "Explore",
-                            width: 90.w,
-                            height: 32.h,
-                            textColor: AppColors.black,
-                            fillColor: AppColors.white,
-                            isBorder: true,
-                            fontSize: 14,
-                            borderWidth: .5,
-                          ),
+                          Row(
+                            children: [
+                              CustomButton(
+                                onTap: () {
+                                   Get.toNamed(AppRoutes.exoloreEventScreen);
+                                },
+                                title: "Explore",
+                                width: 90.w,
+                                height: 32.h,
+                                textColor: AppColors.black,
+                                fillColor: AppColors.white,
+                                isBorder: true,
+                                fontSize: 14,
+                                borderWidth: .5,
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              CustomButton(
+                                onTap: () {
 
-                          SizedBox(
-                            width: 8,
-                          ),
-                          CustomButton(
-                            onTap: () {
-
-                              Get.toNamed(AppRoutes.donationScreen);
-                            },
-                            title: "Donation",
-                            width: 90.w,
-                            height: 32.h,
-                            textColor: AppColors.black,
-                            fillColor: AppColors.white,
-                            isBorder: true,
-                            fontSize: 14,
-                            borderWidth: .5,
-                          ),
-                        ],
-                      )
-                         Row(
-                           children: [
-                             CustomButton(
-                               onTap: () {
-                                 Get.toNamed(AppRoutes.exoloreEventScreen);
-                               },
-                               title: "Explore",
-                               width: 90.w,
-                               height: 32.h,
-                               textColor: AppColors.black,
-                               fillColor: AppColors.white,
-                               isBorder: true,
-                               fontSize: 14,
-                               borderWidth: .5,
-                             ),
-                             SizedBox(width: 8.h,),
-                             CustomButton(
-                               onTap: () {
-                                 Get.toNamed(AppRoutes.exoloreEventScreen);
-                               },
-                               title: "Donation",
-                               width: 90.w,
-                               height: 32.h,
-                               textColor: AppColors.black,
-                               fillColor: AppColors.white,
-                               isBorder: true,
-                               fontSize: 14,
-                               borderWidth: .5,
-                             ),
-                           ],
-                         )
-
+                                  Get.toNamed(AppRoutes.donationScreen);
+                                },
+                                title: "Donation",
+                                width: 90.w,
+                                height: 32.h,
+                                textColor: AppColors.black,
+                                fillColor: AppColors.white,
+                                isBorder: true,
+                                fontSize: 14,
+                                borderWidth: .5,
+                              ),
+                            ],
+                          )
                         ],
                       ),
                       SvgPicture.asset(
@@ -251,40 +217,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
               Column(
                   children: List.generate(1, (index) {
-                    return CustomExploreContainer(
-                      image: AppConstants.profileImage,
-                      title: "Cox’s Bazar Beach Helping Peolple",
-                      location: "Cox’s Bazar, Bangladesh",
-                      leaderName: "Mehedi",
-                    );
-                  })
-              ),
+                return CustomExploreContainer(
+                  image: AppConstants.profileImage,
+                  title: "Cox’s Bazar Beach Helping Peolple",
+                  location: "Cox’s Bazar, Bangladesh",
+                  leaderName: "Mehedi",
+                );
+              })),
 
-              /*Row(
-                children: [
-                  CustomText(
-                    text: "Complete Event",
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  SizedBox(
-                    width: 8.h,
-                  ),
-                  Icon(
-                    Icons.check,
-                    color: Colors.indigoAccent,
-                  )
-                ],
-              ),
-
-              SizedBox(
-                height: 12.h,
-              ),
-
-              Column(
-                  children: List.generate(2, (index) {
-                return CustomContainerRow();
-              })),*/
             ],
           ),
         ),

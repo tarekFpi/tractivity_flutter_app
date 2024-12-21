@@ -22,14 +22,14 @@ class   AppStrings {
   static const String enterYourEmail = "Enter Your Email";
   static const String enterCountry = "Enter Country";
   static const String enterDay = "MM / YY";
-  static const String enterFristName = "Enter Frist Name";
-  static const String enterLastName = "Enter Last Name";
+  static const String enterFristName = "Frist Name";
+  static const String enterLastName = "Last Name";
   static const String enterState = "Enter State";
   static const String enterSecurity = "Security Code";
   static const String password = "Password";
   static const String newPassword = "New Password";
   static const String enterYourPassword = "Enter Your Password";
-  static const String enterSummary = "Enter Your Summary";
+  static const String enterSummary = "Your Donation";
   static const String enterNumber = "1234 1234 1234 1234";
   static const String rememberMe = "Remember me";
   static const String forgotPassword = "Forgot Password?";
@@ -195,6 +195,7 @@ class   AppStrings {
   static const String addEvent = "Add Event";
   //static const String done = "Done";
   static const String allMember = "All Member";
+  static const String member = "Member";
   static const String history = "History";
   static const String exploreEvent = "Explore Event";
   static const String donation = "Donation";

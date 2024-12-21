@@ -2,16 +2,20 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_icons/app_icons.dart';
 import 'package:tractivity_app/view/components/custom_button/custom_button.dart';
+import 'package:tractivity_app/view/components/custom_from_card/custom_from_card.dart';
 import 'package:tractivity_app/view/components/custom_image/custom_image.dart';
 import 'package:tractivity_app/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tractivity_app/view/components/custom_royel_appbar/custom_royel_appbar.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:tractivity_app/view/components/custom_text_field/custom_text_field.dart';
 
 class ExploreEventScreen extends StatefulWidget {
   const ExploreEventScreen({super.key});
@@ -21,6 +25,29 @@ class ExploreEventScreen extends StatefulWidget {
 }
 
 class _ExploreEventScreenState extends State<ExploreEventScreen> {
+
+  final storage = GetStorage();
+  String status="";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    if(storage.read("status")!=null){
+
+      status = storage.read("status");
+    }
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+
+    storage.remove("status");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,23 +70,50 @@ class _ExploreEventScreenState extends State<ExploreEventScreen> {
               SizedBox(
                 height: 12.h,
               ),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+
                   CustomImage(imageSrc: AppIcons.dowanload),
                   SizedBox(
                     width: 8,
                   ),
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                   crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CustomText(
-                        text: "Rohingya refugee camp",
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.black_80,
-                      ),
+
+                     Row(
+                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                       children: [
+
+                         CustomText(
+                           text: "Rohingya refugee camp",
+                           fontSize: 14,
+                           fontWeight: FontWeight.w500,
+                           color: AppColors.black_80,
+                         ),
+
+                         SizedBox(
+                           width: 40,
+                         ),
+
+                         if(status=="home_page" || status=="organize_page")
+                         CustomButton(
+                           onTap: () {
+                             ///chatScreen
+                             Get.toNamed(AppRoutes.messageScreen);
+                           },
+                           title: "Chat",
+                           width: 80.w,
+                           height: 32.h,
+                           textColor: AppColors.black,
+                           fillColor: AppColors.primary,
+                           fontSize: 12,
+                         ),
+                       ],
+                     ),
                       SizedBox(
                         height: 4,
                       ),
@@ -76,12 +130,14 @@ class _ExploreEventScreenState extends State<ExploreEventScreen> {
               SizedBox(
                 height: 12,
               ),
+
               CustomText(
                 text: "Rohingya refugee camp",
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
                 color: AppColors.black_80,
               ),
+
               SizedBox(
                 height: 12,
               ),
@@ -215,23 +271,29 @@ class _ExploreEventScreenState extends State<ExploreEventScreen> {
                 fontWeight: FontWeight.w600,
                 color: AppColors.black_80,
               ),
+
               const SizedBox(
                 height: 8,
               ),
+
               const CustomText(
                 text: "22 December, 2024, 8.00 am-12.00 pm",
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
                 color: AppColors.black_80,
               ),
+
               const SizedBox(
                 height: 16,
               ),
+
               Row(
                 children: [
+
+                  if(status=="banner_page" || status=="home_page" || status=="organize_page")
                   CustomButton(
                     onTap: () {
-                      Get.toNamed(AppRoutes.userEventProfile);
+                      Get.toNamed(AppRoutes.memberScreen);
                     },
                     title: "Details",
                     width: 80.w,
@@ -240,24 +302,144 @@ class _ExploreEventScreenState extends State<ExploreEventScreen> {
                     fillColor: AppColors.primary,
                     fontSize: 12,
                   ),
+
+                  if(status=="report_page")
+                    CustomButton(
+                      onTap: () {
+                        Get.toNamed(AppRoutes.memberScreen);
+                      },
+                      title: "Details",
+                      width: 80.w,
+                      height: 32.h,
+                      textColor: AppColors.black,
+                      fillColor: AppColors.primary,
+                      fontSize: 12,
+                    ),
+
                   const SizedBox(
                     width: 12,
                   ),
-                  CustomButton(
-                    onTap: () {},
-                    title: "Donation",
-                    width: 80.w,
-                    height: 32.h,
-                    textColor: AppColors.black,
-                    fillColor: AppColors.primary,
-                    fontSize: 12,
-                  ),
+
+                  ///report_page
+                  if(status=="home_page")
+                    Row(
+                      children: [
+
+                        CustomButton(
+                          onTap: () {},
+                          title: "Start Work",
+                          width: 80.w,
+                          height: 32.h,
+                          textColor: AppColors.black,
+                          fillColor: AppColors.primary,
+                          fontSize: 12,
+                        ),
+
+                        SizedBox(
+                          width: 8,
+                        ),
+                        CustomButton(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (ctx) => AlertDialog(
+                                backgroundColor: Colors.white,
+                                insetPadding: EdgeInsets.all(16),
+                                contentPadding: EdgeInsets.all(16),
+                                //   clipBehavior: Clip.antiAliasWithSaveLayer,
+                                title: Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+
+                                      CustomText(
+                                        text: "Working Time",
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.black_80,
+                                      ),
+
+                                      InkWell(
+                                          onTap: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Icon(
+                                            Icons.close,
+                                            size: 32,
+                                            color: Colors.black,
+                                          ))
+                                    ],
+                                  ),
+                                ),
+                                content: SizedBox(
+                                  width: MediaQuery.sizeOf(context).width,
+                                  height: 100,
+                                  child: Column(
+                                    children: [
+
+                                      ///============ Working Distance ============
+                                      Container(
+                                        height: 60,
+                                        width: MediaQuery.sizeOf(context).width,
+                                        decoration: BoxDecoration(
+                                          color: AppColors.white,
+                                          borderRadius: BorderRadius.circular(10),
+                                          border: Border.all(color: AppColors.black_80, width: 1),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(right: 16.0),
+                                          child: CustomTextField(
+                                            readOnly: true,
+                                            fillColor: AppColors.white,
+                                            hintText: "04:30 Hours",
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                          title: "End Work",
+                          width: 80.w,
+                          height: 32.h,
+                          textColor: AppColors.black,
+                          fillColor: AppColors.primary,
+                          fontSize: 12,
+                        )
+                      ],
+                    ),
+
                 ],
-              )
+              ),
             ],
           ),
         ),
       ),
+
+       bottomNavigationBar:
+       Column(
+         mainAxisSize: MainAxisSize.min,
+         children: [
+           if(status=="home_page")
+             Padding(
+               padding: const EdgeInsets.only(bottom: 45,left: 16,right: 16),
+               child: CustomButton(
+                 onTap: () {
+                   Get.toNamed(AppRoutes.exoloreEventScreen);
+                 },
+                 title: "Event Complete",
+                 height: 45.h,
+                 textColor: AppColors.black,
+                 fillColor: AppColors.primary,
+                 fontSize: 12,
+               ),
+             )
+         ],
+       ),
+
     );
   }
 }
