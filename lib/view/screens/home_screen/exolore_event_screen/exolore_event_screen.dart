@@ -93,12 +93,7 @@ class ExoloreEventScreen extends StatelessWidget {
               Column(
                 children: List.generate(2, (index) {
 
-                  /*return CustomExploreContainer(
-                    image: AppConstants.profileImage,
-                    title: "Cox’s Bazar Beach Helping Peolple",
-                    location: "Cox’s Bazar, Bangladesh",
-                    leaderName: "Mehedi",
-                  );*/
+
 
                   return  Padding(
                     padding: const EdgeInsets.only(bottom: 20.0),

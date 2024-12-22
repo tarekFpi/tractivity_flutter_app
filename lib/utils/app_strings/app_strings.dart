@@ -185,7 +185,7 @@ class   AppStrings {
   //static const String setting = "Setting";
   static const String seeAllFriends = "See All Friends List";
   static const String inviteFriends = "Invite Friends";
-  static const String inviteMission = "Invite Mission";
+  static const String inviteMission = "Invited Mission";
   static const String eventList = "Event List";
   static const String request = "Request";
   //static const String searchForSomeone = "Search For Someone";

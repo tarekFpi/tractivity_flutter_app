@@ -1,60 +1,32 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_icons/app_icons.dart';
 import 'package:tractivity_app/view/components/custom_button/custom_button.dart';
-import 'package:tractivity_app/view/components/custom_from_card/custom_from_card.dart';
 import 'package:tractivity_app/view/components/custom_image/custom_image.dart';
 import 'package:tractivity_app/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tractivity_app/view/components/custom_royel_appbar/custom_royel_appbar.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:tractivity_app/view/components/custom_text_field/custom_text_field.dart';
 
-class ExploreEventScreen extends StatefulWidget {
-  const ExploreEventScreen({super.key});
+class RecentEventExploreDetails extends StatefulWidget {
+  const RecentEventExploreDetails({super.key});
 
   @override
-  State<ExploreEventScreen> createState() => _ExploreEventScreenState();
+  State<RecentEventExploreDetails> createState() => _RecentEventExploreDetailsState();
 }
 
-
-class _ExploreEventScreenState extends State<ExploreEventScreen> {
-
-  final storage = GetStorage();
-
-  String status="";
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    if(storage.read("status")!=null){
-
-      status = storage.read("status");
-    }
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-
-    storage.remove("status");
-  }
-
+class _RecentEventExploreDetailsState extends State<RecentEventExploreDetails> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+       return Scaffold(
       appBar: CustomRoyelAppbar(
         leftIcon: true,
+        titleName: "Recent Event Details",
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -63,6 +35,7 @@ class _ExploreEventScreenState extends State<ExploreEventScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
               CustomNetworkImage(
                 imageUrl: AppConstants.profileImage,
                 height: 170.h,
@@ -79,43 +52,44 @@ class _ExploreEventScreenState extends State<ExploreEventScreen> {
                 children: [
 
                   CustomImage(imageSrc: AppIcons.dowanload),
-                  SizedBox(
+
+                  const SizedBox(
                     width: 8,
                   ),
                   Column(
-                   crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
 
-                     Row(
-                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                       children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
 
-                         CustomText(
-                           text: "Rohingya refugee camp",
-                           fontSize: 14,
-                           fontWeight: FontWeight.w500,
-                           color: AppColors.black_80,
-                         ),
+                          CustomText(
+                            text: "Rohingya refugee camp",
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.black_80,
+                          ),
 
-                         SizedBox(
-                           width: 40,
-                         ),
+                          SizedBox(
+                            width: 40,
+                          ),
 
-                         if(status=="home_page" || status=="organize_page")
-                         CustomButton(
-                           onTap: () {
-                             ///chatScreen
-                             Get.toNamed(AppRoutes.messageScreen);
-                           },
-                           title: "Chat",
-                           width: 80.w,
-                           height: 32.h,
-                           textColor: AppColors.black,
-                           fillColor: AppColors.primary,
-                           fontSize: 12,
-                         ),
-                       ],
-                     ),
+
+                            CustomButton(
+                              onTap: () {
+                                ///chatScreen
+                                Get.toNamed(AppRoutes.messageScreen);
+                              },
+                              title: "Chat",
+                              width: 80.w,
+                              height: 32.h,
+                              textColor: AppColors.black,
+                              fillColor: AppColors.primary,
+                              fontSize: 12,
+                            ),
+                        ],
+                      ),
                       SizedBox(
                         height: 4,
                       ),
@@ -140,9 +114,88 @@ class _ExploreEventScreenState extends State<ExploreEventScreen> {
                 color: AppColors.black_80,
               ),
 
-              SizedBox(
+              const SizedBox(
                 height: 12,
               ),
+
+              Row(
+                children: [
+
+                  CustomText(
+                    text: "Rohingya refugee camp",
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.black_80,
+                  ),
+
+                  SizedBox(
+                    width: 4,
+                  ),
+                  CustomText(
+                    text: "(Event Name)",
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.lightBlue,
+                  ),
+                ],
+              ),
+
+              const SizedBox(
+                height: 8,
+              ),
+
+              Row(
+                children: [
+
+                  CustomText(
+                    text: "Empower Tomorrow",
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.black_80,
+                  ),
+
+                  SizedBox(
+                    width: 4,
+                  ),
+                  CustomText(
+                    text: "(Mission Name)",
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.lightBlue,
+                  ),
+                ],
+              ),
+
+              const SizedBox(
+                height: 12,
+              ),
+
+              Row(
+                children: [
+
+                  CustomText(
+                    text: "Global Horizons Foundation",
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.black_80,
+                  ),
+
+                  SizedBox(
+                    width: 4,
+                  ),
+                  CustomText(
+                    text: "(Organization)",
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.lightBlue,
+                  ),
+                ],
+              ),
+
+              const SizedBox(
+                height: 12,
+              ),
+
               Row(
                 children: [
                   Icon(
@@ -258,7 +311,7 @@ class _ExploreEventScreenState extends State<ExploreEventScreen> {
               ),
               const CustomText(
                 text:
-                    "The Rohingya have faced decades of discrimination \n and repression under successive Myanmar authorities. denied citizenship \n under the 1982 Citizenship Law, they are one of \n the largest stateless populations in the world.",
+                "The Rohingya have faced decades of discrimination \n and repression under successive Myanmar authorities. denied citizenship \n under the 1982 Citizenship Law, they are one of \n the largest stateless populations in the world.",
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
                 color: AppColors.black_80,
@@ -292,20 +345,6 @@ class _ExploreEventScreenState extends State<ExploreEventScreen> {
               Row(
                 children: [
 
-                  if(status=="banner_page" || status=="home_page" || status=="organize_page")
-                  CustomButton(
-                    onTap: () {
-                      Get.toNamed(AppRoutes.memberScreen);
-                    },
-                    title: "Details",
-                    width: 80.w,
-                    height: 32.h,
-                    textColor: AppColors.black,
-                    fillColor: AppColors.primary,
-                    fontSize: 12,
-                  ),
-
-                  if(status=="report_page")
                     CustomButton(
                       onTap: () {
                         Get.toNamed(AppRoutes.memberScreen);
@@ -323,7 +362,7 @@ class _ExploreEventScreenState extends State<ExploreEventScreen> {
                   ),
 
                   ///report_page
-                  if(status=="home_page")
+
                     Row(
                       children: [
 
@@ -337,7 +376,7 @@ class _ExploreEventScreenState extends State<ExploreEventScreen> {
                           fontSize: 12,
                         ),
 
-                        SizedBox(
+                        const SizedBox(
                           width: 8,
                         ),
                         CustomButton(
@@ -355,7 +394,7 @@ class _ExploreEventScreenState extends State<ExploreEventScreen> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
 
-                                      CustomText(
+                                      const CustomText(
                                         text: "Working Time",
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
@@ -421,26 +460,26 @@ class _ExploreEventScreenState extends State<ExploreEventScreen> {
         ),
       ),
 
-       bottomNavigationBar:
-       Column(
-         mainAxisSize: MainAxisSize.min,
-         children: [
-           if(status=="home_page")
-             Padding(
-               padding: const EdgeInsets.only(bottom: 45,left: 16,right: 16),
-               child: CustomButton(
-                 onTap: () {
-                   Get.toNamed(AppRoutes.exoloreEventScreen);
-                 },
-                 title: "Event Complete",
-                 height: 45.h,
-                 textColor: AppColors.black,
-                 fillColor: AppColors.primary,
-                 fontSize: 12,
-               ),
-             )
-         ],
-       ),
+      bottomNavigationBar:
+      Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+
+            Padding(
+              padding: const EdgeInsets.only(bottom: 45,left: 16,right: 16),
+              child: CustomButton(
+                onTap: () {
+                  Get.toNamed(AppRoutes.exoloreEventCompletedScreen);
+                },
+                title: "Event Complete",
+                height: 45.h,
+                textColor: AppColors.black,
+                fillColor: AppColors.primary,
+                fontSize: 12,
+              ),
+            )
+        ],
+      ),
 
     );
   }

@@ -52,6 +52,7 @@ class CustomExploreContainer extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
               SizedBox(
                 width: 150.w,
                 child: CustomText(

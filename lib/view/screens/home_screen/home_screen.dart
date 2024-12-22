@@ -43,13 +43,14 @@ class _HomeScreenState extends State<HomeScreen> {
               ));
         }),
         title: Text(
-          "ServeOut",
+          "JoinUp",
           style: TextStyle(
               color: AppColors.black,
               fontSize: 30,
               fontWeight: FontWeight.w600),
         ),
         actions: [
+
           IconButton(
             onPressed: () {
               Get.toNamed(AppRoutes.notificationScreen);
@@ -73,44 +74,50 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 12.h,
               ),
 
-              Row(
-                children: [
-                  CustomNetworkImage(
-                    imageUrl: AppConstants.profileImage,
-                    height: 100,
-                    width: 100,
-                    boxShape: BoxShape.circle,
-                    border: Border.all(color: AppColors.primary, width: 3),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomText(
-                        text: "Mehedi Bin Ab. Salam",
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.location_on,
-                            color: AppColors.primary,
-                            size: 20,
-                          ),
-                          CustomText(
-                            text: "Bushwick Brooklyn, NY, USA",
-                            fontSize: 12,
-                            color: AppColors.primary,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ],
-                      )
-                    ],
-                  )
-                ],
+              GestureDetector(
+                onTap: (){
+                  Get.toNamed(AppRoutes.eventsProfileScreen);
+                },
+                child: Row(
+                  children: [
+                    CustomNetworkImage(
+                      imageUrl: AppConstants.profileImage,
+                      height: 100,
+                      width: 100,
+                      boxShape: BoxShape.circle,
+                      border: Border.all(color: AppColors.primary, width: 3),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomText(
+                          text: "Mehedi Bin Ab. Salam",
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.location_on,
+                              color: AppColors.primary,
+                              size: 20,
+                            ),
+                            CustomText(
+                              text: "Bushwick Brooklyn, NY, USA",
+                              fontSize: 12,
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ],
+                        )
+                      ],
+                    )
+                  ],
+                ),
               ),
 
               SizedBox(
@@ -152,15 +159,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           CustomText(
                             text: "Complete Event \n Details",
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.w600,
                             color: AppColors.blue,
                           ),
                           Row(
                             children: [
                               CustomButton(
                                 onTap: () {
-                                   Get.toNamed(AppRoutes.exoloreEventScreen);
+                                   Get.toNamed(AppRoutes.exoloreEventCompletedScreen);
                                 },
                                 title: "Explore",
                                 width: 90.w,
@@ -217,12 +224,122 @@ class _HomeScreenState extends State<HomeScreen> {
 
               Column(
                   children: List.generate(1, (index) {
-                return CustomExploreContainer(
+              /*  return CustomExploreContainer(
                   image: AppConstants.profileImage,
                   title: "Cox’s Bazar Beach Helping Peolple",
                   location: "Cox’s Bazar, Bangladesh",
                   leaderName: "Mehedi",
-                );
+                );*/
+
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 20.0),
+                      child: Row(
+                        children: [
+
+                          CustomNetworkImage(
+                            imageUrl: AppConstants.profileImage,
+                            height: 170.h,
+                            width: 170.h,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+
+                          SizedBox(
+                            width: 10,
+                          ),
+
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+
+                              SizedBox(
+                                width: 150.w,
+                                child: CustomText(
+                                  textAlign: TextAlign.start,
+                                  text: "Cox’s Bazar Beach Helping Peolple",
+                                  maxLines: 3,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  bottom: 5,
+                                ),
+                              ),
+                              /// Location
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.location_on,
+                                    color: AppColors.black,
+                                    size: 20,
+                                  ),
+                                  CustomText(
+                                    text: "Cox’s Bazar, Bangladesh",
+                                    fontSize: 12,
+                                    color: AppColors.black_80,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              // Leader
+                              Row(
+                                children: [
+                                  CustomNetworkImage(
+                                    imageUrl: AppConstants.profileImage,
+                                    height: 30,
+                                    width: 30,
+                                    boxShape: BoxShape.circle,
+                                  ),
+                                  CustomText(
+                                    text: "Mehedi",
+                                    fontSize: 14,
+                                    color: AppColors.black,
+                                    fontWeight: FontWeight.w600,
+                                    right: 10.w,
+                                    left: 10.w,
+                                  ),
+                                  CustomText(
+                                    text: "Leader",
+                                    fontSize: 14,
+                                    color: AppColors.blue,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+
+                                      Get.toNamed(AppRoutes.recentEventExploreDetails);
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                      decoration: BoxDecoration(
+                                        color: AppColors.primary,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: CustomText(
+                                        text:   "Explore",
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: AppColors.black,
+                                      ),
+                                    ),
+                                  ),
+
+
+                                ],
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    );
               })),
 
             ],

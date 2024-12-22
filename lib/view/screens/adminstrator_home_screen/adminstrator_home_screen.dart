@@ -48,7 +48,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
               ));
         }),
         title: Text(
-          "ServeOut",
+          "JoinUp",
           style: TextStyle(
               color: AppColors.black,
               fontSize: 30,
@@ -341,7 +341,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
 
                                                 storage.write("status","report_page");
 
-                                                Get.toNamed(AppRoutes.exploreEventScreen);
+                                             ///   Get.toNamed(AppRoutes.exploreEventScreen);
                                               },
                                               title: "Report",
                                               width: 60.w,

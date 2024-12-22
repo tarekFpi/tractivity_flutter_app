@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
@@ -11,25 +9,17 @@ import 'package:tractivity_app/view/components/custom_netwrok_image/custom_netwo
 import 'package:tractivity_app/view/components/custom_royel_appbar/custom_royel_appbar.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:tractivity_app/view/components/custom_text_field/custom_text_field.dart';
-import 'package:tractivity_app/view/screens/adminstrator_home_screen/alert_dialog_event.dart';
-import 'package:tractivity_app/view/screens/notification/notification_alert.dart';
-
-class EventCompleteScreen extends StatefulWidget {
-  const EventCompleteScreen({super.key});
-
-  @override
-  State<EventCompleteScreen> createState() => _EventCompleteScreenState();
-}
-
-class _EventCompleteScreenState extends State<EventCompleteScreen> {
 
 
+class ExoloreEventCompletedScreen extends StatelessWidget {
+
+  ExoloreEventCompletedScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-       return Scaffold(
+    return Scaffold(
       appBar: const CustomRoyelAppbar(
-        titleName: "Complete Event",
+        titleName:"Explore Completed Events",
         leftIcon: true,
       ),
       body: SingleChildScrollView(
@@ -38,13 +28,71 @@ class _EventCompleteScreenState extends State<EventCompleteScreen> {
           child: Column(
             children: [
 
+              ///======== Search Bar ==============
+
+              const CustomTextField(
+                hintText: AppStrings.searchEvent,
+                fillColor: AppColors.neutral02,
+                suffixIcon: Icon(
+                  Icons.search,
+                  color: AppColors.black_60,
+                ),
+              ),
 
               const SizedBox(
-                height: 24,
+                height: 20,
+              ),
+
+              ///========= Complete Events Row Date Time ===========
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+
+                  const CustomText(
+                    text: "Completed Events",
+                    color: AppColors.blue,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
+
+                  Row(
+                    children: [
+                      const CustomText(
+                        text: "16 Dec, 2024",
+                        color: AppColors.black_80,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      IconButton(
+                        onPressed: () async {
+                          DateTime? datePicker = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime(2101),
+                          );
+                          if(datePicker!=null){
+                            print("Date: ${datePicker.day}-${datePicker.month}-${datePicker.year}");
+                          }
+                        },
+                        icon: const Icon(
+                          Icons.calendar_month,
+                          color: AppColors.black_80,
+                          size: 20,
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+
+              const SizedBox(
+                height: 20,
               ),
 
               Column(
-                  children: List.generate(3, (index) {
+                  children: List.generate(2, (index) {
 
                     return  Padding(
                       padding: const EdgeInsets.only(bottom: 20.0),
@@ -57,18 +105,20 @@ class _EventCompleteScreenState extends State<EventCompleteScreen> {
                             width: 170.h,
                             borderRadius: BorderRadius.circular(10),
                           ),
+
                           const SizedBox(
                             width: 10,
                           ),
+
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
 
                               SizedBox(
                                 width: 150.w,
-                                child: CustomText(
+                                child: const CustomText(
                                   textAlign: TextAlign.start,
-                                  text: "Cox’s Bazar Beach Helping Peolple"!,
+                                  text: "Cox’s Bazar Beach Helping Peolple",
                                   maxLines: 3,
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
@@ -130,8 +180,8 @@ class _EventCompleteScreenState extends State<EventCompleteScreen> {
                                   GestureDetector(
                                     onTap: () {
 
-
-                                      Get.toNamed(AppRoutes.adminstratorEventDetailsScreen);
+                                     /// Get.toNamed(AppRoutes.exploreEventScreen);
+                                      Get.toNamed(AppRoutes.exoloreCompleteDetailsScreen);
                                     },
                                     child: Container(
                                       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
@@ -147,42 +197,8 @@ class _EventCompleteScreenState extends State<EventCompleteScreen> {
                                       ),
                                     ),
                                   ),
+                                  SizedBox(width: 5.w),
 
-                                  const SizedBox(
-                                    width: 8,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-
-                                      showDialog(
-                                        context: context,
-                                        builder: (ctx) => AlertDialog(
-                                          backgroundColor: Colors.white,
-                                          insetPadding: EdgeInsets.all(8),
-                                          contentPadding: EdgeInsets.all(8),
-                                          //   clipBehavior: Clip.antiAliasWithSaveLayer,
-                                          title: SizedBox(),
-                                          content: SizedBox(
-                                            width: MediaQuery.sizeOf(context).width,
-                                            child: AlertDialogEvent(title: "Are you sure you want to \n Approved this Event?",discription: "",),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.primary,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: const CustomText(
-                                        text:  "Approved",
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        color: AppColors.black,
-                                      ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ],
