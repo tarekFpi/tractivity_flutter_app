@@ -4,7 +4,9 @@ import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
@@ -14,8 +16,27 @@ import 'package:tractivity_app/view/components/custom_image/custom_image.dart';
 import 'package:tractivity_app/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 
-class HomeSideDrawer extends StatelessWidget {
+class HomeSideDrawer extends StatefulWidget {
   const HomeSideDrawer({super.key});
+
+  @override
+  State<HomeSideDrawer> createState() => _HomeSideDrawerState();
+}
+
+class _HomeSideDrawerState extends State<HomeSideDrawer> {
+  final storage = GetStorage();
+
+  String status = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    if (storage.read("status") != null) {
+      status = storage.read("status");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +49,6 @@ class HomeSideDrawer extends StatelessWidget {
       width: MediaQuery.of(context).size.width / 1.3,
       child: Column(
         children: [
-
           SizedBox(
             height: 42,
           ),
@@ -55,7 +75,6 @@ class HomeSideDrawer extends StatelessWidget {
             ],
           ),
 
-
           Expanded(
             child: SingleChildScrollView(
               child: Padding(
@@ -64,37 +83,167 @@ class HomeSideDrawer extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ///====================== myProfile ======================>
-                         customRow(
+                    customRow(
                         title: "Profile",
                         icon: Icons.person,
                         onTap: () {
                           Navigator.pop(context);
-                         Get.toNamed(AppRoutes.eventsProfileScreen);
+                          Get.toNamed(AppRoutes.eventsProfileScreen);
                         }),
+
                     ///====================== Volunteer ======================>
-                    customRow(
+                    Container(
+                      width: MediaQuery.sizeOf(context).width,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: status == "volunteer"
+                            ? AppColors.primary
+                            : AppColors.white,
+                      ),
+                      child: GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                            Get.toNamed(AppRoutes.homeScreen);
+                            storage.write("status", "volunteer");
+                            setState(() {});
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.volunteer_activism_outlined,
+                                color: AppColors.black,
+                              ),
+                              CustomText(
+                                color: AppColors.black_80,
+                                left: 16.w,
+                                text: "Volunteer",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ],
+                          )),
+                    ),
+
+                    /*customRow(
                         title: "Volunteer",
                         icon: Icons.volunteer_activism_outlined,
                         onTap: () {
                           Navigator.pop(context);
                           Get.toNamed(AppRoutes.homeScreen);
-                        }),
+                        })*/
+
+                    SizedBox(
+                      height: 12,
+                    ),
+
                     ///====================== Organizer ======================>
-                    customRow(
+                    Container(
+                      width: MediaQuery.sizeOf(context).width,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: status == "organizer"
+                            ? AppColors.primary
+                            : AppColors.white,
+                      ),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                          Get.toNamed(AppRoutes.organizerHomeScreen);
+                          storage.write("status", "organizer");
+                          setState(() {});
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              //  Icon(icon,color: AppColors.black_50,),
+
+                              Icon(
+                                Icons.opacity_rounded,
+                                color: AppColors.black,
+                              ),
+
+                              CustomText(
+                                color: AppColors.black_80,
+                                left: 16.w,
+                                text: "Organizer",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    /*       customRow(
                         title: "Organizer",
                         icon: Icons.opacity_rounded,
                         onTap: () {
                           Navigator.pop(context);
                           Get.toNamed(AppRoutes.organizerHomeScreen);
-                        }),
+                        }),*/
+
                     ///====================== Administrator ======================>
-                    customRow(
+                    /* customRow(
                         title: "Administrator",
                         icon: Icons.admin_panel_settings,
                         onTap: () {
                           Navigator.pop(context);
                           Get.toNamed(AppRoutes.adminstratorHomeScreen);
-                        }),
+                        }),*/
+
+                    SizedBox(
+                      height: 12,
+                    ),
+
+                    Container(
+                      width: MediaQuery.sizeOf(context).width,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: status == "administrator"
+                            ? AppColors.primary
+                            : AppColors.white,
+                      ),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                          Get.toNamed(AppRoutes.adminstratorHomeScreen);
+                          storage.write("status", "administrator");
+                          setState(() {});
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              //  Icon(icon,color: AppColors.black_50,),
+
+                              Icon(
+                                Icons.admin_panel_settings,
+                                color: AppColors.black,
+                              ),
+
+                              CustomText(
+                                color: AppColors.black_80,
+                                left: 16.w,
+                                text: "Administrator",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
 
                     ///====================== settings ======================>
                     customRow(
@@ -104,8 +253,6 @@ class HomeSideDrawer extends StatelessWidget {
                           Navigator.pop(context);
                           Get.toNamed(AppRoutes.settingScreen);
                         }),
-
-
 
                     const SizedBox(
                       height: 12,
@@ -139,7 +286,7 @@ class HomeSideDrawer extends StatelessWidget {
                         icon: Icons.task_rounded,
                         onTap: () {
                           Navigator.pop(context);
-                        Get.toNamed(AppRoutes.termsConditionScreen);
+                          Get.toNamed(AppRoutes.termsConditionScreen);
                         }),
 
                     const Divider(

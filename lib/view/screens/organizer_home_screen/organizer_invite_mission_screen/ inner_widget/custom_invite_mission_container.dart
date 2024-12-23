@@ -28,6 +28,7 @@ class CustomInviteMissionContainer extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,

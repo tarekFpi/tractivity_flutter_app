@@ -6,6 +6,7 @@ import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
 import 'package:tractivity_app/view/components/custom_royel_appbar/custom_royel_appbar.dart';
+import 'package:tractivity_app/view/screens/adminstrator_home_screen/alert_dialog_event.dart';
 import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/inner_widget/custom_setting_row.dart';
 
 class SettingScreen extends StatelessWidget {
@@ -77,10 +78,23 @@ class SettingScreen extends StatelessWidget {
                         icon: Icons.logout),
                     SizedBox(height: 30.h,),
 
-                    ///======= termsAndConditions ====
+                    ///======= termsAndConditions ==============
+
                     CustomSettingRow(
                         onTap: (){
-                        /// settingController.showPopup();
+                          showDialog(
+                            context: context,
+                            builder: (ctx) => AlertDialog(
+                              backgroundColor: Colors.white,
+                              insetPadding: EdgeInsets.all(8),
+                              contentPadding: EdgeInsets.all(8),
+                              title: SizedBox(),
+                              content: SizedBox(
+                                width: MediaQuery.sizeOf(context).width,
+                                child: AlertDialogEvent(title: "Are you sure you want to \n delete ?",discription: "",),
+                              ),
+                            ),
+                          );
                         },
                         text: AppStrings.deleteAccount,
                         color: AppColors.primary,
