@@ -106,15 +106,18 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
             SizedBox(
               height: 20,
             ),
-            CustomTabSelector(
-                tabs: eventsController.joinEvenNameList,
-                selectedIndex: eventsController.currentIndex.value,
-                onTabSelected: (value) {
-                  eventsController.currentIndex.value = value;
-                  setState(() {});
-                },
-                selectedColor: AppColors.primary,
-                unselectedColor: AppColors.black),
+            Padding(
+              padding: const EdgeInsets.only(left: 16,right: 16),
+              child: CustomTabSelector(
+                  tabs: eventsController.joinEvenNameList,
+                  selectedIndex: eventsController.currentIndex.value,
+                  onTabSelected: (value) {
+                    eventsController.currentIndex.value = value;
+                    setState(() {});
+                  },
+                  selectedColor: AppColors.primary,
+                  unselectedColor: AppColors.black),
+            ),
             SizedBox(
               height: 20,
             ),

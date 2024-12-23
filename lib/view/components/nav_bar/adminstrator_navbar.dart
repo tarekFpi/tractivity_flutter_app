@@ -57,7 +57,7 @@ class _UserNavBarState extends State<AdminstratorNavbar> {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [AppColors.lightWhite, AppColors.lightWhite])),
-      height: 80.h,
+      height: 100.h,
       width: MediaQuery.of(context).size.width,
       alignment: Alignment.center,
       child: Row(
@@ -82,8 +82,8 @@ class _UserNavBarState extends State<AdminstratorNavbar> {
                   ),
                   color: Colors.transparent,
                   child: Container(
-                    height: 60.h,
-                    width: 50.w,
+                    height: 80.h,
+                    width: 80.w,
                     decoration: BoxDecoration(
                       color: AppColors.primary,
                       borderRadius: BorderRadius.only(
@@ -91,32 +91,60 @@ class _UserNavBarState extends State<AdminstratorNavbar> {
                           topRight: Radius.circular(50)
                       ),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: SvgPicture.asset(
-                        selectedIcon[index],
-                        height: 24.h,
-                        width: 24.w,
-                        color: AppColors.white,
-                      ),
+                    child: Column(
+                      children: [
+
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: SvgPicture.asset(
+                            selectedIcon[index],
+                            height: 24.h,
+                            width: 24.w,
+                            color: AppColors.white,
+                          ),
+                        ),
+
+                        CustomText(
+                          text: userNavText[index],
+                          color: AppColors.black,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14.w,
+                        ),
+
+                      ],
                     ),
                   ),
                 )
-                    : SvgPicture.asset(
-                  unselectedIcon[index],
-                  height: 24.h,
-                  width: 24.w,
-                  color: AppColors.primary,
-                ),
-                SizedBox(height: 4.h),
-                index == bottomNavIndex
+                    : Column(
+              children: [
+              SvgPicture.asset(
+              unselectedIcon[index],
+                height: 24.h,
+                width: 24.w,
+                color: AppColors.primary,
+              ),
+
+          SizedBox(
+            height: 4,
+          ),
+          CustomText(
+            text: userNavText[index],
+            color: AppColors.black,
+            fontWeight: FontWeight.w600,
+            fontSize: 14.w,
+          ),
+          ],
+        ),
+                //SizedBox(height: 4.h),
+
+             /*   index == bottomNavIndex
                     ? const SizedBox()
                     : CustomText(
                   text: userNavText[index],
                   color: AppColors.primary,
                   fontWeight: FontWeight.w600,
                   fontSize: 14.w,
-                ),
+                ),*/
               ],
             ),
           ),

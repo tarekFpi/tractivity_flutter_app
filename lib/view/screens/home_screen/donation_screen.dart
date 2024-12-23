@@ -38,9 +38,10 @@ class _DonationScreenState extends State<DonationScreen> {
 
               const CustomText(
                 text:
-                    "100% of your donation will go towards \n building the infrastructure of Serve Out. \n We have no paid staff.",
+                    "100% of your donation will go towards \n building the infrastructure \n of Serve Out.  We have no paid staff.",
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
+                textAlign: TextAlign.start,
               ),
 
               const SizedBox(

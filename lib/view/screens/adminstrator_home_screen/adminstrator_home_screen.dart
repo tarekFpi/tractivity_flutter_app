@@ -359,7 +359,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                               ),
                             ),
                           );
-                        })),
+                     })),
                 ],
               ),
             ),

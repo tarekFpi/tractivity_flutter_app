@@ -13,6 +13,7 @@ import '../../../utils/app_colors/app_colors.dart';
 import '../../../utils/app_icons/app_icons.dart';
 import '../../../utils/app_strings/app_strings.dart';
 import '../custom_text/custom_text.dart';
+
 class NavBar extends StatefulWidget {
   final int currentIndex;
   const NavBar({required this.currentIndex, super.key});
@@ -22,6 +23,7 @@ class NavBar extends StatefulWidget {
 }
 
 class _UserNavBarState extends State<NavBar> {
+
   late int bottomNavIndex;
 
   final List<String> selectedIcon = [
@@ -30,6 +32,7 @@ class _UserNavBarState extends State<NavBar> {
     AppIcons.mail,
     AppIcons.pencilalt,
   ];
+
   final List<String> unselectedIcon = [
     AppIcons.home,
     AppIcons.users,
@@ -61,7 +64,7 @@ class _UserNavBarState extends State<NavBar> {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [AppColors.lightWhite, AppColors.lightWhite])),
-      height: 80.h,
+      height: 90.h,
       width: MediaQuery.of(context).size.width,
       alignment: Alignment.center,
       child: Row(
@@ -76,8 +79,8 @@ class _UserNavBarState extends State<NavBar> {
               children: [
                 index == bottomNavIndex
                     ? Card(
-                  elevation: 100,
-                  shadowColor: AppColors.primary,
+                  elevation: 85,
+                 shadowColor: AppColors.primary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                         topLeft:Radius.circular(50),
@@ -86,8 +89,8 @@ class _UserNavBarState extends State<NavBar> {
                   ),
                   color: Colors.transparent,
                   child: Container(
-                    height: 60.h,
-                    width: 50.w,
+                    height: 80.h,
+                    width: 80.w,
                     decoration: BoxDecoration(
                       color: AppColors.primary,
                       borderRadius: BorderRadius.only(
@@ -95,32 +98,66 @@ class _UserNavBarState extends State<NavBar> {
                         topRight: Radius.circular(50)
                       ),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: SvgPicture.asset(
-                        selectedIcon[index],
-                        height: 24.h,
-                        width: 24.w,
-                        color: AppColors.white,
-                      ),
+                    child: Column(
+                      children: [
+
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: SvgPicture.asset(
+                            selectedIcon[index],
+                            height: 24.h,
+                            width: 24.w,
+                            color: AppColors.white,
+                          ),
+                        ),
+
+                        CustomText(
+                          text: userNavText[index],
+                          color: AppColors.black,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14.w,
+                        ),
+
+                      ],
                     ),
                   ),
                 )
-                    : SvgPicture.asset(
-                  unselectedIcon[index],
-                  height: 24.h,
-                  width: 24.w,
-                  color: AppColors.primary,
+                    : Column(
+                  children: [
+                    SvgPicture.asset(
+                      unselectedIcon[index],
+                      height: 24.h,
+                      width: 24.w,
+                      color: AppColors.primary,
+                    ),
+
+                    SizedBox(
+                      height: 4,
+                    ),
+                    CustomText(
+                      text: userNavText[index],
+                      color: AppColors.black,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14.w,
+                    ),
+                  ],
                 ),
-                SizedBox(height: 4.h),
-                index == bottomNavIndex
-                    ? const SizedBox()
-                    : CustomText(
+
+              //  SizedBox(height: 4.h),
+
+                /*index == bottomNavIndex
+                    ? CustomText(
                   text: userNavText[index],
-                  color: AppColors.primary,
+                  color: AppColors.black,
                   fontWeight: FontWeight.w600,
                   fontSize: 14.w,
-                ),
+                )
+                    : CustomText(
+                  text: userNavText[index],
+                  color: AppColors.black,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14.w,
+                ),*/
               ],
             ),
           ),

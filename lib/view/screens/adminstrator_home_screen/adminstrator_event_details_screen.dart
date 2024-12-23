@@ -26,7 +26,7 @@ class _AdminstratorEventDetailsScreenState extends State<AdminstratorEventDetail
       return Scaffold(
       appBar: CustomRoyelAppbar(
         leftIcon: true,
-        titleName: "Administrator Event Details",
+        titleName: "Administrator Details",
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -53,51 +53,43 @@ class _AdminstratorEventDetailsScreenState extends State<AdminstratorEventDetail
                   const SizedBox(
                     width: 8,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                    
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                    
+                            const CustomText(
+                              text: "Rohingya refugee camp",
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.black_80,
+                            ),
 
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-
-                          const CustomText(
-                            text: "Rohingya refugee camp",
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.black_80,
-                          ),
-                          const SizedBox(
-                            width: 30,
-                          ),
-
-                          GestureDetector(
-                              onTap: (){
-                                Get.toNamed(AppRoutes.messageScreen);
-                              },
-                              child: CustomImage(imageSrc: AppIcons.chart)),
-
-                          const SizedBox(
-                            width: 16,
-                          ),
-
-                          GestureDetector(
-                              onTap: (){
-                                Get.toNamed(AppRoutes.memberScreen);
-                              },
-                              child: Icon(Icons.menu,size: 24,)),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 4,
-                      ),
-                      CustomText(
-                        text: "Download",
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.lightBlue,
-                      ),
-                    ],
+                            Padding(
+                              padding: const EdgeInsets.only(right: 16),
+                              child: GestureDetector(
+                                  onTap: (){
+                                    Get.toNamed(AppRoutes.adminstratorMember);
+                                  },
+                                  child: Icon(Icons.menu,size: 24,)),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        CustomText(
+                          text: "Download",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.lightBlue,
+                        ),
+                      ],
+                    ),
                   )
                 ],
               ),
@@ -110,9 +102,90 @@ class _AdminstratorEventDetailsScreenState extends State<AdminstratorEventDetail
                 fontWeight: FontWeight.w500,
                 color: AppColors.black_80,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 12,
               ),
+
+
+              Row(
+                children: [
+
+                  CustomText(
+                    text: "Rohingya refugee camp",
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.black_80,
+                  ),
+
+                  SizedBox(
+                    width: 4,
+                  ),
+                  CustomText(
+                    text: "(Event Name)",
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.lightBlue,
+                  ),
+                ],
+              ),
+
+              const SizedBox(
+                height: 8,
+              ),
+
+              Row(
+                children: [
+
+                  CustomText(
+                    text: "Empower Tomorrow",
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.black_80,
+                  ),
+
+                  SizedBox(
+                    width: 4,
+                  ),
+                  CustomText(
+                    text: "(Mission Name)",
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.lightBlue,
+                  ),
+                ],
+              ),
+
+              const SizedBox(
+                height: 12,
+              ),
+
+              Row(
+                children: [
+
+                  CustomText(
+                    text: "Global Horizons Foundation",
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.black_80,
+                  ),
+
+                  SizedBox(
+                    width: 4,
+                  ),
+                  CustomText(
+                    text: "(Organization)",
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.lightBlue,
+                  ),
+                ],
+              ),
+
+              const SizedBox(
+                height: 12,
+              ),
+
+
               Row(
                 children: [
                   Icon(

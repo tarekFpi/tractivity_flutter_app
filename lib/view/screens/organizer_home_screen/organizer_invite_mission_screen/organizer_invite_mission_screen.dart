@@ -26,60 +26,73 @@ class OrganizerInviteMissionScreen extends StatefulWidget {
       _OrganizerInviteMissionScreenState();
 }
 
-class _OrganizerInviteMissionScreenState
-    extends State<OrganizerInviteMissionScreen> {
+class _OrganizerInviteMissionScreenState extends State<OrganizerInviteMissionScreen> {
+
+
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final OrganizerController organizerController =
-      Get.find<OrganizerController>();
+
+  final OrganizerController organizerController =  Get.find<OrganizerController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
-      appBar: CustomRoyelAppbar(
-        titleName: "Mission",
+      appBar: AppBar(
+        title: Text(
+          "Mission",
+          style: TextStyle(
+              color: AppColors.black,
+              fontSize: 30,
+              fontWeight: FontWeight.w600),
+        ),
+
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Column(
           children: [
-            Row(
-              children: [
-                CustomNetworkImage(
-                  imageUrl: AppConstants.profileImage,
-                  height: 100,
-                  width: 100,
-                  boxShape: BoxShape.circle,
-                  border: Border.all(color: AppColors.primary, width: 3),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CustomText(
-                      text: "Mehedi Bin Ab. Salam",
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.location_on,
-                          color: AppColors.primary,
-                          size: 20,
-                        ),
-                        CustomText(
-                          text: "Bushwick Brooklyn, NY, USA",
-                          fontSize: 12,
-                          color: AppColors.primary,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ],
-                    )
-                  ],
-                )
-              ],
+            GestureDetector(
+              onTap: (){
+                Get.toNamed(AppRoutes.eventsProfileScreen);
+              },
+              child: Row(
+                children: [
+                  CustomNetworkImage(
+                    imageUrl: AppConstants.profileImage,
+                    height: 100,
+                    width: 100,
+                    boxShape: BoxShape.circle,
+                    border: Border.all(color: AppColors.primary, width: 3),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomText(
+                        text: "Mehedi Bin Ab. Salam",
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.location_on,
+                            color: AppColors.primary,
+                            size: 20,
+                          ),
+                          CustomText(
+                            text: "Bushwick Brooklyn, NY, USA",
+                            fontSize: 12,
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ],
+                      )
+                    ],
+                  )
+                ],
+              ),
             ),
 
             ///=============== Invite Mission Event List Tab Bar ===============
@@ -110,6 +123,7 @@ class _OrganizerInviteMissionScreenState
                         return CustomInviteMissionContainer();
                       })
                     ),
+
                   ///============ Complete Event ========
                   if(organizerController.currentIndex.value ==1)
                     Column(
@@ -144,7 +158,7 @@ class _OrganizerInviteMissionScreenState
                                     GestureDetector(
                                       onTap: () {
 
-                                        Get.toNamed(AppRoutes.organizerRecentEventDetails);
+                                        Get.toNamed(AppRoutes.organizerApprovedScreen);
                                       },
 
                                       child: Container(

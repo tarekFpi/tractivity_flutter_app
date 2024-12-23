@@ -199,7 +199,7 @@ class   AppStrings {
   static const String history = "History";
   static const String exploreEvent = "Explore Event";
   static const String donation = "Donation";
-  static const String completeEvent = "Complete Events";
+  static const String completeEvent = "Completed Events";
   static const String recentEvents = "Recent Events";
   static const String inviteEvent = "Invite Event";
   static const String eventListText = "Event List";

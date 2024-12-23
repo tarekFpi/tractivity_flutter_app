@@ -56,50 +56,48 @@ class _RecentEventExploreDetailsState extends State<RecentEventExploreDetails> {
                   const SizedBox(
                     width: 8,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-
-                          CustomText(
-                            text: "Rohingya refugee camp",
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.black_80,
-                          ),
-
-                          SizedBox(
-                            width: 40,
-                          ),
-
-
-                            CustomButton(
-                              onTap: () {
-                                ///chatScreen
-                                Get.toNamed(AppRoutes.messageScreen);
-                              },
-                              title: "Chat",
-                              width: 80.w,
-                              height: 32.h,
-                              textColor: AppColors.black,
-                              fillColor: AppColors.primary,
-                              fontSize: 12,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                    
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                    
+                            const CustomText(
+                              text: "Rohingya refugee camp",
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.black_80,
                             ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 4,
-                      ),
-                      CustomText(
-                        text: "Download",
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.lightBlue,
-                      ),
-                    ],
+                    
+
+                              CustomButton(
+                                onTap: () {
+                                  ///chatScreen
+                                  Get.toNamed(AppRoutes.messageScreen);
+                                },
+                                title: "Chat",
+                                width: 80.w,
+                                height: 32.h,
+                                textColor: AppColors.black,
+                                fillColor: AppColors.primary,
+                                fontSize: 12,
+                              ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        const CustomText(
+                          text: "Download",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.lightBlue,
+                        ),
+                      ],
+                    ),
                   )
                 ],
               ),
@@ -358,128 +356,117 @@ class _RecentEventExploreDetailsState extends State<RecentEventExploreDetails> {
                     ),
 
                   const SizedBox(
-                    width: 12,
+                    width: 8,
                   ),
 
-                  ///report_page
+                  CustomButton(
+                    onTap: () {},
+                    title: "Start Work",
+                    width: 80.w,
+                    height: 32.h,
+                    textColor: AppColors.black,
+                    fillColor: AppColors.primary,
+                    fontSize: 12,
+                  ),
 
-                    Row(
-                      children: [
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  CustomButton(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                          backgroundColor: Colors.white,
+                          insetPadding: EdgeInsets.all(16),
+                          contentPadding: EdgeInsets.all(16),
+                          //   clipBehavior: Clip.antiAliasWithSaveLayer,
+                          title: Align(
+                            alignment: Alignment.centerRight,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
 
-                        CustomButton(
-                          onTap: () {},
-                          title: "Start Work",
-                          width: 80.w,
-                          height: 32.h,
-                          textColor: AppColors.black,
-                          fillColor: AppColors.primary,
-                          fontSize: 12,
-                        ),
-
-                        const SizedBox(
-                          width: 8,
-                        ),
-                        CustomButton(
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (ctx) => AlertDialog(
-                                backgroundColor: Colors.white,
-                                insetPadding: EdgeInsets.all(16),
-                                contentPadding: EdgeInsets.all(16),
-                                //   clipBehavior: Clip.antiAliasWithSaveLayer,
-                                title: Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-
-                                      const CustomText(
-                                        text: "Working Time",
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                        color: AppColors.black_80,
-                                      ),
-
-                                      InkWell(
-                                          onTap: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: const Icon(
-                                            Icons.close,
-                                            size: 32,
-                                            color: Colors.black,
-                                          ))
-                                    ],
-                                  ),
+                                const CustomText(
+                                  text: "Working Time",
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.black_80,
                                 ),
-                                content: SizedBox(
+
+                                InkWell(
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Icon(
+                                      Icons.close,
+                                      size: 32,
+                                      color: Colors.black,
+                                    ))
+                              ],
+                            ),
+                          ),
+                          content: SizedBox(
+                            width: MediaQuery.sizeOf(context).width,
+                            height: 100,
+                            child: Column(
+                              children: [
+
+                                ///============ Working Distance ============
+                                Container(
+                                  height: 60,
                                   width: MediaQuery.sizeOf(context).width,
-                                  height: 100,
-                                  child: Column(
-                                    children: [
-
-                                      ///============ Working Distance ============
-                                      Container(
-                                        height: 60,
-                                        width: MediaQuery.sizeOf(context).width,
-                                        decoration: BoxDecoration(
-                                          color: AppColors.white,
-                                          borderRadius: BorderRadius.circular(10),
-                                          border: Border.all(color: AppColors.black_80, width: 1),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(right: 16.0),
-                                          child: CustomTextField(
-                                            readOnly: true,
-                                            fillColor: AppColors.white,
-                                            hintText: "04:30 Hours",
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                                  decoration: BoxDecoration(
+                                    color: AppColors.white,
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(color: AppColors.black_80, width: 1),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 16.0),
+                                    child: CustomTextField(
+                                      readOnly: true,
+                                      fillColor: AppColors.white,
+                                      hintText: "04:30 Hours",
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
-                          },
-                          title: "End Work",
-                          width: 80.w,
-                          height: 32.h,
-                          textColor: AppColors.black,
-                          fillColor: AppColors.primary,
-                          fontSize: 12,
-                        )
-                      ],
-                    ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    title: "End Work",
+                    width: 80.w,
+                    height: 32.h,
+                    textColor: AppColors.black,
+                    fillColor: AppColors.primary,
+                    fontSize: 12,
+                  )
 
                 ],
               ),
+
+
+              Padding(
+                padding: const EdgeInsets.only(bottom: 32,top: 24),
+                child: CustomButton(
+                  onTap: () {
+                    Get.toNamed(AppRoutes.exoloreEventCompletedScreen);
+                  },
+                  title: "Event Complete",
+                  height: 45.h,
+                  textColor: AppColors.black,
+                  fillColor: AppColors.primary,
+                  fontSize: 12,
+                ),
+              )
             ],
           ),
         ),
       ),
 
-      bottomNavigationBar:
-      Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
 
-            Padding(
-              padding: const EdgeInsets.only(bottom: 45,left: 16,right: 16),
-              child: CustomButton(
-                onTap: () {
-                  Get.toNamed(AppRoutes.exoloreEventCompletedScreen);
-                },
-                title: "Event Complete",
-                height: 45.h,
-                textColor: AppColors.black,
-                fillColor: AppColors.primary,
-                fontSize: 12,
-              ),
-            )
-        ],
-      ),
 
     );
   }
