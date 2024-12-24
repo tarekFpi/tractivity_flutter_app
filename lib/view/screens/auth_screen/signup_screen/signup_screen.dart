@@ -172,19 +172,22 @@ class _SignupScreenState extends State<SignupScreen> {
               SizedBox(
                 height: 12.h,
               ),
-              ///============ First Name ============
+
+              ///============ Last Name ============
               CustomFormCard(
-                  title: AppStrings.yourFirstName,
+                  title: "Your Name",
                   hintText: AppStrings.enterYourName,
                   hasBackgroundColor: true,
                   controller: TextEditingController()),
 
-              ///============ Last Name ============
+              ///============ First Name ============
               CustomFormCard(
-                  title: AppStrings.profession,
-                  hintText: AppStrings.enterYourName,
+                  title:"'Profession' with Talent/Skill everywhere",
+                  hintText: "Enter Talent/skill",
                   hasBackgroundColor: true,
                   controller: TextEditingController()),
+
+
 
               ///============ phoneNumber ============
               CustomFormCard(

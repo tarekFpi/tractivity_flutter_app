@@ -50,9 +50,10 @@ class _AdministratiorCreateScreenState extends State<AdministratiorCreateScreen>
         child: Obx(
           () {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Column(
                 children: [
+
                   Row(
                     children: [
                       CustomNetworkImage(
@@ -127,32 +128,35 @@ class _AdministratiorCreateScreenState extends State<AdministratiorCreateScreen>
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
 
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 8,right: 8),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
 
-                                      CustomText(
-                                        text: "${index+1} .",
-                                        fontSize: 16,
-                                        color: AppColors.black_80,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                                                                     /*     CustomText(
+                                          text: "${index+1} .",
+                                          fontSize: 16,
+                                          color: AppColors.black_80,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                    */
+                                          CustomText(
+                                          text: "${index+1}.Global Horizons Foundation",
+                                          fontSize: 16,
+                                          color: AppColors.black_80,
+                                          fontWeight: FontWeight.w600,
+                                        ),
 
-                                      const CustomText(
-                                        text: "Global Horizons Foundation",
-                                        fontSize: 16,
-                                        color: AppColors.black_80,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-
-                                      const CustomText(
-                                        text: "22-12-2025",
-                                        fontSize: 12,
-                                        color: AppColors.black_80,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ],
+                                        const CustomText(
+                                          text: "22-12-2025",
+                                          fontSize: 12,
+                                          color: AppColors.black_80,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ],
+                                    ),
                                   ),
 
                                   const SizedBox(
@@ -160,7 +164,7 @@ class _AdministratiorCreateScreenState extends State<AdministratiorCreateScreen>
                                   ),
 
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 12,right: 8),
+                                    padding: const EdgeInsets.only(left: 8,right: 8),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -215,57 +219,50 @@ class _AdministratiorCreateScreenState extends State<AdministratiorCreateScreen>
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
 
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-
-                                      CustomText(
-                                        text: "${index+1} .",
-                                        fontSize: 16,
-                                        color: AppColors.black_80,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-
-                                      const CustomText(
-                                        text: "Global Horizons Foundation",
-                                        fontSize: 16,
-                                        color: AppColors.black_80,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-
-                                      const CustomText(
-                                        text: "22-12-2025",
-                                        fontSize: 12,
-                                        color: AppColors.black_80,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ],
-                                  ),
-
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 12,right: 8),
+                                    padding: const EdgeInsets.only(left: 8,right: 8),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
 
-                                        const Flexible(
-                                          child: SizedBox(
-                                            width: 250,
-                                            child: CustomText(
-                                              text: "Empowering communities  worldwide \n through education, healthcare,\n and sustainable development initiatives.",
-                                              fontSize: 12,
-                                              color: AppColors.black_80,
-                                              fontWeight: FontWeight.w400,
-                                              textAlign: TextAlign.start,
-                                            ),
+                                          CustomText(
+                                          text: "${index+1}.Global Horizons Foundation",
+                                          fontSize: 16,
+                                          color: AppColors.black_80,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+
+                                        const CustomText(
+                                          text: "22-12-2025",
+                                          fontSize: 12,
+                                          color: AppColors.black_80,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 8,right: 8),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+
+                                        const SizedBox(
+                                          width: 250,
+                                          child: CustomText(
+                                            text: "Empowering communities  worldwide  through education, healthcare,  and sustainable development initiatives.",
+                                            fontSize: 12,
+                                            color: AppColors.black_80,
+                                            fontWeight: FontWeight.w400,
+                                            textAlign: TextAlign.start,
+                                            overflow: TextOverflow.clip, // Add ellipsis at the end if the text overflows.
+                                            // maxLines: 3,
                                           ),
                                         ),
+
 
                                        Column(
                                          children: [
@@ -301,9 +298,7 @@ class _AdministratiorCreateScreenState extends State<AdministratiorCreateScreen>
                                            CustomButton(
                                              onTap: () {
 
-                                              storage.write("status","report_page");
-
-                                               Get.toNamed(AppRoutes.exploreEventScreen);
+                                               Get.toNamed(AppRoutes.adminstratiorEventListScreen);
                                              },
                                              title: "Report",
                                              width: 60.w,
@@ -350,12 +345,15 @@ class _AdministratiorCreateScreenState extends State<AdministratiorCreateScreen>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
 
-                        const CustomText(
-                          text: "Create Organization",
-                          fontSize: 24,
-                          color: AppColors.black,
-                          fontWeight: FontWeight.w500,
-                          bottom: 8,
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: CustomText(
+                            text: "Create Organization",
+                            fontSize: 24,
+                            color: AppColors.black,
+                            fontWeight: FontWeight.w500,
+                            bottom: 8,
+                          ),
                         ),
 
                         Align(

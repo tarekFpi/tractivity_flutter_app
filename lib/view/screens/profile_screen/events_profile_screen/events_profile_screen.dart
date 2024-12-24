@@ -37,7 +37,9 @@ class _EventsProfileScreenState extends State<EventsProfileScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
+
             ///================= Profile Image , Name and Location
+
             Row(
               children: [
                 CustomNetworkImage(

@@ -27,14 +27,28 @@ class OnboardingScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
 
-           /// CustomImage(imageSrc: AppImages.onboarding),
+           /// CustomImage(imageSrc: AppImages.onboarding), joinUpAlterNet
 
-            CustomText(
-              text: AppStrings.welcomeToAlterNet,
-              fontSize: 24,
-              fontWeight: FontWeight.w600,
-              color: AppColors.white,
-            ),
+          Column(
+            children: [
+
+              CustomText(
+                text: AppStrings.welcomeToAlterNet,
+                fontSize: 48,
+                fontWeight: FontWeight.w700,
+                color: AppColors.white,
+              ),
+
+              CustomText(
+                text: AppStrings.joinUpAlterNet,
+                fontSize: 32,
+                fontWeight: FontWeight.w600,
+                color: AppColors.white,
+              ),
+
+            ],
+          ),
+
             CustomButton(
               onTap: () {
 

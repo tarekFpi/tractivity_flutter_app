@@ -88,10 +88,10 @@ class CustomInviteMissionContainer extends StatelessWidget {
 
                   Get.toNamed(AppRoutes.organizerApprovedScreen);
 
-                }, title: "Approved",height: 30,width: 70,fontSize: 12,),
+                }, title: "Accept",height: 30,width: 70,fontSize: 12,),
                 SizedBox(height: 10.h,),
                 CustomButton(onTap: (){
-                  showDialog(
+           /*       showDialog(
                     context: context,
                     builder: (ctx) => AlertDialog(
                       backgroundColor: Colors.white,
@@ -100,12 +100,12 @@ class CustomInviteMissionContainer extends StatelessWidget {
                       title: SizedBox(),
                       content: SizedBox(
                         width: MediaQuery.sizeOf(context).width,
-                        child: AlertDialogEvent(title: "Are you sure you want to \n delete ?",discription: "",),
+                        child: AlertDialogEvent(title: "Are you sure you want to \n Reject ?",discription: "",),
                       ),
                     ),
-                  );
+                  );*/
 
-                }, title: "Delete",height: 30,width: 70,fontSize: 12,),
+                }, title: "Reject",height: 30,width: 70,fontSize: 12,),
               ],
             )
 

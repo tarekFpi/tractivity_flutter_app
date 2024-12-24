@@ -141,28 +141,32 @@ class _OrganizerInviteMissionScreenState extends State<OrganizerInviteMissionScr
                               children: [
 
                                 CustomNetworkImage(
-                                  imageUrl: AppConstants.profileImage,
-                                  height: 170.h,
+                                  imageUrl: AppConstants.eventImage,
+                                  height: 190.h,
                                   width: 170.h,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
 
                                 SizedBox(
-                                  width: 10,
+                                  width: 16,
                                 ),
 
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
 
-                                    GestureDetector(
-                                      onTap: () {
+                                    CustomButton(onTap: (){
 
+                                      Get.toNamed(AppRoutes.organizerApprovedScreen);
+                                    }, title: "Duplicate",height: 30,width: 80,fontSize: 12,textColor: Colors.black87,),
+
+
+                                 /*   GestureDetector(
+                                      onTap: () {
                                         Get.toNamed(AppRoutes.organizerApprovedScreen);
                                       },
-
                                       child: Container(
-                                        height: 30,
+                                        height: 25,
                                         width: 70,
                                         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                                         decoration: BoxDecoration(
@@ -171,12 +175,12 @@ class _OrganizerInviteMissionScreenState extends State<OrganizerInviteMissionScr
                                         ),
                                         child: CustomText(
                                           text:"Duplicate",
-                                          fontSize: 8,
+                                          fontSize: 9,
                                           fontWeight: FontWeight.w500,
                                           color: AppColors.black,
                                         ),
                                       ),
-                                    ),
+                                    ),*/
 
                                     SizedBox(
                                       height: 8,

@@ -18,7 +18,18 @@ class VerificationMailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomRoyelAppbar(titleName:  AppStrings.serveOut,),
+     //appBar: CustomRoyelAppbar(titleName:  AppStrings.serveOut,),
+     appBar: AppBar(
+       title: Text(
+         AppStrings.serveOut,
+         style: TextStyle(
+             color: AppColors.black,
+             fontSize: 30,
+             fontWeight: FontWeight.w600),
+       ),
+
+     ),
+
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 80),
@@ -54,6 +65,10 @@ class VerificationMailScreen extends StatelessWidget {
                       hintText: AppStrings.enterYourEmail,
                       controller: TextEditingController(),
         
+                  ),
+
+                  SizedBox(
+                    height: 12,
                   ),
         
                   ///============ Login Button ============

@@ -70,6 +70,10 @@ class VerificationScreen extends StatelessWidget {
                  ),
                ],
              ),
+
+              SizedBox(
+                height: 16,
+              ),
               ///============ Login Button ============
               CustomButton(onTap: (){
                  Get.toNamed(AppRoutes.forgotPassword);

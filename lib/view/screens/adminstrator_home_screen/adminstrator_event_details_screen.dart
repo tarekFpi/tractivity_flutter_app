@@ -26,7 +26,7 @@ class _AdminstratorEventDetailsScreenState extends State<AdminstratorEventDetail
       return Scaffold(
       appBar: CustomRoyelAppbar(
         leftIcon: true,
-        titleName: "Administrator Details",
+        titleName: "Event Details",
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

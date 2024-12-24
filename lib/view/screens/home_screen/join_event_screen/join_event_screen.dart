@@ -28,9 +28,14 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomRoyelAppbar(
-        leftIcon: true,
-        titleName: "Mission",
+      appBar: AppBar(
+        title: Text(
+          "Mission",
+          style: TextStyle(
+              color: AppColors.black,
+              fontSize: 30,
+              fontWeight: FontWeight.w600),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -107,7 +112,7 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
               height: 20,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 16,right: 16),
+              padding: const EdgeInsets.only(left: 16,right: 22),
               child: CustomTabSelector(
                   tabs: eventsController.joinEvenNameList,
                   selectedIndex: eventsController.currentIndex.value,
@@ -118,9 +123,11 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
                   selectedColor: AppColors.primary,
                   unselectedColor: AppColors.black),
             ),
+
             SizedBox(
               height: 20,
             ),
+
             ///============ Recent Event ========
             Expanded(
               child: ListView(
@@ -131,14 +138,15 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
                     Column(
                         children: List.generate(5, (index) {
 
-
                             return Padding(
                             padding: const EdgeInsets.only(bottom: 20.0),
                             child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
 
                                 CustomNetworkImage(
-                                  imageUrl: AppConstants.profileImage,
+                                  imageUrl: AppConstants.eventImage,
                                   height: 170.h,
                                   width: 170.h,
                                   borderRadius: BorderRadius.circular(10),
@@ -150,6 +158,7 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
 
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
 
                                     SizedBox(
@@ -163,7 +172,8 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
                                         bottom: 5,
                                       ),
                                     ),
-                                    /// Location
+
+                                    ///======== Location ==============
                                     Row(
                                       children: [
                                         Icon(
@@ -179,11 +189,14 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
                                         ),
                                       ],
                                     ),
+
                                     SizedBox(
                                       height: 5,
                                     ),
                                     // Leader
                                     Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
                                         CustomNetworkImage(
                                           imageUrl: AppConstants.profileImage,
@@ -226,7 +239,7 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
                                               borderRadius: BorderRadius.circular(10),
                                             ),
                                             child: CustomText(
-                                              text:   "Approved",
+                                              text:   "Accept",
                                               fontSize: 14,
                                               fontWeight: FontWeight.w500,
                                               color: AppColors.black,
@@ -239,7 +252,7 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
                                           InkWell(
                                             onTap: () {
 
-                                              showDialog(
+                                          /*    showDialog(
                                                 context: context,
                                                 builder: (ctx) => AlertDialog(
                                                   backgroundColor: Colors.white,
@@ -251,7 +264,7 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
                                                     child: AlertDialogEvent(title: "Are you sure you want to \n Delivery this Event?",discription: "",),
                                                   ),
                                                 ),
-                                              );
+                                              );*/
                                             },
                                             child: Container(
                                               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
@@ -260,7 +273,7 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
                                                 borderRadius: BorderRadius.circular(10),
                                               ),
                                               child: CustomText(
-                                                text: " Delete",
+                                                text: "Reject",
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w500,
                                                 color: AppColors.black,
@@ -278,35 +291,32 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
                         })
                     ),
 
-                  ///============ Complete Event ========
+                  ///============  Event List ========
                   if(eventsController.currentIndex.value ==1)
                     Column(
                         children: List.generate(2, (index) {
-                       /*   return CustomExploreContainer(
-                            image: AppConstants.profileImage,
-                            title: "Cox’s Bazar Beach Helping Peolple",
-                            location: "Cox’s Bazar, Bangladesh",
-                            leaderName: "Mehedi",
-                          );*/
 
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 20.0),
                             child: Row(
+                             mainAxisAlignment: MainAxisAlignment.start,
+                             crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
 
                                 CustomNetworkImage(
-                                  imageUrl: AppConstants.profileImage,
+                                  imageUrl: AppConstants.eventImage,
                                   height: 170.h,
                                   width: 170.h,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
 
                                 SizedBox(
-                                  width: 10,
+                                  width: 8,
                                 ),
 
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
 
                                     SizedBox(
@@ -320,8 +330,11 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
                                         bottom: 5,
                                       ),
                                     ),
+
                                     /// Location
                                     Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Icon(
                                           Icons.location_on,
@@ -333,6 +346,7 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
                                           fontSize: 12,
                                           color: AppColors.black_80,
                                           fontWeight: FontWeight.w400,
+                                          textAlign: TextAlign.start,
                                         ),
                                       ],
                                     ),
@@ -383,7 +397,7 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
                                               borderRadius: BorderRadius.circular(10),
                                             ),
                                             child: CustomText(
-                                              text:   "Explore",
+                                              text: "Explore",
                                               fontSize: 14,
                                               fontWeight: FontWeight.w500,
                                               color: AppColors.black,

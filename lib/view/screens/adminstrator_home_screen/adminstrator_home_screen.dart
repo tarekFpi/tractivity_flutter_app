@@ -70,7 +70,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
         () {
           return SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Column(
                 children: [
 
@@ -139,7 +139,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
-                            height: 120,
+                            height: 110,
                             decoration: BoxDecoration(
                               color: AppColors.grey_5.withOpacity(0.5),
                               borderRadius: BorderRadius.circular(15),
@@ -149,32 +149,29 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
 
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8,right: 8),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
 
-                                    CustomText(
-                                      text: "${index+1} .",
-                                      fontSize: 16,
-                                      color: AppColors.black_80,
-                                      fontWeight: FontWeight.w600,
-                                    ),
 
-                                    CustomText(
-                                      text: "Global Horizons Foundation",
-                                      fontSize: 16,
-                                      color: AppColors.black_80,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                                      CustomText(
+                                        text: "${index+1}.Donation Administrator",
+                                        fontSize: 16,
+                                        color: AppColors.black_80,
+                                        fontWeight: FontWeight.w600,
+                                      ),
 
-                                    CustomText(
-                                      text: "22-12-2025",
-                                      fontSize: 12,
-                                      color: AppColors.black_80,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ],
+                                      CustomText(
+                                        text: "22-12-2025",
+                                        fontSize: 12,
+                                        color: AppColors.black_80,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ],
+                                  ),
                                 ),
 
                                 SizedBox(
@@ -182,22 +179,22 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                 ),
 
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 12,right: 8),
+                                  padding: const EdgeInsets.only(left: 8,right: 8),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
 
-                                      Flexible(
-                                        child: SizedBox(
-                                          width: 250,
-                                          child: CustomText(
-                                            text: "Empowering communities  worldwide \n through education, healthcare,\n and sustainable development initiatives.",
-                                            fontSize: 12,
-                                            color: AppColors.black_80,
-                                            fontWeight: FontWeight.w400,
-                                            textAlign: TextAlign.start,
-                                          ),
+                                      SizedBox(
+                                        width: 250,
+                                        child: CustomText(
+                                          text: "Empowering communities  worldwide  through education, healthcare,  and sustainable development initiatives.",
+                                          fontSize: 12,
+                                          color: AppColors.black_80,
+                                          fontWeight: FontWeight.w400,
+                                          textAlign: TextAlign.start,
+                                          overflow: TextOverflow.clip, // Add ellipsis at the end if the text overflows.
+                                         // maxLines: 3,
                                         ),
                                       ),
 
@@ -251,32 +248,35 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
 
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 8,right: 8),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
 
-                                      CustomText(
-                                        text: "${index+1} .",
-                                        fontSize: 16,
-                                        color: AppColors.black_80,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                                     /*   CustomText(
+                                          text: "${index+1} .",
+                                          fontSize: 16,
+                                          color: AppColors.black_80,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                    */
+                                        CustomText(
+                                          text: "${index+1}.Global Horizons Foundation",
+                                          fontSize: 16,
+                                          color: AppColors.black_80,
+                                          fontWeight: FontWeight.w600,
+                                        ),
 
-                                      CustomText(
-                                        text: "Global Horizons Foundation",
-                                        fontSize: 16,
-                                        color: AppColors.black_80,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-
-                                      CustomText(
-                                        text: "22-12-2025",
-                                        fontSize: 12,
-                                        color: AppColors.black_80,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ],
+                                        CustomText(
+                                          text: "22-12-2025",
+                                          fontSize: 12,
+                                          color: AppColors.black_80,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ],
+                                    ),
                                   ),
 
                                   SizedBox(
@@ -284,22 +284,22 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                   ),
 
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 12,right: 8),
+                                    padding: const EdgeInsets.only(left: 8,right: 8),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
 
-                                        Flexible(
-                                          child: SizedBox(
-                                            width: 250,
-                                            child: CustomText(
-                                              text: "Empowering communities  worldwide \n through education, healthcare,\n and sustainable development initiatives.",
-                                              fontSize: 12,
-                                              color: AppColors.black_80,
-                                              fontWeight: FontWeight.w400,
-                                              textAlign: TextAlign.start,
-                                            ),
+                                        SizedBox(
+                                          width: 250,
+                                          child: CustomText(
+                                            text: "Empowering communities  worldwide  through education, healthcare,  and sustainable development initiatives.",
+                                            fontSize: 12,
+                                            color: AppColors.black_80,
+                                            fontWeight: FontWeight.w400,
+                                            textAlign: TextAlign.start,
+                                            overflow: TextOverflow.clip, // Add ellipsis at the end if the text overflows.
+                                            // maxLines: 3,
                                           ),
                                         ),
 
@@ -339,9 +339,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                             CustomButton(
                                               onTap: () {
 
-                                                storage.write("status","report_page");
-
-                                             ///   Get.toNamed(AppRoutes.exploreEventScreen);
+                                               Get.toNamed(AppRoutes.adminstratiorEventListScreen);
                                               },
                                               title: "Report",
                                               width: 60.w,

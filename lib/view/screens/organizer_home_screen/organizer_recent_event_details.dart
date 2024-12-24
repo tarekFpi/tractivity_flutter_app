@@ -63,14 +63,30 @@ class _OrganizerRecentEventDetailsState extends State<OrganizerRecentEventDetail
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                     
-                            const CustomText(
-                              text: "Rohingya refugee camp",
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.black_80,
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const CustomText(
+                                  text: "Rohingya refugee camp",
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.black_80,
+                                ),
+
+                                SizedBox(
+                                  height: 4,
+                                ),
+                                CustomText(
+                                  text: "Download",
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.lightBlue,
+                                ),
+                              ],
                             ),
 
-                    
+
                             GestureDetector(
                               onTap: (){
                                 Get.toNamed(AppRoutes.messageScreen);
@@ -91,32 +107,94 @@ class _OrganizerRecentEventDetailsState extends State<OrganizerRecentEventDetail
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        CustomText(
-                          text: "Download",
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.lightBlue,
-                        ),
+
+
                       ],
                     ),
                   )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 12,
               ),
-              CustomText(
-                text: "Rohingya refugee camp",
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: AppColors.black_80,
+
+              Row(
+                children: [
+
+                  CustomText(
+                    text: "Rohingya refugee camp",
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.black_80,
+                  ),
+
+                  SizedBox(
+                    width: 4,
+                  ),
+                  CustomText(
+                    text: "(Event Name)",
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.lightBlue,
+                  ),
+                ],
               ),
-              SizedBox(
+
+              const SizedBox(
+                height: 8,
+              ),
+
+              Row(
+                children: [
+
+                  CustomText(
+                    text: "Empower Tomorrow",
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.black_80,
+                  ),
+
+                  SizedBox(
+                    width: 4,
+                  ),
+                  CustomText(
+                    text: "(Mission Name)",
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.lightBlue,
+                  ),
+                ],
+              ),
+
+              const SizedBox(
                 height: 12,
               ),
+
+              Row(
+                children: [
+                  CustomText(
+                    text: "Global Horizons Foundation",
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.black_80,
+                  ),
+
+                  SizedBox(
+                    width: 4,
+                  ),
+                  CustomText(
+                    text: "(Organization)",
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.lightBlue,
+                  ),
+                ],
+              ),
+
+              const SizedBox(
+                height: 12,
+              ),
+
               Row(
                 children: [
                   Icon(
