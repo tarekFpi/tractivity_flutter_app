@@ -17,7 +17,7 @@ class   AppStrings {
   static const String welcomeBack = "Welcome Back !";
   static const String pleaseEnterYourPersonalData = "Please Enter Your Personal Data";
 
-  static const String enterYourName = "Enter  profession";
+  static const String enterYourName = "Enter name";
   static const String enterYourLocation = "Enter Your Location";
   static const String enterYourEmail = "Enter Your Email";
   static const String enterCountry = "Enter Country";
@@ -95,8 +95,9 @@ class   AppStrings {
   static const String team = "Join Event";
   ///===================================================
   static const String letsGo = "LET’S GO";
-  static const String serveOut = "ServeOut";
-  static const String welcomeToAlterNet = "Welcome to AlterNET!";
+  static const String serveOut = "JoinUp";
+  static const String welcomeToAlterNet = "Welcome to";
+  static const String joinUpAlterNet = "JoinUp!";
   static const String orSignInWith = "or sign in with";
   static const String friendsWorkflow = "Friends Workflow";
   static const String searchForSomeone = "Search for someone";

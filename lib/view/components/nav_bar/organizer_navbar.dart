@@ -56,7 +56,7 @@ class _UserNavBarState extends State<OrganizerNavbar> {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [AppColors.lightWhite, AppColors.lightWhite])),
-      height: 100.h,
+      height: 95.h,
       width: MediaQuery.of(context).size.width,
       alignment: Alignment.center,
       child: Row(
@@ -71,41 +71,46 @@ class _UserNavBarState extends State<OrganizerNavbar> {
               children: [
                 index == bottomNavIndex
                     ? Card(
-                  elevation: 90,
+                  elevation: 85,
                   shadowColor: AppColors.primary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                         topLeft:Radius.circular(50),
-                        topRight: Radius.circular(50)
+                        topRight: Radius.circular(50),
+                        bottomLeft: Radius.circular(12),
+                        bottomRight: Radius.circular(12)
                     ),
                   ),
                   color: Colors.transparent,
                   child: Container(
-                    height: 80.h,
+                    height: 85.h,
                     width: 80.w,
                     decoration: BoxDecoration(
                       color: AppColors.primary,
                       borderRadius: BorderRadius.only(
                           topLeft:Radius.circular(50),
-                          topRight: Radius.circular(50)
+                          topRight: Radius.circular(50),
+                          bottomLeft: Radius.circular(12),
+                          bottomRight: Radius.circular(12)
                       ),
                     ),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
 
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: SvgPicture.asset(
-                            selectedIcon[index],
-                            height: 24.h,
-                            width: 24.w,
-                            color: AppColors.white,
-                          ),
+                        SvgPicture.asset(
+                          selectedIcon[index],
+                          height: 24.h,
+                          width: 24.w,
+                          color: AppColors.white,
                         ),
 
+                        SizedBox(
+                          height: 4,
+                        ),
                         CustomText(
                           text: userNavText[index],
-                          color: AppColors.black,
+                          color: AppColors.white,
                           fontWeight: FontWeight.w600,
                           fontSize: 14.w,
                         ),
@@ -114,21 +119,37 @@ class _UserNavBarState extends State<OrganizerNavbar> {
                     ),
                   ),
                 )
-                    : SvgPicture.asset(
-                  unselectedIcon[index],
-                  height: 24.h,
-                  width: 24.w,
-                  color: AppColors.primary,
-                ),
-                SizedBox(height: 4.h),
-                index == bottomNavIndex
+                    : Column(
+              children: [
+              SvgPicture.asset(
+              unselectedIcon[index],
+                height: 24.h,
+                width: 24.w,
+                color: AppColors.primary,
+              ),
+
+          SizedBox(
+            height: 4,
+          ),
+          CustomText(
+            text: userNavText[index],
+            color: AppColors.black,
+            fontWeight: FontWeight.w600,
+            fontSize: 14.w,
+          ),
+          ],
+        ),
+
+               // SizedBox(height: 4.h),
+
+              /*  index == bottomNavIndex
                     ? const SizedBox()
                     : CustomText(
                   text: userNavText[index],
                   color: AppColors.primary,
                   fontWeight: FontWeight.w600,
                   fontSize: 14.w,
-                ),
+                ),*/
               ],
             ),
           ),

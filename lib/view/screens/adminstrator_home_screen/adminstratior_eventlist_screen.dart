@@ -12,45 +12,41 @@ import 'package:tractivity_app/view/components/custom_royel_appbar/custom_royel_
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:tractivity_app/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/alert_dialog_event.dart';
-import 'package:tractivity_app/view/screens/notification/notification_alert.dart';
 
-class EventCompleteScreen extends StatefulWidget {
-  const EventCompleteScreen({super.key});
+
+class AdminstratiorEventListScreen extends StatefulWidget {
+  const AdminstratiorEventListScreen({super.key});
 
   @override
-  State<EventCompleteScreen> createState() => _EventCompleteScreenState();
+  State<AdminstratiorEventListScreen> createState() => _AdminstratiorEventListScreenState();
 }
 
-class _EventCompleteScreenState extends State<EventCompleteScreen> {
-
+class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScreen> {
 
 
   @override
   Widget build(BuildContext context) {
-       return Scaffold(
-   /*   appBar: const CustomRoyelAppbar(
-        titleName: "Completed Event",
-        leftIcon: true,
-      ),*/
-         appBar:  AppBar(
-           leading: Builder(builder: (context) {
-             return IconButton(
-                 onPressed: () => Get.back(),
-                 icon: Icon(
-                   Icons.arrow_back_rounded,
-                   color: AppColors.black,
-                 ));
-           }),
-           title: Text(
-             "Completed Event",
-             style: TextStyle(
-                 color: AppColors.black,
-                 fontSize: 30,
-                 fontWeight: FontWeight.w600),
-           ),
+    return Scaffold(
 
-         ),
-         body: SingleChildScrollView(
+      appBar:  AppBar(
+        leading: Builder(builder: (context) {
+          return IconButton(
+              onPressed: () => Get.back(),
+              icon: const Icon(
+                Icons.arrow_back_rounded,
+                color: AppColors.black,
+              ));
+        }),
+        title: const Text(
+          "Event List",
+          style: TextStyle(
+              color: AppColors.black,
+              fontSize: 30,
+              fontWeight: FontWeight.w600),
+        ),
+
+      ),
+      body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: Column(
@@ -194,7 +190,7 @@ class _EventCompleteScreenState extends State<EventCompleteScreen> {
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       child: const CustomText(
-                                        text:  "Complete",
+                                        text:  "Approved",
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500,
                                         color: AppColors.black,

@@ -178,13 +178,27 @@ class _HomeScreenState extends State<HomeScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
 
-                              CustomText(
+                       /*       CustomText(
                                 text: "Complete Event \n Details",
                                 fontSize: 24.sp,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.blue,
                                 textAlign: TextAlign.start,
+                              ),*/
+
+                              Text.rich(
+                                  TextSpan(
+                                      text: 'Complete Event',
+                                      style:  TextStyle(fontSize: 24.sp,fontWeight: FontWeight.w600),
+                                      children: <InlineSpan>[
+                                        TextSpan(
+                                          text: '\nDetails',
+                                          style: TextStyle(fontSize: 24.sp,fontWeight: FontWeight.w600),
+                                        )
+                                      ]
+                                  )
                               ),
+
 
                               Row(
                                 children: [
@@ -271,7 +285,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
 
                               CustomNetworkImage(
-                                imageUrl: AppConstants.profileImage,
+                                imageUrl: AppConstants.eventImage,
                                 height: 170.h,
                                 width: 170.h,
                                 borderRadius: BorderRadius.circular(10),

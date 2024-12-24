@@ -130,7 +130,7 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
                             children: [
 
                               CustomNetworkImage(
-                                imageUrl: AppConstants.profileImage,
+                                imageUrl: AppConstants.eventImage,
                                 height: 170.h,
                                 width: 170.h,
                                 borderRadius: BorderRadius.circular(10),
@@ -244,7 +244,7 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
                             children: [
 
                               CustomNetworkImage(
-                                imageUrl: AppConstants.profileImage,
+                                imageUrl: AppConstants.eventImage,
                                 height: 170.h,
                                 width: 170.h,
                                 borderRadius: BorderRadius.circular(10),
@@ -350,7 +350,7 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
                                               title: SizedBox(),
                                               content: SizedBox(
                                                 width: MediaQuery.sizeOf(context).width,
-                                                child: AlertDialogEvent(title: "Are you sure you want to \n Delivery this Event?",discription: "",),
+                                                child: AlertDialogEvent(title: "Are you sure you want to \n Complete this Event?",discription: "",),
                                               ),
                                             ),
                                           );
@@ -362,7 +362,7 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
                                             borderRadius: BorderRadius.circular(10),
                                           ),
                                           child: CustomText(
-                                            text:"Delivery",
+                                            text:"Complete",
                                             fontSize: 14,
                                             fontWeight: FontWeight.w500,
                                             color: AppColors.black,

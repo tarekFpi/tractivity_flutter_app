@@ -60,17 +60,15 @@ class _UserNavBarState extends State<NavBar> {
       // color: AppColors.dartBlue,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.only(topRight: Radius.circular(40.r), topLeft: Radius.circular(40.r)),
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [AppColors.lightWhite, AppColors.lightWhite])),
-      height: 90.h,
+         ),
+      height: 95.h,
       width: MediaQuery.of(context).size.width,
       alignment: Alignment.center,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: List.generate(
+
           selectedIcon.length,
               (index) => InkWell(
             onTap: () => onTap(index),
@@ -84,40 +82,42 @@ class _UserNavBarState extends State<NavBar> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                         topLeft:Radius.circular(50),
-                        topRight: Radius.circular(50)
+                        topRight: Radius.circular(50),
+                        bottomLeft: Radius.circular(12),
+                        bottomRight: Radius.circular(12)
                     ),
                   ),
                   color: Colors.transparent,
                   child: Container(
-                    height: 80.h,
+                    height: 85.h,
                     width: 80.w,
                     decoration: BoxDecoration(
-                      color: AppColors.primary,
+                     color: AppColors.primary,
                       borderRadius: BorderRadius.only(
                           topLeft:Radius.circular(50),
-                        topRight: Radius.circular(50)
+                          topRight: Radius.circular(50),
+                          bottomLeft: Radius.circular(12),
+                          bottomRight: Radius.circular(12)
                       ),
                     ),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: SvgPicture.asset(
-                            selectedIcon[index],
-                            height: 24.h,
-                            width: 24.w,
-                            color: AppColors.white,
-                          ),
+                        SvgPicture.asset(
+                          selectedIcon[index],
+                          height: 24.h,
+                          width: 24.w,
+                          color: AppColors.white,
                         ),
-
+                        SizedBox(
+                          height: 4,
+                        ),
                         CustomText(
                           text: userNavText[index],
-                          color: AppColors.black,
+                          color: AppColors.white,
                           fontWeight: FontWeight.w600,
-                          fontSize: 14.w,
+                          fontSize: 12.w,
                         ),
-
                       ],
                     ),
                   ),
@@ -138,12 +138,11 @@ class _UserNavBarState extends State<NavBar> {
                       text: userNavText[index],
                       color: AppColors.black,
                       fontWeight: FontWeight.w600,
-                      fontSize: 14.w,
+                      fontSize: 12.w,
                     ),
                   ],
                 ),
 
-              //  SizedBox(height: 4.h),
 
                 /*index == bottomNavIndex
                     ? CustomText(

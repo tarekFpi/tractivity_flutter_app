@@ -25,7 +25,7 @@ class _JonEventDetailsScreenState extends State<JonEventDetailsScreen> {
         return Scaffold(
       appBar: CustomRoyelAppbar(
         leftIcon: true,
-        titleName: "Join Event Details",
+        titleName: "Join Event",
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -236,7 +236,8 @@ class _JonEventDetailsScreenState extends State<JonEventDetailsScreen> {
                   const SizedBox(
                     width: 10,
                   ),
-                  Text.rich(
+
+                  const Text.rich(
                     TextSpan(
                         text: 'Mehedi Bin',
                         style: TextStyle(
@@ -268,7 +269,7 @@ class _JonEventDetailsScreenState extends State<JonEventDetailsScreen> {
                   const SizedBox(
                     width: 10,
                   ),
-                  Text.rich(
+                  const Text.rich(
                     TextSpan(
                         text: 'Sujon',
                         style: TextStyle(
@@ -331,32 +332,25 @@ class _JonEventDetailsScreenState extends State<JonEventDetailsScreen> {
                 height: 16,
               ),
 
-
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16,left: 12,right: 12),
+                child: CustomButton(
+                  onTap: () {
+                    Get.toNamed(AppRoutes.joinDetailsScreen);
+                  },
+                  title: "Join",
+                  height: 45.h,
+                  textColor: AppColors.black,
+                  fillColor: AppColors.primary,
+                  fontSize: 14,
+                ),
+              )
             ],
           ),
         ),
       ),
 
-      bottomNavigationBar:
-      Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
 
-          Padding(
-            padding: const EdgeInsets.only(bottom: 45,left: 16,right: 16),
-            child: CustomButton(
-              onTap: () {
-                Get.toNamed(AppRoutes.joinDetailsScreen);
-              },
-              title: "Join",
-              height: 45.h,
-              textColor: AppColors.black,
-              fillColor: AppColors.primary,
-              fontSize: 12,
-            ),
-          )
-        ],
-      ),
 
     );
   }

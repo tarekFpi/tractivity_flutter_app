@@ -37,6 +37,7 @@ class _JoinDetailsScreenState extends State<JoinDetailsScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
               CustomNetworkImage(
                 imageUrl: AppConstants.profileImage,
                 height: 170.h,
@@ -53,50 +54,51 @@ class _JoinDetailsScreenState extends State<JoinDetailsScreen> {
                 children: [
 
                   CustomImage(imageSrc: AppIcons.dowanload),
-                  SizedBox(
+
+                  const SizedBox(
                     width: 8,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
 
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-
-                          CustomText(
-                            text: "Rohingya refugee camp",
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.black_80,
-                          ),
-
-                          SizedBox(
-                            width: 40,
-                          ),
-
-                            CustomButton(
-                              onTap: () {
-                                ///chatScreen
-                                Get.toNamed(AppRoutes.messageScreen);
-                              },
-                              title: "Chat",
-                              width: 80.w,
-                              height: 32.h,
-                              textColor: AppColors.black,
-                              fillColor: AppColors.primary,
-                              fontSize: 12,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                    
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                    
+                            const CustomText(
+                              text: "Rohingya refugee camp",
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.black_80,
                             ),
-                        ],
-                      ),
+                    
 
-                      const CustomText(
-                        text: "Download",
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.lightBlue,
-                      ),
-                    ],
+                              CustomButton(
+                                onTap: () {
+                                  ///chatScreen
+                                  Get.toNamed(AppRoutes.messageScreen);
+                                },
+                                title: "Chat",
+                                width: 80.w,
+                                height: 32.h,
+                                textColor: AppColors.black,
+                                fillColor: AppColors.primary,
+                                fontSize: 12,
+                              ),
+                          ],
+                        ),
+                    
+                        const CustomText(
+                          text: "Download",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.lightBlue,
+                        ),
+                      ],
+                    ),
                   )
                 ],
               ),

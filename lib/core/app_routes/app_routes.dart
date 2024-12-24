@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:get/get.dart';
+import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstratior_eventlist_screen.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrator_event_details_screen.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrator_home_screen.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/event_complete_screen.dart';
@@ -85,6 +86,7 @@ class AppRoutes {
   static const String exoloreCompleteDetailsScreen = "/ExoloreCompleteDetailsScreen";
   static const String notificationScreen = "/NotificationScreen";
   static const String exoloreEventScreen = "/ExoloreEventScreen";
+  static const String adminstratiorEventListScreen = "/AdminstratiorEventListScreen";
   static const String donationScreen = "/DonationScreen";
   static const String eventMemberDetailsScreen = "/EventMemberDetailsScreen";
   static const String organizerHomeScreen = "/OrganizerHomeScreen";
@@ -170,6 +172,7 @@ class AppRoutes {
     GetPage(name: adminstratorEventDetailsScreen, page: () => AdminstratorEventDetailsScreen()),
     GetPage(name: organizeDetailsScreen, page: () => OrganizeDetailsScreen()),
     GetPage(name: organizationEventListScreen, page: () => OrganizationEventListScreen()),
+    GetPage(name: adminstratiorEventListScreen, page: () => AdminstratiorEventListScreen()),
 
 
 

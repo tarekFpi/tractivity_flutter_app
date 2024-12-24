@@ -29,6 +29,8 @@ class AppConstants {
   static const String politicalMove = 'https://images.unsplash.com/photo-1569000971870-7605f9bd8734?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjZ8fHBvbGl0aWNhbCUyMHN0YXRlbWVudHxlbnwwfHwwfHx8MA%3D%3D';
 
   static String profileImage = 'https://ntvb.tmsimg.com/assets/assets/866126_v9_bc.jpg';
+
+  static String eventImage = 'https://s3-alpha-sig.figma.com/img/c603/f485/c5015defd40ef19142b21210b22e2b30?Expires=1736121600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=KR8AnsJ8sdW2ON~6e1HqBK~dhCrqtSv-R83uFpw5nQ2ntdtYKBklfhltx05yvrLvJixWVASKY~Z0BmKR32htEu4NEqMLnoUuf1oZzAdlJakPJbQ~HS80k-iNnFjm6M5xY42smUE9yoz1QGWHUXAe-Ccxbs8hCMDouyDhhBei9m0hcUdKigyVAUnQXbPv4GJTe1Qqsc~RC6LYb8YIfddyg9J5eBAk5UVEj8tcFh8aNWIFrYZbgF13cOSQQ~AqjHQ7IPjrFaaxoPR2HShlMTHfSOLHlyQ3s52Cv2stbLosdcWlP17FioSP7LIoV4Bf~0t7vwUxMzYfYho8OSj~Wsgl3Q__';
   static String bdFlag = 'https://flagcdn.com/w320/bd.png';
   static String pkFlag = 'https://flagcdn.com/w320/pk.png';
   static String resturentImage = 'https://images.pexels.com/photos/941861/pexels-photo-941861.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
