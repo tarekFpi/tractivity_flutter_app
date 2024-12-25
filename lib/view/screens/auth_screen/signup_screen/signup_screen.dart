@@ -182,7 +182,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
               ///============ First Name ============
               CustomFormCard(
-                  title:"'Profession' with Talent/Skill everywhere",
+                  title:'"Profession" with Talent/Skill everywhere',
                   hintText: "Enter Talent/skill",
                   hasBackgroundColor: true,
                   controller: TextEditingController()),
