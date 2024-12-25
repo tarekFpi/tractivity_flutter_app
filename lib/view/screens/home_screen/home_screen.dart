@@ -411,12 +411,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                       mainAxisAlignment: MainAxisAlignment.start,
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
+
                                         CustomText(
                                           text: "Empower Tomorrow",
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500,
                                           bottom: 8.h,
                                         ),
+
                                         CustomText(
                                           text:
                                           "Fostering opportunities for underprivileged communities through education and skill development programs.",
@@ -426,6 +428,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           textAlign: TextAlign.start,
                                           bottom: 10.h,
                                         ),
+
                                         Row(
                                           children: [
                                             CustomNetworkImage(
