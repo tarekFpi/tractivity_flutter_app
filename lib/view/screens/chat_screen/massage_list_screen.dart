@@ -76,9 +76,9 @@ class MassageListScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+
                   Row(
                     children: [
-
 
                       CustomImage(imageSrc: AppIcons.groupImage),
 

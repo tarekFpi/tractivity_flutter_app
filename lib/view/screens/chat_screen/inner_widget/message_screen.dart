@@ -3,9 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:tractivity_app/view/components/custom_text_field/custom_text_field.dart';
+import 'package:tractivity_app/view/screens/adminstrator_home_screen/alert_dialog_event.dart';
 import '../../../../../utils/app_colors/app_colors.dart';
 import '../../../../../utils/app_const/app_const.dart';
 import '../../../../../utils/app_strings/app_strings.dart';
@@ -91,9 +93,156 @@ class MessageScreen extends StatelessWidget {
             color: AppColors.black,
             icon: Icon(Icons.more_vert),
             onPressed: () {
-              //Get.toNamed(AppRoutes.moreScreen);
+
+
+              showModalBottomSheet(
+                context: context,
+               // barrierColor: Colors.grey,
+                 backgroundColor: Colors.white,
+                elevation: 10,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                builder: (BuildContext context) {
+                  // UDE : SizedBox instead of Container for whitespaces
+                  return SizedBox(
+                    height: 230,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+
+
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8,right: 8,top: 12),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+
+                              const Align(
+                                alignment: Alignment.centerLeft,
+                                child: CustomText(
+                                  text: "Setting",
+                                  fontSize: 24,
+                                  color: AppColors.black,
+                                  fontWeight: FontWeight.w500,
+                                  bottom: 8,
+                                ),
+                              ),
+
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: InkWell(
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Icon(
+                                      Icons.close,
+                                      size: 32,
+                                      color: Colors.black,
+                                    )),
+                              )
+                            ],
+                          ),
+                        ),
+
+
+                        GestureDetector(
+                          onTap: (){
+
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 8,right: 8,top: 12),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+
+                                InkWell(
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Icon(
+                                      Icons.person,
+                                      size: 32,
+                                      color: Colors.black,
+                                    )),
+
+                                 SizedBox(
+                                   width: 8,
+                                 ),
+                                 CustomText(
+                                  text: "Remove someone from the Event",
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.black,
+                                ),
+
+                              ],
+                            ),
+                          ),
+                        ),
+
+
+                        GestureDetector(
+                          onTap: (){
+
+                            showDialog(
+                              context: context,
+                              builder: (ctx) => AlertDialog(
+                                backgroundColor: Colors.white,
+                                insetPadding: EdgeInsets.all(8),
+                                contentPadding: EdgeInsets.all(8),
+                                title: SizedBox(),
+                                content: SizedBox(
+                                  width: MediaQuery.sizeOf(context).width,
+                                  child: AlertDialogEvent(title: "Are you sure you want to \n Delete this Group?",discription: "",),
+                                ),
+                              ),
+                            );
+
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 8,right: 8,top: 16),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+
+                                InkWell(
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Icon(
+                                      Icons.delete,
+                                      size: 32,
+                                      color: AppColors.primary,
+                                    )),
+
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                CustomText(
+                                  text: "Delete",
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.primary,
+                                ),
+
+                              ],
+                            ),
+                          ),
+                        ),
+
+                      ],
+                    ),
+                  );
+                },
+              );
+
+
             },
           ),
+
           /*IconButton(
             icon: CustomImage(imageSrc: AppIcons.personIcon),
             onPressed: () {},

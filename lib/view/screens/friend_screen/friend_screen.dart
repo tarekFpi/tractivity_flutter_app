@@ -83,7 +83,8 @@ class FriendScreen extends StatelessWidget {
                   SizedBox(height: 20.h,),
 
                  ///========= Friends Remove List ========
-                 if(eventsController.currentIndex.value == 0) Column(
+                 if(eventsController.currentIndex.value == 0)
+                   Column(
                       children: List.generate(6, (index) {
                         return GestureDetector(
                           onTap: (){
@@ -93,7 +94,7 @@ class FriendScreen extends StatelessWidget {
                           child: CustomFriendsList(
                             image: AppConstants.profileImage,
                             name: "Mehedi Hassan",
-                            userName: "@mehedi",
+                            userName: "married",
                             reversText: "Remove",
                           ),
                         );
@@ -111,7 +112,7 @@ class FriendScreen extends StatelessWidget {
                           child: CustomFriendsList(
                             image: AppConstants.profileImage,
                             name: "Mehedi Hassan",
-                            userName: "@mehedi",
+                            userName: "single",
                             reversText: "Invite",
                           ),
                         );
@@ -129,7 +130,7 @@ class FriendScreen extends StatelessWidget {
                           child: CustomFriendsList(
                             image: AppConstants.profileImage,
                             name: "Mehedi Hassan",
-                            userName: "@mehedi",
+                            userName: "student",
                             reversText: "Confirm",
                           ),
                         );
