@@ -43,6 +43,7 @@ class _InviteMemberScreenState extends State<InviteMemberScreen> {
             const SizedBox(
               height: 12,
             ),
+
             Column(
                 children: List.generate(6, (index) {
                   return GestureDetector(
@@ -52,7 +53,7 @@ class _InviteMemberScreenState extends State<InviteMemberScreen> {
                     child: CustomFriendsList(
                       image: AppConstants.profileImage,
                       name: "Mehedi Hassan",
-                      userName: "@mehedi",
+                      userName: "Single",
                       reversText: "Select",
                     ),
                   );

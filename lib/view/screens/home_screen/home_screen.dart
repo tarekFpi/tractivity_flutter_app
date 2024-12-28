@@ -52,6 +52,8 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: HomeSideDrawer(),
       // drawerScrimColor: Colors.black,
       appBar: AppBar(
+        backgroundColor: Colors.white,
+
         leading: Builder(builder: (context) {
           return IconButton(
               onPressed: () => Scaffold.of(context).openDrawer(),
@@ -272,12 +274,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   if(homeController.home_currentIndex.value ==0)
                   Column(
                       children: List.generate(1, (index) {
-                  /*  return CustomExploreContainer(
-                      image: AppConstants.profileImage,
-                      title: "Cox’s Bazar Beach Helping Peolple",
-                      location: "Cox’s Bazar, Bangladesh",
-                      leaderName: "Mehedi",
-                    );*/
 
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 20.0),

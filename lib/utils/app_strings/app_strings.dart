@@ -90,8 +90,10 @@ class   AppStrings {
 
   static const String home = "Home";
   static const String friend = "Friend";
+  static const String removeFriend = "Remove Friend";
   static const String messages = "Messages";
   static const String profile = "Profile";
+  static const String singleProfile = "User Message";
   static const String team = "Join Event";
   ///===================================================
   static const String letsGo = "LET’S GO";

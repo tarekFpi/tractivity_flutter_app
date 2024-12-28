@@ -68,9 +68,8 @@ class _UserNavBarState extends State<NavBar> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: List.generate(
-
           selectedIcon.length,
-              (index) => InkWell(
+              (index) => GestureDetector(
             onTap: () => onTap(index),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

@@ -12,8 +12,8 @@ import '../../../../../utils/app_colors/app_colors.dart';
 import '../../../../../utils/app_const/app_const.dart';
 import '../../../../../utils/app_strings/app_strings.dart';
 
-class MessageScreen extends StatelessWidget {
-  MessageScreen({super.key});
+class SingleMessageScreen extends StatelessWidget {
+  SingleMessageScreen({super.key});
   final List<bool> align = [
     true,
     false,
@@ -50,7 +50,7 @@ class MessageScreen extends StatelessWidget {
         ),
         title: Row(
           children: [
-            Stack(
+           /* Stack(
               children: [
                 CustomNetworkImage(
                   imageUrl: AppConstants.profileImage,
@@ -69,26 +69,27 @@ class MessageScreen extends StatelessWidget {
                   ),
                 )
               ],
-            ),
+            ),*/
             SizedBox(
               width: 10.w,
             ),
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-               CustomText(
-                  text: AppStrings.profile,
+              CustomText(
+                  text: AppStrings.singleProfile,
                   fontSize: 22,
                   fontWeight: FontWeight.w700,
                   color: AppColors.black),
-              CustomText(
+
+         /*     CustomText(
                 text: "Active Now",
                 fontSize: 14,
                 fontWeight: FontWeight.w700,
                 color: AppColors.black.withOpacity(0.5),
-              ),
+              ),*/
             ]),
           ],
         ),
-           actions: [
+        actions: [
           IconButton(
             color: AppColors.black,
             icon: Icon(Icons.more_vert),
@@ -97,8 +98,8 @@ class MessageScreen extends StatelessWidget {
 
               showModalBottomSheet(
                 context: context,
-               // barrierColor: Colors.grey,
-                 backgroundColor: Colors.white,
+                /// barrierColor: Colors.grey,
+                backgroundColor: Colors.white,
                 elevation: 10,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
@@ -106,7 +107,7 @@ class MessageScreen extends StatelessWidget {
                 builder: (BuildContext context) {
                   // UDE : SizedBox instead of Container for whitespaces
                   return SizedBox(
-                    height: 230,
+                    height: 200,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
@@ -121,57 +122,56 @@ class MessageScreen extends StatelessWidget {
                               const Align(
                                 alignment: Alignment.centerLeft,
                                 child: CustomText(
-                                  text: "Setting",
+                                  text: "User Setting",
                                   fontSize: 24,
                                   color: AppColors.black,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                   bottom: 8,
                                 ),
                               ),
 
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: InkWell(
-                                    onTap: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Icon(
-                                      Icons.close,
-                                      size: 32,
-                                      color: Colors.black,
-                                    )),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 12),
+                                child: Align(
+                                  alignment: Alignment.centerRight,
+                                  child: InkWell(
+                                      onTap: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Icon(
+                                        Icons.close,
+                                        size: 32,
+                                        color: Colors.black,
+                                      )),
+                                ),
                               )
                             ],
                           ),
                         ),
 
 
-                        GestureDetector(
+                        InkWell(
                           onTap: (){
-
+                            Get.toNamed(AppRoutes.userEventProfile);
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(left: 8,right: 8,top: 12),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
+                              children: const [
 
-                                InkWell(
-                                    onTap: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Icon(
-                                      Icons.person,
-                                      size: 32,
-                                      color: Colors.black,
-                                    )),
+                                Icon(
+                                  Icons.person,
+                                  size: 32,
+                                  color: Colors.black,
+                                ),
 
-                                 SizedBox(
-                                   width: 8,
-                                 ),
-                                 CustomText(
-                                  text: "Remove someone from the Event",
+                                SizedBox(
+                                  width: 4,
+                                ),
+                                CustomText(
+                                  text: "View Profile",
                                   fontSize: 16,
                                   fontWeight: FontWeight.w400,
                                   color: AppColors.black,
@@ -182,6 +182,9 @@ class MessageScreen extends StatelessWidget {
                           ),
                         ),
 
+                        SizedBox(
+                          height: 8,
+                        ),
 
                         GestureDetector(
                           onTap: (){
@@ -195,7 +198,7 @@ class MessageScreen extends StatelessWidget {
                                 title: SizedBox(),
                                 content: SizedBox(
                                   width: MediaQuery.sizeOf(context).width,
-                                  child: AlertDialogEvent(title: "Are you sure you want to \n Delete this Group?",discription: "",),
+                                  child: AlertDialogEvent(title: "Are you sure you want \n to Block this User?",discription: "",),
                                 ),
                               ),
                             );
@@ -213,16 +216,16 @@ class MessageScreen extends StatelessWidget {
                                       Navigator.of(context).pop();
                                     },
                                     child: const Icon(
-                                      Icons.delete,
+                                      Icons.block,
                                       size: 32,
                                       color: AppColors.primary,
                                     )),
 
                                 SizedBox(
-                                  width: 8,
+                                  width: 4,
                                 ),
                                 CustomText(
-                                  text: "Delete",
+                                  text: "Block this user",
                                   fontSize: 16,
                                   fontWeight: FontWeight.w400,
                                   color: AppColors.primary,
@@ -262,10 +265,10 @@ class MessageScreen extends StatelessWidget {
                 shrinkWrap: true,
                 children: List.generate(
                   align.length,
-                  (index) => CustomInboxMassage(
+                      (index) => CustomInboxMassage(
                       alignment: align[index],
                       message:
-                          'Mi sento bene adesso. Ma ho un problema. Puoi fare una chiamata?',
+                      'Mi sento bene adesso. Ma ho un problema. Puoi fare una chiamata?',
                       messageTime: '2:00 PM'),
                 ),
               ),
@@ -288,12 +291,12 @@ class MessageScreen extends StatelessWidget {
                 //===================== Write message field =======================
                 Expanded(
                     child: CustomTextField(
-                  suffixIcon:
+                      suffixIcon:
                       IconButton(onPressed: () {}, icon: const Icon(Icons.image)),
-                  fillColor: Colors.grey.withOpacity(.1),
-                  hintText: 'Write your message',
-                  fieldBorderColor: Colors.grey,
-                )),
+                      fillColor: Colors.grey.withOpacity(.1),
+                      hintText: 'Write your message',
+                      fieldBorderColor: Colors.grey,
+                    )),
                 SizedBox(
                   width: 10.w,
                 ),
@@ -339,103 +342,103 @@ class CustomInboxMassage extends StatelessWidget {
       alignment: alignment ? Alignment.centerLeft : Alignment.centerRight,
       child: Column(
         crossAxisAlignment:
-            alignment ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+        alignment ? CrossAxisAlignment.start : CrossAxisAlignment.end,
         children: [
           alignment
               ? Row(
-                  children: [
-                    CustomNetworkImage(
-                      imageUrl: AppConstants.profileImage,
-                      height: 45.w,
-                      width: 45.w,
-                      boxShape: BoxShape.circle,
+            children: [
+              CustomNetworkImage(
+                imageUrl: AppConstants.profileImage,
+                height: 45.w,
+                width: 45.w,
+                boxShape: BoxShape.circle,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: MediaQuery.sizeOf(context).width / 1.5,
+                    decoration: BoxDecoration(
+                      color:
+                      alignment ? AppColors.white : AppColors.primary,
+                      borderRadius: alignment
+                          ? const BorderRadius.only(
+                        bottomRight: Radius.circular(16),
+                        topLeft: Radius.circular(16),
+                        topRight: Radius.circular(16),
+                      )
+                          : const BorderRadius.only(
+                          topLeft: Radius.circular(16),
+                          topRight: Radius.circular(16),
+                          bottomLeft: Radius.circular(16)),
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: MediaQuery.sizeOf(context).width / 1.5,
-                          decoration: BoxDecoration(
-                            color:
-                                alignment ? AppColors.white : AppColors.primary,
-                            borderRadius: alignment
-                                ? const BorderRadius.only(
-                                    bottomRight: Radius.circular(16),
-                                    topLeft: Radius.circular(16),
-                                    topRight: Radius.circular(16),
-                                  )
-                                : const BorderRadius.only(
-                                    topLeft: Radius.circular(16),
-                                    topRight: Radius.circular(16),
-                                    bottomLeft: Radius.circular(16)),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 14.0.h, vertical: 10.h),
-                            child: CustomText(
-                              textAlign: TextAlign.left,
-                              text: message,
-                              fontSize: 16.sp,
-                              color: alignment
-                                  ? AppColors.black
-                                  : AppColors.white,
-                              fontWeight: FontWeight.w400,
-                              maxLines: 20,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 14.0),
-                          child: CustomText(
-                            text: messageTime ?? '',
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.black,
-                          ),
-                        ),
-                      ],
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 14.0.h, vertical: 10.h),
+                      child: CustomText(
+                        textAlign: TextAlign.left,
+                        text: message,
+                        fontSize: 16.sp,
+                        color: alignment
+                            ? AppColors.black
+                            : AppColors.white,
+                        fontWeight: FontWeight.w400,
+                        maxLines: 20,
+                      ),
                     ),
-                  ],
-                )
-              : Container(
-                  width: MediaQuery.sizeOf(context).width / 1.5,
-                  decoration: BoxDecoration(
-                    color: alignment ? AppColors.white : AppColors.primary,
-                    borderRadius: alignment
-                        ? const BorderRadius.only(
-                            bottomRight: Radius.circular(16),
-                            topLeft: Radius.circular(16),
-                            topRight: Radius.circular(16),
-                          )
-                        : const BorderRadius.only(
-                            topLeft: Radius.circular(16),
-                            topRight: Radius.circular(16),
-                            bottomLeft: Radius.circular(16)),
                   ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 14.0.h, vertical: 10.h),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 14.0),
                     child: CustomText(
-                      textAlign: TextAlign.left,
-                      text: message,
-                      fontSize: 16.sp,
-                      color: alignment ? AppColors.black : AppColors.white,
+                      text: messageTime ?? '',
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
-                      maxLines: 20,
+                      color: AppColors.black,
                     ),
                   ),
-                ),
+                ],
+              ),
+            ],
+          )
+              : Container(
+            width: MediaQuery.sizeOf(context).width / 1.5,
+            decoration: BoxDecoration(
+              color: alignment ? AppColors.white : AppColors.primary,
+              borderRadius: alignment
+                  ? const BorderRadius.only(
+                bottomRight: Radius.circular(16),
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+              )
+                  : const BorderRadius.only(
+                  topLeft: Radius.circular(16),
+                  topRight: Radius.circular(16),
+                  bottomLeft: Radius.circular(16)),
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: 14.0.h, vertical: 10.h),
+              child: CustomText(
+                textAlign: TextAlign.left,
+                text: message,
+                fontSize: 16.sp,
+                color: alignment ? AppColors.black : AppColors.white,
+                fontWeight: FontWeight.w400,
+                maxLines: 20,
+              ),
+            ),
+          ),
           SizedBox(
             height: 4.h,
           ),
           alignment
               ? Container()
               : CustomText(
-                  text: messageTime ?? '',
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.black,
-                ),
+            text: messageTime ?? '',
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w400,
+            color: AppColors.black,
+          ),
           SizedBox(
             height: 12.h,
           ),

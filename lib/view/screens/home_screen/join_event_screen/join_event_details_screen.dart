@@ -23,9 +23,9 @@ class _JonEventDetailsScreenState extends State<JonEventDetailsScreen> {
   @override
   Widget build(BuildContext context) {
         return Scaffold(
-      appBar: CustomRoyelAppbar(
+      appBar: const CustomRoyelAppbar(
         leftIcon: true,
-        titleName: "Join Event",
+        titleName: "Join Details",
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -55,50 +55,46 @@ class _JonEventDetailsScreenState extends State<JonEventDetailsScreen> {
                   const SizedBox(
                     width: 8,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                    
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                    
+                            const CustomText(
+                              text: "Rohingya refugee camp",
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.black_80,
+                            ),
+                    
+                            
+                            CustomButton(
+                              onTap: () {
+                                Get.toNamed(AppRoutes.organizeMapScreen);
+                              },
+                              title: "Map",
+                              width: 80.w,
+                              height: 32.h,
+                              textColor: AppColors.black,
+                              fillColor: AppColors.primary,
+                              fontSize: 12,
+                            ),
+                    
+                          ],
+                        ),
 
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-
-                          CustomText(
-                            text: "Rohingya refugee camp",
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.black_80,
-                          ),
-
-                          const SizedBox(
-                            width: 40,
-                          ),
-
-                          CustomButton(
-                            onTap: () {
-                              Get.toNamed(AppRoutes.organizeMapScreen);
-                            },
-                            title: "Map",
-                            width: 80.w,
-                            height: 32.h,
-                            textColor: AppColors.black,
-                            fillColor: AppColors.primary,
-                            fontSize: 12,
-                          ),
-
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 4,
-                      ),
-
-                      const CustomText(
-                        text: "Download",
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.lightBlue,
-                      ),
-                    ],
+                        const CustomText(
+                          text: "Download",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.lightBlue,
+                        ),
+                      ],
+                    ),
                   )
                 ],
               ),

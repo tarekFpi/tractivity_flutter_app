@@ -13,14 +13,14 @@ import 'package:tractivity_app/view/components/custom_netwrok_image/custom_netwo
 import 'package:tractivity_app/view/components/custom_royel_appbar/custom_royel_appbar.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 
-class OrganizerApprovedScreen extends StatefulWidget {
-  const OrganizerApprovedScreen({super.key});
+class OrganizerEventCreateScreen extends StatefulWidget {
+  const OrganizerEventCreateScreen({super.key});
 
   @override
-  State<OrganizerApprovedScreen> createState() => _OrganizerApprovedScreenState();
+  State<OrganizerEventCreateScreen> createState() => _OrganizerEventCreateScreenState();
 }
 
-class _OrganizerApprovedScreenState extends State<OrganizerApprovedScreen> {
+class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +45,7 @@ class _OrganizerApprovedScreenState extends State<OrganizerApprovedScreen> {
                     boxShape: BoxShape.circle,
                     border: Border.all(color: AppColors.primary, width: 3),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   const Column(
@@ -76,7 +76,7 @@ class _OrganizerApprovedScreenState extends State<OrganizerApprovedScreen> {
                 ],
               ),
         
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
               Row(
@@ -109,7 +109,7 @@ class _OrganizerApprovedScreenState extends State<OrganizerApprovedScreen> {
                     ),
                   ),
 
-                  SizedBox(
+                  const SizedBox(
                     width: 4,
                   ),
                   Container(

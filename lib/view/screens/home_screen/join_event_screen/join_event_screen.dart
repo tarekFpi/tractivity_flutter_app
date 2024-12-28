@@ -247,7 +247,7 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
                                           ),
                                         ),
 
-                                        SizedBox(width: 5.w),
+                                         SizedBox(width: 5.w),
 
                                           InkWell(
                                             onTap: () {

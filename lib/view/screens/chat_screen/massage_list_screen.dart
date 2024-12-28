@@ -13,6 +13,7 @@ import 'package:tractivity_app/view/components/custom_royel_appbar/custom_royel_
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:tractivity_app/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tractivity_app/view/components/nav_bar/nav_bar.dart';
+
 class MassageListScreen extends StatelessWidget {
   const MassageListScreen({super.key});
   @override
@@ -23,6 +24,7 @@ class MassageListScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
         child: Column(
           children: [
+
             CustomTextField(
                 hintText: AppStrings.searchForSomeone,
                 suffixIcon: Icon(
@@ -32,9 +34,10 @@ class MassageListScreen extends StatelessWidget {
             SizedBox(
               height: 20.h,
             ),
+
             GestureDetector(
               onTap: (){
-                Get.toNamed(AppRoutes.messageScreen);
+                Get.toNamed(AppRoutes.singleMessageScreen);
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -66,8 +69,10 @@ class MassageListScreen extends StatelessWidget {
             ),
 
             SizedBox(
-              height: 16.h,
+              height: 22.h,
             ),
+
+          /// ================= Group Messenger ================================
 
             GestureDetector(
               onTap: (){
@@ -75,7 +80,7 @@ class MassageListScreen extends StatelessWidget {
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                children: const [
 
                   Row(
                     children: [
@@ -85,7 +90,7 @@ class MassageListScreen extends StatelessWidget {
                       CustomText(
                         text: "Cox’s Bazar Beach \n Helping Peolple",
                         fontSize: 14,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w600,
                         left: 10,
                       ),
                     ],

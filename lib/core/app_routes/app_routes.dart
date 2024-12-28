@@ -6,7 +6,8 @@ import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrato
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/event_complete_screen.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/member/adminstrator_member.dart';
 import 'package:tractivity_app/view/screens/chat_screen/chat_screen.dart';
-import 'package:tractivity_app/view/screens/chat_screen/inner_widget/message_screen.dart';
+import 'package:tractivity_app/view/screens/chat_screen/inner_widget/group_message_screen.dart';
+import 'package:tractivity_app/view/screens/chat_screen/inner_widget/single_message_screen.dart';
 import 'package:tractivity_app/view/screens/chat_screen/massage_list_screen.dart';
 import 'package:tractivity_app/view/screens/create_team_screen/add_events_screen/add_events_screen.dart';
 import 'package:tractivity_app/view/screens/create_team_screen/all_member_screen/all_member_screen.dart';
@@ -18,6 +19,7 @@ import 'package:tractivity_app/view/screens/auth_screen/verification_mail_screen
 import 'package:tractivity_app/view/screens/auth_screen/verification_screen/verification_screen.dart';
 import 'package:tractivity_app/view/screens/friend_screen/friend_screen.dart';
 import 'package:tractivity_app/view/screens/auth_screen/signup_screen/signup_screen.dart';
+import 'package:tractivity_app/view/screens/friend_screen/remove_friend_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/donation_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/exolore_complete_details_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/exolore_completed_event.dart';
@@ -75,6 +77,7 @@ class AppRoutes {
   static const String historyScreeen = "/HistoryScreeen";
   static const String massageListScreen = "/MassageListScreen";
   static const String messageScreen = "/MessageScreen";
+  static const String singleMessageScreen = "/SingleMessageScreen";
   static const String chatScreen = "/ChatScreen";
   static const String signupScreen = "/SignupScreen";
   static const String verificationMailScreen = "/VerificationMailScreen";
@@ -83,6 +86,7 @@ class AppRoutes {
   static const String exploreEventScreen = "/ExploreEventScreen";
   static const String organizerRecentEventDetails = "/OrganizerRecentEventDetails";
   static const String recentEventExploreDetails = "/RecentEventExploreDetails";
+  static const String removeFriendScreen = "/RemoveFriendScreen";
   static const String exoloreCompleteDetailsScreen = "/ExoloreCompleteDetailsScreen";
   static const String notificationScreen = "/NotificationScreen";
   static const String exoloreEventScreen = "/ExoloreEventScreen";
@@ -127,7 +131,7 @@ class AppRoutes {
 
 
     ///=========================== Mehedi ==========================
-    GetPage(name: eventsProfileScreen, page: () => EventsProfileScreen()),
+   // GetPage(name: eventsProfileScreen, page: () => EventsProfileScreen()),
     GetPage(name: settingScreen, page: () => SettingScreen()),
     GetPage(name: aboutUsScreen, page: () => AboutUsScreen()),
     GetPage(name: privacyPolicyScreen, page: () => PrivacyPolicyScreen()),
@@ -140,6 +144,8 @@ class AppRoutes {
     GetPage(name: historyScreeen, page: () => HistoryScreeen()),
     GetPage(name: massageListScreen, page: () => MassageListScreen()),
     GetPage(name: messageScreen, page: () => MessageScreen()),
+    GetPage(name: singleMessageScreen, page: () => SingleMessageScreen()),
+    GetPage(name: removeFriendScreen, page: () => RemoveFriendScreen()),
     GetPage(name: chatScreen, page: () => ChatScreen()),
     GetPage(name: homeScreen, page: () => HomeScreen()),
     GetPage(name: exploreEventScreen, page: () => ExploreEventScreen()),
@@ -160,7 +166,7 @@ class AppRoutes {
     GetPage(name: joinEventScreen, page: () => JoinEventScreen()),
     GetPage(name: eventCompleteScreen, page: () => EventCompleteScreen()),
     GetPage(name: termsConditionScreen, page: () => TermsConditionScreen()),
-    GetPage(name: organizerApprovedScreen, page: () => OrganizerApprovedScreen()),
+    GetPage(name: organizerApprovedScreen, page: () => OrganizerEventCreateScreen()),
     GetPage(name: organizeMapScreen, page: () => OrganizeMapScreen()),
     GetPage(name: addMemberScreen, page: () => InviteMemberScreen()),
 

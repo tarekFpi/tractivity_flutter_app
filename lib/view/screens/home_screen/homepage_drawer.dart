@@ -24,6 +24,7 @@ class HomeSideDrawer extends StatefulWidget {
 }
 
 class _HomeSideDrawerState extends State<HomeSideDrawer> {
+
   final storage = GetStorage();
 
   String status = "";
@@ -109,20 +110,32 @@ class _HomeSideDrawerState extends State<HomeSideDrawer> {
                             setState(() {});
                           },
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Icon(
-                                Icons.volunteer_activism_outlined,
+
+                             Row(
+                               mainAxisAlignment: MainAxisAlignment.center,
+                               crossAxisAlignment: CrossAxisAlignment.end,
+                               children: [
+                                 Icon(
+                                   Icons.volunteer_activism_outlined,
+                                   color: AppColors.black,
+                                 ),
+                                 CustomText(
+                                   color: AppColors.black_80,
+                                   left: 14.w,
+                                   text: "Volunteer",
+                                   fontSize: 14,
+                                   fontWeight:status == "volunteer"? FontWeight.w600:FontWeight.w400,
+                                 ),
+                               ],
+                             ),
+
+                              status == "volunteer"? Icon(
+                                Icons.check,
                                 color: AppColors.black,
-                              ),
-                              CustomText(
-                                color: AppColors.black_80,
-                                left: 16.w,
-                                text: "Volunteer",
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                              ),
+                              ):SizedBox(),
                             ],
                           )),
                     ),
@@ -159,23 +172,36 @@ class _HomeSideDrawerState extends State<HomeSideDrawer> {
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              //  Icon(icon,color: AppColors.black_50,),
 
-                              Icon(
-                                Icons.opacity_rounded,
+
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Icon(
+                                    Icons.opacity_rounded,
+                                    color: AppColors.black,
+                                  ),
+
+                                  CustomText(
+                                    color: AppColors.black_80,
+                                    left: 14.w,
+                                    text: "Organizer",
+                                    fontSize: 14,
+                                    fontWeight:status == "organizer"? FontWeight.w600:FontWeight.w400,
+                                  ),
+                                ],
+                              ),
+
+                              status == "organizer"? Icon(
+                                Icons.check,
                                 color: AppColors.black,
-                              ),
+                              ):SizedBox(),
 
-                              CustomText(
-                                color: AppColors.black_80,
-                                left: 16.w,
-                                text: "Organizer",
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                              ),
+
                             ],
                           ),
                         ),
@@ -222,23 +248,34 @@ class _HomeSideDrawerState extends State<HomeSideDrawer> {
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              //  Icon(icon,color: AppColors.black_50,),
 
-                              Icon(
-                                Icons.admin_panel_settings,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Icon(
+                                    Icons.admin_panel_settings,
+                                    color: AppColors.black,
+                                  ),
+
+                                  CustomText(
+                                    color: AppColors.black_80,
+                                    left: 14.w,
+                                    text: "Administrator",
+                                    fontSize: 14,
+                                    fontWeight:status == "administrator"? FontWeight.w600:FontWeight.w400,
+                                  ),
+                                ],
+                              ),
+
+                              status == "administrator"? Icon(
+                                Icons.check,
                                 color: AppColors.black,
-                              ),
+                              ):SizedBox(),
 
-                              CustomText(
-                                color: AppColors.black_80,
-                                left: 16.w,
-                                text: "Administrator",
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                              ),
                             ],
                           ),
                         ),

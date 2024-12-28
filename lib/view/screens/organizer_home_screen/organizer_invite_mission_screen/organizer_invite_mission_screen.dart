@@ -37,6 +37,7 @@ class _OrganizerInviteMissionScreenState extends State<OrganizerInviteMissionScr
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: Text(
           "Mission",
           style: TextStyle(
@@ -44,7 +45,6 @@ class _OrganizerInviteMissionScreenState extends State<OrganizerInviteMissionScr
               fontSize: 30,
               fontWeight: FontWeight.w600),
         ),
-
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -128,13 +128,6 @@ class _OrganizerInviteMissionScreenState extends State<OrganizerInviteMissionScr
                   if(organizerController.currentIndex.value ==1)
                     Column(
                         children: List.generate(5, (index) {
-                          /*return CustomExploreContainer(
-                            showDeliveryButtton: true,
-                            image: AppConstants.profileImage,
-                            title: "Cox’s Bazar Beach Helping Peolple",
-                            location: "Cox’s Bazar, Bangladesh",
-                            leaderName: "Mehedi",
-                          );*/
                             return Padding(
                             padding: const EdgeInsets.only(bottom: 20.0),
                             child: Row(
@@ -160,27 +153,6 @@ class _OrganizerInviteMissionScreenState extends State<OrganizerInviteMissionScr
                                       Get.toNamed(AppRoutes.organizerApprovedScreen);
                                     }, title: "Duplicate",height: 30,width: 80,fontSize: 12,textColor: Colors.black87,),
 
-
-                                 /*   GestureDetector(
-                                      onTap: () {
-                                        Get.toNamed(AppRoutes.organizerApprovedScreen);
-                                      },
-                                      child: Container(
-                                        height: 25,
-                                        width: 70,
-                                        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                                        decoration: BoxDecoration(
-                                          color: AppColors.primary,
-                                          borderRadius: BorderRadius.circular(10),
-                                        ),
-                                        child: CustomText(
-                                          text:"Duplicate",
-                                          fontSize: 9,
-                                          fontWeight: FontWeight.w500,
-                                          color: AppColors.black,
-                                        ),
-                                      ),
-                                    ),*/
 
                                     SizedBox(
                                       height: 8,

@@ -64,7 +64,7 @@ class _UserNavBarState extends State<AdminstratorNavbar> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: List.generate(
           selectedIcon.length,
-              (index) => InkWell(
+              (index) => GestureDetector(
             onTap: () => onTap(index),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
