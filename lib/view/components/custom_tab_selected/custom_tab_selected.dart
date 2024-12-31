@@ -46,7 +46,7 @@ class CustomTabSelector extends StatelessWidget {
           return GestureDetector(
             onTap: () => onTabSelected(index),
             child: Container(
-              padding: const EdgeInsets.only(bottom: 10),
+              padding: const EdgeInsets.only(bottom: 4),
               decoration: BoxDecoration(
                 //color: AppColors.red,
                 border: Border(

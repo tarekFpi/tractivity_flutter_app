@@ -31,6 +31,7 @@ class CustomRoyelAppbar extends StatelessWidget implements PreferredSizeWidget {
         centerTitle: true,
         scrolledUnderElevation: 0,
         actions: [
+
           IconButton(
               onPressed: () {
                 rightOnTap!();
@@ -38,7 +39,6 @@ class CustomRoyelAppbar extends StatelessWidget implements PreferredSizeWidget {
               icon: rightIcon == null ? SizedBox():
               CustomImage(imageSrc: rightIcon!, height: 26,width: 26,
                )),
-
         ],
         backgroundColor: Colors.transparent,
         leading: leftIcon == true
@@ -46,7 +46,7 @@ class CustomRoyelAppbar extends StatelessWidget implements PreferredSizeWidget {
             : null,
         title: CustomText(
           text: titleName ?? "",
-          fontSize: 20.w,
+          fontSize: 18.w,
           fontWeight: FontWeight.w700,
           color: AppColors.black,
         ));

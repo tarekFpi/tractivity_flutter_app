@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
@@ -13,6 +14,7 @@ import 'package:tractivity_app/view/screens/friend_screen/inner_widget/custom_fr
 import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/events_controller/events_controller.dart';
 class FriendScreen extends StatelessWidget {
   FriendScreen({super.key});
+
   final EventsController eventsController = Get.find<EventsController>();
 
   @override
@@ -68,44 +70,68 @@ class FriendScreen extends StatelessWidget {
                       }),
                     ),
                   ),
+
                   SizedBox(height: 10,),
+
                   CustomTextField(
                       hintText: AppStrings.searchForSomeone,
                       suffixIcon: Icon(
                         Icons.search,
                         color: AppColors.black_60,
                       )),
+
                   SizedBox(height: 20.h,),
+
                  ///========= Friends Remove List ========
                  if(eventsController.currentIndex.value == 0) Column(
                       children: List.generate(6, (index) {
-                        return CustomFriendsList(
-                          image: AppConstants.profileImage,
-                          name: "Mehedi Hassan",
-                          userName: "@mehedi",
-                          reversText: "Remove",
+                        return GestureDetector(
+                          onTap: (){
+
+                            Get.toNamed(AppRoutes.eventsProfileScreen);
+                          },
+                          child: CustomFriendsList(
+                            image: AppConstants.profileImage,
+                            name: "Mehedi Hassan",
+                            userName: "@mehedi",
+                            reversText: "Remove",
+                          ),
                         );
                       })
                   ),
+
                   ///========= Friends Invite List ========
-                  if(eventsController.currentIndex.value == 1) Column(
+                  if(eventsController.currentIndex.value == 1)
+                    Column(
                       children: List.generate(6, (index) {
-                        return CustomFriendsList(
-                          image: AppConstants.profileImage,
-                          name: "Mehedi Hassan",
-                          userName: "@mehedi",
-                          reversText: "Invite",
+                        return GestureDetector(
+                          onTap: (){
+                            Get.toNamed(AppRoutes.eventsProfileScreen);
+                          },
+                          child: CustomFriendsList(
+                            image: AppConstants.profileImage,
+                            name: "Mehedi Hassan",
+                            userName: "@mehedi",
+                            reversText: "Invite",
+                          ),
                         );
                       })
                   ),
+
                   ///========= Friends Confirm List ========
-                  if(eventsController.currentIndex.value == 2) Column(
+                  if(eventsController.currentIndex.value == 2)
+                    Column(
                       children: List.generate(6, (index) {
-                        return CustomFriendsList(
-                          image: AppConstants.profileImage,
-                          name: "Mehedi Hassan",
-                          userName: "@mehedi",
-                          reversText: "Confirm",
+                        return GestureDetector(
+                          onTap: (){
+                            Get.toNamed(AppRoutes.eventsProfileScreen);
+                          },
+                          child: CustomFriendsList(
+                            image: AppConstants.profileImage,
+                            name: "Mehedi Hassan",
+                            userName: "@mehedi",
+                            reversText: "Confirm",
+                          ),
                         );
                       })
                   )

@@ -17,19 +17,19 @@ class   AppStrings {
   static const String welcomeBack = "Welcome Back !";
   static const String pleaseEnterYourPersonalData = "Please Enter Your Personal Data";
 
-  static const String enterYourName = "Enter  profession";
+  static const String enterYourName = "Enter name";
   static const String enterYourLocation = "Enter Your Location";
   static const String enterYourEmail = "Enter Your Email";
   static const String enterCountry = "Enter Country";
   static const String enterDay = "MM / YY";
-  static const String enterFristName = "Enter Frist Name";
-  static const String enterLastName = "Enter Last Name";
+  static const String enterFristName = "Frist Name";
+  static const String enterLastName = "Last Name";
   static const String enterState = "Enter State";
   static const String enterSecurity = "Security Code";
   static const String password = "Password";
   static const String newPassword = "New Password";
   static const String enterYourPassword = "Enter Your Password";
-  static const String enterSummary = "Enter Your Summary";
+  static const String enterSummary = "Your Donation";
   static const String enterNumber = "1234 1234 1234 1234";
   static const String rememberMe = "Remember me";
   static const String forgotPassword = "Forgot Password?";
@@ -95,8 +95,9 @@ class   AppStrings {
   static const String team = "Join Event";
   ///===================================================
   static const String letsGo = "LET’S GO";
-  static const String serveOut = "ServeOut";
-  static const String welcomeToAlterNet = "Welcome to AlterNET!";
+  static const String serveOut = "JoinUp";
+  static const String welcomeToAlterNet = "Welcome to";
+  static const String joinUpAlterNet = "JoinUp!";
   static const String orSignInWith = "or sign in with";
   static const String friendsWorkflow = "Friends Workflow";
   static const String searchForSomeone = "Search for someone";
@@ -185,7 +186,7 @@ class   AppStrings {
   //static const String setting = "Setting";
   static const String seeAllFriends = "See All Friends List";
   static const String inviteFriends = "Invite Friends";
-  static const String inviteMission = "Invite Mission";
+  static const String inviteMission = "Invited Mission";
   static const String eventList = "Event List";
   static const String request = "Request";
   //static const String searchForSomeone = "Search For Someone";
@@ -195,10 +196,11 @@ class   AppStrings {
   static const String addEvent = "Add Event";
   //static const String done = "Done";
   static const String allMember = "All Member";
+  static const String member = "Member";
   static const String history = "History";
   static const String exploreEvent = "Explore Event";
   static const String donation = "Donation";
-  static const String completeEvent = "Complete Events";
+  static const String completeEvent = "Completed Events";
   static const String recentEvents = "Recent Events";
   static const String inviteEvent = "Invite Event";
   static const String eventListText = "Event List";

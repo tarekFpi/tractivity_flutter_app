@@ -37,7 +37,9 @@ class _EventsProfileScreenState extends State<EventsProfileScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
+
             ///================= Profile Image , Name and Location
+
             Row(
               children: [
                 CustomNetworkImage(
@@ -77,18 +79,23 @@ class _EventsProfileScreenState extends State<EventsProfileScreen> {
                 )
               ],
             ),
+
             SizedBox(
               height: 20,
             ),
-            CustomTabSelector(
-                tabs: eventsController.nameList,
-                selectedIndex: eventsController.currentIndex.value,
-                onTabSelected: (value) {
-                  eventsController.currentIndex.value = value;
-                  setState(() {});
-                },
-                selectedColor: AppColors.primary,
-                unselectedColor: AppColors.black),
+
+            Padding(
+              padding: const EdgeInsets.only(left: 12,right: 12),
+              child: CustomTabSelector(
+                  tabs: eventsController.nameList,
+                  selectedIndex: eventsController.currentIndex.value,
+                  onTabSelected: (value) {
+                    eventsController.currentIndex.value = value;
+                    setState(() {});
+                  },
+                  selectedColor: AppColors.primary,
+                  unselectedColor: AppColors.black),
+            ),
             SizedBox(
               height: 20,
             ),

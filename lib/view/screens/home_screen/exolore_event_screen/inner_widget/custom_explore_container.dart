@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
@@ -28,24 +29,30 @@ class CustomExploreContainer extends StatelessWidget {
     this.showDeliveryButtton = false, this.btnOne, this.btnTwo,
   });
 
+  final storage = GetStorage();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 20.0),
       child: Row(
         children: [
+
           CustomNetworkImage(
             imageUrl: image!,
             height: 170.h,
             width: 170.h,
             borderRadius: BorderRadius.circular(10),
           ),
+
           SizedBox(
             width: 10,
           ),
+
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
               SizedBox(
                 width: 150.w,
                 child: CustomText(
@@ -57,7 +64,7 @@ class CustomExploreContainer extends StatelessWidget {
                   bottom: 5,
                 ),
               ),
-              // Location
+              /// Location
               Row(
                 children: [
                   Icon(
@@ -110,6 +117,7 @@ class CustomExploreContainer extends StatelessWidget {
                   InkWell(
                     onTap: () {
                       Get.toNamed(AppRoutes.exploreEventScreen);
+                      storage.write("status","home_page");
                     },
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),

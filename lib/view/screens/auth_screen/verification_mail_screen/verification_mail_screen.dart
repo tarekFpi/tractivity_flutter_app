@@ -18,60 +18,73 @@ class VerificationMailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomRoyelAppbar(titleName:  AppStrings.serveOut,),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 80),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+     //appBar: CustomRoyelAppbar(titleName:  AppStrings.serveOut,),
+     appBar: AppBar(
+       title: Text(
+         AppStrings.serveOut,
+         style: TextStyle(
+             color: AppColors.black,
+             fontSize: 30,
+             fontWeight: FontWeight.w600),
+       ),
 
-            /*CustomText(
-                text: AppStrings.serveOut,
-                fontSize: 32,
-                fontWeight: FontWeight.w600,
-                ),*/
-            Column(
-              children: [
-                CustomText(
-                  top: 80.h,
-                  text: AppStrings.emailConfirmation,
-                  fontSize: 32,
-                  fontWeight: FontWeight.w600,
-                  bottom: 20.h,
-                ),
-                CustomText(
-                  text: AppStrings.enterYourEmailForVerification,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w400,
-                  maxLines: 2,
-                  bottom: 32.h,
-                  color: AppColors.black,
-                ),
+     ),
 
-                ///============ Email ============
-                CustomFormCard(
-                    title: AppStrings.email,
-                   // hasBackgroundColor: true,
-                    titleColor: Colors.black,
-                    hintText: AppStrings.enterYourEmail,
-                    controller: TextEditingController(),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 80),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+        
 
-                ),
+              Column(
+                children: [
+                  CustomText(
+                    top: 80.h,
+                    text: AppStrings.emailConfirmation,
+                    fontSize: 32,
+                    fontWeight: FontWeight.w600,
+                    bottom: 20.h,
+                  ),
+                  CustomText(
+                    text: AppStrings.enterYourEmailForVerification,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                    maxLines: 2,
+                    bottom: 32.h,
+                    color: AppColors.black,
+                  ),
+        
+                  ///============ Email ============
+                  CustomFormCard(
+                      title: AppStrings.email,
+                     // hasBackgroundColor: true,
+                      titleColor: Colors.black,
+                      hintText: AppStrings.enterYourEmail,
+                      controller: TextEditingController(),
+        
+                  ),
 
-                ///============ Login Button ============
-                CustomButton(
-                  onTap: () {
-
-                   Get.toNamed(AppRoutes.verificationScreen);
-                  },
-                  title: AppStrings.sendVerificationCode,
-                ),
-              ],
-            ),
-
-
-          ],
+                  SizedBox(
+                    height: 12,
+                  ),
+        
+                  ///============ Login Button ============
+                  CustomButton(
+                    onTap: () {
+        
+                     Get.toNamed(AppRoutes.verificationScreen);
+                    },
+                    title: AppStrings.sendVerificationCode,
+                  ),
+                ],
+              ),
+        
+        
+            ],
+          ),
         ),
       ),
     );

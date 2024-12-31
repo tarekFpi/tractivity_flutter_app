@@ -6,6 +6,7 @@ import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
 import 'package:tractivity_app/view/components/custom_royel_appbar/custom_royel_appbar.dart';
+import 'package:tractivity_app/view/screens/adminstrator_home_screen/alert_dialog_event.dart';
 import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/inner_widget/custom_setting_row.dart';
 
 class SettingScreen extends StatelessWidget {
@@ -19,65 +20,88 @@ class SettingScreen extends StatelessWidget {
           leftIcon: true,
           titleName: AppStrings.setting,
         ),
-        body: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-          child: Container(
-            height: MediaQuery.sizeOf(context).height / 2.5,
-            width: MediaQuery.sizeOf(context).width,
-            decoration: BoxDecoration(
-              color: AppColors.white_50,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 20, top: 40),
-              child: Column(
-                children: [
-                  ///======= Profile Person====
-                  CustomSettingRow(
-                      onTap: (){
-                       // Get.toNamed(AppRoutes.editPersonProfileScreen);
-                      },
-                      text: AppStrings.profileSetting,
-                      icon: Icons.person),
-                  ///======= aboutus ====
-                  CustomSettingRow(
-                      onTap: (){
-                        Get.toNamed(AppRoutes.aboutUsScreen);
-                      },
-                      text: AppStrings.aboutus,
-                      icon: Icons.info_outline),
-                  ///======= privacyPolicy ====
-                  CustomSettingRow(
-                      onTap: (){
-                       Get.toNamed(AppRoutes.privacyPolicyScreen);
-                      },
-                      text: AppStrings.privacyPolicy,
-                      icon: Icons.privacy_tip_outlined),
-                  ///======= termsAndConditions ====
-                  CustomSettingRow(
-                      onTap: (){
-                        Get.toNamed(AppRoutes.termsConditionScreen);
-                      },
-                      text: AppStrings.termsAndConditions,
-                      icon: Icons.align_vertical_bottom_outlined),
-                  ///======= termsAndConditions ====
-                  CustomSettingRow(
-                      onTap: (){
-                        //Get.toNamed(AppRoutes.loginScreen);
-                      },
-                      text: AppStrings.logOut,
-                      icon: Icons.logout),
-                  SizedBox(height: 30.h,),
-                  ///======= termsAndConditions ====
-                  CustomSettingRow(
-                      onTap: (){
-                      //  settingController.showPopup();
-                      },
-                      text: AppStrings.deleteAccount,
-                      color: AppColors.primary,
-                      textColor: AppColors.primary,
-                      icon: Icons.delete_sweep_outlined),
-                ],
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+            child: Container(
+             /// height: MediaQuery.sizeOf(context).height / 2.5,
+              width: MediaQuery.sizeOf(context).width,
+              decoration: BoxDecoration(
+                color: AppColors.white_50,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20, top: 40),
+                child: Column(
+                  children: [
+
+                    ///======= Profile Person====
+                    CustomSettingRow(
+                        onTap: (){
+                         Get.toNamed(AppRoutes.editPersonProfileScreen);
+                        },
+                        text: AppStrings.profileSetting,
+                        icon: Icons.person),
+
+                    ///======= aboutus ====
+                    CustomSettingRow(
+                        onTap: (){
+                          Get.toNamed(AppRoutes.aboutUsScreen);
+                        },
+                        text: AppStrings.aboutus,
+                        icon: Icons.info_outline),
+                    ///======= privacyPolicy ====
+
+                    CustomSettingRow(
+                        onTap: (){
+                         Get.toNamed(AppRoutes.privacyPolicyScreen);
+                        },
+                        text: AppStrings.privacyPolicy,
+                        icon: Icons.privacy_tip_outlined),
+
+                    ///======= termsAndConditions ====
+
+                    CustomSettingRow(
+                        onTap: (){
+                          Get.toNamed(AppRoutes.termsConditionScreen);
+                        },
+                        text: AppStrings.termsAndConditions,
+                        icon: Icons.align_vertical_bottom_outlined),
+
+                    ///======= termsAndConditions ====
+
+                    CustomSettingRow(
+                        onTap: (){
+                         Get.toNamed(AppRoutes.loginScreen);
+                        },
+                        text: AppStrings.logOut,
+                        icon: Icons.logout),
+                    SizedBox(height: 30.h,),
+
+                    ///======= termsAndConditions ==============
+
+                    CustomSettingRow(
+                        onTap: (){
+                          showDialog(
+                            context: context,
+                            builder: (ctx) => AlertDialog(
+                              backgroundColor: Colors.white,
+                              insetPadding: EdgeInsets.all(8),
+                              contentPadding: EdgeInsets.all(8),
+                              title: SizedBox(),
+                              content: SizedBox(
+                                width: MediaQuery.sizeOf(context).width,
+                                child: AlertDialogEvent(title: "Are you sure you want to \n delete ?",discription: "",),
+                              ),
+                            ),
+                          );
+                        },
+                        text: AppStrings.deleteAccount,
+                        color: AppColors.primary,
+                        textColor: AppColors.primary,
+                        icon: Icons.delete_sweep_outlined),
+                  ],
+                ),
               ),
             ),
           ),

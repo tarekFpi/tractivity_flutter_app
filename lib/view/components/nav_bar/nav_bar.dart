@@ -13,6 +13,7 @@ import '../../../utils/app_colors/app_colors.dart';
 import '../../../utils/app_icons/app_icons.dart';
 import '../../../utils/app_strings/app_strings.dart';
 import '../custom_text/custom_text.dart';
+
 class NavBar extends StatefulWidget {
   final int currentIndex;
   const NavBar({required this.currentIndex, super.key});
@@ -22,6 +23,7 @@ class NavBar extends StatefulWidget {
 }
 
 class _UserNavBarState extends State<NavBar> {
+
   late int bottomNavIndex;
 
   final List<String> selectedIcon = [
@@ -30,6 +32,7 @@ class _UserNavBarState extends State<NavBar> {
     AppIcons.mail,
     AppIcons.pencilalt,
   ];
+
   final List<String> unselectedIcon = [
     AppIcons.home,
     AppIcons.users,
@@ -57,17 +60,15 @@ class _UserNavBarState extends State<NavBar> {
       // color: AppColors.dartBlue,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.only(topRight: Radius.circular(40.r), topLeft: Radius.circular(40.r)),
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [AppColors.lightWhite, AppColors.lightWhite])),
-      height: 80.h,
+         ),
+      height: 95.h,
       width: MediaQuery.of(context).size.width,
       alignment: Alignment.center,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: List.generate(
+
           selectedIcon.length,
               (index) => InkWell(
             onTap: () => onTap(index),
@@ -76,51 +77,86 @@ class _UserNavBarState extends State<NavBar> {
               children: [
                 index == bottomNavIndex
                     ? Card(
-                  elevation: 100,
-                  shadowColor: AppColors.primary,
+                  elevation: 85,
+                 shadowColor: AppColors.primary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                         topLeft:Radius.circular(50),
-                        topRight: Radius.circular(50)
+                        topRight: Radius.circular(50),
+                        bottomLeft: Radius.circular(12),
+                        bottomRight: Radius.circular(12)
                     ),
                   ),
                   color: Colors.transparent,
                   child: Container(
-                    height: 60.h,
-                    width: 50.w,
+                    height: 85.h,
+                    width: 80.w,
                     decoration: BoxDecoration(
-                      color: AppColors.primary,
+                     color: AppColors.primary,
                       borderRadius: BorderRadius.only(
                           topLeft:Radius.circular(50),
-                        topRight: Radius.circular(50)
+                          topRight: Radius.circular(50),
+                          bottomLeft: Radius.circular(12),
+                          bottomRight: Radius.circular(12)
                       ),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: SvgPicture.asset(
-                        selectedIcon[index],
-                        height: 24.h,
-                        width: 24.w,
-                        color: AppColors.white,
-                      ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          selectedIcon[index],
+                          height: 24.h,
+                          width: 24.w,
+                          color: AppColors.white,
+                        ),
+                        SizedBox(
+                          height: 4,
+                        ),
+                        CustomText(
+                          text: userNavText[index],
+                          color: AppColors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12.w,
+                        ),
+                      ],
                     ),
                   ),
                 )
-                    : SvgPicture.asset(
-                  unselectedIcon[index],
-                  height: 24.h,
-                  width: 24.w,
-                  color: AppColors.primary,
+                    : Column(
+                  children: [
+                    SvgPicture.asset(
+                      unselectedIcon[index],
+                      height: 24.h,
+                      width: 24.w,
+                      color: AppColors.primary,
+                    ),
+
+                    SizedBox(
+                      height: 4,
+                    ),
+                    CustomText(
+                      text: userNavText[index],
+                      color: AppColors.black,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12.w,
+                    ),
+                  ],
                 ),
-                SizedBox(height: 4.h),
-                index == bottomNavIndex
-                    ? const SizedBox()
-                    : CustomText(
+
+
+                /*index == bottomNavIndex
+                    ? CustomText(
                   text: userNavText[index],
-                  color: AppColors.primary,
+                  color: AppColors.black,
                   fontWeight: FontWeight.w600,
                   fontSize: 14.w,
-                ),
+                )
+                    : CustomText(
+                  text: userNavText[index],
+                  color: AppColors.black,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14.w,
+                ),*/
               ],
             ),
           ),

@@ -31,20 +31,24 @@ class _DonationScreenState extends State<DonationScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+
+              const SizedBox(
                 height: 12,
               ),
 
-              CustomText(
+              const CustomText(
                 text:
-                    "100% of your donation will go towards \n building the infrastructure of Serve Out. \n We have no paid staff.",
+                    "100% of your donation will go towards \n building the infrastructure \n of Serve Out.  We have no paid staff.",
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
+                textAlign: TextAlign.start,
               ),
-              SizedBox(
+
+              const SizedBox(
                 height: 12,
               ),
-              CustomText(
+
+              const CustomText(
                 text: "Your Details",
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
@@ -134,23 +138,24 @@ class _DonationScreenState extends State<DonationScreen> {
                   controller: TextEditingController()),
 
               ///============ Recurring Monthly Gift  ============
-              CustomText(
+              const CustomText(
                 text: "Recurring Monthly Gift",
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
                 bottom: 16,
               ),
 
-              ///============ Card number  ============
-              CustomFormCard(
-                  title: AppStrings.card,
-                  hintText: AppStrings.enterNumber,
-                  hasBackgroundColor: true,
-                  controller: TextEditingController()),
+              const CustomText(
+                text: AppStrings.card,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                bottom: 8,
+              ),
 
               const SizedBox(
                 height: 8,
               ),
+
               Container(
                 height: 60,
                 width: MediaQuery.sizeOf(context).width,
@@ -159,20 +164,24 @@ class _DonationScreenState extends State<DonationScreen> {
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(color: AppColors.black_80, width: 1),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 16.0),
+                child: const Padding(
+                  padding: EdgeInsets.only(right: 16.0),
                   child: Row(
                     children: [
                       Flexible(
                         child: CustomTextField(
                           fillColor: AppColors.white,
-                          hintText: "tarek",
+                          hintText: "1234 1234 1234 1234",
                         ),
                       ),
                       CustomImage(imageSrc: AppIcons.cardImage)
                     ],
                   ),
                 ),
+              ),
+
+              const SizedBox(
+                height: 8,
               ),
               Row(
                 children: [

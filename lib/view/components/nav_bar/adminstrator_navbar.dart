@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:tractivity_app/view/screens/adminstrator_home_screen/administratior_create.dart';
+import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrator_home_screen.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_home_screen.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_invite_mission_screen/organizer_invite_mission_screen.dart';
 import '../../../utils/app_colors/app_colors.dart';
@@ -18,17 +20,17 @@ class AdminstratorNavbar extends StatefulWidget {
 }
 
 class _UserNavBarState extends State<AdminstratorNavbar> {
+
   late int bottomNavIndex;
 
   final List<String> selectedIcon = [
     AppIcons.home,
     AppIcons.userAdd,
-
   ];
+
   final List<String> unselectedIcon = [
     AppIcons.home,
     AppIcons.userAdd,
-
   ];
 
   final List<String> userNavText = [
@@ -54,7 +56,7 @@ class _UserNavBarState extends State<AdminstratorNavbar> {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [AppColors.lightWhite, AppColors.lightWhite])),
-      height: 80.h,
+      height: 95.h,
       width: MediaQuery.of(context).size.width,
       alignment: Alignment.center,
       child: Row(
@@ -69,51 +71,86 @@ class _UserNavBarState extends State<AdminstratorNavbar> {
               children: [
                 index == bottomNavIndex
                     ? Card(
-                  elevation: 100,
+                  elevation: 85,
                   shadowColor: AppColors.primary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                         topLeft:Radius.circular(50),
-                        topRight: Radius.circular(50)
+                        topRight: Radius.circular(50),
+                        bottomLeft: Radius.circular(12),
+                       bottomRight: Radius.circular(12)
                     ),
                   ),
                   color: Colors.transparent,
                   child: Container(
-                    height: 60.h,
-                    width: 50.w,
+                    height: 85.h,
+                    width: 80.w,
                     decoration: BoxDecoration(
                       color: AppColors.primary,
                       borderRadius: BorderRadius.only(
                           topLeft:Radius.circular(50),
-                          topRight: Radius.circular(50)
+                          topRight: Radius.circular(50),
+                          bottomLeft: Radius.circular(12),
+                          bottomRight: Radius.circular(12)
                       ),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: SvgPicture.asset(
-                        selectedIcon[index],
-                        height: 24.h,
-                        width: 24.w,
-                        color: AppColors.white,
-                      ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+
+                        SvgPicture.asset(
+                          selectedIcon[index],
+                          height: 24.h,
+                          width: 24.w,
+                          color: AppColors.white,
+                        ),
+
+                        SizedBox(
+                          height: 4,
+                        ),
+
+                        CustomText(
+                          text: userNavText[index],
+                          color: AppColors.black,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14.w,
+                        ),
+
+                      ],
                     ),
                   ),
                 )
-                    : SvgPicture.asset(
-                  unselectedIcon[index],
-                  height: 24.h,
-                  width: 24.w,
-                  color: AppColors.primary,
-                ),
-                SizedBox(height: 4.h),
-                index == bottomNavIndex
+                    : Column(
+              children: [
+
+              SvgPicture.asset(
+              unselectedIcon[index],
+                height: 24.h,
+                width: 24.w,
+                color: AppColors.primary,
+              ),
+
+          SizedBox(
+            height: 4,
+          ),
+          CustomText(
+            text: userNavText[index],
+            color: AppColors.black,
+            fontWeight: FontWeight.w600,
+            fontSize: 14.w,
+          ),
+          ],
+        ),
+                //SizedBox(height: 4.h),
+
+             /*   index == bottomNavIndex
                     ? const SizedBox()
                     : CustomText(
                   text: userNavText[index],
                   color: AppColors.primary,
                   fontWeight: FontWeight.w600,
                   fontSize: 14.w,
-                ),
+                ),*/
               ],
             ),
           ),
@@ -126,10 +163,10 @@ class _UserNavBarState extends State<AdminstratorNavbar> {
     if (index != bottomNavIndex) {
       switch (index) {
         case 0:
-          Get.offAll(() => OrganizerHomeScreen());
+          Get.offAll(() => AdminstratorHomeScreen());
           break;
         case 1:
-          Get.to(() => OrganizerInviteMissionScreen());
+          Get.to(() => AdministratiorCreateScreen());
           break;
       /*   case 2:
           Get.to(() => MassageListScreen());

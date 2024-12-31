@@ -8,6 +8,7 @@ import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 
 
 class AlertNotification extends StatefulWidget {
+
   AlertNotification({super.key});
 
 

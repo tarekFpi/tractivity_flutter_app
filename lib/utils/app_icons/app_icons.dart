@@ -23,6 +23,10 @@ class AppIcons {
   static const String clipboardList = "$basePath/clipboardList.svg";
   static const String userAdd = "$basePath/userAdd.svg";
   static const String cardImage = "$basePath/card.svg";
+  static const String bookmark = "$basePath/bookmark.svg";
+  static const String uploadIcon = "$basePath/upload_icon.svg";
+  static const String chart = "$basePath/chart.svg";
+  static const String groupImage = "$basePath/group_image.png";
 
 
 
