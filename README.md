@@ -1,14 +1,14 @@
 # tractivity app screenshot
 
  
-![Screenshot_20241225_104150](https://github.com/user-attachments/assets/d8c8bffe-0283-4ed8-bb02-4e4607bc133c)
-![Screenshot_20241225_104145](https://github.com/user-attachments/assets/ac73327d-78a3-44f1-939d-fe6ed8347676)
-![Screenshot_20241225_104140](https://github.com/user-attachments/assets/cc5c69c0-8326-4e24-a459-06bfa5782acc)
-![Screenshot_20241225_104133](https://github.com/user-attachments/assets/c5036848-94da-4c53-870e-cb07c2183791)
-![Screenshot_20241225_104113](https://github.com/user-attachments/assets/525006de-a7b4-40c6-b75c-c7dd7fdf3da3)
-![Screenshot_20241225_104108](https://github.com/user-attachments/assets/16e3e486-b249-4f6b-a53f-ff47536cd281)
-![Screenshot_20241225_104102](https://github.com/user-attachments/assets/d7e08e8e-1db5-4fcc-99ee-f20d34a92370)
-![Screenshot_20241225_104211](https://github.com/user-attachments/assets/5e45f83e-adf5-406a-ac41-6a7a30ca1db9)
-
-![Screenshot_20241225_104218](https://github.com/user-attachments/assets/38230ba8-c70a-4321-b53c-76687a201197)
-![Screenshot_20241225_104238](https://github.com/user-attachments/assets/255a978e-7330-434c-a575-b1b1f2d7283a)
+ 
+![Screenshot_20241225_104102](https://github.com/user-attachments/assets/59b4f6b8-613f-4723-b4cc-c812cf5f2284)
+![Screenshot_20241225_104108](https://github.com/user-attachments/assets/b8076840-eb21-4f6e-8bc4-04588a9f3f85)
+![Screenshot_20241225_104113](https://github.com/user-attachments/assets/74478772-ec34-4a80-8748-95d100a0853f)
+![Screenshot_20241225_104133](https://github.com/user-attachments/assets/619c48f1-e98c-4d60-b5e1-1ab5b4c92ede)
+![Screenshot_20241225_104140](https://github.com/user-attachments/assets/a552a697-545a-4b62-986b-893f0b44af17)
+![Screenshot_20241225_104145](https://github.com/user-attachments/assets/64f2686e-0307-4921-8e97-43f058e3313b)
+![Screenshot_20241225_104150](https://github.com/user-attachments/assets/f27a51c5-7ac0-4ad1-b536-4294a286a9db)
+![Screenshot_20241225_104211](https://github.com/user-attachments/assets/924dcace-e39c-47d4-8f60-1080a4617178)
+![Screenshot_20241225_104218](https://github.com/user-attachments/assets/c2d4ab0c-4a15-46c4-99fe-b3be14386275)
+![Screenshot_20241225_104238](https://github.com/user-attachments/assets/d7ac3ee4-0c0b-4d73-96a3-58e61fe4c23c)
