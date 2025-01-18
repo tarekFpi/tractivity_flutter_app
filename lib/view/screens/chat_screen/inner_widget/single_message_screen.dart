@@ -90,196 +90,204 @@ class SingleMessageScreen extends StatelessWidget {
           ],
         ),
         actions: [
-          IconButton(
-            color: AppColors.black,
-            icon: Icon(Icons.more_vert),
-            onPressed: () {
+
+          LayoutBuilder(builder: (context,constraints){
+
+            final isTablet = constraints.maxWidth > 600;
+
+            return IconButton(
+              color: AppColors.black,
+              icon: Icon(Icons.more_vert,size:isTablet?32: 24,),
+              onPressed: () {
 
 
-              showModalBottomSheet(
-                context: context,
-                /// barrierColor: Colors.grey,
-                backgroundColor: Colors.white,
-                elevation: 10,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                builder: (BuildContext context) {
-                  // UDE : SizedBox instead of Container for whitespaces
-                  return SizedBox(
-                    height: 200,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
+                showModalBottomSheet(
+                  context: context,
+                  /// barrierColor: Colors.grey,
+                  backgroundColor: Colors.white,
+                  elevation: 10,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  builder: (BuildContext context) {
+
+                    final height = MediaQuery.of(context).size.height * 0.2;
+
+                    return SizedBox(
+                      height: isTablet?height:200,
+                      width: MediaQuery.of(context).size.width,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
 
 
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8,right: 8,top: 12),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8,right: 8,top: 12),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
 
-                              const Align(
-                                alignment: Alignment.centerLeft,
-                                child: CustomText(
-                                  text: "User Setting",
-                                  fontSize: 24,
-                                  color: AppColors.black,
-                                  fontWeight: FontWeight.w600,
-                                  bottom: 8,
+                                const Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: CustomText(
+                                    text: "User Setting",
+                                    fontSize: 24,
+                                    color: AppColors.black,
+                                    fontWeight: FontWeight.w600,
+                                    bottom: 8,
+                                  ),
                                 ),
-                              ),
 
-                              Padding(
-                                padding: const EdgeInsets.only(right: 12),
-                                child: Align(
-                                  alignment: Alignment.centerRight,
-                                  child: InkWell(
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 12),
+                                  child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: InkWell(
+                                        onTap: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Icon(
+                                          Icons.close,
+                                          size: 32,
+                                          color: Colors.black,
+                                        )),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+
+
+                          InkWell(
+                            onTap: (){
+                              Get.toNamed(AppRoutes.userEventProfile);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 8,right: 8,top: 12),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: const [
+
+                                  Icon(
+                                    Icons.person,
+                                    size: 32,
+                                    color: Colors.black,
+                                  ),
+
+                                  SizedBox(
+                                    width: 4,
+                                  ),
+                                  CustomText(
+                                    text: "View Profile",
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.black,
+                                  ),
+
+                                ],
+                              ),
+                            ),
+                          ),
+
+                          SizedBox(
+                            height: 8,
+                          ),
+
+                          GestureDetector(
+                            onTap: (){
+
+                              showDialog(
+                                context: context,
+                                builder: (ctx) => AlertDialog(
+                                  backgroundColor: Colors.white,
+                                  insetPadding: EdgeInsets.all(8),
+                                  contentPadding: EdgeInsets.all(8),
+                                  title: SizedBox(),
+                                  content: SizedBox(
+                                    width: MediaQuery.sizeOf(context).width,
+                                    child: AlertDialogEvent(title: "Are you sure you want \n to Block this User?",discription: "",),
+                                  ),
+                                ),
+                              );
+
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 8,right: 8,top: 16),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+
+                                  InkWell(
                                       onTap: () {
                                         Navigator.of(context).pop();
                                       },
                                       child: const Icon(
-                                        Icons.close,
+                                        Icons.block,
                                         size: 32,
-                                        color: Colors.black,
+                                        color: AppColors.primary,
                                       )),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
 
+                                  SizedBox(
+                                    width: 4,
+                                  ),
+                                  CustomText(
+                                    text: "Block this user",
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.primary,
+                                  ),
 
-                        InkWell(
-                          onTap: (){
-                            Get.toNamed(AppRoutes.userEventProfile);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 8,right: 8,top: 12),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [
-
-                                Icon(
-                                  Icons.person,
-                                  size: 32,
-                                  color: Colors.black,
-                                ),
-
-                                SizedBox(
-                                  width: 4,
-                                ),
-                                CustomText(
-                                  text: "View Profile",
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColors.black,
-                                ),
-
-                              ],
-                            ),
-                          ),
-                        ),
-
-                        SizedBox(
-                          height: 8,
-                        ),
-
-                        GestureDetector(
-                          onTap: (){
-
-                            showDialog(
-                              context: context,
-                              builder: (ctx) => AlertDialog(
-                                backgroundColor: Colors.white,
-                                insetPadding: EdgeInsets.all(8),
-                                contentPadding: EdgeInsets.all(8),
-                                title: SizedBox(),
-                                content: SizedBox(
-                                  width: MediaQuery.sizeOf(context).width,
-                                  child: AlertDialogEvent(title: "Are you sure you want \n to Block this User?",discription: "",),
-                                ),
+                                ],
                               ),
-                            );
-
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 8,right: 8,top: 16),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-
-                                InkWell(
-                                    onTap: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Icon(
-                                      Icons.block,
-                                      size: 32,
-                                      color: AppColors.primary,
-                                    )),
-
-                                SizedBox(
-                                  width: 4,
-                                ),
-                                CustomText(
-                                  text: "Block this user",
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColors.primary,
-                                ),
-
-                              ],
                             ),
                           ),
-                        ),
 
-                      ],
-                    ),
-                  );
-                },
-              );
+                        ],
+                      ),
+                    );
+                  },
+                );
 
 
-            },
-          ),
+              },
+            );
+          }),
 
-          /*IconButton(
-            icon: CustomImage(imageSrc: AppIcons.personIcon),
-            onPressed: () {},
-          ),
-          SizedBox(
-            width: 10.w,
-          )*/
+
+
         ],
       ),
-      body: Column(
-        children: [
-          //============================= Measage Screen =============================
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.0.w),
-              child: ListView(
-                shrinkWrap: true,
-                children: List.generate(
-                  align.length,
-                      (index) => CustomInboxMassage(
-                      alignment: align[index],
-                      message:
-                      'Mi sento bene adesso. Ma ho un problema. Puoi fare una chiamata?',
-                      messageTime: '2:00 PM'),
+      body: LayoutBuilder(builder: (context,constraints){
+
+        final isTablet = constraints.maxWidth > 600;
+
+        return Column(
+          children: [
+            //============================= Measage Screen =============================
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0.w),
+                child: ListView(
+                  shrinkWrap: true,
+                  children: List.generate(
+                    align.length,
+                        (index) => CustomInboxMassage(
+                        alignment: align[index],
+                        message:
+                        'Mi sento bene adesso. Ma ho un problema. Puoi fare una chiamata?',
+                        messageTime: '2:00 PM',),
+                  ),
                 ),
               ),
             ),
-          ),
-          //========================= Write Message Screen ==========================
-          Padding(
-            padding: const EdgeInsets.only(right: 20.0, left: 20, bottom: 20),
-            child: Row(
-              children: [
-                /*//===================== AttCh file button =======================
+            //========================= Write Message Screen ==========================
+            Padding(
+              padding: const EdgeInsets.only(right: 20.0, left: 20, bottom: 20),
+              child: Row(
+                children: [
+                  /*//===================== AttCh file button =======================
                 CustomImage(
                   imageSrc: AppIcons.personIcon,size: 25,
                  // height: 25.w,
@@ -288,38 +296,40 @@ class SingleMessageScreen extends StatelessWidget {
                 SizedBox(
                   width: 10.w,
                 ),*/
-                //===================== Write message field =======================
-                Expanded(
-                    child: CustomTextField(
-                      suffixIcon:
-                      IconButton(onPressed: () {}, icon: const Icon(Icons.image)),
-                      fillColor: Colors.grey.withOpacity(.1),
-                      hintText: 'Write your message',
-                      fieldBorderColor: Colors.grey,
-                    )),
-                SizedBox(
-                  width: 10.w,
-                ),
-                //====================== Camera button =======================
-                Container(
-                  height: 45,
-                  width: 45,
-                  decoration: BoxDecoration(
-                    color: AppColors.primary,
-                    borderRadius: BorderRadius.circular(70),
-                  ),
-                  child: const Icon(
-                    Icons.send,
-                    color: AppColors.white,
-                  ),
-                )
 
-                //=================== Record button ====================
-              ],
-            ),
-          )
-        ],
-      ),
+                  ///===================== Write message field =======================
+                  Expanded(
+                      child: CustomTextField(
+                        suffixIcon:
+                        IconButton(onPressed: () {}, icon: const Icon(Icons.image)),
+                        fillColor: Colors.grey.withOpacity(.1),
+                        hintText: 'Write your message',
+                        fieldBorderColor: Colors.grey,
+                      )),
+                  SizedBox(
+                    width: 10.w,
+                  ),
+                  //====================== Camera button =======================
+                  Container(
+                    height: 45,
+                    width: 45,
+                    decoration: BoxDecoration(
+                      color: AppColors.primary,
+                      borderRadius: BorderRadius.circular(70),
+                    ),
+                    child: const Icon(
+                      Icons.send,
+                      color: AppColors.white,
+                    ),
+                  )
+
+                  //=================== Record button ====================
+                ],
+              ),
+            )
+          ],
+        );
+      }),
     );
   }
 }
@@ -338,112 +348,116 @@ class CustomInboxMassage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: alignment ? Alignment.centerLeft : Alignment.centerRight,
-      child: Column(
-        crossAxisAlignment:
-        alignment ? CrossAxisAlignment.start : CrossAxisAlignment.end,
-        children: [
-          alignment
-              ? Row(
-            children: [
-              CustomNetworkImage(
-                imageUrl: AppConstants.profileImage,
-                height: 45.w,
-                width: 45.w,
-                boxShape: BoxShape.circle,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: MediaQuery.sizeOf(context).width / 1.5,
-                    decoration: BoxDecoration(
-                      color:
-                      alignment ? AppColors.white : AppColors.primary,
-                      borderRadius: alignment
-                          ? const BorderRadius.only(
-                        bottomRight: Radius.circular(16),
-                        topLeft: Radius.circular(16),
-                        topRight: Radius.circular(16),
-                      )
-                          : const BorderRadius.only(
+    return LayoutBuilder(builder: (context,constraints){
+
+      final isTablet = constraints.maxWidth > 600;
+      return Align(
+        alignment: alignment ? Alignment.centerLeft : Alignment.centerRight,
+        child: Column(
+          crossAxisAlignment:
+          alignment ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+          children: [
+            alignment
+                ? Row(
+              children: [
+                CustomNetworkImage(
+                  imageUrl: AppConstants.profileImage,
+                  height: 45.w,
+                  width: 45.w,
+                  boxShape: BoxShape.circle,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: MediaQuery.sizeOf(context).width / 1.5,
+                      decoration: BoxDecoration(
+                        color:
+                        alignment ? AppColors.white : AppColors.primary,
+                        borderRadius: alignment
+                            ? const BorderRadius.only(
+                          bottomRight: Radius.circular(16),
                           topLeft: Radius.circular(16),
                           topRight: Radius.circular(16),
-                          bottomLeft: Radius.circular(16)),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 14.0.h, vertical: 10.h),
-                      child: CustomText(
-                        textAlign: TextAlign.left,
-                        text: message,
-                        fontSize: 16.sp,
-                        color: alignment
-                            ? AppColors.black
-                            : AppColors.white,
-                        fontWeight: FontWeight.w400,
-                        maxLines: 20,
+                        )
+                            : const BorderRadius.only(
+                            topLeft: Radius.circular(16),
+                            topRight: Radius.circular(16),
+                            bottomLeft: Radius.circular(16)),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 14.0.h, vertical: 10.h),
+                        child: CustomText(
+                          textAlign: TextAlign.left,
+                          text: message,
+                          fontSize:isTablet?14: 14.sp,
+                          color: alignment
+                              ? AppColors.black
+                              : AppColors.white,
+                          fontWeight: FontWeight.w400,
+                          maxLines: 20,
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 14.0),
-                    child: CustomText(
-                      text: messageTime ?? '',
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.black,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 14.0),
+                      child: CustomText(
+                        text: messageTime ?? '',
+                        fontSize:isTablet?14: 14.sp,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.black,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
-          )
-              : Container(
-            width: MediaQuery.sizeOf(context).width / 1.5,
-            decoration: BoxDecoration(
-              color: alignment ? AppColors.white : AppColors.primary,
-              borderRadius: alignment
-                  ? const BorderRadius.only(
-                bottomRight: Radius.circular(16),
-                topLeft: Radius.circular(16),
-                topRight: Radius.circular(16),
-              )
-                  : const BorderRadius.only(
+                  ],
+                ),
+              ],
+            )
+                : Container(
+              width: MediaQuery.sizeOf(context).width / 1.5,
+              decoration: BoxDecoration(
+                color: alignment ? AppColors.white : AppColors.primary,
+                borderRadius: alignment
+                    ? const BorderRadius.only(
+                  bottomRight: Radius.circular(16),
                   topLeft: Radius.circular(16),
                   topRight: Radius.circular(16),
-                  bottomLeft: Radius.circular(16)),
-            ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: 14.0.h, vertical: 10.h),
-              child: CustomText(
-                textAlign: TextAlign.left,
-                text: message,
-                fontSize: 16.sp,
-                color: alignment ? AppColors.black : AppColors.white,
-                fontWeight: FontWeight.w400,
-                maxLines: 20,
+                )
+                    : const BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16),
+                    bottomLeft: Radius.circular(16)),
+              ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: 14.0.h, vertical: 10.h),
+                child: CustomText(
+                  textAlign: TextAlign.left,
+                  text: message,
+                  fontSize:isTablet?14: 14.sp,
+                  color: alignment ? AppColors.black : AppColors.white,
+                  fontWeight: FontWeight.w400,
+                  maxLines: 20,
+                ),
               ),
             ),
-          ),
-          SizedBox(
-            height: 4.h,
-          ),
-          alignment
-              ? Container()
-              : CustomText(
-            text: messageTime ?? '',
-            fontSize: 14.sp,
-            fontWeight: FontWeight.w400,
-            color: AppColors.black,
-          ),
-          SizedBox(
-            height: 12.h,
-          ),
-        ],
-      ),
-    );
+            SizedBox(
+              height: 4.h,
+            ),
+            alignment
+                ? Container()
+                : CustomText(
+              text: messageTime ?? '',
+              fontSize:isTablet?14: 14.sp,
+              fontWeight: FontWeight.w400,
+              color: AppColors.black,
+            ),
+            SizedBox(
+              height: 12.h,
+            ),
+          ],
+        ),
+      );
+    });
   }
 }

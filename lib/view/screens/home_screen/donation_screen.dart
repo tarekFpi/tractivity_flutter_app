@@ -22,202 +22,201 @@ class _DonationScreenState extends State<DonationScreen> {
     return Scaffold(
       appBar: CustomRoyelAppbar(
         titleName: AppStrings.donation,
+        fontSize: 22,
         leftIcon: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final isTablet = constraints.maxWidth > 600; // Detect if it's a tablet
 
-              const SizedBox(
-                height: 12,
-              ),
-
-              const CustomText(
-                text:
-                    "100% of your donation will go towards \n building the infrastructure \n of Serve Out.  We have no paid staff.",
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                textAlign: TextAlign.start,
-              ),
-
-              const SizedBox(
-                height: 12,
-              ),
-
-              const CustomText(
-                text: "Your Details",
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                bottom: 12,
-              ),
-
-              ///============ email ============
-              CustomFormCard(
-                  title: AppStrings.email,
-                  hintText: AppStrings.enterYourEmail,
-                  hasBackgroundColor: true,
-                  controller: TextEditingController()),
-
-              Row(
+          return Padding(
+            padding: EdgeInsets.all(isTablet ? 20.0 : 12.0), // Adjust padding
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ///============ first  Name ============
-                  Flexible(
-                    child: SizedBox(
-                      width: 200,
-                      child: CustomFormCard(
+
+                  SizedBox(height: isTablet ? 20 : 12),
+
+                  /// **Donation Description**
+                  CustomText(
+                    text: "100% of your donation will go towards \n building the infrastructure \n of Serve Out. We have no paid staff.",
+                    fontSize: isTablet ? 18 : 18,
+                    fontWeight: FontWeight.w500,
+                    textAlign: TextAlign.start,
+                  ),
+
+                  SizedBox(height: isTablet ? 20 : 12),
+
+                  CustomText(
+                    text: "Your Details",
+                    fontSize: isTablet ? 18 : 18,
+                    fontWeight: FontWeight.w600,
+                    bottom: 12,
+                  ),
+
+                  /// **Email Field**
+                  CustomFormCard(
+                    title: AppStrings.email,
+                    hintText: AppStrings.enterYourEmail,
+                    fontSize: isTablet?16:16,
+                    hasBackgroundColor: true,
+                    controller: TextEditingController(),
+                  ),
+
+                  SizedBox(height: isTablet ? 16 : 8),
+
+                  /// **First Name & Last Name**
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CustomFormCard(
                           title: AppStrings.firstName,
                           hintText: AppStrings.enterFristName,
+                          fontSize: isTablet?16:16,
                           hasBackgroundColor: true,
-                          controller: TextEditingController()),
-                    ),
-                  ),
-
-                  const SizedBox(
-                    width: 8,
-                  ),
-
-                  ///============ last  Name ============
-                  Flexible(
-                    child: SizedBox(
-                      width: 200,
-                      child: CustomFormCard(
+                          controller: TextEditingController(),
+                        ),
+                      ),
+                      SizedBox(width: isTablet ? 16 : 8),
+                      Expanded(
+                        child: CustomFormCard(
                           title: AppStrings.lastName,
                           hintText: AppStrings.enterLastName,
+                          fontSize: isTablet?16:16,
                           hasBackgroundColor: true,
-                          controller: TextEditingController()),
-                    ),
+                          controller: TextEditingController(),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
 
-              const SizedBox(
-                height: 8,
-              ),
+                  SizedBox(height: isTablet ? 16 : 8),
 
-              Row(
-                children: [
-                  ///============ Country  Name ============
-                  Flexible(
-                    child: SizedBox(
-                      width: 200,
-                      child: CustomFormCard(
+                  /// **Country & State**
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CustomFormCard(
                           title: AppStrings.country,
                           hintText: AppStrings.enterCountry,
                           hasBackgroundColor: true,
-                          controller: TextEditingController()),
-                    ),
-                  ),
-
-                  const SizedBox(
-                    width: 8,
-                  ),
-
-                  ///============ last  Name ============
-                  Flexible(
-                    child: SizedBox(
-                      width: 200,
-                      child: CustomFormCard(
+                          fontSize: isTablet?16:16,
+                          controller: TextEditingController(),
+                        ),
+                      ),
+                      SizedBox(width: isTablet ? 16 : 8),
+                      Expanded(
+                        child: CustomFormCard(
                           title: AppStrings.state,
                           hintText: AppStrings.enterState,
                           hasBackgroundColor: true,
-                          controller: TextEditingController()),
-                    ),
-                  ),
-                ],
-              ),
-
-              ///============ Summary Name ============
-              CustomFormCard(
-                  title: AppStrings.summary,
-                  hintText: AppStrings.enterSummary,
-                  hasBackgroundColor: true,
-                  controller: TextEditingController()),
-
-              ///============ Recurring Monthly Gift  ============
-              const CustomText(
-                text: "Recurring Monthly Gift",
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                bottom: 16,
-              ),
-
-              const CustomText(
-                text: AppStrings.card,
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                bottom: 8,
-              ),
-
-              const SizedBox(
-                height: 8,
-              ),
-
-              Container(
-                height: 60,
-                width: MediaQuery.sizeOf(context).width,
-                decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: AppColors.black_80, width: 1),
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.only(right: 16.0),
-                  child: Row(
-                    children: [
-                      Flexible(
-                        child: CustomTextField(
-                          fillColor: AppColors.white,
-                          hintText: "1234 1234 1234 1234",
+                          fontSize: isTablet?16:16,
+                          controller: TextEditingController(),
                         ),
                       ),
-                      CustomImage(imageSrc: AppIcons.cardImage)
                     ],
                   ),
-                ),
-              ),
 
-              const SizedBox(
-                height: 8,
-              ),
-              Row(
-                children: [
-                  ///============ Expiration date  ============
-                  Flexible(
-                    child: SizedBox(
-                      width: 200,
-                      child: CustomFormCard(
+                  SizedBox(height: isTablet ? 16 : 8),
+
+                  /// **Summary Field**
+                  CustomFormCard(
+                    title: AppStrings.summary,
+                    hintText: AppStrings.enterSummary,
+                    hasBackgroundColor: true,
+                    fontSize: isTablet?16:16,
+                    controller: TextEditingController(),
+                  ),
+
+                  SizedBox(height: isTablet ? 20 : 12),
+
+                  /// **Recurring Monthly Gift**
+                  CustomText(
+                    text: "Recurring Monthly Gift",
+                    fontSize: isTablet ? 16 : 16,
+                    fontWeight: FontWeight.w600,
+                    bottom: 16,
+                  ),
+
+                  /// **Card Information**
+                  CustomText(
+                    text: AppStrings.card,
+                    fontSize: isTablet ? 16 : 14,
+                    fontWeight: FontWeight.w600,
+                    bottom: 8,
+                  ),
+
+                  SizedBox(height: isTablet ? 12 : 8),
+
+                  /// **Card Input**
+                  Container(
+                    height: 60,
+                    width: constraints.maxWidth,
+                    decoration: BoxDecoration(
+                      color: AppColors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: AppColors.black_80, width: 1),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 16.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: CustomTextField(
+                              fillColor: AppColors.white,
+                              hintText: "1234 1234 1234 1234",
+                            ),
+                          ),
+                          CustomImage(imageSrc: AppIcons.cardImage)
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(height: isTablet ? 16 : 8),
+
+                  /// **Expiration Date & Security Code**
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CustomFormCard(
                           title: AppStrings.expiration,
                           hintText: AppStrings.enterDay,
                           hasBackgroundColor: true,
-                          controller: TextEditingController()),
-                    ),
-                  ),
-
-                  const SizedBox(
-                    width: 8,
-                  ),
-
-                  ///============ security code ============
-                  Flexible(
-                    child: SizedBox(
-                      width: 200,
-                      child: CustomFormCard(
+                          fontSize: isTablet?16:16,
+                          controller: TextEditingController(),
+                        ),
+                      ),
+                      SizedBox(width: isTablet ? 16 : 8),
+                      Expanded(
+                        child: CustomFormCard(
                           title: AppStrings.security,
                           hintText: AppStrings.enterSecurity,
+                          fontSize: isTablet?16:16,
                           hasBackgroundColor: true,
-                          controller: TextEditingController()),
-                    ),
+                          controller: TextEditingController(),
+                        ),
+                      ),
+                    ],
                   ),
+
+                  SizedBox(height: isTablet ? 24 : 16),
+
+                  /// **Submit Button**
+                  CustomButton(
+                    onTap: () {},
+                    title: "Submit",
+                    height: isTablet ? 70 : 50,
+                    fontSize: isTablet ? 16 : 16,
+                  ),
+
+                  SizedBox(height: isTablet ? 24 : 16),
                 ],
               ),
-              CustomButton(onTap: (){}, title: "Submit",)
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

@@ -31,8 +31,12 @@ class MessageScreen extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
+
+    final width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight:Get.width> 600?100:80,
         titleSpacing: 0,
         surfaceTintColor: AppColors.white,
         elevation: 1,
@@ -50,213 +54,228 @@ class MessageScreen extends StatelessWidget {
             ),
           ],
         ),
-        title: Row(
-          children: [
-            Stack(
-              children: [
+        title: LayoutBuilder(builder: (context,constraints){
 
-            /*    CustomNetworkImage(
+          final isTablet = constraints.maxWidth > 600;
+
+          return Row(
+            children: [
+              Stack(
+                children: [
+
+                  /*    CustomNetworkImage(
                   imageUrl: AppConstants.profileImage,
                   height: 54.w,
                   width: 54.w,
                   boxShape: BoxShape.circle,
                 ),*/
 
-                CustomImage(imageSrc: AppIcons.groupImage,
-                  height: 60.w,
-                  width: 60.w,),
+                  CustomImage(imageSrc: AppIcons.groupImage,
+                    height: 60.w,
+                    width: 60.w,),
 
-                Positioned(
-                  bottom: 5.w,
-                  right: 0,
-                  child: Container(
-                    height: 12.h,
-                    width: 12.w,
-                    decoration: BoxDecoration(
-                        color: AppColors.green, shape: BoxShape.circle),
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              width: 10.w,
-            ),
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-               CustomText(
-                  text: AppStrings.profile,
-                  fontSize: 22,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.black),
-
-              CustomText(
-                text: "Active Now",
-                fontSize: 14,
-                fontWeight: FontWeight.w700,
-                color: AppColors.black.withOpacity(0.5),
+                  Positioned(
+                    bottom: 12.w,
+                    right: 2,
+                    child: Container(
+                      height: 12.h,
+                      width: 12.w,
+                      decoration: BoxDecoration(
+                          color: AppColors.green, shape: BoxShape.circle),
+                    ),
+                  )
+                ],
               ),
-            ]),
-          ],
-        ),
+              SizedBox(
+                width: 10.w,
+              ),
+              Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+
+                CustomText(
+                    text: AppStrings.profile,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.black),
+
+                CustomText(
+                  text: "Active Now",
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.black.withOpacity(0.5),
+
+                ),
+              ]),
+            ],
+          );
+        }),
            actions: [
 
-          IconButton(
-            color: AppColors.black,
-            icon: Icon(Icons.more_vert),
-            onPressed: () {
+             LayoutBuilder(builder: (context,constraints){
 
-              showModalBottomSheet(
-                context: context,
-               /// barrierColor: Colors.grey,
-                 backgroundColor: Colors.white,
-                elevation: 10,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                builder: (BuildContext context) {
-                  // UDE : SizedBox instead of Container for whitespaces
-                  return SizedBox(
-                    height: 200,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
+               final isTablet = constraints.maxWidth > 600;
 
+               return IconButton(
+                 color: AppColors.black,
+                 icon: Icon(Icons.more_vert,size:isTablet?32: 24,),
+                 onPressed: () {
 
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8,right: 8,top: 12),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-
-                              const Align(
-                                alignment: Alignment.centerLeft,
-                                child: CustomText(
-                                  text: "Setting",
-                                  fontSize: 24,
-                                  color: AppColors.black,
-                                  fontWeight: FontWeight.w500,
-                                  bottom: 8,
-                                ),
-                              ),
-
-                              Padding(
-                                padding: const EdgeInsets.only(right: 12),
-                                child: Align(
-                                  alignment: Alignment.centerRight,
-                                  child: InkWell(
-                                      onTap: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: const Icon(
-                                        Icons.close,
-                                        size: 32,
-                                        color: Colors.black,
-                                      )),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
+                   showModalBottomSheet(
+                     context: context,
+                     /// barrierColor: Colors.grey,
+                     backgroundColor: Colors.white,
+                     elevation: 10,
+                     shape: RoundedRectangleBorder(
+                       borderRadius: BorderRadius.circular(10.0),
+                     ),
+                     builder: (BuildContext context) {
+                       // UDE : SizedBox instead of Container for whitespaces
+                       final height = MediaQuery.of(context).size.height * 0.2;
+                       return SizedBox(
+                         height: isTablet?height:200,
+                         width: width,
+                         child: Column(
+                           mainAxisSize: MainAxisSize.min,
+                           children: <Widget>[
 
 
-                        GestureDetector(
-                          onTap: (){
-                            Get.toNamed(AppRoutes.removeFriendScreen);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 8,right: 8,top: 12),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
+                             Padding(
+                               padding: const EdgeInsets.only(left: 8,right: 8,top: 12),
+                               child: Row(
+                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                 children: [
 
-                                InkWell(
-                                    onTap: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Icon(
-                                      Icons.person,
-                                      size: 32,
-                                      color: Colors.black,
-                                    )),
+                                   const Align(
+                                     alignment: Alignment.centerLeft,
+                                     child: CustomText(
+                                       text: "Setting",
+                                       fontSize: 24,
+                                       color: AppColors.black,
+                                       fontWeight: FontWeight.w500,
+                                       bottom: 8,
+                                     ),
+                                   ),
 
-                                 SizedBox(
-                                   width: 4,
+                                   Padding(
+                                     padding: const EdgeInsets.only(right: 12),
+                                     child: Align(
+                                       alignment: Alignment.centerRight,
+                                       child: InkWell(
+                                           onTap: () {
+                                             Navigator.of(context).pop();
+                                           },
+                                           child: const Icon(
+                                             Icons.close,
+                                             size: 32,
+                                             color: Colors.black,
+                                           )),
+                                     ),
+                                   )
+                                 ],
+                               ),
+                             ),
+
+
+                             GestureDetector(
+                               onTap: (){
+                                 Get.toNamed(AppRoutes.removeFriendScreen);
+                               },
+                               child: Padding(
+                                 padding: const EdgeInsets.only(left: 8,right: 8,top: 12),
+                                 child: Row(
+                                   mainAxisAlignment: MainAxisAlignment.start,
+                                   crossAxisAlignment: CrossAxisAlignment.center,
+                                   children: [
+
+                                     InkWell(
+                                         onTap: () {
+                                           Navigator.of(context).pop();
+                                         },
+                                         child: const Icon(
+                                           Icons.person,
+                                           size: 32,
+                                           color: Colors.black,
+                                         )),
+
+                                     SizedBox(
+                                       width: 4,
+                                     ),
+                                     CustomText(
+                                       text: "Remove someone from the Event",
+                                       fontSize: 16,
+                                       fontWeight: FontWeight.w400,
+                                       color: AppColors.black,
+                                     ),
+
+                                   ],
                                  ),
-                                 CustomText(
-                                  text: "Remove someone from the Event",
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColors.black,
-                                ),
+                               ),
+                             ),
 
-                              ],
-                            ),
-                          ),
-                        ),
+                             SizedBox(
+                               height: 8,
+                             ),
 
-                        SizedBox(
-                          height: 8,
-                        ),
+                             GestureDetector(
+                               onTap: (){
 
-                        GestureDetector(
-                          onTap: (){
+                                 showDialog(
+                                   context: context,
+                                   builder: (ctx) => AlertDialog(
+                                     backgroundColor: Colors.white,
+                                     insetPadding: EdgeInsets.all(8),
+                                     contentPadding: EdgeInsets.all(8),
+                                     title: SizedBox(),
+                                     content: SizedBox(
+                                       width: MediaQuery.sizeOf(context).width,
+                                       child: AlertDialogEvent(title: "Are you sure you want to \n Delete this Group?",discription: "",),
+                                     ),
+                                   ),
+                                 );
 
-                            showDialog(
-                              context: context,
-                              builder: (ctx) => AlertDialog(
-                                backgroundColor: Colors.white,
-                                insetPadding: EdgeInsets.all(8),
-                                contentPadding: EdgeInsets.all(8),
-                                title: SizedBox(),
-                                content: SizedBox(
-                                  width: MediaQuery.sizeOf(context).width,
-                                  child: AlertDialogEvent(title: "Are you sure you want to \n Delete this Group?",discription: "",),
-                                ),
-                              ),
-                            );
+                               },
+                               child: Padding(
+                                 padding: const EdgeInsets.only(left: 8,right: 8,top: 16),
+                                 child: Row(
+                                   mainAxisAlignment: MainAxisAlignment.start,
+                                   crossAxisAlignment: CrossAxisAlignment.center,
+                                   children: [
 
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 8,right: 8,top: 16),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
+                                     InkWell(
+                                         onTap: () {
+                                           Navigator.of(context).pop();
+                                         },
+                                         child: const Icon(
+                                           Icons.delete,
+                                           size: 32,
+                                           color: AppColors.primary,
+                                         )),
 
-                                InkWell(
-                                    onTap: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Icon(
-                                      Icons.delete,
-                                      size: 32,
-                                      color: AppColors.primary,
-                                    )),
+                                     SizedBox(
+                                       width: 4,
+                                     ),
+                                     CustomText(
+                                       text: "Delete",
+                                       fontSize: 16,
+                                       fontWeight: FontWeight.w400,
+                                       color: AppColors.primary,
+                                     ),
 
-                                SizedBox(
-                                  width: 4,
-                                ),
-                                CustomText(
-                                  text: "Delete",
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColors.primary,
-                                ),
+                                   ],
+                                 ),
+                               ),
+                             ),
 
-                              ],
-                            ),
-                          ),
-                        ),
+                           ],
+                         ),
+                       );
+                     },
+                   );
+                 },
+               );
+             }),
 
-                      ],
-                    ),
-                  );
-                },
-              );
-
-
-            },
-          ),
 
           /*IconButton(
             icon: CustomImage(imageSrc: AppIcons.personIcon),
@@ -267,31 +286,35 @@ class MessageScreen extends StatelessWidget {
           )*/
         ],
       ),
-      body: Column(
-        children: [
-          //============================= Measage Screen =============================
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.0.w),
-              child: ListView(
-                shrinkWrap: true,
-                children: List.generate(
-                  align.length,
-                  (index) => CustomInboxMassage(
-                      alignment: align[index],
-                      message:
-                          'Mi sento bene adesso. Ma ho un problema. Puoi fare una chiamata?',
-                      messageTime: '2:00 PM'),
+      body: LayoutBuilder(builder: (context,constraints){
+
+        final isTablet = constraints.maxWidth > 600;
+
+        return Column(
+          children: [
+            ///============================= Measage Screen =============================
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0.w),
+                child: ListView(
+                  shrinkWrap: true,
+                  children: List.generate(
+                    align.length,
+                        (index) => CustomInboxMassage(
+                        alignment: align[index],
+                        message:
+                        'Mi sento bene adesso. Ma ho un problema. Puoi fare una chiamata?',
+                        messageTime: '2:00 PM'),
+                  ),
                 ),
               ),
             ),
-          ),
-          //========================= Write Message Screen ==========================
-          Padding(
-            padding: const EdgeInsets.only(right: 20.0, left: 20, bottom: 20),
-            child: Row(
-              children: [
-                /*//===================== AttCh file button =======================
+            //========================= Write Message Screen ==========================
+            Padding(
+              padding: const EdgeInsets.only(right: 20.0, left: 20, bottom: 20),
+              child: Row(
+                children: [
+                  /*//===================== AttCh file button =======================
                 CustomImage(
                   imageSrc: AppIcons.personIcon,size: 25,
                  // height: 25.w,
@@ -300,38 +323,39 @@ class MessageScreen extends StatelessWidget {
                 SizedBox(
                   width: 10.w,
                 ),*/
-                //===================== Write message field =======================
-                Expanded(
-                    child: CustomTextField(
-                  suffixIcon:
-                      IconButton(onPressed: () {}, icon: const Icon(Icons.image)),
-                  fillColor: Colors.grey.withOpacity(.1),
-                  hintText: 'Write your message',
-                  fieldBorderColor: Colors.grey,
-                )),
-                SizedBox(
-                  width: 10.w,
-                ),
-                //====================== Camera button =======================
-                Container(
-                  height: 45,
-                  width: 45,
-                  decoration: BoxDecoration(
-                    color: AppColors.primary,
-                    borderRadius: BorderRadius.circular(70),
+                  //===================== Write message field =======================
+                  Expanded(
+                      child: CustomTextField(
+                        suffixIcon:
+                        IconButton(onPressed: () {}, icon: const Icon(Icons.image)),
+                        fillColor: Colors.grey.withOpacity(.1),
+                        hintText: 'Write your message',
+                        fieldBorderColor: Colors.grey,
+                      )),
+                  SizedBox(
+                    width: 10.w,
                   ),
-                  child: const Icon(
-                    Icons.send,
-                    color: AppColors.white,
-                  ),
-                )
+                  //====================== Camera button =======================
+                  Container(
+                    height: 45,
+                    width: 45,
+                    decoration: BoxDecoration(
+                      color: AppColors.primary,
+                      borderRadius: BorderRadius.circular(70),
+                    ),
+                    child: const Icon(
+                      Icons.send,
+                      color: AppColors.white,
+                    ),
+                  )
 
-                //=================== Record button ====================
-              ],
-            ),
-          )
-        ],
-      ),
+                  //=================== Record button ====================
+                ],
+              ),
+            )
+          ],
+        );
+      }),
     );
   }
 }
@@ -350,117 +374,116 @@ class CustomInboxMassage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: alignment ? Alignment.centerLeft : Alignment.centerRight,
-      child: Column(
-        crossAxisAlignment:
-            alignment ? CrossAxisAlignment.start : CrossAxisAlignment.end,
-        children: [
-          alignment
-              ? Row(
+    return LayoutBuilder(builder: (context,constraints){
+
+      final isTablet = constraints.maxWidth > 600;
+      return Align(
+        alignment: alignment ? Alignment.centerLeft : Alignment.centerRight,
+        child: Column(
+          crossAxisAlignment:
+          alignment ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+          children: [
+            alignment
+                ? Row(
+              children: [
+                CustomNetworkImage(
+                  imageUrl: AppConstants.profileImage,
+                  height: 45.w,
+                  width: 45.w,
+                  boxShape: BoxShape.circle,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                  /*  CustomNetworkImage(
-                      imageUrl: AppConstants.groupImage,
-                      height: 45.w,
-                      width: 45.w,
-                      boxShape: BoxShape.circle,
-                    ),*/
-
-                    CustomImage(imageSrc: AppIcons.groupImage,
-                      height: 60.w,
-                      width: 60.w,),
-
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: MediaQuery.sizeOf(context).width / 1.5,
-                          decoration: BoxDecoration(
-                            color:
-                                alignment ? AppColors.white : AppColors.primary,
-                            borderRadius: alignment
-                                ? const BorderRadius.only(
-                                    bottomRight: Radius.circular(16),
-                                    topLeft: Radius.circular(16),
-                                    topRight: Radius.circular(16),
-                                  )
-                                : const BorderRadius.only(
-                                    topLeft: Radius.circular(16),
-                                    topRight: Radius.circular(16),
-                                    bottomLeft: Radius.circular(16)),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 14.0.h, vertical: 10.h),
-                            child: CustomText(
-                              textAlign: TextAlign.left,
-                              text: message,
-                              fontSize: 16.sp,
-                              color: alignment
-                                  ? AppColors.black
-                                  : AppColors.white,
-                              fontWeight: FontWeight.w400,
-                              maxLines: 20,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 14.0),
-                          child: CustomText(
-                            text: messageTime ?? '',
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                )
-              : Container(
-                  width: MediaQuery.sizeOf(context).width / 1.5,
-                  decoration: BoxDecoration(
-                    color: alignment ? AppColors.white : AppColors.primary,
-                    borderRadius: alignment
-                        ? const BorderRadius.only(
-                            bottomRight: Radius.circular(16),
-                            topLeft: Radius.circular(16),
-                            topRight: Radius.circular(16),
-                          )
-                        : const BorderRadius.only(
+                    Container(
+                      width: MediaQuery.sizeOf(context).width / 1.5,
+                      decoration: BoxDecoration(
+                        color:
+                        alignment ? AppColors.white : AppColors.primary,
+                        borderRadius: alignment
+                            ? const BorderRadius.only(
+                          bottomRight: Radius.circular(16),
+                          topLeft: Radius.circular(16),
+                          topRight: Radius.circular(16),
+                        )
+                            : const BorderRadius.only(
                             topLeft: Radius.circular(16),
                             topRight: Radius.circular(16),
                             bottomLeft: Radius.circular(16)),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 14.0.h, vertical: 10.h),
-                    child: CustomText(
-                      textAlign: TextAlign.left,
-                      text: message,
-                      fontSize: 16.sp,
-                      color: alignment ? AppColors.black : AppColors.white,
-                      fontWeight: FontWeight.w400,
-                      maxLines: 20,
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 14.0.h, vertical: 10.h),
+                        child: CustomText(
+                          textAlign: TextAlign.left,
+                          text: message,
+                          fontSize:isTablet?14: 14.sp,
+                          color: alignment
+                              ? AppColors.black
+                              : AppColors.white,
+                          fontWeight: FontWeight.w400,
+                          maxLines: 20,
+                        ),
+                      ),
                     ),
-                  ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 14.0),
+                      child: CustomText(
+                        text: messageTime ?? '',
+                        fontSize:isTablet?14: 14.sp,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.black,
+                      ),
+                    ),
+                  ],
                 ),
-          SizedBox(
-            height: 4.h,
-          ),
-          alignment
-              ? Container()
-              : CustomText(
-                  text: messageTime ?? '',
-                  fontSize: 14.sp,
+              ],
+            )
+                : Container(
+              width: MediaQuery.sizeOf(context).width / 1.5,
+              decoration: BoxDecoration(
+                color: alignment ? AppColors.white : AppColors.primary,
+                borderRadius: alignment
+                    ? const BorderRadius.only(
+                  bottomRight: Radius.circular(16),
+                  topLeft: Radius.circular(16),
+                  topRight: Radius.circular(16),
+                )
+                    : const BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16),
+                    bottomLeft: Radius.circular(16)),
+              ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: 14.0.h, vertical: 10.h),
+                child: CustomText(
+                  textAlign: TextAlign.left,
+                  text: message,
+                  fontSize:isTablet?14: 14.sp,
+                  color: alignment ? AppColors.black : AppColors.white,
                   fontWeight: FontWeight.w400,
-                  color: AppColors.black,
+                  maxLines: 20,
                 ),
-          SizedBox(
-            height: 12.h,
-          ),
-        ],
-      ),
-    );
+              ),
+            ),
+            SizedBox(
+              height: 4.h,
+            ),
+            alignment
+                ? Container()
+                : CustomText(
+              text: messageTime ?? '',
+              fontSize:isTablet?14: 14.sp,
+              fontWeight: FontWeight.w400,
+              color: AppColors.black,
+            ),
+            SizedBox(
+              height: 12.h,
+            ),
+          ],
+        ),
+      );
+    });
   }
 }

@@ -35,256 +35,264 @@ class _OrganizerInviteMissionScreenState extends State<OrganizerInviteMissionScr
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text(
-          "Mission",
-          style: TextStyle(
-              color: AppColors.black,
-              fontSize: 30,
-              fontWeight: FontWeight.w600),
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: Column(
-          children: [
-            GestureDetector(
-              onTap: (){
-                Get.toNamed(AppRoutes.eventsProfileScreen);
-              },
-              child: Row(
-                children: [
-                  CustomNetworkImage(
-                    imageUrl: AppConstants.profileImage,
-                    height: 100,
-                    width: 100,
-                    boxShape: BoxShape.circle,
-                    border: Border.all(color: AppColors.primary, width: 3),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomText(
-                        text: "Mehedi Bin Ab. Salam",
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.location_on,
-                            color: AppColors.primary,
-                            size: 20,
-                          ),
-                          CustomText(
-                            text: "Bushwick Brooklyn, NY, USA",
-                            fontSize: 12,
-                            color: AppColors.primary,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ],
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
+    return LayoutBuilder(builder: (context,constraints){
 
-            ///=============== Invite Mission Event List Tab Bar ===============
-            SizedBox(
-              height: 20,
-            ),
-            CustomTabSingleText(
-                tabs: organizerController.inviteMissionNameList,
-                selectedIndex: organizerController.currentIndex.value,
-                onTabSelected: (value) {
-                  organizerController.currentIndex.value = value;
-                  setState(() {});
+      final isTablet = constraints.maxWidth > 600;
+
+      return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          title: Text(
+            "Mission",
+            style: TextStyle(
+                color: AppColors.black,
+                fontSize: 24.sp,
+                fontWeight: FontWeight.w600),
+          ),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Column(
+            children: [
+
+              GestureDetector(
+                onTap: (){
+                  Get.toNamed(AppRoutes.eventsProfileScreen);
                 },
-                selectedColor: AppColors.primary,
-                unselectedColor: AppColors.grey_1),
-
-            SizedBox(
-              height: 20,
-            ),
-
-            ///============ Recent Event ========
-            Expanded(
-              child: ListView(
-                children: [
-                  if (organizerController.currentIndex.value == 0)
-                    Column(
-                      children: List.generate(3, (index){
-                        return CustomInviteMissionContainer();
-                      })
+                child: Row(
+                  children: [
+                    CustomNetworkImage(
+                      imageUrl: AppConstants.profileImage,
+                      height: 100,
+                      width: 100,
+                      boxShape: BoxShape.circle,
+                      border: Border.all(color: AppColors.primary, width: 3),
                     ),
-
-                  ///============ Complete Event ========
-                  if(organizerController.currentIndex.value ==1)
+                    SizedBox(
+                      width: 10,
+                    ),
                     Column(
-                        children: List.generate(5, (index) {
-                            return Padding(
-                            padding: const EdgeInsets.only(bottom: 20.0),
-                            child: Row(
-                              children: [
-
-                                CustomNetworkImage(
-                                  imageUrl: AppConstants.eventImage,
-                                  height: 190.h,
-                                  width: 170.h,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-
-                                SizedBox(
-                                  width: 16,
-                                ),
-
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-
-                                    CustomButton(onTap: (){
-
-                                      Get.toNamed(AppRoutes.organizerApprovedScreen);
-                                    }, title: "Duplicate",height: 30,width: 80,fontSize: 12,textColor: Colors.black87,),
-
-
-                                    SizedBox(
-                                      height: 8,
-                                    ),
-                                    SizedBox(
-                                      width: 150.w,
-                                      child: CustomText(
-                                        textAlign: TextAlign.start,
-                                        text: "Cox’s Bazar Beach Helping Peolple",
-                                        maxLines: 3,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        bottom: 5,
-                                      ),
-                                    ),
-                                    /// Location
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.location_on,
-                                          color: AppColors.black,
-                                          size: 20,
-                                        ),
-                                        CustomText(
-                                          text: "Cox’s Bazar, Bangladesh",
-                                          fontSize: 12,
-                                          color: AppColors.black_80,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    // Leader
-                                    Row(
-                                      children: [
-
-                                        Icon(Icons.lock_clock,color: Colors.grey,),
-
-                                        CustomText(
-                                          text: "12/12/24",
-                                          fontSize: 12,
-                                          color: AppColors.titleText,
-                                          fontWeight: FontWeight.w600,
-                                          right: 10.w,
-                                          left: 10.w,
-                                        ),
-
-                                      ],
-                                    ),
-
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-
-                                        GestureDetector(
-                                          onTap: () {
-                                            Get.toNamed(AppRoutes.organizerRecentEventDetails);
-
-                                          },
-                                          child: Container(
-                                            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                                            decoration: BoxDecoration(
-                                              color: AppColors.primary,
-                                              borderRadius: BorderRadius.circular(10),
-                                            ),
-                                            child: CustomText(
-                                              text:"Explore",
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w500,
-                                              color: AppColors.black,
-                                            ),
-                                          ),
-                                        ),
-
-                                        SizedBox(
-                                          width: 8,
-                                        ),
-
-                                        GestureDetector(
-                                          onTap: () {
-                                            showDialog(
-                                              context: context,
-                                              builder: (ctx) => AlertDialog(
-                                                backgroundColor: Colors.white,
-                                                insetPadding: EdgeInsets.all(8),
-                                                contentPadding: EdgeInsets.all(8),
-                                                title: SizedBox(),
-                                                content: SizedBox(
-                                                  width: MediaQuery.sizeOf(context).width,
-                                                  child: AlertDialogEvent(title: "Are you sure you want to \n Delete this Event?",discription: "",),
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                          child: Container(
-                                            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                                            decoration: BoxDecoration(
-                                              color: AppColors.primary,
-                                              borderRadius: BorderRadius.circular(10),
-                                            ),
-                                            child: CustomText(
-                                              text:"Delete ",
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w500,
-                                              color: AppColors.black,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                )
-                              ],
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomText(
+                          text: "Mehedi Bin Ab. Salam",
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.location_on,
+                              color: AppColors.primary,
+                              size: 20,
                             ),
-                          );
-                        })
-                    ),
-                ],
+                            CustomText(
+                              text: "Bushwick Brooklyn, NY, USA",
+                              fontSize: 12,
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ],
+                        )
+                      ],
+                    )
+                  ],
+                ),
               ),
-            )
-          ],
+
+              ///=============== Invite Mission Event List Tab Bar ===============
+              SizedBox(
+                height: 16,
+              ),
+              CustomTabSingleText(
+                  fontSize: isTablet?24:16,
+                  tabs: organizerController.inviteMissionNameList,
+                  selectedIndex: organizerController.currentIndex.value,
+                  onTabSelected: (value) {
+                    organizerController.currentIndex.value = value;
+                    setState(() {});
+                  },
+                  selectedColor: AppColors.primary,
+                  unselectedColor: AppColors.grey_1),
+
+              SizedBox(
+                height: 20,
+              ),
+
+              ///============ Recent Event ========
+              Expanded(
+                child: ListView(
+                  children: [
+                    if (organizerController.currentIndex.value == 0)
+                      Column(
+                          children: List.generate(3, (index){
+                            return CustomInviteMissionContainer();
+                          })
+                      ),
+
+                    ///============ Complete Event ========
+                    if(organizerController.currentIndex.value ==1)
+                      Column(
+                          children: List.generate(5, (index) {
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 20.0),
+                              child: Row(
+                                children: [
+
+                                  CustomNetworkImage(
+                                    imageUrl: AppConstants.eventImage,
+                                    height:isTablet?200.h: 190.h,
+                                    width:isTablet?200.h: 170.h,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+
+                                  SizedBox(
+                                    width: 16,
+                                  ),
+
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+
+                                      CustomButton(onTap: (){
+
+                                        Get.toNamed(AppRoutes.organizerApprovedScreen);
+                                      }, title: "Duplicate",height:isTablet?40.h: 30.h,width:80.w,
+                                        fontSize: 12,textColor: Colors.black87,),
+
+
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      SizedBox(
+                                        width: 150.w,
+                                        child: CustomText(
+                                          textAlign: TextAlign.start,
+                                          text: "Cox’s Bazar Beach Helping Peolple",
+                                          maxLines: 3,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                          bottom: 5,
+                                        ),
+                                      ),
+                                      /// Location
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.location_on,
+                                            color: AppColors.black,
+                                            size: 20,
+                                          ),
+                                          CustomText(
+                                            text: "Cox’s Bazar, Bangladesh",
+                                            fontSize: 12,
+                                            color: AppColors.black_80,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      // Leader
+                                      Row(
+                                        children: [
+
+                                          Icon(Icons.lock_clock,color: Colors.grey,),
+
+                                          CustomText(
+                                            text: "12/12/24",
+                                            fontSize: 12,
+                                            color: AppColors.titleText,
+                                            fontWeight: FontWeight.w600,
+                                            right: 10.w,
+                                            left: 10.w,
+                                          ),
+
+                                        ],
+                                      ),
+
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+
+                                          GestureDetector(
+                                            onTap: () {
+                                              Get.toNamed(AppRoutes.organizerRecentEventDetails);
+
+                                            },
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                              decoration: BoxDecoration(
+                                                color: AppColors.primary,
+                                                borderRadius: BorderRadius.circular(10),
+                                              ),
+                                              child: CustomText(
+                                                text:"Explore",
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500,
+                                                color: AppColors.black,
+                                              ),
+                                            ),
+                                          ),
+
+                                          SizedBox(
+                                            width: 8,
+                                          ),
+
+                                          GestureDetector(
+                                            onTap: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (ctx) => AlertDialog(
+                                                  backgroundColor: Colors.white,
+                                                  insetPadding: EdgeInsets.all(8),
+                                                  contentPadding: EdgeInsets.all(8),
+                                                  title: SizedBox(),
+                                                  content: SizedBox(
+                                                    width: MediaQuery.sizeOf(context).width,
+                                                    child: AlertDialogEvent(title: "Are you sure you want to \n Delete this Event?",discription: "",),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                              decoration: BoxDecoration(
+                                                color: AppColors.primary,
+                                                borderRadius: BorderRadius.circular(10),
+                                              ),
+                                              child: CustomText(
+                                                text:"Delete ",
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500,
+                                                color: AppColors.black,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            );
+                          })
+                      ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
-      ),
-      bottomNavigationBar: OrganizerNavbar(
-        currentIndex: 1,
-      ),
-    );
+        bottomNavigationBar: OrganizerNavbar(
+          currentIndex: 1,
+        ),
+      );
+    });
   }
 }

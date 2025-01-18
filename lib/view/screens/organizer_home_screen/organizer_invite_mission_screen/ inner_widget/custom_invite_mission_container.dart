@@ -16,82 +16,87 @@ class CustomInviteMissionContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10.0),
-      child: Container(
-        padding: EdgeInsets.symmetric(
-            horizontal: 10, vertical: 10),
-        decoration: BoxDecoration(
-          color: AppColors.neutral02,
-          borderRadius: BorderRadius.circular(13),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
+    return LayoutBuilder(builder: (context,constraints){
+      final isTablet = constraints.maxWidth > 600;
 
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomText(
-                    text: "Empower Tomorrow",
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    bottom: 8.h,
-                  ),
-                  CustomText(
-                    text:
-                    "Fostering opportunities for underprivileged communities through education and skill development programs.",
-                    fontSize: 10,
-                    fontWeight: FontWeight.w400,
-                    maxLines: 5,
-                    textAlign: TextAlign.start,
-                    bottom: 10.h,
-                  ),
-                  Row(
-                    children: [
-                      CustomNetworkImage(
-                        imageUrl: AppConstants.profileImage,
-                        height: 40,
-                        width: 40,
-                        boxShape: BoxShape.circle,
-                      ),
-                      CustomText(
-                        text: "Mehedi",
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        left: 8.h,
-                        right: 8.h,
-                      ),
-                      CustomText(
-                        text: "(Adminstrator)",
-                        fontSize: 14,
-                        color: AppColors.blue,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ],
-                  )
-                ],
-              ),
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 10.0),
+          child: Container(
+            padding: EdgeInsets.symmetric(
+                horizontal: 10, vertical: 10),
+            decoration: BoxDecoration(
+              color: AppColors.neutral02,
+              borderRadius: BorderRadius.circular(13),
             ),
-            Column(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CustomText(
-                  text: "17-12-2024",
-                  fontSize: 10,
-                  fontWeight: FontWeight.w400,
-                  bottom: 8.h,
+
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomText(
+                        text: "Empower Tomorrow",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        bottom: 8.h,
+                      ),
+                      CustomText(
+                        text:
+                        "Fostering opportunities for underprivileged communities through education and skill development programs.",
+                        fontSize: 10,
+                        fontWeight: FontWeight.w400,
+                        maxLines: 5,
+                        textAlign: TextAlign.start,
+                        bottom: 10.h,
+                      ),
+                      Row(
+                        children: [
+                          CustomNetworkImage(
+                            imageUrl: AppConstants.profileImage,
+                            height: 40,
+                            width: 40,
+                            boxShape: BoxShape.circle,
+                          ),
+                          CustomText(
+                            text: "Mehedi",
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            left: 8.h,
+                            right: 8.h,
+                          ),
+                          CustomText(
+                            text: "(Adminstrator)",
+                            fontSize: 14,
+                            color: AppColors.blue,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
-                CustomButton(onTap: (){
-                  //OrganizerApprovedScreen
+                Column(
+                  children: [
+                    CustomText(
+                      text: "17-12-2024",
+                      fontSize: 10,
+                      fontWeight: FontWeight.w400,
+                      bottom: 8.h,
+                    ),
+                    CustomButton(onTap: (){
+                      ///OrganizerApprovedScreen
 
-                  Get.toNamed(AppRoutes.organizerApprovedScreen);
+                      Get.toNamed(AppRoutes.organizerApprovedScreen);
 
-                }, title: "Accept",height: 30,width: 70,fontSize: 12,),
-                SizedBox(height: 10.h,),
-                CustomButton(onTap: (){
-           /*       showDialog(
+                    }, title: "Accept",height:isTablet?30.h: 30.h,
+                      width:isTablet?70.sp: 60.sp,fontSize: 6.sp,),
+
+                    SizedBox(height: 10.h,),
+                    CustomButton(onTap: (){
+                      /*       showDialog(
                     context: context,
                     builder: (ctx) => AlertDialog(
                       backgroundColor: Colors.white,
@@ -105,14 +110,16 @@ class CustomInviteMissionContainer extends StatelessWidget {
                     ),
                   );*/
 
-                }, title: "Reject",height: 30,width: 70,fontSize: 12,),
+                    }, title: "Reject",height:isTablet?30.h: 30.h,
+                      width:isTablet?70.sp: 60.sp,fontSize: 6.sp,),
+                  ],
+                )
+
+
               ],
-            )
-
-
-          ],
-        ),
-      ),
-    );
+            ),
+          ),
+        );
+    });
   }
 }

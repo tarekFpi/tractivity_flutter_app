@@ -39,7 +39,7 @@ class CustomFriendsList extends StatelessWidget {
                   children: [
                     CustomText(
                       text: name ?? "",
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.w600,
                       color: AppColors.black,
                     ),

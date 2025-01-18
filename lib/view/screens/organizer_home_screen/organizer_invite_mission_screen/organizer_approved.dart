@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
@@ -23,303 +24,310 @@ class OrganizerEventCreateScreen extends StatefulWidget {
 class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const CustomRoyelAppbar(
-        titleName: "Create Event",
-        leftIcon: true,
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-        
-              Row(
-                children: [
-                  CustomNetworkImage(
-                    imageUrl: AppConstants.profileImage,
-                    height: 100,
-                    width: 100,
-                    boxShape: BoxShape.circle,
-                    border: Border.all(color: AppColors.primary, width: 3),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomText(
-                        text: "Mehedi Bin Ab. Salam",
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
+    return LayoutBuilder(builder: (context,constraints){
+
+      final isTablet = constraints.maxWidth > 600;
+
+      return Scaffold(
+        appBar: const CustomRoyelAppbar(
+          titleName: "Create Event",
+          leftIcon: true,
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+
+                Row(
+                  children: [
+                    CustomNetworkImage(
+                      imageUrl: AppConstants.profileImage,
+                      height: 100,
+                      width: 100,
+                      boxShape: BoxShape.circle,
+                      border: Border.all(color: AppColors.primary, width: 3),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomText(
+                          text: "Mehedi Bin Ab. Salam",
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.location_on,
+                              color: AppColors.primary,
+                              size: 20,
+                            ),
+                            CustomText(
+                              text: "Bushwick Brooklyn, NY, USA",
+                              fontSize: 12,
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ],
+                        )
+                      ],
+                    )
+                  ],
+                ),
+
+                const SizedBox(
+                  height: 16,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+
+                    Container(
+                      height:isTablet?90.h: 90.h,
+                      width: 110.w,
+                      decoration: BoxDecoration(
+                        color: AppColors.grey_5.withOpacity(0.5),
+                        borderRadius: BorderRadius.circular(15),
                       ),
-                      Row(
+                      padding: const EdgeInsets.only(top: 12),
+                      child: Column(
                         children: [
-                          Icon(
-                            Icons.location_on,
-                            color: AppColors.primary,
-                            size: 20,
+
+                          CustomImage(imageSrc: AppIcons.uploadIcon,width: 45,height: 45,),
+
+                          SizedBox(
+                            height: 4,
                           ),
                           CustomText(
-                            text: "Bushwick Brooklyn, NY, USA",
+                            text: "Upload Image",
                             fontSize: 12,
-                            color: AppColors.primary,
+                            color: AppColors.black_80,
                             fontWeight: FontWeight.w400,
                           ),
                         ],
-                      )
-                    ],
-                  )
-                ],
-              ),
-        
-              const SizedBox(
-                height: 16,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-        
-                  Container(
-                    height: 90,
-                    width: 160,
-                    decoration: BoxDecoration(
-                      color: AppColors.grey_5.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(15),
+                      ),
                     ),
-                    padding: const EdgeInsets.only(top: 12),
-                    child: Column(
-                       children: [
-        
-                         CustomImage(imageSrc: AppIcons.uploadIcon,width: 45,height: 45,),
-        
-                         SizedBox(
-                           height: 4,
-                         ),
-                         CustomText(
-                           text: "Upload Image",
-                           fontSize: 12,
-                           color: AppColors.black_80,
-                           fontWeight: FontWeight.w400,
-                         ),
-                       ],
-                    ),
-                  ),
 
-                  const SizedBox(
-                    width: 4,
-                  ),
-                  Container(
-                    height: 90,
-                    width: 160,
-                    decoration: BoxDecoration(
-                      color: AppColors.grey_5.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(15),
+                    const SizedBox(
+                      width: 4,
                     ),
-                    padding: const EdgeInsets.only(top: 12),
-                    child: Column(
-                       children: [
-        
-                         CustomImage(imageSrc: AppIcons.dowanload,width: 45,height: 45,),
-        
-                         SizedBox(
-                           height: 4,
-                         ),
-                         CustomText(
-                           text: "Upload PDF",
-                           fontSize: 12,
-                           color: AppColors.black_80,
-                           fontWeight: FontWeight.w400,
-                         ),
-                       ],
+                    Container(
+                      height:isTablet?90.h: 90.h,
+                      width: 110.w,
+                      decoration: BoxDecoration(
+                        color: AppColors.grey_5.withOpacity(0.5),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      padding: const EdgeInsets.only(top: 12),
+                      child: Column(
+                        children: [
+
+                          CustomImage(imageSrc: AppIcons.dowanload,width: 45,height: 45,),
+
+                          SizedBox(
+                            height: 4,
+                          ),
+                          CustomText(
+                            text: "Upload PDF",
+                            fontSize: 12,
+                            color: AppColors.black_80,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-        
-              const SizedBox(
-                height: 12,
-              ),
-              ///============ Event Name ============
-              CustomFormCard(
-                  title: "Event Name",
-                  hintText: "Event Name",
-                  hasBackgroundColor: true,
-                  controller: TextEditingController()),
-        
-              ///============ Event Name ============
-              CustomFormCard(
-                  title: "Description",
-                  hintText: "Description",
-                  hasBackgroundColor: true,
-                  controller: TextEditingController()),
-        
-              Row(
-            //    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-        
-                  const Icon(
-                    Icons.location_on,
-                    size: 24,
-                  ),
-        
-                  CustomButton(onTap: (){
-                    Get.toNamed(AppRoutes.organizeMapScreen);
-        
-                  }, title: "Map",height: 25,width: 60,fontSize: 12,),
-        
-        
-                  const SizedBox(
-                    width: 8,
-                  ),
-        
-                 Row(
-                 children: [
-                   const Icon(
-                     Icons.lock_clock,
-                     size: 24,
-                   ),
-        
-                   SizedBox(
-                     width: 4,
-                   ),
-                   CustomText(
-                     text: "start",
-                     fontSize: 12,
-                     fontWeight: FontWeight.w500,
-                   ),
-        
-                   const Icon(
-                     Icons.keyboard_arrow_down,
-                     size: 24,
-                   ),
-                 ],
-               ),
-        
-                  const SizedBox(
-                    width: 8,
-                  ),
-        
-                  Row(
-                    children: [
-                      CustomText(
-                        text: "end",
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                      ),
-        
-                      const Icon(
-                        Icons.keyboard_arrow_down,
-                        size: 24,
-                      ),
-                    ],
-                  ),
-        
-        
-                  const SizedBox(
-                    width: 8,
-                  ),
-        
-                  const Expanded(
-                    child: Row(
+                  ],
+                ),
+
+                const SizedBox(
+                  height: 12,
+                ),
+                ///============ Event Name ============
+                CustomFormCard(
+                    fontSize: isTablet?16:16,
+                    title: "Event Name",
+                    hintText: "Event Name",
+                    hasBackgroundColor: true,
+                    controller: TextEditingController()),
+
+                ///============ Event Name ============
+                CustomFormCard(
+                    fontSize: isTablet?16:16,
+                    title: "Description",
+                    hintText: "Description",
+                    hasBackgroundColor: true,
+                    controller: TextEditingController()),
+
+                Row(
+                  //    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+
+                    const Icon(
+                      Icons.location_on,
+                      size: 24,
+                    ),
+
+                    CustomButton(onTap: (){
+                      Get.toNamed(AppRoutes.organizeMapScreen);
+
+                    }, title: "Map",height:isTablet?30.h: 25.h,width: 60.w,fontSize: 12,),
+
+
+                    const SizedBox(
+                      width: 8,
+                    ),
+
+                    Row(
                       children: [
-                    
-                        Icon(
-                          Icons.calendar_month_outlined,
+                        const Icon(
+                          Icons.lock_clock,
                           size: 24,
                         ),
-                    
+
+                        SizedBox(
+                          width: 4,
+                        ),
                         CustomText(
-                          text: "00/00/0000",
+                          text: "start",
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
                         ),
+
+                        const Icon(
+                          Icons.keyboard_arrow_down,
+                          size: 24,
+                        ),
                       ],
                     ),
-                  )
-                ],
-              ),
-        
-              const SizedBox(
-                height: 12,
-              ),
-        
-              Row(
-                children: [
-                  CustomButton(onTap: (){
-        
-                  }, title: "Private",height: 30,width: 100,fontSize: 12,
-                    textColor: AppColors.black,
-                    fillColor: AppColors.white,
-                    isBorder: true,
-                    borderWidth: .5,
-                  ),
-        
-                  const SizedBox(
-                    width: 12,
-                  ),
-        
-                  CustomButton(onTap: (){
-        
-                  }, title: "Public",height: 30,width: 100,fontSize: 12,),
-        
-                  const SizedBox(
-                    width: 12,
-                  ),
-                  CustomButton(onTap: (){
-        
-                  }, title: "Organization",height: 30,width: 100,fontSize: 12,
-                    textColor: AppColors.black,
-                    fillColor: AppColors.white,
-                    isBorder: true,
-                    borderWidth: .5,
-                  ),
-                ],
-              ),
-        
-              const SizedBox(
-                height: 12,
-              ),
-        
-              CustomButton(onTap: (){
-        
-             Get.toNamed(AppRoutes.addMemberScreen);
-        
-              }, title: "Add Member",height: 30,width: 100,fontSize: 12,
-                textColor: AppColors.black,
-              ),
-        
-              const SizedBox(
-                height: 12,
-              ),
-        
-              CustomButton(onTap: (){
-                Get.toNamed(AppRoutes.memberScreen);
-              }, title: "View All Members",height: 30,width: 130,fontSize: 12,
-                textColor: AppColors.black,
-              ),
-        
-            ],
+
+                    const SizedBox(
+                      width: 8,
+                    ),
+
+                    Row(
+                      children: [
+                        CustomText(
+                          text: "end",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                        ),
+
+                        const Icon(
+                          Icons.keyboard_arrow_down,
+                          size: 24,
+                        ),
+                      ],
+                    ),
+
+
+                    const SizedBox(
+                      width: 8,
+                    ),
+
+                    const Expanded(
+                      child: Row(
+                        children: [
+
+                          Icon(
+                            Icons.calendar_month_outlined,
+                            size: 24,
+                          ),
+
+                          CustomText(
+                            text: "00/00/0000",
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+
+                const SizedBox(
+                  height: 12,
+                ),
+
+                Row(
+                  children: [
+                    CustomButton(onTap: (){
+
+                    }, title: "Private",height: 30.h,width: 60.w,fontSize: 6.sp,
+                      textColor: AppColors.black,
+                      fillColor: AppColors.white,
+                      isBorder: true,
+                      borderWidth: .5,
+                    ),
+
+                    const SizedBox(
+                      width: 12,
+                    ),
+
+                    CustomButton(onTap: (){
+
+                    }, title: "Public",height: 30.h,width: 60.w,fontSize: 6.sp,),
+
+                    const SizedBox(
+                      width: 12,
+                    ),
+                    CustomButton(onTap: (){
+
+                    }, title: "Organization",height: 30.h,width:isTablet?90.w: 60.w,fontSize: 6.sp,
+                      textColor: AppColors.black,
+                      fillColor: AppColors.white,
+                      isBorder: true,
+                      borderWidth: .5,
+                    ),
+                  ],
+                ),
+
+                const SizedBox(
+                  height: 12,
+                ),
+
+                CustomButton(onTap: (){
+
+                  Get.toNamed(AppRoutes.addMemberScreen);
+
+                }, title: "Add Member",height: 30.h,width: 90.w,fontSize: 12,
+                  textColor: AppColors.black,
+                ),
+
+                const SizedBox(
+                  height: 12,
+                ),
+
+                CustomButton(onTap: (){
+                  Get.toNamed(AppRoutes.memberScreen);
+                }, title: "View All Members",height: 30.h,width:isTablet?120.w: 90.w,fontSize: 6.sp,
+                  textColor: AppColors.black,
+                ),
+
+              ],
+            ),
           ),
         ),
-      ),
-      bottomNavigationBar: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
+        bottomNavigationBar: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
 
-          Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: CustomButton(onTap: (){
-            }, title: "Submit",fontSize: 12,),
-          ),
-
+            Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: CustomButton(onTap: (){
+              }, title: "Submit",fontSize: 12,),
+            ),
 
 
-        ],
-      ),
-    );
+
+          ],
+        ),
+      );
+    });
   }
 }

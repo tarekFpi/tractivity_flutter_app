@@ -10,6 +10,7 @@ class CustomTabSingleText extends StatelessWidget {
   final Color? textColor;
   final bool? isTextColorActive;
   final bool? isPadding;
+  final double fontSize;
 
 
   const CustomTabSingleText({
@@ -22,6 +23,7 @@ class CustomTabSingleText extends StatelessWidget {
     this.textColor,
     this.isTextColorActive = false,
     this.isPadding = true,
+    this.fontSize=16
   });
 
   @override
@@ -64,7 +66,7 @@ class CustomTabSingleText extends StatelessWidget {
                       : isTextColorActive!
                       ? textColor
                       : unselectedColor,
-                  fontSize: 16,
+                  fontSize: fontSize,
                   fontWeight: FontWeight.w500,
                 ),
               ),

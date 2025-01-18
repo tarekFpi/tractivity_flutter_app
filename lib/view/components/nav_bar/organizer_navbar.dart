@@ -47,114 +47,115 @@ class _UserNavBarState extends State<OrganizerNavbar> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.w),
-      // color: AppColors.dartBlue,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(topRight: Radius.circular(40.r), topLeft: Radius.circular(40.r)),
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [AppColors.lightWhite, AppColors.lightWhite])),
-      height: 95.h,
-      width: MediaQuery.of(context).size.width,
-      alignment: Alignment.center,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: List.generate(
-          selectedIcon.length,
-              (index) => GestureDetector(
-            onTap: () => onTap(index),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                index == bottomNavIndex
-                    ? Card(
-                  elevation: 85,
-                  shadowColor: AppColors.primary,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                        topLeft:Radius.circular(50),
-                        topRight: Radius.circular(50),
-                        bottomLeft: Radius.circular(12),
-                        bottomRight: Radius.circular(12)
-                    ),
-                  ),
-                  color: Colors.transparent,
-                  child: Container(
-                    height: 85.h,
-                    width: 80.w,
-                    decoration: BoxDecoration(
-                      color: AppColors.primary,
-                      borderRadius: BorderRadius.only(
-                          topLeft:Radius.circular(50),
-                          topRight: Radius.circular(50),
-                          bottomLeft: Radius.circular(12),
-                          bottomRight: Radius.circular(12)
-                      ),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isTablet = constraints.maxWidth > 600;
 
-                        SvgPicture.asset(
-                          selectedIcon[index],
-                          height: 24.h,
-                          width: 24.w,
-                          color: AppColors.white,
-                        ),
-
-                        SizedBox(
-                          height: 4,
-                        ),
-                        CustomText(
-                          text: userNavText[index],
-                          color: AppColors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14.w,
-                        ),
-
-                      ],
-                    ),
-                  ),
-                )
-                    : Column(
-              children: [
-              SvgPicture.asset(
-              unselectedIcon[index],
-                height: 24.h,
-                width: 24.w,
-                color: AppColors.primary,
-              ),
-
-          SizedBox(
-            height: 4,
-          ),
-          CustomText(
-            text: userNavText[index],
-            color: AppColors.black,
-            fontWeight: FontWeight.w600,
-            fontSize: 14.w,
-          ),
-          ],
-        ),
-
-               // SizedBox(height: 4.h),
-
-              /*  index == bottomNavIndex
-                    ? const SizedBox()
-                    : CustomText(
-                  text: userNavText[index],
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14.w,
-                ),*/
-              ],
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: isTablet ? 12.w : 20.w),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+                topLeft:Radius.circular(50),
+                topRight: Radius.circular(50),
+                bottomLeft: Radius.circular(12),
+                bottomRight: Radius.circular(12)
             ),
           ),
+          height: isTablet ? 110.h : 95.h, // Adjust height for tablets
+          width: constraints.maxWidth,
+          alignment: Alignment.center,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Equal spacing
+            children: List.generate(
+              selectedIcon.length,
+                  (index) => Expanded( // Ensures even distribution
+                child: GestureDetector(
+                  onTap: () => onTap(index),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (index == bottomNavIndex)
+                        _buildSelectedNavItem(index, isTablet)
+                      else
+                        _buildUnselectedNavItem(index, isTablet),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  /// **Selected Navigation Item (Highlighted Button)**
+  Widget _buildSelectedNavItem(int index, bool isTablet) {
+    return Card(
+      elevation: 85,
+      shadowColor: AppColors.primary,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+            topLeft:Radius.circular(50),
+            topRight: Radius.circular(50),
+            bottomLeft: Radius.circular(12),
+            bottomRight: Radius.circular(12)
         ),
       ),
+      color: Colors.transparent,
+      child: Container(
+        height: isTablet ? 100.h : 85.h,
+        width: isTablet ? 90.w : 80.w,
+        decoration: BoxDecoration(
+          color: AppColors.primary,
+          borderRadius:  BorderRadius.only(
+              topLeft:Radius.circular(50),
+              topRight: Radius.circular(50),
+              bottomLeft: Radius.circular(12),
+              bottomRight: Radius.circular(12)
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              selectedIcon[index],
+              height: isTablet ? 28.h : 24.h,
+              width: isTablet ? 28.w : 24.w,
+              color: AppColors.white,
+            ),
+            SizedBox(height: 6),
+            CustomText(
+              text: userNavText[index],
+              color: AppColors.white,
+              fontWeight: FontWeight.w600,
+              fontSize: isTablet ? 6.sp : 12.w,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// **Unselected Navigation Item**
+  Widget _buildUnselectedNavItem(int index, bool isTablet) {
+    return Column(
+      children: [
+        SvgPicture.asset(
+          unselectedIcon[index],
+          height: isTablet ? 28.h : 24.h,
+          width: isTablet ? 28.w : 24.w,
+          color: AppColors.primary,
+        ),
+        SizedBox(height: 4),
+        CustomText(
+          text: userNavText[index],
+          color: AppColors.black,
+          fontWeight: FontWeight.w600,
+          fontSize: isTablet ? 6.sp : 12.sp,
+        ),
+      ],
     );
   }
 
@@ -167,12 +168,7 @@ class _UserNavBarState extends State<OrganizerNavbar> {
         case 1:
           Get.to(() => OrganizerInviteMissionScreen());
           break;
-     /*   case 2:
-          Get.to(() => MassageListScreen());
-          break;
-        case 3:
-          Get.to(() => CreateTeamScreen());
-          break;*/
+
       }
     }
   }

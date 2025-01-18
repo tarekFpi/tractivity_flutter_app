@@ -27,232 +27,236 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
   final EventsController eventsController = Get.find<EventsController>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Mission",
-          style: TextStyle(
-              color: AppColors.black,
-              fontSize: 30,
-              fontWeight: FontWeight.w600),
+    return LayoutBuilder(builder: (context,constraints){
+      final isTablet = constraints.maxWidth > 600;
+
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            "Mission",
+            style: TextStyle(
+                color: AppColors.black,
+                fontSize: 30,
+                fontWeight: FontWeight.w600),
+          ),
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: [
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: [
 
-            ///================= Profile Image , Name and Location
-            GestureDetector(
-              onTap: (){
-                Get.toNamed(AppRoutes.eventsProfileScreen);
-              },
-              child: Row(
+              ///================= Profile Image , Name and Location
+              GestureDetector(
+                onTap: (){
+                  Get.toNamed(AppRoutes.eventsProfileScreen);
+                },
+                child: Row(
+                  children: [
+                    CustomNetworkImage(
+                      imageUrl: AppConstants.profileImage,
+                      height: 70,
+                      width: 70,
+                      boxShape: BoxShape.circle,
+                      border: Border.all(color: AppColors.primary, width: 3),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomText(
+                          text: "Mehedi Bin Ab. Salam",
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.location_on,
+                              color: AppColors.primary,
+                              size: 20,
+                            ),
+                            CustomText(
+                              text: "Bushwick Brooklyn, NY, USA",
+                              fontSize: 12,
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ],
+                        ),
+
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(height: 15,),
+              Row(
                 children: [
-                  CustomNetworkImage(
-                    imageUrl: AppConstants.profileImage,
-                    height: 70,
-                    width: 70,
-                    boxShape: BoxShape.circle,
-                    border: Border.all(color: AppColors.primary, width: 3),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10,vertical: 8),
+                    decoration: BoxDecoration(
+                      color: AppColors.neutral02,
+                      borderRadius: BorderRadius.circular(10),
+                    ),child: CustomText(text: "Working Time : 6:30 hours",fontSize: 12,fontWeight: FontWeight.w400,),
                   ),
-                  SizedBox(
-                    width: 10,
+                  SizedBox(width: 8,),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10,vertical: 8),
+                    decoration: BoxDecoration(
+                      color: AppColors.neutral02,
+                      borderRadius: BorderRadius.circular(10),
+                    ),child: CustomText(text: "Millage : 8km",fontSize: 12,fontWeight: FontWeight.w400,),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomText(
-                        text: "Mehedi Bin Ab. Salam",
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.location_on,
-                            color: AppColors.primary,
-                            size: 20,
-                          ),
-                          CustomText(
-                            text: "Bushwick Brooklyn, NY, USA",
-                            fontSize: 12,
-                            color: AppColors.primary,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ],
-                      ),
-
-                    ],
-                  )
                 ],
               ),
-            ),
-            SizedBox(height: 15,),
-            Row(
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10,vertical: 8),
-                  decoration: BoxDecoration(
-                    color: AppColors.neutral02,
-                    borderRadius: BorderRadius.circular(10),
-                  ),child: CustomText(text: "Working Time : 6:30 hours",fontSize: 12,fontWeight: FontWeight.w400,),
-                ),
-                SizedBox(width: 8,),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10,vertical: 8),
-                  decoration: BoxDecoration(
-                    color: AppColors.neutral02,
-                    borderRadius: BorderRadius.circular(10),
-                  ),child: CustomText(text: "Millage : 8km",fontSize: 12,fontWeight: FontWeight.w400,),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 16,right: 22),
-              child: CustomTabSelector(
-                  tabs: eventsController.joinEvenNameList,
-                  selectedIndex: eventsController.currentIndex.value,
-                  onTabSelected: (value) {
-                    eventsController.currentIndex.value = value;
-                    setState(() {});
-                  },
-                  selectedColor: AppColors.primary,
-                  unselectedColor: AppColors.black),
-            ),
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 16,right: 22),
+                child: CustomTabSelector(
+                     fontSize: isTablet?24:16,
+                    tabs: eventsController.joinEvenNameList,
+                    selectedIndex: eventsController.currentIndex.value,
+                    onTabSelected: (value) {
+                      eventsController.currentIndex.value = value;
+                      setState(() {});
+                    },
+                    selectedColor: AppColors.primary,
+                    unselectedColor: AppColors.black),
+              ),
 
-            SizedBox(
-              height: 20,
-            ),
+              SizedBox(
+                height: 20,
+              ),
 
-            ///============ Recent Event ========
-            Expanded(
-              child: ListView(
-                shrinkWrap: true,
-                children: [
-                  if(eventsController.currentIndex.value ==0)
+              ///============ Recent Event ========
+              Expanded(
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    if(eventsController.currentIndex.value ==0)
 
-                    Column(
-                        children: List.generate(5, (index) {
+                      Column(
+                          children: List.generate(5, (index) {
 
                             return Padding(
-                            padding: const EdgeInsets.only(bottom: 20.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
+                              padding: const EdgeInsets.only(bottom: 20.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
 
-                                CustomNetworkImage(
-                                  imageUrl: AppConstants.eventImage,
-                                  height: 170.h,
-                                  width: 170.h,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
+                                  CustomNetworkImage(
+                                    imageUrl: AppConstants.eventImage,
+                                    height: isTablet?200.h: 170.h,
+                                    width: isTablet?200.h : 170.h,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
 
-                                SizedBox(
-                                  width: 10,
-                                ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
 
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
 
-                                    SizedBox(
-                                      width: 150.w,
-                                      child: CustomText(
-                                        textAlign: TextAlign.start,
-                                        text: "Cox’s Bazar Beach Helping Peolple",
-                                        maxLines: 3,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        bottom: 5,
+                                      SizedBox(
+                                        width: 150.w,
+                                        child: CustomText(
+                                          textAlign: TextAlign.start,
+                                          text: "Cox’s Bazar Beach Helping Peolple",
+                                          maxLines: 3,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                          bottom: 5,
+                                        ),
                                       ),
-                                    ),
 
-                                    ///======== Location ==============
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.location_on,
-                                          color: AppColors.black,
-                                          size: 20,
-                                        ),
-                                        CustomText(
-                                          text: "Cox’s Bazar, Bangladesh",
-                                          fontSize: 12,
-                                          color: AppColors.black_80,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ],
-                                    ),
+                                      ///======== Location ==============
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.location_on,
+                                            color: AppColors.black,
+                                            size: 20,
+                                          ),
+                                          CustomText(
+                                            text: "Cox’s Bazar, Bangladesh",
+                                            fontSize: 12,
+                                            color: AppColors.black_80,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ],
+                                      ),
 
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    // Leader
-                                    Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        CustomNetworkImage(
-                                          imageUrl: AppConstants.profileImage,
-                                          height: 30,
-                                          width: 30,
-                                          boxShape: BoxShape.circle,
-                                        ),
-                                        CustomText(
-                                          text: "Mehedi",
-                                          fontSize: 14,
-                                          color: AppColors.black,
-                                          fontWeight: FontWeight.w600,
-                                          right: 10.w,
-                                          left: 10.w,
-                                        ),
-                                        CustomText(
-                                          text: "Leader",
-                                          fontSize: 14,
-                                          color: AppColors.blue,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      // Leader
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          CustomNetworkImage(
+                                            imageUrl: AppConstants.profileImage,
+                                            height: 30,
+                                            width: 30,
+                                            boxShape: BoxShape.circle,
+                                          ),
+                                          CustomText(
+                                            text: "Mehedi",
+                                            fontSize: 14,
+                                            color: AppColors.black,
+                                            fontWeight: FontWeight.w600,
+                                            right: 10.w,
+                                            left: 10.w,
+                                          ),
+                                          CustomText(
+                                            text: "Leader",
+                                            fontSize: 14,
+                                            color: AppColors.blue,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
 
-                                        InkWell(
-                                          onTap: () {
-                                            Get.toNamed(AppRoutes.jonEventDetailsScreen);
+                                          InkWell(
+                                            onTap: () {
+                                              Get.toNamed(AppRoutes.jonEventDetailsScreen);
 
-                                          },
-                                          child: Container(
-                                            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                                            decoration: BoxDecoration(
-                                              color: AppColors.primary,
-                                              borderRadius: BorderRadius.circular(10),
-                                            ),
-                                            child: CustomText(
-                                              text:   "Accept",
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w500,
-                                              color: AppColors.black,
+                                            },
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                              decoration: BoxDecoration(
+                                                color: AppColors.primary,
+                                                borderRadius: BorderRadius.circular(10),
+                                              ),
+                                              child: CustomText(
+                                                text:   "Accept",
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500,
+                                                color: AppColors.black,
+                                              ),
                                             ),
                                           ),
-                                        ),
 
-                                         SizedBox(width: 5.w),
+                                          SizedBox(width: 5.w),
 
                                           InkWell(
                                             onTap: () {
 
-                                          /*    showDialog(
+                                              /*    showDialog(
                                                 context: context,
                                                 builder: (ctx) => AlertDialog(
                                                   backgroundColor: Colors.white,
@@ -281,148 +285,149 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
                                             ),
                                           )
 
-                                      ],
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          );
-                        })
-                    ),
-
-                  ///============  Event List ========
-                  if(eventsController.currentIndex.value ==1)
-                    Column(
-                        children: List.generate(2, (index) {
-
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 20.0),
-                            child: Row(
-                             mainAxisAlignment: MainAxisAlignment.start,
-                             crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-
-                                CustomNetworkImage(
-                                  imageUrl: AppConstants.eventImage,
-                                  height: 170.h,
-                                  width: 170.h,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-
-                                SizedBox(
-                                  width: 8,
-                                ),
-
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-
-                                    SizedBox(
-                                      width: 150.w,
-                                      child: CustomText(
-                                        textAlign: TextAlign.start,
-                                        text: "Cox’s Bazar Beach Helping Peolple",
-                                        maxLines: 3,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        bottom: 5,
+                                        ],
                                       ),
-                                    ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            );
+                          })
+                      ),
 
-                                    /// Location
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Icon(
-                                          Icons.location_on,
-                                          color: AppColors.black,
-                                          size: 20,
-                                        ),
-                                        CustomText(
-                                          text: "Cox’s Bazar, Bangladesh",
-                                          fontSize: 12,
-                                          color: AppColors.black_80,
-                                          fontWeight: FontWeight.w400,
+                    ///============  Event List ========
+                    if(eventsController.currentIndex.value ==1)
+                      Column(
+                          children: List.generate(2, (index) {
+
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 20.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+
+                                  CustomNetworkImage(
+                                    imageUrl: AppConstants.eventImage,
+                                    height: 170.h,
+                                    width: 170.h,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+
+                                      SizedBox(
+                                        width: 150.w,
+                                        child: CustomText(
                                           textAlign: TextAlign.start,
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    // Leader
-                                    Row(
-                                      children: [
-                                        CustomNetworkImage(
-                                          imageUrl: AppConstants.profileImage,
-                                          height: 30,
-                                          width: 30,
-                                          boxShape: BoxShape.circle,
-                                        ),
-                                        CustomText(
-                                          text: "Mehedi",
+                                          text: "Cox’s Bazar Beach Helping Peolple",
+                                          maxLines: 3,
                                           fontSize: 14,
-                                          color: AppColors.black,
-                                          fontWeight: FontWeight.w600,
-                                          right: 10.w,
-                                          left: 10.w,
+                                          fontWeight: FontWeight.w500,
+                                          bottom: 5,
                                         ),
-                                        CustomText(
-                                          text: "Leader",
-                                          fontSize: 14,
-                                          color: AppColors.blue,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
+                                      ),
 
-                                        InkWell(
-                                          onTap: () {
-                                            Get.toNamed(AppRoutes.joinDetailsScreen);
+                                      /// Location
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Icon(
+                                            Icons.location_on,
+                                            color: AppColors.black,
+                                            size: 20,
+                                          ),
+                                          CustomText(
+                                            text: "Cox’s Bazar, Bangladesh",
+                                            fontSize: 12,
+                                            color: AppColors.black_80,
+                                            fontWeight: FontWeight.w400,
+                                            textAlign: TextAlign.start,
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      // Leader
+                                      Row(
+                                        children: [
+                                          CustomNetworkImage(
+                                            imageUrl: AppConstants.profileImage,
+                                            height: 30,
+                                            width: 30,
+                                            boxShape: BoxShape.circle,
+                                          ),
+                                          CustomText(
+                                            text: "Mehedi",
+                                            fontSize: 14,
+                                            color: AppColors.black,
+                                            fontWeight: FontWeight.w600,
+                                            right: 10.w,
+                                            left: 10.w,
+                                          ),
+                                          CustomText(
+                                            text: "Leader",
+                                            fontSize: 14,
+                                            color: AppColors.blue,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
 
-                                          },
-                                          child: Container(
-                                            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                                            decoration: BoxDecoration(
-                                              color: AppColors.primary,
-                                              borderRadius: BorderRadius.circular(10),
-                                            ),
-                                            child: CustomText(
-                                              text: "Explore",
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w500,
-                                              color: AppColors.black,
+                                          InkWell(
+                                            onTap: () {
+                                              Get.toNamed(AppRoutes.joinDetailsScreen);
+
+                                            },
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                              decoration: BoxDecoration(
+                                                color: AppColors.primary,
+                                                borderRadius: BorderRadius.circular(10),
+                                              ),
+                                              child: CustomText(
+                                                text: "Explore",
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500,
+                                                color: AppColors.black,
+                                              ),
                                             ),
                                           ),
-                                        ),
 
 
 
-                                      ],
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          );
-                        })
-                    ),
-                ],
-              ),
-            )
-          ],
+                                        ],
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            );
+                          })
+                      ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
-      ),
-      bottomNavigationBar: NavBar(currentIndex: 3),
-    );
+        bottomNavigationBar: NavBar(currentIndex: 3),
+      );
+    });
   }
 }
