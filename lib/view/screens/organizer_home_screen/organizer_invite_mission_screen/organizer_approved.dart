@@ -89,8 +89,8 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                   children: [
 
                     Container(
-                      height:isTablet?90.h: 90.h,
-                      width: 110.w,
+                      height:isTablet?90.h: 100.h,
+                      width:isTablet? 110.w:140.w,
                       decoration: BoxDecoration(
                         color: AppColors.grey_5.withOpacity(0.5),
                         borderRadius: BorderRadius.circular(15),
@@ -118,8 +118,8 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                       width: 4,
                     ),
                     Container(
-                      height:isTablet?90.h: 90.h,
-                      width: 110.w,
+                      height:isTablet?90.h: 100.h,
+                      width:isTablet? 110.w:140.w,
                       decoration: BoxDecoration(
                         color: AppColors.grey_5.withOpacity(0.5),
                         borderRadius: BorderRadius.circular(15),
@@ -165,7 +165,7 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                     controller: TextEditingController()),
 
                 Row(
-                  //    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  ///mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
 
                     const Icon(
@@ -176,7 +176,7 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                     CustomButton(onTap: (){
                       Get.toNamed(AppRoutes.organizeMapScreen);
 
-                    }, title: "Map",height:isTablet?30.h: 25.h,width: 60.w,fontSize: 12,),
+                    }, title: "Map",height:isTablet?30.h: 25.h,width: 60.w,fontSize:isTablet?6.sp: 12.sp,),
 
 
                     const SizedBox(
@@ -250,15 +250,15 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                   ],
                 ),
 
-                const SizedBox(
-                  height: 12,
+                  SizedBox(
+                  height:isTablet?16.h: 12.h,
                 ),
 
                 Row(
                   children: [
                     CustomButton(onTap: (){
 
-                    }, title: "Private",height: 30.h,width: 60.w,fontSize: 6.sp,
+                    }, title: "Private",height: 30.h,width:isTablet?60.w:70.w,fontSize:isTablet?6.sp:14.sp,
                       textColor: AppColors.black,
                       fillColor: AppColors.white,
                       isBorder: true,
@@ -271,14 +271,14 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
 
                     CustomButton(onTap: (){
 
-                    }, title: "Public",height: 30.h,width: 60.w,fontSize: 6.sp,),
+                    }, title: "Public",height: 30.h,width: isTablet?60.w:70.w,fontSize:isTablet? 6.sp:14.sp,),
 
                     const SizedBox(
                       width: 12,
                     ),
                     CustomButton(onTap: (){
 
-                    }, title: "Organization",height: 30.h,width:isTablet?90.w: 60.w,fontSize: 6.sp,
+                    }, title: "Organization",height: 30.h,width:isTablet?90.w: 100.w,fontSize:isTablet? 6.sp:14.sp,
                       textColor: AppColors.black,
                       fillColor: AppColors.white,
                       isBorder: true,
@@ -287,8 +287,8 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                   ],
                 ),
 
-                const SizedBox(
-                  height: 12,
+                  SizedBox(
+                  height:isTablet?16.h: 12.h,
                 ),
 
                 CustomButton(onTap: (){
@@ -299,13 +299,13 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                   textColor: AppColors.black,
                 ),
 
-                const SizedBox(
-                  height: 12,
+                  SizedBox(
+                  height:isTablet?16.h: 12.h,
                 ),
 
                 CustomButton(onTap: (){
                   Get.toNamed(AppRoutes.memberScreen);
-                }, title: "View All Members",height: 30.h,width:isTablet?120.w: 90.w,fontSize: 6.sp,
+                }, title: "View All Members",height: 30.h,width:isTablet?120.w: 140.w,fontSize:isTablet? 6.sp:14.sp,
                   textColor: AppColors.black,
                 ),
 
@@ -320,7 +320,7 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
             Padding(
               padding: const EdgeInsets.all(24.0),
               child: CustomButton(onTap: (){
-              }, title: "Submit",fontSize: 12,),
+              }, title: "Submit",fontSize: 12, height: isTablet?70:60,),
             ),
 
 

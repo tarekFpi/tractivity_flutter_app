@@ -9,6 +9,7 @@ import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_icons/app_icons.dart';
 import 'package:tractivity_app/utils/app_images/app_images.dart';
+import 'package:tractivity_app/utils/app_strings/app_strings.dart';
 import 'package:tractivity_app/view/components/custom_button/custom_button.dart';
 import 'package:tractivity_app/view/components/custom_image/custom_image.dart';
 import 'package:tractivity_app/view/components/custom_netwrok_image/custom_network_image.dart';
@@ -34,277 +35,179 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      drawer: HomeSideDrawer(),
-      //drawerScrimColor: Colors.black,
-      appBar: AppBar(
-        leading: Builder(builder: (context) {
-          return IconButton(
-              onPressed: () => Scaffold.of(context).openDrawer(),
-              icon: Icon(
-                Icons.menu,
-                color: AppColors.primary,
-              ));
-        }),
-        title: Text(
-          "JoinUp",
-          style: TextStyle(
-              color: AppColors.black,
-              fontSize: 30,
-              fontWeight: FontWeight.w600),
-        ),
-     actions: [
-         GestureDetector(
-           onTap: (){
-             Get.toNamed(AppRoutes.eventCompleteScreen);
-           },
-           child: Padding(
-             padding: const EdgeInsets.only(right: 12),
-             child: CustomImage(imageSrc: AppIcons.bookmark),
-           ),
-         )
-    ],
-      ),
-      body: Obx(
-        () {
-          return SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Column(
-                children: [
+    return LayoutBuilder(builder: (context,constraints){
 
-                  Row(
+      final isTablet = constraints.maxWidth > 600;
+
+      return Scaffold(
+        key: _scaffoldKey,
+        drawer: HomeSideDrawer(),
+        //drawerScrimColor: Colors.black,
+        appBar: AppBar(
+          leading: Builder(builder: (context) {
+            return IconButton(
+                onPressed: () => Scaffold.of(context).openDrawer(),
+                icon: Icon(
+                  Icons.menu,
+                  color: AppColors.primary,
+                  size: isTablet?28.w:24.w
+                ));
+          }),
+          title: Text(
+            AppStrings.serveOut,
+            style: TextStyle(
+                color: AppColors.black,
+                fontSize: 24.sp,
+                fontWeight: FontWeight.w600),
+          ),
+          actions: [
+
+            GestureDetector(
+              onTap: (){
+                Get.toNamed(AppRoutes.eventCompleteScreen);
+              },
+              child: Padding(
+                padding:  EdgeInsets.only(right: 16.h,),
+                child: CustomImage(imageSrc: AppIcons.bookmark,width: isTablet?28.h:24.h,height:isTablet?28.h:24.h,),
+              ),
+            )
+          ],
+        ),
+        body: Obx(
+                () {
+              return SingleChildScrollView(
+                child: Padding(
+                  padding:   EdgeInsets.symmetric(horizontal: 8,vertical: isTablet?28:0),
+                  child: Column(
                     children: [
-                      CustomNetworkImage(
-                        imageUrl: AppConstants.profileImage,
-                        height: 100,
-                        width: 100,
-                        boxShape: BoxShape.circle,
-                        border: Border.all(color: AppColors.primary, width: 3),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+
+                      Row(
                         children: [
-                          CustomText(
-                            text: "Mehedi Bin Ab. Salam",
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
+                          CustomNetworkImage(
+                            imageUrl: AppConstants.profileImage,
+                            height: 100.h,
+                            width: 100.w,
+                            boxShape: BoxShape.circle,
+                            border: Border.all(color: AppColors.primary, width: 3),
                           ),
-                          Row(
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Icon(
-                                Icons.location_on,
-                                color: AppColors.primary,
-                                size: 20,
-                              ),
                               CustomText(
-                                text: "Bushwick Brooklyn, NY, USA",
-                                fontSize: 12,
-                                color: AppColors.primary,
-                                fontWeight: FontWeight.w400,
+                                text: "Mehedi Bin Ab. Salam",
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
                               ),
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.location_on,
+                                    color: AppColors.primary,
+                                    size: 20,
+                                  ),
+                                  CustomText(
+                                    text: "Bushwick Brooklyn, NY, USA",
+                                    fontSize: 12,
+                                    color: AppColors.primary,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ],
+                              )
                             ],
                           )
                         ],
-                      )
-                    ],
-                  ),
+                      ),
 
-                  ///=============== Recemt Events Tab Bar ===============
+                      ///=============== Recemt Events Tab Bar ===============
 
-                  SizedBox(height: 20,),
+                      SizedBox(height: 20,),
 
-                  CustomTabSingleText(
-                      tabs: organizerController.adminstratiorNameList,
-                      selectedIndex: organizerController.adminstratior_currentIndex.value,
-                      onTabSelected: (value) {
-                        organizerController.adminstratior_currentIndex.value = value;
-                        setState(() {});
-                      },
-                      selectedColor: AppColors.primary,
-                      unselectedColor: AppColors.grey_1
-                  ),
+                      CustomTabSingleText(
+                          fontSize: isTablet?24:16,
+                          tabs: organizerController.adminstratiorNameList,
+                          selectedIndex: organizerController.adminstratior_currentIndex.value,
+                          onTabSelected: (value) {
+                            organizerController.adminstratior_currentIndex.value = value;
+                            setState(() {});
+                          },
+                          selectedColor: AppColors.primary,
+                          unselectedColor: AppColors.grey_1
+                      ),
 
-                  SizedBox(height: 20,),
-
-
-                  ///============ Recent  Event ========
-                  if(organizerController.adminstratior_currentIndex.value==0)
-                  Column(
-                      children: List.generate(6, (index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            height: 110,
-                            decoration: BoxDecoration(
-                              color: AppColors.grey_5.withOpacity(0.5),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            padding: EdgeInsets.only(top: 12),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 8,right: 8),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
+                      SizedBox(height: 20,),
 
 
-                                      CustomText(
-                                        text: "${index+1}.Donation Administrator",
-                                        fontSize: 16,
-                                        color: AppColors.black_80,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-
-                                      CustomText(
-                                        text: "22-12-2025",
-                                        fontSize: 12,
-                                        color: AppColors.black_80,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ],
+                      ///============ Recent  Event ========
+                      if(organizerController.adminstratior_currentIndex.value==0)
+                        Column(
+                            children: List.generate(6, (index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height:isTablet?140.h: 130.h,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.grey_5.withOpacity(0.5),
+                                    borderRadius: BorderRadius.circular(15),
                                   ),
-                                ),
-
-                                SizedBox(
-                                  height: 4,
-                                ),
-
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 8,right: 8),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                  padding: EdgeInsets.only(top: 12),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
+
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 8,right: 8),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+
+
+                                            CustomText(
+                                              text: "${index+1}.Donation Administrator",
+                                              fontSize: 16,
+                                              color: AppColors.black_80,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+
+                                            CustomText(
+                                              text: "22-12-2025",
+                                              fontSize: 12,
+                                              color: AppColors.black_80,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
 
                                       SizedBox(
-                                        width: 250,
-                                        child: CustomText(
-                                          text: "Empowering communities  worldwide  through education, healthcare,  and sustainable development initiatives.",
-                                          fontSize: 12,
-                                          color: AppColors.black_80,
-                                          fontWeight: FontWeight.w400,
-                                          textAlign: TextAlign.start,
-                                          overflow: TextOverflow.clip, // Add ellipsis at the end if the text overflows.
-                                         // maxLines: 3,
-                                        ),
+                                        height: 4,
                                       ),
 
-                                      CustomButton(
-                                        onTap: () {
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 8,right: 8),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
 
-                                          showDialog(
-                                            context: context,
-                                            builder: (ctx) => AlertDialog(
-                                              backgroundColor: Colors.white,
-                                              insetPadding: EdgeInsets.all(8),
-                                              contentPadding: EdgeInsets.all(8),
-                                              title: SizedBox(),
-                                              content: SizedBox(
-                                                width: MediaQuery.sizeOf(context).width,
-                                                child: AlertDialogEvent(title: "Are you sure you want to \n delete ?",discription: "",),
+                                            SizedBox(
+                                              width: 250.w,
+                                              child: Expanded(
+                                                child: CustomText(
+                                                  text: "Empowering communities  worldwide  through education, healthcare,  and sustainable development initiatives.",
+                                                  fontSize: 12,
+                                                  color: AppColors.black_80,
+                                                  fontWeight: FontWeight.w400,
+                                                  textAlign: TextAlign.start,
+                                                   maxLines: 2,
+                                                  overflow: TextOverflow.clip, // Add ellipsis at the end if the text overflows.
+                                                  // maxLines: 3,
+                                                ),
                                               ),
                                             ),
-                                          );
-
-                                        },
-                                        title: "Delete",
-                                        width: 60.w,
-                                        height: 32.h,
-                                        textColor: AppColors.black,
-                                        fillColor: AppColors.primary,
-                                        fontSize: 12,
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        );
-                      })),
-
-                  if(organizerController.adminstratior_currentIndex.value==1)
-                    Column(
-                        children: List.generate(3, (index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              height: 130,
-                              decoration: BoxDecoration(
-                                color: AppColors.grey_5.withOpacity(0.5),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              padding: EdgeInsets.only(top: 12),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8,right: 8),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-
-                                     /*   CustomText(
-                                          text: "${index+1} .",
-                                          fontSize: 16,
-                                          color: AppColors.black_80,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                    */
-                                        CustomText(
-                                          text: "${index+1}.Global Horizons Foundation",
-                                          fontSize: 16,
-                                          color: AppColors.black_80,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-
-                                        CustomText(
-                                          text: "22-12-2025",
-                                          fontSize: 12,
-                                          color: AppColors.black_80,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-
-                                  SizedBox(
-                                    height: 4,
-                                  ),
-
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8,right: 8),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-
-                                        SizedBox(
-                                          width: 250,
-                                          child: CustomText(
-                                            text: "Empowering communities  worldwide  through education, healthcare,  and sustainable development initiatives.",
-                                            fontSize: 12,
-                                            color: AppColors.black_80,
-                                            fontWeight: FontWeight.w400,
-                                            textAlign: TextAlign.start,
-                                            overflow: TextOverflow.clip, // Add ellipsis at the end if the text overflows.
-                                            // maxLines: 3,
-                                          ),
-                                        ),
-
-                                        Column(
-                                          children: [
 
                                             CustomButton(
                                               onTap: () {
@@ -315,7 +218,6 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                     backgroundColor: Colors.white,
                                                     insetPadding: EdgeInsets.all(8),
                                                     contentPadding: EdgeInsets.all(8),
-                                                    //   clipBehavior: Clip.antiAliasWithSaveLayer,
                                                     title: SizedBox(),
                                                     content: SizedBox(
                                                       width: MediaQuery.sizeOf(context).width,
@@ -323,6 +225,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                     ),
                                                   ),
                                                 );
+
                                               },
                                               title: "Delete",
                                               width: 60.w,
@@ -331,40 +234,152 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                               fillColor: AppColors.primary,
                                               fontSize: 12,
                                             ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              );
+                            })),
 
-                                            SizedBox(
-                                              height: 8,
+                      if(organizerController.adminstratior_currentIndex.value==1)
+                        Column(
+                            children: List.generate(3, (index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height:isTablet?140.h: 130.h,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.grey_5.withOpacity(0.5),
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  padding: EdgeInsets.only(top: 12),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 8,right: 8),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+
+                                            /*   CustomText(
+                                          text: "${index+1} .",
+                                          fontSize: 16,
+                                          color: AppColors.black_80,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                    */
+                                            CustomText(
+                                              text: "${index+1}.Global Horizons Foundation",
+                                              fontSize: 16,
+                                              color: AppColors.black_80,
+                                              fontWeight: FontWeight.w600,
                                             ),
 
-                                            CustomButton(
-                                              onTap: () {
-
-                                               Get.toNamed(AppRoutes.adminstratiorEventListScreen);
-                                              },
-                                              title: "Report",
-                                              width: 60.w,
-                                              height: 32.h,
-                                              textColor: AppColors.black,
-                                              fillColor: AppColors.primary,
+                                            CustomText(
+                                              text: "22-12-2025",
                                               fontSize: 12,
+                                              color: AppColors.black_80,
+                                              fontWeight: FontWeight.w400,
                                             ),
                                           ],
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          );
-                     })),
-                ],
-              ),
-            ),
-          );
-        }
-      ),
-      bottomNavigationBar: AdminstratorNavbar(currentIndex: 0,),
-    );
+                                        ),
+                                      ),
+
+                                      SizedBox(
+                                        height: 4,
+                                      ),
+
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 8,right: 8),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+
+                                            SizedBox(
+                                              width:isTablet?300.h: 250.w,
+                                              child: Expanded(
+                                                child: CustomText(
+                                                  text: "Empowering communities  worldwide  through education, healthcare,  and sustainable development initiatives.",
+                                                  fontSize: 12,
+                                                  color: AppColors.black_80,
+                                                  fontWeight: FontWeight.w400,
+                                                  textAlign: TextAlign.start,
+                                                  maxLines: 2,
+                                                  overflow: TextOverflow.clip,// Add ellipsis at the end if the text overflows.
+                                                  // maxLines: 3,
+                                                ),
+                                              ),
+                                            ),
+
+                                            Column(
+                                              children: [
+
+                                                CustomButton(
+                                                  onTap: () {
+
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (ctx) => AlertDialog(
+                                                        backgroundColor: Colors.white,
+                                                        insetPadding: EdgeInsets.all(8),
+                                                        contentPadding: EdgeInsets.all(8),
+                                                        //   clipBehavior: Clip.antiAliasWithSaveLayer,
+                                                        title: SizedBox(),
+                                                        content: SizedBox(
+                                                          width: MediaQuery.sizeOf(context).width,
+                                                          child: AlertDialogEvent(title: "Are you sure you want to \n delete ?",discription: "",),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                  title: "Delete",
+                                                  width: 60.w,
+                                                  height: 32.h,
+                                                  textColor: AppColors.black,
+                                                  fillColor: AppColors.primary,
+                                                  fontSize: 12,
+                                                ),
+
+                                                SizedBox(
+                                                  height:isTablet?12.h: 8.h,
+                                                ),
+
+                                                CustomButton(
+                                                  onTap: () {
+
+                                                    Get.toNamed(AppRoutes.adminstratiorEventListScreen);
+                                                  },
+                                                  title: "Report",
+                                                  width: 60.w,
+                                                  height: 32.h,
+                                                  textColor: AppColors.black,
+                                                  fillColor: AppColors.primary,
+                                                  fontSize: 12,
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              );
+                            })),
+                    ],
+                  ),
+                ),
+              );
+            }
+        ),
+        bottomNavigationBar: AdminstratorNavbar(currentIndex: 0,),
+      );
+    });
   }
 }

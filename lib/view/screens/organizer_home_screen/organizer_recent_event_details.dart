@@ -25,6 +25,7 @@ class _OrganizerRecentEventDetailsState extends State<OrganizerRecentEventDetail
 
   @override
   Widget build(BuildContext context) {
+
     return LayoutBuilder(builder: (context,constraints){
 
       final isTablet = constraints.maxWidth > 600;
@@ -33,7 +34,7 @@ class _OrganizerRecentEventDetailsState extends State<OrganizerRecentEventDetail
         appBar: CustomRoyelAppbar(
           leftIcon: true,
           titleName: "Organizer Event Details",
-          fontSize: 8.sp,
+          fontSize:isTablet?8.sp:16.sp,
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),

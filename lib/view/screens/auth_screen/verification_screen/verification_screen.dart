@@ -15,81 +15,91 @@ class VerificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return LayoutBuilder(builder: (context,constraints){
 
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-        child: SingleChildScrollView(
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height/1.1,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+      final isTablet = constraints.maxWidth > 600;
 
-                SizedBox(
-                  height: 16,
-                ),
-              CustomText(
-                  text: AppStrings.serveOut,
-                  fontSize: 32,
-                  fontWeight: FontWeight.w600,
-                  bottom: 20.h,
-                ),
-                Column(
-                  children: [
-                    CustomText(
-                      top: 80.h,
-                      text: AppStrings.enterCode,
-                      fontSize: 32,
-                      fontWeight: FontWeight.w600,
-                      bottom: 20.h,
-                    ),
-                    CustomText(
-                      text: AppStrings.enterTheCodeTitle,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w400,
-                      maxLines: 2,
-                      bottom: 30.h,
-                      color: AppColors.black,
-                    ),
-                    CustomPinCode(controller: TextEditingController()),
-                    SizedBox(height: 20.h),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CustomText(
-                          text: AppStrings.ididntFind,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.black_04,
-                          right: 10,
-                        ),
-                        CustomText(
-                          text: AppStrings.sendAgain,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.red,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                SizedBox(height: 16),
-                ///============ Login Button ============
-                CustomButton(
-                  onTap: () {
-                    Get.toNamed(AppRoutes.forgotPassword);
-                  },
-                  title: AppStrings.confirm,
-                ),
-              ],
+      return Scaffold(
+
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          child: SingleChildScrollView(
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height/1.1,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+
+                  SizedBox(
+                    height: 16.h,
+                  ),
+                  CustomText(
+                    text: AppStrings.serveOut,
+                    fontSize:isTablet?18.sp: 28.sp,
+                    fontWeight: FontWeight.w600,
+                    bottom: 20.h,
+                  ),
+                  Column(
+                    children: [
+
+                      CustomText(
+                        top: 80.h,
+                        text: AppStrings.enterCode,
+                        fontSize: 32,
+                        fontWeight: FontWeight.w600,
+                        bottom: 20.h,
+                      ),
+                      CustomText(
+                        text: AppStrings.enterTheCodeTitle,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
+                        maxLines: 2,
+                        bottom: 30.h,
+                        color: AppColors.black,
+                      ),
+                      CustomPinCode(controller: TextEditingController()),
+                      SizedBox(height: 20.h),
+
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+
+                          CustomText(
+                            text: AppStrings.ididntFind,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.black_04,
+                            right: 10,
+                          ),
+                          CustomText(
+                            text: AppStrings.sendAgain,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.red,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16.h),
+                  ///============ Login Button ============
+                  CustomButton(
+                    onTap: () {
+                      Get.toNamed(AppRoutes.forgotPassword);
+                    },
+                    title: AppStrings.confirm,
+                    height: isTablet?60.h:60.h,
+                    fontSize: isTablet ? 10.sp : 14.sp,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    });
 
   }
 }

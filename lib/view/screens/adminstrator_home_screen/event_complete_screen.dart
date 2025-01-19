@@ -23,197 +23,198 @@ class EventCompleteScreen extends StatefulWidget {
 
 class _EventCompleteScreenState extends State<EventCompleteScreen> {
 
-
-
   @override
   Widget build(BuildContext context) {
-       return Scaffold(
-   /*   appBar: const CustomRoyelAppbar(
-        titleName: "Completed Event",
-        leftIcon: true,
-      ),*/
-         appBar:  AppBar(
-           leading: Builder(builder: (context) {
-             return IconButton(
-                 onPressed: () => Get.back(),
-                 icon: Icon(
-                   Icons.arrow_back_rounded,
+       return LayoutBuilder(builder: (context,constraints){
+
+         final isTablet = constraints.maxWidth > 600;
+
+         return Scaffold(
+
+           appBar:  AppBar(
+             leading: Builder(builder: (context) {
+               return IconButton(
+                   onPressed: () => Get.back(),
+                   icon: Icon(
+                     Icons.arrow_back_rounded,
+                     color: AppColors.black,
+                     size: isTablet?42:24,
+                   ));
+             }),
+             title: Text(
+               "Completed Event",
+               style: TextStyle(
                    color: AppColors.black,
-                 ));
-           }),
-           title: Text(
-             "Completed Event",
-             style: TextStyle(
-                 color: AppColors.black,
-                 fontSize: 30,
-                 fontWeight: FontWeight.w600),
+                   fontSize: 22.sp,
+                   fontWeight: FontWeight.w600),
+             ),
+
            ),
-
-         ),
-         body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-          child: Column(
-            children: [
+           body: SingleChildScrollView(
+             child: Padding(
+               padding: const EdgeInsets.symmetric(horizontal: 15.0),
+               child: Column(
+                 children: [
 
 
-              const SizedBox(
-                height: 24,
-              ),
+                   const SizedBox(
+                     height: 24,
+                   ),
 
-              Column(
-                  children: List.generate(3, (index) {
+                   Column(
+                       children: List.generate(3, (index) {
 
-                    return  Padding(
-                      padding: const EdgeInsets.only(bottom: 20.0),
-                      child: Row(
-                        children: [
+                         return  Padding(
+                           padding: const EdgeInsets.only(bottom: 20.0),
+                           child: Row(
+                             children: [
 
-                          CustomNetworkImage(
-                            imageUrl: AppConstants.eventImage,
-                            height: 170.h,
-                            width: 170.h,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
+                               CustomNetworkImage(
+                                 imageUrl: AppConstants.eventImage,
+                                 height: isTablet ? 200.h : 170.h,
+                                 width: isTablet ? 180.w : 170.w,
+                                 borderRadius: BorderRadius.circular(10),
+                               ),
+                               const SizedBox(
+                                 width: 10,
+                               ),
+                               Column(
+                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                 children: [
 
-                              SizedBox(
-                                width: 150.w,
-                                child: CustomText(
-                                  textAlign: TextAlign.start,
-                                  text: "Cox’s Bazar Beach Helping Peolple"!,
-                                  maxLines: 3,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  bottom: 5,
-                                ),
-                              ),
-                              /// Location
-                              const Row(
-                                children: [
-                                  Icon(
-                                    Icons.location_on,
-                                    color: AppColors.black,
-                                    size: 20,
-                                  ),
-                                  CustomText(
-                                    text: "Cox’s Bazar, Bangladesh",
-                                    fontSize: 12,
-                                    color: AppColors.black_80,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              /// Leader
-                              Row(
-                                children: [
-                                  CustomNetworkImage(
-                                    imageUrl: AppConstants.profileImage,
-                                    height: 30,
-                                    width: 30,
-                                    boxShape: BoxShape.circle,
-                                  ),
-                                  CustomText(
-                                    text: "Mehedi",
-                                    fontSize: 14,
-                                    color: AppColors.black,
-                                    fontWeight: FontWeight.w600,
-                                    right: 10.w,
-                                    left: 10.w,
-                                  ),
-                                  const CustomText(
-                                    text: "Leader",
-                                    fontSize: 14,
-                                    color: AppColors.blue,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
+                                   SizedBox(
+                                     width: 150.w,
+                                     child: CustomText(
+                                       textAlign: TextAlign.start,
+                                       text: "Cox’s Bazar Beach Helping Peolple"!,
+                                       maxLines: 3,
+                                       fontSize: 14,
+                                       fontWeight: FontWeight.w500,
+                                       bottom: 5,
+                                     ),
+                                   ),
+                                   /// Location
+                                   const Row(
+                                     children: [
+                                       Icon(
+                                         Icons.location_on,
+                                         color: AppColors.black,
+                                         size: 20,
+                                       ),
+                                       CustomText(
+                                         text: "Cox’s Bazar, Bangladesh",
+                                         fontSize: 12,
+                                         color: AppColors.black_80,
+                                         fontWeight: FontWeight.w400,
+                                       ),
+                                     ],
+                                   ),
+                                   const SizedBox(
+                                     height: 5,
+                                   ),
+                                   /// Leader
+                                   Row(
+                                     children: [
+                                       CustomNetworkImage(
+                                         imageUrl: AppConstants.profileImage,
+                                         height: 30,
+                                         width: 30,
+                                         boxShape: BoxShape.circle,
+                                       ),
+                                       CustomText(
+                                         text: "Mehedi",
+                                         fontSize: 14,
+                                         color: AppColors.black,
+                                         fontWeight: FontWeight.w600,
+                                         right: 10.w,
+                                         left: 10.w,
+                                       ),
+                                       const CustomText(
+                                         text: "Leader",
+                                         fontSize: 14,
+                                         color: AppColors.blue,
+                                         fontWeight: FontWeight.w600,
+                                       ),
+                                     ],
+                                   ),
+                                   const SizedBox(
+                                     height: 10,
+                                   ),
 
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
+                                   Row(
+                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                     children: [
 
-                                  GestureDetector(
-                                    onTap: () {
+                                       GestureDetector(
+                                         onTap: () {
 
 
-                                      Get.toNamed(AppRoutes.adminstratorEventDetailsScreen);
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.primary,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: const CustomText(
-                                        text:  "Explore",
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        color: AppColors.black,
-                                      ),
-                                    ),
-                                  ),
+                                           Get.toNamed(AppRoutes.adminstratorEventDetailsScreen);
+                                         },
+                                         child: Container(
+                                           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                           decoration: BoxDecoration(
+                                             color: AppColors.primary,
+                                             borderRadius: BorderRadius.circular(10),
+                                           ),
+                                           child: const CustomText(
+                                             text:  "Explore",
+                                             fontSize: 14,
+                                             fontWeight: FontWeight.w500,
+                                             color: AppColors.black,
+                                           ),
+                                         ),
+                                       ),
 
-                                  const SizedBox(
-                                    width: 8,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
+                                       const SizedBox(
+                                         width: 8,
+                                       ),
+                                       GestureDetector(
+                                         onTap: () {
 
-                                      showDialog(
-                                        context: context,
-                                        builder: (ctx) => AlertDialog(
-                                          backgroundColor: Colors.white,
-                                          insetPadding: EdgeInsets.all(8),
-                                          contentPadding: EdgeInsets.all(8),
-                                          //   clipBehavior: Clip.antiAliasWithSaveLayer,
-                                          title: SizedBox(),
-                                          content: SizedBox(
-                                            width: MediaQuery.sizeOf(context).width,
-                                            child: AlertDialogEvent(title: "Are you sure you want to \n Approved this Event?",discription: "",),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.primary,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: const CustomText(
-                                        text:  "Complete",
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        color: AppColors.black,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    );
-                  })
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+                                           showDialog(
+                                             context: context,
+                                             builder: (ctx) => AlertDialog(
+                                               backgroundColor: Colors.white,
+                                               insetPadding: EdgeInsets.all(8),
+                                               contentPadding: EdgeInsets.all(8),
+                                               //   clipBehavior: Clip.antiAliasWithSaveLayer,
+                                               title: SizedBox(),
+                                               content: SizedBox(
+                                                 width: MediaQuery.sizeOf(context).width,
+                                                 child: AlertDialogEvent(title: "Are you sure you want to \n Approved this Event?",discription: "",),
+                                               ),
+                                             ),
+                                           );
+                                         },
+                                         child: Container(
+                                           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                           decoration: BoxDecoration(
+                                             color: AppColors.primary,
+                                             borderRadius: BorderRadius.circular(10),
+                                           ),
+                                           child: const CustomText(
+                                             text:  "Complete",
+                                             fontSize: 14,
+                                             fontWeight: FontWeight.w500,
+                                             color: AppColors.black,
+                                           ),
+                                         ),
+                                       ),
+                                     ],
+                                   ),
+                                 ],
+                               )
+                             ],
+                           ),
+                         );
+                       })
+                   )
+                 ],
+               ),
+             ),
+           ),
+         );
+       });
   }
 }

@@ -11,6 +11,7 @@ class CustomSettingRow extends StatelessWidget {
   final Color? textColor;
   final Function()? onTap;
   final double fontSize;
+  final bool isTablet;
   const CustomSettingRow({
     super.key,
     required this.text,
@@ -19,6 +20,7 @@ class CustomSettingRow extends StatelessWidget {
     this.textColor = Colors.black,
     this.onTap,
     this.fontSize = 16,
+    this.isTablet =false
   });
 
   @override
@@ -32,6 +34,7 @@ class CustomSettingRow extends StatelessWidget {
             Icon(
               icon,
               color: color,
+              size: isTablet?42:24,
             ),
             SizedBox(
               width: 20.w,

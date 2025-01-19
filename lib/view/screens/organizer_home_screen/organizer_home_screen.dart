@@ -16,7 +16,7 @@ import 'package:tractivity_app/view/screens/adminstrator_home_screen/alert_dialo
 import 'package:tractivity_app/view/screens/home_screen/exolore_event_screen/inner_widget/custom_explore_container.dart';
 import 'package:tractivity_app/view/screens/home_screen/homepage_drawer.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_controller/organizer_controller.dart';
-import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/inner_widget/custom_container_row.dart';
+
 class OrganizerHomeScreen extends StatefulWidget {
    OrganizerHomeScreen({super.key});
 
@@ -68,14 +68,14 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
 
               GestureDetector(
                 onTap: (){
-                  Get.toNamed(AppRoutes.eventsProfileScreen);
+                  Get.toNamed(AppRoutes.userEventProfile);
                 },
                 child: Row(
                   children: [
                     CustomNetworkImage(
                       imageUrl: AppConstants.profileImage,
-                      height: 100,
-                      width: 100,
+                      height: 100.h,
+                      width: 100.w,
                       boxShape: BoxShape.circle,
                       border: Border.all(color: AppColors.primary, width: 3),
                     ),
@@ -301,12 +301,14 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
                                       // Leader
                                       Row(
                                         children: [
+
                                           CustomNetworkImage(
                                             imageUrl: AppConstants.profileImage,
                                             height: 30,
                                             width: 30,
                                             boxShape: BoxShape.circle,
                                           ),
+
                                           CustomText(
                                             text: "Cox’s Bazar",
                                             fontSize: 12,

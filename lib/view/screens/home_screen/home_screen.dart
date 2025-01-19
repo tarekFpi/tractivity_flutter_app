@@ -65,16 +65,20 @@ class _HomeScreenState extends State<HomeScreen> {
             AppStrings.serveOut,
             style: TextStyle(
               color: AppColors.black,
-              fontSize: 30,
+              fontSize: 22.sp,
               fontWeight: FontWeight.w600,
             ),
           ),
           actions: [
+
             IconButton(
               onPressed: () {
                 Get.toNamed(AppRoutes.notificationScreen);
               },
-              icon: Icon(Icons.notifications_active_outlined, color: AppColors.black),
+              icon: Padding(
+                padding: const EdgeInsets.only(right: 12),
+                child: Icon(Icons.notifications_active_outlined, color: AppColors.black,size: isTablet?42:24,),
+              ),
             )
           ],
         ),
@@ -91,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   /// Profile Section**
                   GestureDetector(
                     onTap: () {
-                      Get.toNamed(AppRoutes.eventsProfileScreen);
+                      Get.toNamed(AppRoutes.userEventProfile);
                     },
                     child: Row(
                       children: [
@@ -388,8 +392,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           children: [
                                             CustomNetworkImage(
                                               imageUrl: AppConstants.profileImage,
-                                              height: 40,
-                                              width: 40,
+                                              height: 40.h,
+                                              width: 40.w,
                                               boxShape: BoxShape.circle,
                                             ),
                                             CustomText(
@@ -425,8 +429,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           Get.toNamed(AppRoutes.organizeDetailsScreen);
                                         },
                                         title: "Details",
-                                        height:isTablet?60: 30,
-                                        width:isTablet?150: 70,
+                                        height:isTablet?40.h: 30.h,
+                                        width:isTablet?70.w: 70.w,
                                         fontSize: 12,
                                       ),
                                     ],

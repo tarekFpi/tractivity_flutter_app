@@ -94,7 +94,7 @@ class FriendScreen extends StatelessWidget {
                               return GestureDetector(
                                 onTap: (){
 
-                                  Get.toNamed(AppRoutes.eventsProfileScreen);
+                                  Get.toNamed(AppRoutes.userEventProfile);
                                 },
                                 child: CustomFriendsList(
                                   image: AppConstants.profileImage,
@@ -112,7 +112,7 @@ class FriendScreen extends StatelessWidget {
                             children: List.generate(6, (index) {
                               return GestureDetector(
                                 onTap: (){
-                                  Get.toNamed(AppRoutes.eventsProfileScreen);
+                                  Get.toNamed(AppRoutes.userEventProfile);
                                 },
                                 child: CustomFriendsList(
                                   image: AppConstants.profileImage,
@@ -130,7 +130,7 @@ class FriendScreen extends StatelessWidget {
                             children: List.generate(6, (index) {
                               return GestureDetector(
                                 onTap: (){
-                                  Get.toNamed(AppRoutes.eventsProfileScreen);
+                                  Get.toNamed(AppRoutes.userEventProfile);
                                 },
                                 child: CustomFriendsList(
                                   image: AppConstants.profileImage,

@@ -17,77 +17,85 @@ class VerificationMailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-     //appBar: CustomRoyelAppbar(titleName:  AppStrings.serveOut,),
-     appBar: AppBar(
-       title: Text(
-         AppStrings.serveOut,
-         style: TextStyle(
-             color: AppColors.black,
-             fontSize: 30,
-             fontWeight: FontWeight.w600),
-       ),
+    return LayoutBuilder(builder: (context,constraints){
 
-     ),
+      final isTablet = constraints.maxWidth > 600;
 
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 80),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-        
+      return Scaffold(
+        //appBar: CustomRoyelAppbar(titleName:  AppStrings.serveOut,),
+        appBar: AppBar(
+          title: Text(
+            AppStrings.serveOut,
+            style: TextStyle(
+                color: AppColors.black,
+                fontSize: 22.sp,
+                fontWeight: FontWeight.w600),
+          ),
 
-              Column(
-                children: [
-                  CustomText(
-                    top: 80.h,
-                    text: AppStrings.emailConfirmation,
-                    fontSize: 32,
-                    fontWeight: FontWeight.w600,
-                    bottom: 20.h,
-                  ),
-                  CustomText(
-                    text: AppStrings.enterYourEmailForVerification,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w400,
-                    maxLines: 2,
-                    bottom: 32.h,
-                    color: AppColors.black,
-                  ),
-        
-                  ///============ Email ============
-                  CustomFormCard(
+        ),
+
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 80),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+
+
+                Column(
+                  children: [
+                    CustomText(
+                      top: 80.h,
+                      text: AppStrings.emailConfirmation,
+                      fontSize: 32,
+                      fontWeight: FontWeight.w600,
+                      bottom: 20.h,
+                    ),
+                    CustomText(
+                      text: AppStrings.enterYourEmailForVerification,
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w400,
+                      maxLines: 2,
+                      bottom: 32.h,
+                      color: AppColors.black,
+                    ),
+
+                    ///============ Email ============
+                    CustomFormCard(
                       title: AppStrings.email,
-                     // hasBackgroundColor: true,
+                      // hasBackgroundColor: true,
                       titleColor: Colors.black,
+                      fontSize: isTablet?16:16,
                       hintText: AppStrings.enterYourEmail,
                       controller: TextEditingController(),
-        
-                  ),
 
-                  SizedBox(
-                    height: 12,
-                  ),
-        
-                  ///============ Login Button ============
-                  CustomButton(
-                    onTap: () {
-        
-                     Get.toNamed(AppRoutes.verificationScreen);
-                    },
-                    title: AppStrings.sendVerificationCode,
-                  ),
-                ],
-              ),
-        
-        
-            ],
+                    ),
+
+                    SizedBox(
+                      height: 12,
+                    ),
+
+                    ///============ Login Button ============
+                    CustomButton(
+                      onTap: () {
+
+                        Get.toNamed(AppRoutes.verificationScreen);
+                      },
+                      title: AppStrings.sendVerificationCode,
+                      height: isTablet?60.h:60.h,
+                      fontSize: isTablet ? 10.sp : 14.sp,
+                    ),
+                  ],
+                ),
+
+
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
 

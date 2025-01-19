@@ -15,96 +15,110 @@ class SettingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: CustomRoyelAppbar(
-          leftIcon: true,
-          titleName: AppStrings.setting,
-        ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-            child: Container(
-             /// height: MediaQuery.sizeOf(context).height / 2.5,
-              width: MediaQuery.sizeOf(context).width,
-              decoration: BoxDecoration(
-                color: AppColors.white_50,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 20, top: 40),
-                child: Column(
-                  children: [
+    return LayoutBuilder(builder: (context,constraints){
 
-                    ///======= Profile Person====
-                    CustomSettingRow(
-                        onTap: (){
-                         Get.toNamed(AppRoutes.editPersonProfileScreen);
-                        },
-                        text: AppStrings.profileSetting,
-                        icon: Icons.person),
+      final isTablet = constraints.maxWidth > 600;
 
-                    ///======= aboutus ====
-                    CustomSettingRow(
-                        onTap: (){
-                          Get.toNamed(AppRoutes.aboutUsScreen);
-                        },
-                        text: AppStrings.aboutus,
-                        icon: Icons.info_outline),
-                    ///======= privacyPolicy ====
+      return Scaffold(
+          appBar: CustomRoyelAppbar(
+            leftIcon: true,
+            titleName: AppStrings.setting,
+          ),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+              child: Container(
+                /// height: MediaQuery.sizeOf(context).height / 2.5,
+                width: MediaQuery.sizeOf(context).width,
+                decoration: BoxDecoration(
+                  color: AppColors.white_50,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20, top: 40),
+                  child: Column(
+                    children: [
 
-                    CustomSettingRow(
-                        onTap: (){
-                         Get.toNamed(AppRoutes.privacyPolicyScreen);
-                        },
-                        text: AppStrings.privacyPolicy,
-                        icon: Icons.privacy_tip_outlined),
+                      ///======= Profile Person====
+                      CustomSettingRow(
+                          onTap: (){
+                            Get.toNamed(AppRoutes.userEventProfile);
+                          },
+                          text: AppStrings.profileSetting,
+                          isTablet: isTablet,
+                          icon: Icons.person),
 
-                    ///======= termsAndConditions ====
+                      ///======= about ====
 
-                    CustomSettingRow(
-                        onTap: (){
-                          Get.toNamed(AppRoutes.termsConditionScreen);
-                        },
-                        text: AppStrings.termsAndConditions,
-                        icon: Icons.align_vertical_bottom_outlined),
+                      CustomSettingRow(
+                          onTap: (){
+                            Get.toNamed(AppRoutes.aboutUsScreen);
+                          },
+                          text: AppStrings.aboutus,
+                          isTablet: isTablet,
+                          icon: Icons.info_outline),
 
-                    ///======= termsAndConditions ====
+                      ///======= privacyPolicy ====
 
-                    CustomSettingRow(
-                        onTap: (){
-                         Get.toNamed(AppRoutes.loginScreen);
-                        },
-                        text: AppStrings.logOut,
-                        icon: Icons.logout),
-                    SizedBox(height: 30.h,),
+                      CustomSettingRow(
+                          onTap: (){
+                            Get.toNamed(AppRoutes.privacyPolicyScreen);
+                          },
+                          text: AppStrings.privacyPolicy,
+                          isTablet: isTablet,
+                          icon: Icons.privacy_tip_outlined),
 
-                    ///======= termsAndConditions ==============
+                      ///======= termsAndConditions ====
 
-                    CustomSettingRow(
-                        onTap: (){
-                          showDialog(
-                            context: context,
-                            builder: (ctx) => AlertDialog(
-                              backgroundColor: Colors.white,
-                              insetPadding: EdgeInsets.all(8),
-                              contentPadding: EdgeInsets.all(8),
-                              title: SizedBox(),
-                              content: SizedBox(
-                                width: MediaQuery.sizeOf(context).width,
-                                child: AlertDialogEvent(title: "Are you sure you want to \n delete ?",discription: "",),
+                      CustomSettingRow(
+                          onTap: (){
+                            Get.toNamed(AppRoutes.termsConditionScreen);
+                          },
+                          text: AppStrings.termsAndConditions,
+                          isTablet: isTablet,
+                          icon: Icons.align_vertical_bottom_outlined),
+
+                      ///======= termsAndConditions ====
+
+                      CustomSettingRow(
+                          onTap: (){
+                            Get.toNamed(AppRoutes.loginScreen);
+                          },
+                          text: AppStrings.logOut,
+                          isTablet: isTablet,
+                          icon: Icons.logout),
+
+                      SizedBox(height: 30.h,),
+
+                      ///======= termsAndConditions ==============
+
+                      CustomSettingRow(
+                          onTap: (){
+                            showDialog(
+                              context: context,
+                              builder: (ctx) => AlertDialog(
+                                backgroundColor: Colors.white,
+                                insetPadding: EdgeInsets.all(8),
+                                contentPadding: EdgeInsets.all(8),
+                                title: SizedBox(),
+                                content: SizedBox(
+                                  width: MediaQuery.sizeOf(context).width,
+                                  child: AlertDialogEvent(title: "Are you sure you want to \n delete ?",discription: "",),
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                        text: AppStrings.deleteAccount,
-                        color: AppColors.primary,
-                        textColor: AppColors.primary,
-                        icon: Icons.delete_sweep_outlined),
-                  ],
+                            );
+                          },
+                          text: AppStrings.deleteAccount,
+                          color: AppColors.primary,
+                          textColor: AppColors.primary,
+                          isTablet: isTablet,
+                          icon: Icons.delete_sweep_outlined),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ));
+          ));
+    });
   }
 }

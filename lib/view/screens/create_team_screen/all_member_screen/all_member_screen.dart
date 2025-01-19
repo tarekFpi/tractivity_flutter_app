@@ -36,7 +36,7 @@ class AllMemberScreen extends StatelessWidget {
                   children: List.generate(6, (index) {
                     return CustomFriendsList(
                       nameOnTap: (){
-                        Get.toNamed(AppRoutes.eventsProfileScreen);
+                        Get.toNamed(AppRoutes.userEventProfile);
                       },
                       image: AppConstants.profileImage,
                       name: "Mehedi Hassan",

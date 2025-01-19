@@ -44,9 +44,7 @@ import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_invi
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_invite_mission_screen/organizer_approved.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_invite_mission_screen/organizer_invite_mission_screen.dart';
 import 'package:tractivity_app/view/screens/profile_screen/edit_profile_screen.dart';
-import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/events_profile_screen.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/explore_event_screen.dart';
-
 import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/setting_screen/about_us_screen.dart';
 import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/setting_screen/privacy_policy_screen.dart';
 import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/setting_screen/setting_screen.dart';
@@ -63,10 +61,8 @@ class AppRoutes {
 
 
 
-
-
   ////============ Mededi =================
-  static const String eventsProfileScreen = "/EventsProfileScreen";
+
   static const String settingScreen = "/SettingScreen";
   static const String aboutUsScreen = "/AboutUsScreen";
   static const String privacyPolicyScreen = "/PrivacyPolicyScreen";
@@ -131,7 +127,7 @@ class AppRoutes {
 
 
     ///=========================== Mehedi ==========================
-   // GetPage(name: eventsProfileScreen, page: () => EventsProfileScreen()),
+
     GetPage(name: settingScreen, page: () => SettingScreen()),
     GetPage(name: aboutUsScreen, page: () => AboutUsScreen()),
     GetPage(name: privacyPolicyScreen, page: () => PrivacyPolicyScreen()),

@@ -95,7 +95,7 @@ class _HomeSideDrawerState extends State<HomeSideDrawer> {
                           isTablet: isTablet,
                           onTap: () {
                             Navigator.pop(context);
-                            Get.toNamed(AppRoutes.eventsProfileScreen);
+                            Get.toNamed(AppRoutes.userEventProfile);
                           }),
 
                       ///====================== Volunteer ======================>
