@@ -1,7 +1,5 @@
 class   AppStrings {
-  static RegExp passRegexp = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.{8,}$)');
-  static RegExp emailRegexp = RegExp(
-      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+
   static const String fieldCantBeEmpty = "Field can't be empty";
   static const String emailFieldCantBeEmpty = "Please enter your email";
   static const String passwordFieldCantBeEmpty = "Please enter your password";
@@ -11,6 +9,14 @@ class   AppStrings {
 
   //================== Custom Controller String ===================//
   static const String item = "Item";
+
+  ///================== singUP ===================// Volunteer
+  static const String volunteer = "Volunteer";
+  static const String organizer = "Organizer";
+  static const String administrator = "Administrator";
+  static const String yourName = "Your Name";
+  static const String talentSkill = '"Profession" with Talent/Skill everywhere';
+  static const String enterSkill = "Enter Talent/skill";
 
 
   ///============================ Commom Auth =========================//
@@ -80,18 +86,20 @@ class   AppStrings {
   static const String offers = "Offers";
   static const String oldPassword = "Old password";
   static const String changePassword = "Change password";
-  static const String yourName = "Your Name";
   static const String yourFirstName = "Your Name";
   static const String userName = "User Name";
   static const String profession = "Profession";
+  static const String register = "register";
 
 
   ///========================== Nav Bar =====================//
 
   static const String home = "Home";
   static const String friend = "Friend";
+  static const String removeFriend = "Remove Friend";
   static const String messages = "Messages";
   static const String profile = "Profile";
+  static const String singleProfile = "User Message";
   static const String team = "Join Event";
   ///===================================================
   static const String letsGo = "LET’S GO";
@@ -176,10 +184,8 @@ class   AppStrings {
 
   static const String explore = "Explore";
   static const String events = "Events";
-  static const String organizer = "Organizer";
   static const String create = "Create";
   static const String delivery = "Delivery";
-  static const String volunteer = "Volunteer";
   static const String address = "Address";
   //static const String profileSetting = "ProfileSetting";
   //static const String aboutus = "Aboutus";
@@ -188,7 +194,7 @@ class   AppStrings {
   static const String inviteFriends = "Invite Friends";
   static const String inviteMission = "Invited Mission";
   static const String eventList = "Event List";
-  static const String request = "Request";
+  static const String request = "Request Friend";
   //static const String searchForSomeone = "Search For Someone";
   static const String createTeam = "Create Team";
   static const String teamName = "Team Name";

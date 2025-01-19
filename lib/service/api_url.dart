@@ -12,23 +12,22 @@ class ApiUrl {
   static const String userVerify = "/auth/verify-email";
   static const String forgotCreateNewPassword = "/auth/reset-password";
   static const String signUp = "/user/create";
+  static const String register = "/user/create";
   static const String createNewPassword = "/auth/change-password";
   static const String privacyPolicy = "/privacy-policy/retrive";
   static const String termsCondition = "/terms-condition/retrive";
   static const String infoRetrieve = "/info/retrive/all";
- // static const String updateProfile = "/user/update";
+
+
   ///============= Profile Apis ===============
   static String getUserProfile({required String userId}) => "/user/$userId";
   static String updateProfile({required String userId}) => "/user/update/$userId";
   static String getReviewMode({required String userId}) => "/review-mode/user/intervals/$userId";
   static String friendSearch({required String cetagory, required String query}) => "/user/search?$cetagory=$query";
-  static String playFriend = "/quiz/init-quiz/play-friend";// Play Friend     
 
-  //=========================== Leaderboard =========================== 
+  ///=========================== Leaderboard ===========================
 
-  static String getLeaderboard({required String period}) => "/leaderboard/retrive?period=$period";
 
-//=============================== Home =============================
 
-//========================= Profile =========================
+
 }

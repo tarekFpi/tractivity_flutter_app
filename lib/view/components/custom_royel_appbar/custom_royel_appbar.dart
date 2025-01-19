@@ -11,7 +11,7 @@ class CustomRoyelAppbar extends StatelessWidget implements PreferredSizeWidget {
   //final void Function()? leftOnTap;
   final void Function()? rightOnTap;
   final bool? leftIcon;
-
+  final double fontSize;
 
   const CustomRoyelAppbar({
     super.key,
@@ -19,7 +19,8 @@ class CustomRoyelAppbar extends StatelessWidget implements PreferredSizeWidget {
    // this.leftOnTap,
     this.rightIcon,
     this.rightOnTap,
-    this.leftIcon = false
+    this.leftIcon = false,
+    this.fontSize=22
   });
 
   @override
@@ -46,7 +47,7 @@ class CustomRoyelAppbar extends StatelessWidget implements PreferredSizeWidget {
             : null,
         title: CustomText(
           text: titleName ?? "",
-          fontSize: 18.w,
+          fontSize: fontSize,
           fontWeight: FontWeight.w700,
           color: AppColors.black,
         ));

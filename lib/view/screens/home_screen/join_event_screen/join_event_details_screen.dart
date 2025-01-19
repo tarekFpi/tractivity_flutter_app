@@ -22,336 +22,337 @@ class JonEventDetailsScreen extends StatefulWidget {
 class _JonEventDetailsScreenState extends State<JonEventDetailsScreen> {
   @override
   Widget build(BuildContext context) {
-        return Scaffold(
-      appBar: CustomRoyelAppbar(
-        leftIcon: true,
-        titleName: "Join Event",
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+        return LayoutBuilder(builder: (context,constraints){
 
-              CustomNetworkImage(
-                imageUrl: AppConstants.profileImage,
-                height: 170.h,
-                width: MediaQuery.of(context).size.width,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              SizedBox(
-                height: 12.h,
-              ),
+          final isTablet = constraints.maxWidth > 600;
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+          return Scaffold(
+            appBar: const CustomRoyelAppbar(
+              leftIcon: true,
+              titleName: "Join Details",
+            ),
+            body: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
 
-                  CustomImage(imageSrc: AppIcons.dowanload),
+                    CustomNetworkImage(
+                      imageUrl: AppConstants.profileImage,
+                      height: isTablet?200.h:170.h,
+                      width: MediaQuery.of(context).size.width,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    SizedBox(
+                      height: 12.h,
+                    ),
 
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
 
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                        CustomImage(imageSrc: AppIcons.dowanload),
 
-                          CustomText(
-                            text: "Rohingya refugee camp",
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.black_80,
-                          ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
 
-                          const SizedBox(
-                            width: 40,
-                          ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
 
-                          CustomButton(
-                            onTap: () {
-                              Get.toNamed(AppRoutes.organizeMapScreen);
-                            },
-                            title: "Map",
-                            width: 80.w,
-                            height: 32.h,
-                            textColor: AppColors.black,
-                            fillColor: AppColors.primary,
-                            fontSize: 12,
-                          ),
+                                  const CustomText(
+                                    text: "Rohingya refugee camp",
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.black_80,
+                                  ),
 
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 4,
-                      ),
 
-                      const CustomText(
-                        text: "Download",
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.lightBlue,
-                      ),
-                    ],
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 12,
-              ),
+                                  CustomButton(
+                                    onTap: () {
+                                      Get.toNamed(AppRoutes.organizeMapScreen);
+                                    },
+                                    title: "Map",
+                                    width: 80.w,
+                                    height: 32.h,
+                                    textColor: AppColors.black,
+                                    fillColor: AppColors.primary,
+                                    fontSize: 12,
+                                  ),
 
-              Row(
-                children: [
+                                ],
+                              ),
 
-                  CustomText(
-                    text: "Rohingya refugee camp",
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.black_80,
-                  ),
-
-                  SizedBox(
-                    width: 4,
-                  ),
-                  CustomText(
-                    text: "(Event Name)",
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.lightBlue,
-                  ),
-                ],
-              ),
-
-              const SizedBox(
-                height: 8,
-              ),
-
-              Row(
-                children: [
-
-                  CustomText(
-                    text: "Empower Tomorrow",
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.black_80,
-                  ),
-
-                  SizedBox(
-                    width: 4,
-                  ),
-                  CustomText(
-                    text: "(Mission Name)",
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.lightBlue,
-                  ),
-                ],
-              ),
-
-              const SizedBox(
-                height: 12,
-              ),
-
-              Row(
-                children: [
-
-                  CustomText(
-                    text: "Global Horizons Foundation",
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.black_80,
-                  ),
-
-                  SizedBox(
-                    width: 4,
-                  ),
-                  CustomText(
-                    text: "(Organization)",
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.lightBlue,
-                  ),
-                ],
-              ),
-
-              const SizedBox(
-                height: 12,
-              ),
-
-              Row(
-                children: [
-                  Icon(
-                    Icons.monetization_on_outlined,
-                    size: 18,
-                  ),
-                  SizedBox(
-                    width: 4,
-                  ),
-                  CustomText(
-                    text: "3500",
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.black_80,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.location_pin,
-                    size: 18,
-                  ),
-                  SizedBox(
-                    width: 4,
-                  ),
-                  CustomText(
-                    text: "Cox’s Bazar",
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.black_80,
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              Row(
-                children: [
-                  CustomNetworkImage(
-                    imageUrl: AppConstants.profileImage,
-                    height: 24,
-                    width: 24,
-                    boxShape: BoxShape.circle,
-                    border: Border.all(color: AppColors.primary, width: 3),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-
-                  const Text.rich(
-                    TextSpan(
-                        text: 'Mehedi Bin',
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w600),
-                        children: [
-                          TextSpan(
-                            text: ' Leader',
-                            style: TextStyle(
-                                fontSize: 14,
+                              const CustomText(
+                                text: "Download",
+                                fontSize: 12,
                                 fontWeight: FontWeight.w400,
-                                color: AppColors.lightBlue),
+                                color: AppColors.lightBlue,
+                              ),
+                            ],
                           ),
-                        ]),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              Row(
-                children: [
-                  CustomNetworkImage(
-                    imageUrl: AppConstants.profileImage,
-                    height: 24,
-                    width: 24,
-                    boxShape: BoxShape.circle,
-                    border: Border.all(color: AppColors.primary, width: 3),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  const Text.rich(
-                    TextSpan(
-                        text: 'Sujon',
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w600),
-                        children: [
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+
+                    const Row(
+                      children: [
+
+                        CustomText(
+                          text: "Rohingya refugee camp",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.black_80,
+                        ),
+
+                        SizedBox(
+                          width: 4,
+                        ),
+                        CustomText(
+                          text: "(Event Name)",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.lightBlue,
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(
+                      height: 8,
+                    ),
+
+                    const Row(
+                      children: [
+
+                        CustomText(
+                          text: "Empower Tomorrow",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.black_80,
+                        ),
+
+                        SizedBox(
+                          width: 4,
+                        ),
+                        CustomText(
+                          text: "(Mission Name)",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.lightBlue,
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(
+                      height: 12,
+                    ),
+
+                    const Row(
+                      children: [
+
+                        CustomText(
+                          text: "Global Horizons Foundation",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.black_80,
+                        ),
+
+                        SizedBox(
+                          width: 4,
+                        ),
+                        CustomText(
+                          text: "(Organization)",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.lightBlue,
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(
+                      height: 12,
+                    ),
+
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.monetization_on_outlined,
+                          size: 18,
+                        ),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        CustomText(
+                          text: "3500",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.black_80,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    const Row(
+                      children: [
+                        Icon(
+                          Icons.location_pin,
+                          size: 18,
+                        ),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        CustomText(
+                          text: "Cox’s Bazar",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.black_80,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    Row(
+                      children: [
+                        CustomNetworkImage(
+                          imageUrl: AppConstants.profileImage,
+                          height:isTablet?32.h: 24.h,
+                          width:isTablet?32.w: 24.w,
+                          boxShape: BoxShape.circle,
+                          border: Border.all(color: AppColors.primary, width: 3),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+
+                          Text.rich(
                           TextSpan(
-                            text: ' Food Delivery',
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.lightBlue),
-                          ),
-                        ]),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              const CustomText(
-                text: "Description",
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: AppColors.black_80,
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              const CustomText(
-                text:
-                "The Rohingya have faced decades of discrimination \n and repression under successive Myanmar authorities. denied citizenship \n under the 1982 Citizenship Law, they are one of \n the largest stateless populations in the world.",
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-                color: AppColors.black_80,
-                textAlign: TextAlign.start,
-              ),
-              const SizedBox(
-                height: 16,
-              ),
+                              text: 'Mehedi Bin',
+                              style: TextStyle(
+                                  fontSize: 12.sp, fontWeight: FontWeight.w600),
+                              children: [
+                                TextSpan(
+                                  text: ' Leader',
+                                  style: TextStyle(
+                                      fontSize:  12.sp,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColors.lightBlue),
+                                ),
+                              ]),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    Row(
+                      children: [
+                        CustomNetworkImage(
+                          imageUrl: AppConstants.profileImage,
+                          height:isTablet?32.h: 24.h,
+                          width:isTablet?32.w: 24.w,
+                          boxShape: BoxShape.circle,
+                          border: Border.all(color: AppColors.primary, width: 3),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                          Text.rich(
+                          TextSpan(
+                              text: 'Sujon',
+                              style: TextStyle(
+                                  fontSize: 12.sp, fontWeight: FontWeight.w600),
+                              children: [
+                                TextSpan(
+                                  text: ' Food Delivery',
+                                  style: TextStyle(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColors.lightBlue),
+                                ),
+                              ]),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    const CustomText(
+                      text: "Description",
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.black_80,
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    const CustomText(
+                      text:
+                      "The Rohingya have faced decades of discrimination \n and repression under successive Myanmar authorities. denied citizenship \n under the 1982 Citizenship Law, they are one of \n the largest stateless populations in the world.",
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.black_80,
+                      textAlign: TextAlign.start,
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
 
-              const CustomText(
-                text: "Time & Date",
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: AppColors.black_80,
-              ),
+                    const CustomText(
+                      text: "Time & Date",
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.black_80,
+                    ),
 
-              const SizedBox(
-                height: 8,
-              ),
+                    const SizedBox(
+                      height: 8,
+                    ),
 
-              const CustomText(
-                text: "22 December, 2024, 8.00 am-12.00 pm",
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-                color: AppColors.black_80,
-              ),
+                    const CustomText(
+                      text: "22 December, 2024, 8.00 am-12.00 pm",
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.black_80,
+                    ),
 
-              const SizedBox(
-                height: 16,
-              ),
+                    const SizedBox(
+                      height: 16,
+                    ),
 
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16,left: 12,right: 12),
-                child: CustomButton(
-                  onTap: () {
-                    Get.toNamed(AppRoutes.joinDetailsScreen);
-                  },
-                  title: "Join",
-                  height: 45.h,
-                  textColor: AppColors.black,
-                  fillColor: AppColors.primary,
-                  fontSize: 14,
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16,left: 12,right: 12),
+                      child: CustomButton(
+                        onTap: () {
+                          Get.toNamed(AppRoutes.joinDetailsScreen);
+                        },
+                        title: "Join",
+                        height: 45.h,
+                        textColor: AppColors.black,
+                        fillColor: AppColors.primary,
+                        fontSize: 14,
+                      ),
+                    )
+                  ],
                 ),
-              )
-            ],
-          ),
-        ),
-      ),
+              ),
+            ),
 
 
 
-    );
+          );
+        });
   }
 }

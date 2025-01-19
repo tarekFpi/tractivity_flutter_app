@@ -11,7 +11,7 @@ class CustomTabSelector extends StatelessWidget {
   final Color? textColor;
   final bool? isTextColorActive;
   final bool? isPadding;
-
+  final double fontSize;
 
   const CustomTabSelector({
     super.key,
@@ -23,6 +23,7 @@ class CustomTabSelector extends StatelessWidget {
     this.textColor,
     this.isTextColorActive = false,
     this.isPadding = true,
+    this.fontSize=16
     //required this.numberList,
   });
 
@@ -80,7 +81,7 @@ class CustomTabSelector extends StatelessWidget {
                           : isTextColorActive!
                               ? textColor
                               : unselectedColor,
-                      fontSize: 16,
+                      fontSize:fontSize,
                       fontWeight: FontWeight.w500,
                     ),
                   ),

@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/core/dependency/dependency_injection.dart';
 import 'utils/app_colors/app_colors.dart';
+import 'package:oktoast/oktoast.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,14 +27,14 @@ void main() async{
 
   runApp(const MyApp());
 
-/*   runApp(DevicePreview(
-     enabled: !kReleaseMode,
-     builder: (context) =>
-         //====================
-    const MyApp(), // Wrap your app
-   ));*/
-  //const MyApp();
 
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.landscapeRight,
+    DeviceOrientation.landscapeLeft,
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+ 
 }
 
 void configLoading() {
@@ -50,26 +51,28 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      minTextAdapt: true,
-      splitScreenMode: true,
-      designSize: const Size(393, 852),
-      child: GetMaterialApp(
-        theme: ThemeData(
-            scaffoldBackgroundColor: AppColors.white,
-            appBarTheme: const AppBarTheme(
-              //surfaceTintColor: AppColors.brinkPink,
-                toolbarHeight: 65,
-                elevation: 0,
-                centerTitle: true,
-                backgroundColor: AppColors.white,
-                iconTheme: IconThemeData(color: AppColors.white))),
-        debugShowCheckedModeBanner: false,
-        defaultTransition: Transition.fadeIn,
-        transitionDuration: const Duration(milliseconds: 200),
-        initialRoute: AppRoutes.splashScreen,
-        navigatorKey: Get.key,
-        getPages: AppRoutes.routes,
+    return OKToast(
+      child: ScreenUtilInit(
+        minTextAdapt: true,
+        splitScreenMode: true,
+        designSize: const Size(393, 852),
+        child: GetMaterialApp(
+          theme: ThemeData(
+              scaffoldBackgroundColor: AppColors.white,
+              appBarTheme: const AppBarTheme(
+                //surfaceTintColor: AppColors.brinkPink,
+                  toolbarHeight: 65,
+                  elevation: 0,
+                  centerTitle: true,
+                  backgroundColor: AppColors.white,
+                  iconTheme: IconThemeData(color: AppColors.white))),
+          debugShowCheckedModeBanner: false,
+          defaultTransition: Transition.fadeIn,
+          transitionDuration: const Duration(milliseconds: 200),
+          initialRoute: AppRoutes.splashScreen,
+          navigatorKey: Get.key,
+          getPages: AppRoutes.routes,
+        ),
       ),
     );
   }

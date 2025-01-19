@@ -30,7 +30,7 @@ class AppConstants {
 
   static String profileImage = 'https://ntvb.tmsimg.com/assets/assets/866126_v9_bc.jpg';
 
-  static String eventImage = 'https://s3-alpha-sig.figma.com/img/c603/f485/c5015defd40ef19142b21210b22e2b30?Expires=1736121600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=KR8AnsJ8sdW2ON~6e1HqBK~dhCrqtSv-R83uFpw5nQ2ntdtYKBklfhltx05yvrLvJixWVASKY~Z0BmKR32htEu4NEqMLnoUuf1oZzAdlJakPJbQ~HS80k-iNnFjm6M5xY42smUE9yoz1QGWHUXAe-Ccxbs8hCMDouyDhhBei9m0hcUdKigyVAUnQXbPv4GJTe1Qqsc~RC6LYb8YIfddyg9J5eBAk5UVEj8tcFh8aNWIFrYZbgF13cOSQQ~AqjHQ7IPjrFaaxoPR2HShlMTHfSOLHlyQ3s52Cv2stbLosdcWlP17FioSP7LIoV4Bf~0t7vwUxMzYfYho8OSj~Wsgl3Q__';
+  static String eventImage = "https://s3-alpha-sig.figma.com/img/c603/f485/c5015defd40ef19142b21210b22e2b30?Expires=1737936000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=bKki2gDnMj8viAlLa9KKCMi512KMuGkmeiJ~k7U1ft88K1YTajBc1dDw~Lh1~dCLpdTpHRvm2iSKGWQiuUsEpo0j6FjCMhi4GwkL7lAP5FxRAdi2Q92c5O5xzZ6~777rktzsMemIb6Fw-yz-B42oJScA1vaDPttgGGDsngXBNOPq9aq0Mztaiq7GxG02PQ-Bs~yjfARTEXyryGxJIZPaYbLTyNxHBUGyNSj-MYtcz~uVXFdzvqjFoXToyRVtAFdGBZhln-PClbq5vvI9omZHOLgIfE0N9L0N29mMR2XL30Hkr~LkSBTS-0xciQwbQLJRtu9CFop57Ihe-8OApA57tQ__";
   static String bdFlag = 'https://flagcdn.com/w320/bd.png';
   static String pkFlag = 'https://flagcdn.com/w320/pk.png';
   static String resturentImage = 'https://images.pexels.com/photos/941861/pexels-photo-941861.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';

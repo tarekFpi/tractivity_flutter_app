@@ -53,7 +53,7 @@ class CustomFormCard extends StatelessWidget {
           text: title,
           color: titleColor ?? AppColors.black,
           fontWeight: FontWeight.w600,
-          fontSize: fontSize ?? 16.w,
+          fontSize: fontSize ?? 16.sp,
           bottom: 12.h,
           maxLines: 2,
         ),

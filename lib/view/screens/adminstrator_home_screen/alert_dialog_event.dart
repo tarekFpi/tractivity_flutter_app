@@ -19,36 +19,43 @@ class AlertDialogEvent extends StatefulWidget {
 class _AlertDialogEventState extends State<AlertDialogEvent> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
+    return LayoutBuilder(builder: (context,constraints){
 
-          CustomText(
-            text:"${widget.title}",
-            fontSize: 22,
-            fontWeight: FontWeight.w600,
-            color: AppColors.black_80,
-          ),
+      final isTablet = constraints.maxWidth > 600;
 
-          SizedBox(
-            height: 8.h,
-          ),
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
 
-          CustomButton(onTap: (){
-            Navigator.of(context).pop();
-          },title:"Yes",height: 45.h,),
+            CustomText(
+              text:"${widget.title}",
+              fontSize: 22,
+              fontWeight: FontWeight.w600,
+              color: AppColors.black_80,
+            ),
 
-          SizedBox(
-            height: 12.h,
-          ),
-          CustomButton(onTap: (){
-            Navigator.of(context).pop();
-          },title:"NO",height: 45.h,fillColor: AppColors.white,textColor: AppColors.primary,
-            isBorder: true,borderWidth: 1,)
-        ],
-      ),
-    );
+            SizedBox(
+              height: 8.h,
+            ),
+
+            CustomButton(onTap: (){
+              Navigator.of(context).pop();
+            },title:"Yes",height:isTablet?70.h: 45.h,fontSize: 12.sp,),
+
+            SizedBox(
+              height: 12.h,
+            ),
+            CustomButton(onTap: (){
+              Navigator.of(context).pop();
+            },title:"NO",height:isTablet?70.h: 45.h,
+              fontSize: 12.sp,fillColor: AppColors.white,
+              textColor: AppColors.primary,
+              isBorder: true,borderWidth: 1,)
+          ],
+        ),
+      );
+    });
   }
 }

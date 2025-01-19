@@ -15,11 +15,8 @@ import 'package:tractivity_app/view/components/custom_tab_selected/custom_tab_si
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:tractivity_app/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tractivity_app/view/components/nav_bar/nav_bar.dart';
-import 'package:tractivity_app/view/screens/adminstrator_home_screen/alert_dialog_event.dart';
 import 'package:tractivity_app/view/screens/home_screen/controller/home_controller.dart';
 import 'package:tractivity_app/view/screens/home_screen/homepage_drawer.dart';
-import 'package:tractivity_app/view/screens/home_screen/exolore_event_screen/inner_widget/custom_explore_container.dart';
-import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_invite_mission_screen/%20inner_widget/custom_invite_mission_container.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
@@ -47,357 +44,319 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      drawer: HomeSideDrawer(),
-      // drawerScrimColor: Colors.black,
-      appBar: AppBar(
-        leading: Builder(builder: (context) {
-          return IconButton(
-              onPressed: () => Scaffold.of(context).openDrawer(),
-              icon: Icon(
-                Icons.menu,
-                color: AppColors.primary,
-              ));
-        }),
-        title: Text(
-          "JoinUp",
-          style: TextStyle(
+    return LayoutBuilder(builder: (context,constraints){
+      final isTablet = constraints.maxWidth > 600;
+
+      return Scaffold(
+        key: _scaffoldKey,
+        drawer: HomeSideDrawer(),
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          leading: Builder(
+            builder: (context) {
+              return IconButton(
+                onPressed: () => Scaffold.of(context).openDrawer(),
+                icon: Icon(Icons.menu, color: AppColors.primary,size: isTablet?28.w:24.w
+                  ,),
+              );
+            },
+          ),
+          title: Text(
+            AppStrings.serveOut,
+            style: TextStyle(
               color: AppColors.black,
               fontSize: 30,
-              fontWeight: FontWeight.w600),
-        ),
-        actions: [
-
-          IconButton(
-            onPressed: () {
-              Get.toNamed(AppRoutes.notificationScreen);
-            },
-            icon: Icon(
-              Icons.notifications_active_outlined,
-              color: AppColors.black,
+              fontWeight: FontWeight.w600,
             ),
-          )
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 0, left: 12, right: 12),
-        child: Obx(
-            () {
+          ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Get.toNamed(AppRoutes.notificationScreen);
+              },
+              icon: Icon(Icons.notifications_active_outlined, color: AppColors.black),
+            )
+          ],
+        ),
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: isTablet ? 24 : 12),
+          child: Obx(() {
+
             return SingleChildScrollView(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(height: isTablet ? 20 : 12),
 
-                  SizedBox(
-                    height: 12.h,
-                  ),
-
+                  /// Profile Section**
                   GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       Get.toNamed(AppRoutes.eventsProfileScreen);
                     },
                     child: Row(
                       children: [
                         CustomNetworkImage(
                           imageUrl: AppConstants.profileImage,
-                          height: 100,
-                          width: 100,
+                          height: isTablet ? 120 : 100,
+                          width: isTablet ? 120 : 100,
                           boxShape: BoxShape.circle,
                           border: Border.all(color: AppColors.primary, width: 3),
                         ),
-                        SizedBox(
-                          width: 10,
-                        ),
-
+                        SizedBox(width: isTablet ? 15 : 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             CustomText(
                               text: "Mehedi Bin Ab. Salam",
-                              fontSize: 20,
+                              fontSize: isTablet ? 24 : 20,
                               fontWeight: FontWeight.w500,
                             ),
                             Row(
                               children: [
-                                Icon(
-                                  Icons.location_on,
-                                  color: AppColors.primary,
-                                  size: 20,
-                                ),
+                                Icon(Icons.location_on, color: AppColors.primary, size: isTablet ? 24 : 20),
                                 CustomText(
                                   text: "Bushwick Brooklyn, NY, USA",
-                                  fontSize: 12,
+                                  fontSize: isTablet ? 14 : 12,
                                   color: AppColors.primary,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ],
-                            )
+                            ),
                           ],
                         )
                       ],
                     ),
                   ),
 
-                  SizedBox(
-                    height: 12.h,
-                  ),
+                  SizedBox(height: isTablet ? 20 : 12),
 
-                  ///============ search ======================================
+                  /// **Search Bar**
                   CustomTextField(
-                      hintText: AppStrings.searchEvent,
-                      fillColor: AppColors.neutral02,
-                      suffixIcon: Icon(
-                        Icons.search,
-                        color: AppColors.black_60,
-                      )),
-
-                  SizedBox(
-                    height: 12.h,
+                    hintText: AppStrings.searchEvent,
+                    fillColor: AppColors.neutral02,
+                    suffixIcon: Icon(Icons.search, color: AppColors.black_60),
                   ),
 
+                  SizedBox(height: isTablet ? 20 : 12),
+
+                  /// **Event Banner**
                   Container(
                     width: double.infinity,
-                    height: 140,
+                    height: isTablet ? 230 : 140,
                     decoration: BoxDecoration(
                       color: Colors.blueAccent.withOpacity(0.2),
-                      border: Border.all(
-                        color: Colors.blueAccent,
-                      ),
+                      border: Border.all(color: Colors.blueAccent),
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(12.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-
-                       /*       CustomText(
-                                text: "Complete Event \n Details",
-                                fontSize: 24.sp,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.blue,
-                                textAlign: TextAlign.start,
-                              ),*/
-
                               Text.rich(
-                                  TextSpan(
-                                      text: 'Complete Event',
-                                      style:  TextStyle(fontSize: 24.sp,fontWeight: FontWeight.w600),
-                                      children: <InlineSpan>[
-                                        TextSpan(
-                                          text: '\nDetails',
-                                          style: TextStyle(fontSize: 24.sp,fontWeight: FontWeight.w600),
-                                        )
-                                      ]
-                                  )
+                                TextSpan(
+                                  text: 'Complete Event',
+                                  style: TextStyle(fontSize: isTablet ? 28 : 24, fontWeight: FontWeight.w600),
+                                  children: [
+                                    TextSpan(
+                                      text: '\nDetails',
+                                      style: TextStyle(fontSize: isTablet ? 28 : 24, fontWeight: FontWeight.w600),
+                                    ),
+                                  ],
+                                ),
                               ),
-
-
                               Row(
                                 children: [
                                   CustomButton(
                                     onTap: () {
-                                       Get.toNamed(AppRoutes.exoloreEventCompletedScreen);
+                                      Get.toNamed(AppRoutes.exoloreEventCompletedScreen);
                                     },
                                     title: "Explore",
-                                    width: 90.w,
-                                    height: 32.h,
+                                    width: isTablet ? 170 : 90,
+                                    height: isTablet ? 60 : 32,
+                                    fontSize: isTablet ? 16 : 14,
                                     textColor: AppColors.black,
                                     fillColor: AppColors.white,
                                     isBorder: true,
-                                    fontSize: 14,
                                     borderWidth: .6,
                                   ),
-                                  SizedBox(
-                                    width: 8,
-                                  ),
+                                  SizedBox(width: 10),
+
                                   CustomButton(
                                     onTap: () {
-                                     Get.toNamed(AppRoutes.donationScreen);
+                                      Get.toNamed(AppRoutes.donationScreen);
                                     },
                                     title: "Donation",
-                                    width: 90.w,
-                                    height: 32.h,
+                                    width: isTablet ? 170 : 90,
+                                    height: isTablet ? 60 : 32,
+                                    fontSize: isTablet ? 16 : 14,
                                     textColor: AppColors.black,
                                     fillColor: AppColors.white,
                                     isBorder: true,
-                                    fontSize: 14,
-                                    borderWidth: .5,
+                                    borderWidth: .6,
                                   ),
+
                                 ],
-                              )
+                              ),
                             ],
                           ),
                           SvgPicture.asset(
                             AppIcons.icon1,
-                            height: 100,
-                            width: 70,
+                            height: isTablet ? 120 : 100,
+                            width: isTablet ? 90 : 70,
                           ),
                         ],
                       ),
                     ),
                   ),
 
-                  SizedBox(
-                    height: 12.h,
-                  ),
+                  SizedBox(height: isTablet ? 20 : 12),
 
-
-                  ///=============== Recemt Events Tab Bar ===============
-                  SizedBox(height: 20,),
-
+                  /// **Recent Events Tab Bar**
                   CustomTabSingleText(
-                      tabs: homeController.nameList,
-                      selectedIndex: homeController.home_currentIndex.value,
-                      onTabSelected: (value) {
-                        homeController.home_currentIndex.value = value;
-                        setState(() {});
-                      },
-                      selectedColor: AppColors.primary,
-                      unselectedColor: AppColors.grey_1
+                    fontSize: isTablet?24:16,
+                    tabs: homeController.nameList,
+                    selectedIndex: homeController.home_currentIndex.value,
+                    onTabSelected: (value) {
+                      homeController.home_currentIndex.value = value;
+                      setState(() {});
+                    },
+                    selectedColor: AppColors.primary,
+                    unselectedColor: AppColors.grey_1,
                   ),
 
+                  SizedBox(height: isTablet ? 20 : 8),
 
-                  SizedBox(
-                    height: 12.h,
-                  ),
+                  /// Recent Events List
 
                   if(homeController.home_currentIndex.value ==0)
-                  Column(
-                      children: List.generate(1, (index) {
-                  /*  return CustomExploreContainer(
-                      image: AppConstants.profileImage,
-                      title: "Cox’s Bazar Beach Helping Peolple",
-                      location: "Cox’s Bazar, Bangladesh",
-                      leaderName: "Mehedi",
-                    );*/
+                    Column(
+                        children: List.generate(6, (index) {
 
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 20.0),
-                          child: Row(
-                            children: [
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 20.0),
+                            child: Row(
+                              children: [
 
-                              CustomNetworkImage(
-                                imageUrl: AppConstants.eventImage,
-                                height: 170.h,
-                                width: 170.h,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
+                                CustomNetworkImage(
+                                  imageUrl: AppConstants.eventImage,
+                                  height: isTablet ? 200.h : 170.h,
+                                  width: isTablet ? 180.w : 170.w,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
 
-                              SizedBox(
-                                width: 10,
-                              ),
+                                SizedBox(
+                                  width: 10,
+                                ),
 
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
 
-                                  SizedBox(
-                                    width: 150.w,
-                                    child: CustomText(
-                                      textAlign: TextAlign.start,
-                                      text: "Cox’s Bazar Beach Helping Peolple",
-                                      maxLines: 3,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      bottom: 5,
+                                    SizedBox(
+                                      width: 150.w,
+                                      child: CustomText(
+                                        textAlign: TextAlign.start,
+                                        text: "Cox’s Bazar Beach Helping Peolple",
+                                        maxLines: 3,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        bottom: 5,
+                                      ),
                                     ),
-                                  ),
-                                  /// Location
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.location_on,
-                                        color: AppColors.black,
-                                        size: 20,
-                                      ),
-                                      CustomText(
-                                        text: "Cox’s Bazar, Bangladesh",
-                                        fontSize: 12,
-                                        color: AppColors.black_80,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  // Leader
-                                  Row(
-                                    children: [
-                                      CustomNetworkImage(
-                                        imageUrl: AppConstants.profileImage,
-                                        height: 30,
-                                        width: 30,
-                                        boxShape: BoxShape.circle,
-                                      ),
-                                      CustomText(
-                                        text: "Mehedi",
-                                        fontSize: 14,
-                                        color: AppColors.black,
-                                        fontWeight: FontWeight.w600,
-                                        right: 10.w,
-                                        left: 10.w,
-                                      ),
-                                      CustomText(
-                                        text: "Leader",
-                                        fontSize: 14,
-                                        color: AppColors.blue,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      InkWell(
-                                        onTap: () {
+                                    /// Location
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.location_on,
+                                          color: AppColors.black,
+                                          size: 20,
+                                        ),
+                                        CustomText(
+                                          text: "Cox’s Bazar, Bangladesh",
+                                          fontSize: 12,
+                                          color: AppColors.black_80,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    // Leader
+                                    Row(
+                                      children: [
+                                        CustomNetworkImage(
+                                          imageUrl: AppConstants.profileImage,
+                                          height: isTablet?45: 30,
+                                          width: isTablet?45: 30,
+                                          boxShape: BoxShape.circle,
+                                        ),
+                                        CustomText(
+                                          text: "Mehedi",
+                                          fontSize: 14,
+                                          color: AppColors.black,
+                                          fontWeight: FontWeight.w600,
+                                          right: 10.w,
+                                          left: 10.w,
+                                        ),
+                                        CustomText(
+                                          text: "Leader",
+                                          fontSize: 14,
+                                          color: AppColors.blue,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
 
-                                          Get.toNamed(AppRoutes.recentEventExploreDetails);
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                                          decoration: BoxDecoration(
-                                            color: AppColors.primary,
-                                            borderRadius: BorderRadius.circular(10),
-                                          ),
-                                          child: CustomText(
-                                            text:   "Explore",
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color: AppColors.black,
+                                            Get.toNamed(AppRoutes.recentEventExploreDetails);
+                                          },
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.primary,
+                                              borderRadius: BorderRadius.circular(10),
+                                            ),
+                                            child: CustomText(
+                                              text:   "Explore",
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: AppColors.black,
+                                            ),
                                           ),
                                         ),
-                                      ),
 
 
-                                    ],
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        );
-                  })),
+                                      ],
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          );
+                        })),
 
-                  if(homeController.home_currentIndex.value ==1)
+
+                  if (homeController.home_currentIndex.value == 1)
                     Column(
-                        children: List.generate(3, (index){
+                        children: List.generate(3, (index) {
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 10.0),
                             child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 10),
+                              padding:
+                              EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                               decoration: BoxDecoration(
                                 color: AppColors.neutral02,
                                 borderRadius: BorderRadius.circular(13),
@@ -405,20 +364,17 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-
                                   Expanded(
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment.start,
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-
                                         CustomText(
                                           text: "Empower Tomorrow",
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500,
                                           bottom: 8.h,
                                         ),
-
                                         CustomText(
                                           text:
                                           "Fostering opportunities for underprivileged communities through education and skill development programs.",
@@ -428,7 +384,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                           textAlign: TextAlign.start,
                                           bottom: 10.h,
                                         ),
-
                                         Row(
                                           children: [
                                             CustomNetworkImage(
@@ -457,41 +412,41 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   Column(
                                     children: [
-
                                       CustomText(
                                         text: "17-12-2024",
                                         fontSize: 10,
                                         fontWeight: FontWeight.w400,
                                         bottom: 8.h,
                                       ),
+                                      CustomButton(
+                                        onTap: () {
+                                          ///OrganizerApprovedScreen
 
-                                      CustomButton(onTap: (){
-                                        ///OrganizerApprovedScreen
-
-                                        Get.toNamed(AppRoutes.organizeDetailsScreen);
-                                      }, title: "Details",height: 30,width: 70,fontSize: 12,),
-
+                                          Get.toNamed(AppRoutes.organizeDetailsScreen);
+                                        },
+                                        title: "Details",
+                                        height:isTablet?60: 30,
+                                        width:isTablet?150: 70,
+                                        fontSize: 12,
+                                      ),
                                     ],
                                   )
-
-
                                 ],
                               ),
                             ),
                           );
-                        })
-                    )
+                        })),
 
+                  SizedBox(height: isTablet ? 30 : 20),
                 ],
               ),
             );
-          }
+          },
+          ),
         ),
-      ),
-
-      bottomNavigationBar: NavBar(
-        currentIndex: 0,
-      ),
-    );
+        bottomNavigationBar: NavBar(currentIndex: 0),
+      );
+    });
   }
 }
+
