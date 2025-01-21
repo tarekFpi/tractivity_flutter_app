@@ -5,6 +5,7 @@ import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrato
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrator_home_screen.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/event_complete_screen.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/member/adminstrator_member.dart';
+import 'package:tractivity_app/view/screens/auth_screen/signup_screen/location_map_screen.dart';
 import 'package:tractivity_app/view/screens/chat_screen/chat_screen.dart';
 import 'package:tractivity_app/view/screens/chat_screen/inner_widget/group_message_screen.dart';
 import 'package:tractivity_app/view/screens/chat_screen/inner_widget/single_message_screen.dart';
@@ -57,6 +58,7 @@ class AppRoutes {
   static const String homeScreen = "/HomeScreen";
   static const String onboardingScreen = "/OnboardingScreen";
   static const String loginScreen = "/LoginScreen";
+  static const String locationMapScreen = "/LocationMapScreen";
 
 
 
@@ -119,6 +121,7 @@ class AppRoutes {
     GetPage(name: onboardingScreen, page: () => OnboardingScreen()),
     GetPage(name: loginScreen, page: () => LoginScreen()),
     GetPage(name: signupScreen, page: () => SignupScreen()),
+    GetPage(name: locationMapScreen, page: () => LocationMapScreen()),
 
     GetPage(name: verificationMailScreen, page: () => VerificationMailScreen()),
     GetPage(name: verificationScreen, page: () => VerificationScreen()),

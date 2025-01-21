@@ -29,7 +29,7 @@ class ApiClient extends GetxService {
       //'Content-Type': 'application/x-www-form-urlencoded',
       'Accept': 'application/json',
 
-      'Authorization': bearerToken
+      'Authorization': 'Bearer $bearerToken'
     };
     try {
       debugPrint('====> API Call: $uri\nHeader: ${headers ?? mainHeaders}');
@@ -85,8 +85,14 @@ class ApiClient extends GetxService {
     bearerToken = await SharePrefsHelper.getString(AppConstants.bearerToken);
 
     var mainHeaders = isContentType
-        ? {'Content-Type': 'application/json', 'Authorization': bearerToken}
-        : {'Accept': 'application/json', 'Authorization': bearerToken};
+        ? {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $bearerToken'
+    }
+        : {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $bearerToken'
+    };
     try {
       debugPrint('====> API Call: $uri\nHeader: ${headers ?? mainHeaders}');
       debugPrint('====> API Body: $body');
@@ -130,6 +136,7 @@ class ApiClient extends GetxService {
       return const Response(statusCode: 1, statusText: somethingWentWrong);
     }
   }
+
 
   static Future<Response> postMultipartData(String uri, dynamic body,
       {List<MultipartBody>? multipartBody,
@@ -184,6 +191,8 @@ class ApiClient extends GetxService {
     }
   }
 
+
+
   static Future<Response> patchMultipartData(String uri, dynamic body,
       {List<MultipartBody>? multipartBody,
         Map<String, String>? headers}) async {
@@ -192,7 +201,7 @@ class ApiClient extends GetxService {
 
       var mainHeaders = {
         'Accept': 'application/json',
-        'Authorization': bearerToken
+        'Authorization': 'Bearer $bearerToken'
       };
 
       debugPrint('====> API Call: $uri\nHeader: ${headers ?? mainHeaders}');
@@ -319,7 +328,7 @@ class ApiClient extends GetxService {
 
     var mainHeaders = {
       'Content-Type': 'application/json',
-      'Authorization': bearerToken
+      'Authorization': 'Bearer $bearerToken'
     };
     try {
       debugPrint('====> API Call: $uri\nHeader: ${headers ?? mainHeaders}');

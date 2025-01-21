@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/helper/shared_prefe/shared_prefe.dart';
@@ -42,6 +44,53 @@ class AuthController extends GetxController {
     }
   }
 
+
+  ///==================== get User Current Location and address ==================
+
+  RxString address = "".obs;
+
+  Position? _currentPosition;
+
+  Future<void> getUserCurrentLocation() async {
+    try {
+
+      await Geolocator.requestPermission();
+      Position position = await Geolocator.getCurrentPosition();
+
+      _currentPosition = position;
+
+      locationController.value.text ="${_currentPosition?.latitude},${_currentPosition?.longitude}";
+
+
+      debugPrint("_currentPosition: ${_currentPosition?.latitude},${_currentPosition?.longitude}");
+
+      List<Placemark> placemarks = await placemarkFromCoordinates(_currentPosition?.latitude??0.0, _currentPosition?.longitude??0.0);
+
+      if (placemarks.isNotEmpty) {
+        Placemark place = placemarks[0];
+        ///  setState(() { });
+
+        address.value ="${place.street}, ${place.locality}, ${place.administrativeArea}, ${place.country}";
+
+      } else {
+        address.value = "No address found.";
+      }
+
+    } catch (e) {
+      print("Error getting location: $e");
+    }
+  }
+
+  RxBool volunteer = false.obs;
+
+  RxBool organizer = false.obs;
+
+  RxBool administrator = false.obs;
+
+ RxList<String>rolesList = <String>[].obs;
+
+ RxList<String>cordsList = <String>[].obs;
+
   ///====================USER REGISTER CONTROLLER==================
   Rx<TextEditingController> fullNameController = TextEditingController().obs;
   Rx<TextEditingController> talentSkillController = TextEditingController().obs;
@@ -49,40 +98,50 @@ class AuthController extends GetxController {
   Rx<TextEditingController> phoneNumberController = TextEditingController().obs;
   Rx<TextEditingController> locationController = TextEditingController().obs;
   Rx<TextEditingController> passwordController = TextEditingController().obs;
-  Rx<TextEditingController> confirmPasswordController =
-      TextEditingController().obs;
+  Rx<TextEditingController> confirmPasswordController = TextEditingController().obs;
 
-  //=====================USER REGISTER METHOD=====================
+  ///=====================USER REGISTER METHOD=====================
   RxBool userRegisterLoading = false.obs;
+
   Future<void> userRegister() async {
+
     userRegisterLoading.value = true;
-    refresh();
-    var body = {
+
+
+   var body = json.encode({
       "fullName": fullNameController.value.text,
+      "profession": talentSkillController.value.text,
       "email": emailController.value.text,
       "phone": phoneNumberController.value.text,
       "password": passwordController.value.text,
-      "referralCode": null,
+      "roles":rolesList.value,
+      "cords": {
+        "lat": _currentPosition?.latitude,
+        "lng": _currentPosition?.longitude
+      },
+      "address": address.value,
       "isSocial": false,
       "fcmToken": null
-    };
-    var response =
-    await ApiClient.postData(ApiUrl.signUp, jsonEncode(body));
-    if (response.statusCode == 201) {
-      userRegisterLoading.value = false;
-      refresh();
+    });
 
-     ///showCustomSnackBar(response.body['message']!, isError: false);
+    var response = await ApiClient.postData(ApiUrl.signUp, body);
+
+
+    if (response.statusCode == 201) {
 
       Toast.successToast(response.body['message']);
+      Get.toNamed(AppRoutes.loginScreen);
 
       clearUserRegisterTextFields();
       refresh();
+      userRegisterLoading.value = false;
+
     } else {
+      userRegisterLoading.value = false;
       if (response.statusText == ApiClient.somethingWentWrong) {
 
         Toast.errorToast(AppStrings.checknetworkconnection);
-      ///showCustomSnackBar(AppStrings.checknetworkconnection, isError: false);
+
         return;
       } else {
 
@@ -94,6 +153,7 @@ class AuthController extends GetxController {
     }
   }
 
+
   ///=========== CLEAR USER REGITER TEXT FIELDS =============
   clearUserRegisterTextFields() {
     fullNameController.value.clear();
@@ -101,40 +161,42 @@ class AuthController extends GetxController {
     phoneNumberController.value.clear();
     passwordController.value.clear();
     confirmPasswordController.value.clear();
+    locationController.value.clear();
   }
 
   ///======================VALITATION CONTROLLER=====================
   Rx<TextEditingController> otpController = TextEditingController().obs;
   ///=====================VALITATION METHOD=====================
+
   RxBool otpLoading = false.obs;
-  Future<void> otpValidation(
-      {required String email, required String screenName}) async {
+
+  Future<void> otpValidation(String email) async {
+
     otpLoading.value = true;
+
     refresh();
     var body = {
       "email": email,
       "otp": otpController.value.text,
     };
-    var response = await ApiClient.postData(ApiUrl.userVerify, jsonEncode(body));
+    var response = await ApiClient.postData(ApiUrl.otp_verify, jsonEncode(body));
     if (response.statusCode == 200) {
       otpLoading.value = false;
       refresh();
 
-    ///showCustomSnackBar(response.body['message']!, isError: false);
       Toast.successToast(response.body['message']);
 
-      if (screenName == AppStrings.forgotPassword) {
-        Get.offAllNamed(AppRoutes.forgotPassword,
-            arguments: UserModel(email, AppStrings.resetPassword));
-      } else if (screenName == AppStrings.register) {
-        Get.offAllNamed(AppRoutes.loginScreen);
-      } else {
-        Get.offAllNamed(AppRoutes.homeScreen);
-      }
+      Get.toNamed(AppRoutes.forgotPassword,
+          arguments: [
+            {
+              "email":forgetEmailController.value.text
+            }
+          ]
+      );
+
     } else {
 
       if (response.statusText == ApiClient.somethingWentWrong) {
-       /// showCustomSnackBar(AppStrings.checknetworkconnection, isError: true);
 
         Toast.errorToast(AppStrings.checknetworkconnection);
         otpLoading.value = false;
@@ -150,40 +212,75 @@ class AuthController extends GetxController {
     }
   }
 
+
+  RxBool otpResetLoading = false.obs;
+
+  Future<void> otpResetValidation(String email) async {
+
+    otpResetLoading.value = true;
+
+    var body = {
+      "email": email,
+    };
+
+    var response = await ApiClient.postData(ApiUrl.forget_password, jsonEncode(body));
+    if (response.statusCode == 200) {
+      otpResetLoading.value = false;
+      refresh();
+
+      Toast.successToast(response.body['message']);
+
+      Get.toNamed(AppRoutes.forgotPassword);
+
+    } else {
+
+      if (response.statusText == ApiClient.somethingWentWrong) {
+
+        Toast.errorToast(AppStrings.checknetworkconnection);
+        otpResetLoading.value = false;
+        refresh();
+        return;
+
+      } else {
+        ApiChecker.checkApi(response);
+        otpResetLoading.value = false;
+        refresh();
+        return;
+      }
+    }
+  }
+
+
   ///====================FORGET PASSWORD CONTROLLER==================
   Rx<TextEditingController> forgetEmailController = TextEditingController().obs;
   ///================= FORGET PASSWORD METHOD================
 
   RxBool forgetPasswordLoading = false.obs;
-  Future<void> forgetPassword(
-      {required bool isForgot, required String email}) async {
+
+  Future<void> forgetPassword() async {
+
     forgetPasswordLoading.value = true;
     refresh();
-    var body = {"email": email};
+    var body = {"email": forgetEmailController.value.text};
 
-    var response = await ApiClient.postData(ApiUrl.userVerify, jsonEncode(body));
-
+    var response = await ApiClient.postData(ApiUrl.forget_password, jsonEncode(body));
 
     if (response.statusCode == 200) {
 
       forgetPasswordLoading.value = false;
-      SharePrefsHelper.setString(AppConstants.bearerToken, response.body["data"]);
 
       refresh();
 
       Toast.successToast(response.body['message']);
 
-      if (isForgot) {
-        Get.offAllNamed(AppRoutes.verificationMailScreen,
-            arguments: UserModel(
-              forgetEmailController.value.text,
-              AppStrings.forgotPassword,
-            ));
-      } else {
-        Get.offAllNamed(AppRoutes.verificationMailScreen,
-            arguments: UserModel(email, AppStrings.logIn));
-      }
+      Get.toNamed(AppRoutes.verificationScreen,arguments: [
+        {
+          "email":forgetEmailController.value.text
+        }
+      ]);
+
     } else {
+
       if (response.statusText == ApiClient.somethingWentWrong) {
 
         Toast.errorToast(response.body['message']);
@@ -205,25 +302,27 @@ class AuthController extends GetxController {
       TextEditingController().obs;
   Rx<TextEditingController> resetConfirmPasswordController =
       TextEditingController().obs;
-  //================= RESET PASSWORD METHOD================
+
+  ///================= RESET PASSWORD METHOD================
   RxBool resetPasswordLoading = false.obs;
-  Future<void> restPassword({required String email}) async {
+
+  Future<void> restPassword(String email) async {
     resetPasswordLoading.value = true;
-    refresh();
+
     var body = {
       "email": email,
       "newPassword": resetNewPasswordController.value.text,
     };
     var response =
-    await ApiClient.postData(ApiUrl.register, jsonEncode(body));
+    await ApiClient.postData(ApiUrl.forgotPassword, jsonEncode(body));
     if (response.statusCode == 200) {
       resetPasswordLoading.value = false;
       refresh();
 
+      Toast.successToast("password Reset SuccessFull..");
 
-      Get.offAllNamed(AppRoutes.loginScreen,
-          arguments:
-          UserModel(forgetEmailController.value.text, AppStrings.register));
+      Get.toNamed(AppRoutes.loginScreen);
+
     } else {
       if (response.statusText == ApiClient.somethingWentWrong) {
 
@@ -244,7 +343,7 @@ class AuthController extends GetxController {
   ///======================LOGIN CONTROLLER=====================
 
   Rx<TextEditingController> loginEmailController = TextEditingController(
-    text: kDebugMode ? "sohiwori@mailinator.com" : "",
+    text: kDebugMode ? "taleg84804@citdaca.com" : "",
   ).obs;
 
   Rx<TextEditingController> loginPasswordController = TextEditingController(
@@ -267,23 +366,16 @@ class AuthController extends GetxController {
     if (response.statusCode == 200) {
       loginLoading.value = false;
       refresh();
-      showCustomSnackBar(response.body['message']!, isError: false);
-      SharePrefsHelper.setString(
-          AppConstants.bearerToken, response.body["data"]["accessToken"]);
-      SharePrefsHelper.setString(
-          AppConstants.userId, response.body["data"]["_id"]);
-      if (response.body["data"]["isVerified"] == false) {
-        forgetPassword(isForgot: false, email: loginEmailController.value.text);
-      } else {
+    ///  showCustomSnackBar(response.body['message']!, isError: false);
 
-        if (response.body["data"]["role"] == "outlet") {
-          Get.offAllNamed(AppRoutes.homeScreen);
+      SharePrefsHelper.setString(AppConstants.bearerToken, response.body["data"]["accessToken"]);
 
-        } else {
+      SharePrefsHelper.setString(AppConstants.userId, response.body["data"]["_id"]);
 
-          Get.offAllNamed(AppRoutes.homeScreen);
-        }
-      }
+      SharePrefsHelper.setString(AppConstants.userEmail, response.body["data"]["email"]);
+
+      Get.toNamed(AppRoutes.homeScreen);
+
     } else {
       loginLoading.value = false;
       refresh();

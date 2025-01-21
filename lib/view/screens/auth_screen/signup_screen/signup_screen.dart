@@ -1,17 +1,21 @@
 // ignore_for_file: prefer_const_constructors
-import 'dart:io';
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
+import 'package:tractivity_app/utils/toast.dart';
 import 'package:tractivity_app/view/components/custom_button/custom_button.dart';
 import 'package:tractivity_app/view/components/custom_dropdown/custom_royel_dropdown.dart';
 import 'package:tractivity_app/view/components/custom_from_card/custom_from_card.dart';
+import 'package:tractivity_app/view/components/custom_loader/custom_loader.dart';
 import 'package:tractivity_app/view/components/custom_netwrok_image/custom_network_image.dart';
+import 'package:tractivity_app/view/components/custom_royel_appbar/custom_royel_appbar.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:tractivity_app/view/screens/auth_screen/controller/auth_controller.dart';
 
@@ -26,20 +30,23 @@ class _SignupScreenState extends State<SignupScreen> {
 
   final authController = Get.put(AuthController());
 
-
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  void singUpValidator(){
+  ///final TextEditingController locationEditingController = TextEditingController();
 
-    if (formKey.currentState!.validate()) {
+  @override
+  void initState() {
+    super.initState();
 
-     ///authController.login(phone, pin);
-    }
+  authController.getUserCurrentLocation();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+     appBar: CustomRoyelAppbar(titleName: AppStrings.singUpText),
       body: LayoutBuilder(
         builder: (context, constraints) {
           final isTablet = constraints.maxWidth > 600;
@@ -49,8 +56,8 @@ class _SignupScreenState extends State<SignupScreen> {
               key: formKey,
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: isTablet ? 40 : 15, // Adjust padding dynamically
-                  vertical: isTablet ? 100 : 80, // Adjust top padding for tablet
+                  horizontal: isTablet ? 40 : 12.w, // Adjust padding dynamically
+                  vertical: isTablet ? 32 : 12.h, // Adjust top padding for tablet
                 ),
                 child: Obx(
                       () {
@@ -58,126 +65,148 @@ class _SignupScreenState extends State<SignupScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         /// Title
-                        CustomText(
-                          text: AppStrings.singUpText,
-                          fontSize: isTablet ? 28 : 24,
-                          fontWeight: FontWeight.w600,
-                          bottom: 15.h,
-                        ),
+
                         Container(
                           height: 1.h,
                           width: MediaQuery.sizeOf(context).width,
                           color: AppColors.white_50,
                         ),
+
                         SizedBox(height: 30.h),
 
-                        /// Profile Image
-                        Center(
-                          child: Stack(
-                            children: [
-                              Container(
-                                height: 120.h,
-                                width: 120.w,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.grey,
-                                  border: Border.all(
-                                    width: 1,
-                                    color: AppColors.primary,
-                                  ),
-                                  image: DecorationImage(
-                                    image: FileImage(File(authController.chooseUserImage.value)),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                bottom: 5,
-                                right: isTablet? -80:0,
-                                 left: 0,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    authController.chooseUserPhoto();
-                                  },
-                                  child: Container(
-                                    height: 30,
-                                    width: 30,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.primary,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: const Icon(
-                                      Icons.camera_alt,
-                                      size: 18,
-                                      color: AppColors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: 20.h),
 
                         /// Profile Role Selection (Radio Buttons)
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Row(
                             children: [
+
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Radio(
-                                    value: AppStrings.volunteer,
-                                    fillColor: MaterialStateColor.resolveWith(
-                                            (states) => AppColors.primary),
-                                    groupValue: authController.checkValueStatues.value,
-                                    onChanged: (String? value) {
-                                      authController.checkValueStatues.value = value!;
+
+                                  Checkbox(
+                                    checkColor: AppColors.white,
+                                    activeColor: AppColors.primary,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(3.0),
+                                    ),
+                                    side: const BorderSide(
+                                      // ======> CHANGE THE BORDER COLOR HERE <======
+                                      color: AppColors.primary,
+                                      // Give your checkbox border a custom width
+                                      width: 1.4,
+                                    ),
+                                    value: authController.volunteer.value,
+                                    onChanged: (bool? value) {
+
+                                      authController.volunteer.value = value!;
+
+                                      if(authController.volunteer.value){
+
+                                        authController.rolesList.add("volunteer");
+                                      }else{
+                                        authController.rolesList.remove("volunteer");
+                                      }
+
                                     },
                                   ),
-                                  CustomText(
-                                    text: AppStrings.volunteer,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
+
+                                CustomText(
+                                    text: "Volunteer",
+                                    fontSize:isTablet?10.sp: 14.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColors.primary,
                                   ),
+
+
                                 ],
                               ),
+
+                              SizedBox(
+                                width: 4.w,
+                              ),
+
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Radio(
-                                    value: AppStrings.organizer,
-                                    groupValue: authController.checkValueStatues.value,
-                                    fillColor: MaterialStateColor.resolveWith(
-                                            (states) => AppColors.primary),
-                                    onChanged: (value) {
-                                      authController.checkValueStatues.value = value!;
+
+                                  Checkbox(
+                                    checkColor: AppColors.white,
+                                    activeColor: AppColors.primary,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(3.0),
+                                    ),
+                                    side: const BorderSide(
+                                      // ======> CHANGE THE BORDER COLOR HERE <======
+                                      color: AppColors.primary,
+                                      // Give your checkbox border a custom width
+                                      width: 1.4,
+                                    ),
+                                    value: authController.organizer.value,
+                                    onChanged: (bool? value) {
+
+                                      authController.organizer.value=value!;
+
+                                      if(authController.organizer.value){
+
+                                        authController.rolesList.add("organizer");
+                                      }else{
+                                        authController.rolesList.remove("organizer");
+                                      }
+
                                     },
                                   ),
+
                                   CustomText(
-                                    text: AppStrings.organizer,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
+                                    text: "Organizer",
+                                    fontSize:isTablet?10.sp: 14.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColors.primary,
                                   ),
+
                                 ],
                               ),
+
+                              SizedBox(
+                                width: 4.w,
+                              ),
+
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Radio(
-                                    value: AppStrings.administrator,
-                                    groupValue: authController.checkValueStatues.value,
-                                    fillColor: MaterialStateColor.resolveWith(
-                                            (states) => AppColors.primary),
-                                    onChanged: (value) {
-                                      authController.checkValueStatues.value = value!;
+
+                                  Checkbox(
+                                    checkColor: AppColors.white,
+                                    activeColor: AppColors.primary,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(3.0),
+                                    ),
+                                    side: const BorderSide(
+                                      // ======> CHANGE THE BORDER COLOR HERE <======
+                                      color: AppColors.primary,
+                                      // Give your checkbox border a custom width
+                                      width: 1.4,
+                                    ),
+                                    value: authController.administrator.value,
+                                    onChanged: (bool? value) {
+
+                                      authController.administrator.value=value!;
+
+                                      if(authController.administrator.value){
+
+                                        authController.rolesList.add("administrator");
+                                      }else{
+                                        authController.rolesList.remove("administrator");
+                                      }
                                     },
                                   ),
+
                                   CustomText(
-                                    text: AppStrings.administrator,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
+                                    text: "Administrator",
+                                    fontSize:isTablet?10.sp: 14.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColors.primary,
                                   ),
                                 ],
                               ),
@@ -222,6 +251,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         CustomFormCard(
                           title: AppStrings.phoneNumber,
                           hintText: AppStrings.enterYourPhone,
+                          keyboardType: TextInputType.number,
                           fontSize: isTablet?16:16,
                           hasBackgroundColor: true,
                           controller: authController.phoneNumberController.value,
@@ -254,12 +284,19 @@ class _SignupScreenState extends State<SignupScreen> {
                           hintText: AppStrings.enterYourLocation,
                           fontSize: isTablet?16:16,
                           hasBackgroundColor: true,
-                          controller: authController.locationController.value,
+                          readOnly: true,
+                          suffixIcon: Icon(Icons.location_pin),
+                           controller: authController.locationController.value,
+                         // controller: locationEditingController,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return AppStrings.fieldCantBeEmpty;
                             }
                             return null;
+                          },
+                          onTap: (){
+
+                           // Get.toNamed(AppRoutes.locationMapScreen);
                           },
                         ),
 
@@ -296,7 +333,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
 
                         /// Terms and Conditions
-                        Row(
+                     /*   Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Checkbox(
@@ -330,16 +367,35 @@ class _SignupScreenState extends State<SignupScreen> {
                               ),
                             ),
                           ],
-                        ),
+                        ),*/
 
                         SizedBox(height: 8),
 
                         /// Sign Up Button
 
-                        CustomButton(
+                      authController.userRegisterLoading.value?CustomLoader():
+                      CustomButton(
                           height: isTablet?70:60,
                           onTap: () {
-                            singUpValidator();
+
+                            debugPrint("rolesList:${jsonEncode(authController.rolesList.value)} :address:${authController.address}");
+
+                            if (formKey.currentState!.validate()) {
+
+                              if(authController.passwordController.value.text!= authController.confirmPasswordController.value.text){
+
+                                Toast.errorToast("password & Confirm Not match");
+
+                              }else if(authController.rolesList.isEmpty){
+
+                                Toast.errorToast("User roll is Empty!..");
+                              }else{
+
+                                authController.userRegister();
+                              }
+
+                            }
+
                           },
                           title: AppStrings.singUpText,
                           fontSize: isTablet ? 16 : 14,
@@ -351,7 +407,9 @@ class _SignupScreenState extends State<SignupScreen> {
                         Center(
                           child: GestureDetector(
                             onTap: () {
-                              Get.toNamed(AppRoutes.loginScreen);
+
+                            Get.toNamed(AppRoutes.loginScreen);
+
                             },
                             child: Text.rich(
                               TextSpan(
