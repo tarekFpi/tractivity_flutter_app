@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -35,20 +36,9 @@ class AdministratiorCreateScreen extends StatefulWidget {
 
 class _AdministratiorCreateScreenState extends State<AdministratiorCreateScreen> {
 
- // final OrganizerController administratorController = Get.find<OrganizerController>();
 
    final administratorController = Get.put(AdministratiorController());
 
-  final storage = GetStorage();
-
-  final List<String> items = [
-    'Item1',
-    'Item2',
-    'Item3',
-    'Item4',
-  ];
-
-  String? selectedValue;
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +123,7 @@ class _AdministratiorCreateScreenState extends State<AdministratiorCreateScreen>
 
                       const SizedBox(height: 20,),
 
-                      ///============ Recent  Event ==============================
+                      ///============  organization show  Event ==============================
                       if(administratorController.adminstratior_currentIndex.value==0)
 
                        administratorController.organizationShowLoading.value?CustomLoader():
@@ -228,9 +218,14 @@ class _AdministratiorCreateScreenState extends State<AdministratiorCreateScreen>
                               );
                             })),
 
+                      ///============  Mission show  Event ==============================
+
                       if(administratorController.adminstratior_currentIndex.value==1)
                         Column(
-                            children: List.generate(3, (index) {
+                            children: List.generate(administratorController.missionShowList.length, (index) {
+
+                              final model =administratorController.missionShowList[index];
+
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
@@ -252,14 +247,14 @@ class _AdministratiorCreateScreenState extends State<AdministratiorCreateScreen>
                                           children: [
 
                                             CustomText(
-                                              text: "${index+1}.Mission Horizons Foundation",
+                                              text: "${index+1}.${model.name}",
                                               fontSize: 16,
                                               color: AppColors.black_80,
                                               fontWeight: FontWeight.w600,
                                             ),
 
-                                            const CustomText(
-                                              text: "22-12-2025",
+                                              CustomText(
+                                              text: DateConverter.timeFormetString("${model.createdAt}"),
                                               fontSize: 12,
                                               color: AppColors.black_80,
                                               fontWeight: FontWeight.w400,
@@ -277,8 +272,8 @@ class _AdministratiorCreateScreenState extends State<AdministratiorCreateScreen>
 
                                              SizedBox(
                                                width:isTablet?300.w: 250.w,
-                                              child: const CustomText(
-                                                text: "Empowering communities  worldwide  through education, healthcare,  and sustainable development initiatives.",
+                                              child: CustomText(
+                                                text: "${model.description}",
                                                 fontSize: 12,
                                                 color: AppColors.black_80,
                                                 fontWeight: FontWeight.w400,
@@ -303,7 +298,47 @@ class _AdministratiorCreateScreenState extends State<AdministratiorCreateScreen>
                                                         title: SizedBox(),
                                                         content: SizedBox(
                                                           width: MediaQuery.sizeOf(context).width,
-                                                          child: AlertDialogEvent(title: "Are you sure you want to \n delete ?",discription: "",),
+                                                        child: Padding(
+                                                          padding: const EdgeInsets.all(8.0),
+                                                          child: Column(
+                                                            mainAxisSize: MainAxisSize.min,
+                                                            children: [
+
+                                                              const CustomText(
+                                                                text:"Are you sure you want to \n delete ?",
+                                                                fontSize: 22,
+                                                                fontWeight: FontWeight.w600,
+                                                                color: AppColors.black_80,
+                                                              ),
+
+                                                              SizedBox(
+                                                                height: 8.h,
+                                                              ),
+
+                                                            administratorController.missionDeleteLoading.value?CustomLoader():
+                                                            CustomButton(onTap: (){
+
+                                                              administratorController.missionDelete(model.id.toString());
+
+                                                              if(administratorController.missionDeleteLoading.value){
+                                                                Navigator.of(context).pop();
+                                                              }
+
+                                                              },title:"Yes",height:isTablet?70.h: 45.h,fontSize: 12.sp,),
+
+                                                              SizedBox(
+                                                                height: 12.h,
+                                                              ),
+                                                              CustomButton(onTap: (){
+                                                                Navigator.of(context).pop();
+                                                              },title:"NO",height:isTablet?70.h: 45.h,
+                                                                fontSize: 12.sp,fillColor: AppColors.white,
+                                                                textColor: AppColors.primary,
+                                                                isBorder: true,borderWidth: 1,)
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        //  child: AlertDialogEvent(title: "Are you sure you want to \n delete ?",discription: "",),
                                                         ),
                                                       ),
                                                     );
@@ -323,9 +358,13 @@ class _AdministratiorCreateScreenState extends State<AdministratiorCreateScreen>
                                                 CustomButton(
                                                   onTap: () {
 
-                                                    Get.toNamed(AppRoutes.adminstratiorEventListScreen);
+                                                    Get.toNamed(AppRoutes.adminstratiorEventListScreen,arguments: [
+                                                      {
+                                                        "missionId":model.id,
+                                                      }
+                                                    ]);
                                                   },
-                                                  title: "Report",
+                                                  title: "Details",
                                                   width: 60.w,
                                                   height: 32.h,
                                                   textColor: AppColors.black,
@@ -386,6 +425,7 @@ class _AdministratiorCreateScreenState extends State<AdministratiorCreateScreen>
                               child: InkWell(
                                   onTap: () {
                                     Navigator.of(context).pop();
+
                                   },
                                   child: const Icon(
                                     Icons.close,
@@ -498,6 +538,8 @@ class _AdministratiorCreateScreenState extends State<AdministratiorCreateScreen>
                                     Navigator.of(context).pop();
                                     administratorController.organizationIdList.value.clear();
                                     administratorController.leaderIdList.value.clear();
+                                    administratorController.organizationShow();
+                                    administratorController.leaderShow();
                                   },
                                   child: const Icon(
                                     Icons.close,
@@ -512,203 +554,213 @@ class _AdministratiorCreateScreenState extends State<AdministratiorCreateScreen>
                             return SingleChildScrollView(
                               child: SizedBox(
                                 width: MediaQuery.sizeOf(context).width,
-                              //  height: MediaQuery.sizeOf(context).height/1.4,
+                                //  height: MediaQuery.sizeOf(context).height/1.4,
 
                                 child: Column(
                                   children: [
 
-                                      Align(
+                                    Align(
                                       alignment: Alignment.topLeft,
                                       child: CustomText(
                                         text: "Add Organization",
-                                        fontSize:isTablet?10.sp: 12.sp,
+                                        fontSize:isTablet?10.sp: 14.sp,
                                         color: AppColors.black,
                                         fontWeight: FontWeight.w500,
-                                        bottom: 4,
+                                        bottom: 4.sp,
                                       ),
                                     ),
 
                                     Container(
-                                      padding: EdgeInsets.only(left: 4.sp,right: 4.sp),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.white,
-                                        boxShadow: const [
-                                          BoxShadow(color: Colors.black, spreadRadius: 1),
-                                        ],
-                                      ),
-                                     // height: 70.h,
-                                      child: ExpansionTile(
-                                        title: CustomText(
-                                          text: "Select Organization",
-                                          fontSize:isTablet? 6.sp:14.sp,
-                                          color: AppColors.black,
-                                          fontWeight: FontWeight.w500,
-                                          textAlign: TextAlign.start,
+                                        padding: EdgeInsets.only(left: 4.sp,right: 4.sp),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          color: Colors.white,
+                                          boxShadow: const [
+                                            BoxShadow(color: Colors.black, spreadRadius: 1),
+                                          ],
                                         ),
-                                        children: [
-                                          ///======== Search Bar ==============
-                                          const CustomTextField(
-                                            hintText: "Search",
-                                            fillColor: AppColors.neutral02,
-                                            suffixIcon: Icon(
-                                              Icons.search,
-                                              color: AppColors.black_60,
+                                        // height: 70.h,
+                                        child: ExpansionTile(
+                                          title: CustomText(
+                                            text: "Select Organization",
+                                            fontSize:isTablet? 6.sp:14.sp,
+                                            color: AppColors.black,
+                                            fontWeight: FontWeight.w500,
+                                            textAlign: TextAlign.start,
+                                          ),
+                                          children: [
+
+                                            ///======== Organization Search Bar ==============
+                                            CustomTextField(
+                                              hintText: "Search organization name",
+                                              fillColor: AppColors.neutral02,
+                                              suffixIcon:const Icon(
+                                                FluentIcons.search_24_regular,
+                                                size: 24,
+                                              ),
+                                                onChanged: (String value){
+                                                if(value.isEmpty){
+
+                                                  FocusScope.of(context).unfocus();
+
+                                                    administratorController.searchOragizationLoading.value?CircularProgressIndicator(color: AppColors.primary,):
+                                                    administratorController.searchOrganizationList("");
+
+                                                }else{
+
+                                                  Future.delayed(Duration(seconds: 2), () {
+
+                                                    administratorController.searchOragizationLoading.value?CircularProgressIndicator(color: AppColors.primary,):
+                                                    administratorController.searchOrganizationList(value);
+                                                  });
+
+                                                }
+                                                },
+
                                             ),
-                                          ),
 
-                                          const SizedBox(
-                                            height: 12,
-                                          ),
-                                          Column(
-                                            children:  List.generate(
-                                                    administratorController.organizationShowList.length,
-                                                    (index) {
+                                            const SizedBox(
+                                              height: 12,
+                                            ),
+                                            Column(
+                                              children:  List.generate(
+                                                  administratorController.organizationShowList.length,
+                                                      (index) {
 
-                                                      final model =administratorController.organizationShowList[index];
+                                                    final model = administratorController.organizationShowList[index];
 
-                                                      return Column(
-                                                        children: [
+                                                    return Column(
+                                                      children: [
 
-                                                          Padding(
-                                                            padding: const EdgeInsets.all(4.0),
-                                                            child: Container(
-                                                              height:isTablet?130.h: 100.h,
-                                                              decoration: BoxDecoration(
-                                                                color: AppColors.grey_5.withOpacity(0.5),
-                                                                borderRadius: BorderRadius.circular(15),
-                                                              ),
-                                                              padding: EdgeInsets.all(12),
-                                                              child: Column(
-                                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                                children: [
+                                                        Padding(
+                                                          padding: const EdgeInsets.all(4.0),
+                                                          child: Container(
+                                                            height:isTablet?130.h: 120.h,
+                                                            decoration: BoxDecoration(
+                                                              color: AppColors.grey_5.withOpacity(0.5),
+                                                              borderRadius: BorderRadius.circular(15),
+                                                            ),
+                                                            padding: EdgeInsets.all(12),
+                                                            child: Column(
+                                                              mainAxisAlignment: MainAxisAlignment.start,
+                                                              children: [
 
-                                                                  Row(
-                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                                    children: [
+                                                                Row(
+                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                  children: [
 
-                                                                      Row(
-                                                                        mainAxisAlignment: MainAxisAlignment.start,
-                                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                                        children: [
-                                                                          CustomText(
-                                                                            text: "${index+1 }.",
-                                                                            fontSize: 16,
-                                                                            color: AppColors.black_80,
-                                                                            fontWeight: FontWeight.w600,
-                                                                          ),
-
-                                                                          CustomText(
-                                                                            text: "${model.name}",
-                                                                            fontSize:isTablet?6.sp: 14.sp,
-                                                                            color: AppColors.black_80,
-                                                                            fontWeight: FontWeight.w600,
-                                                                            overflow: TextOverflow.clip,
-                                                                          ),
-                                                                        ],
-                                                                      ),
-
-                                                                        CustomText(
-                                                                        text: DateConverter.timeFormetString("${model.createdAt}"),
-                                                                        fontSize: 12,
-                                                                        color: AppColors.black_80,
-                                                                        fontWeight: FontWeight.w400,
-                                                                      ),
-                                                                    ],
-                                                                  ),
-
-                                                                  const SizedBox(
-                                                                    height: 4,
-                                                                  ),
-
-                                                                  Padding(
-                                                                    padding: const EdgeInsets.only(left: 16,right: 4),
-                                                                    child: Row(
-                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                    Row(
+                                                                      mainAxisAlignment: MainAxisAlignment.start,
                                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                                       children: [
-
-                                                                        Flexible(
-                                                                          child: SizedBox(
-                                                                            width:isTablet?300.w: 250.w,
-                                                                            child: CustomText(
-                                                                              text: "${model.description}",
-                                                                              fontSize: 12,
-                                                                              color: AppColors.black_80,
-                                                                              fontWeight: FontWeight.w400,
-                                                                              textAlign: TextAlign.start,
-                                                                              overflow: TextOverflow.clip,
-                                                                              maxLines: 2,
-                                                                            ),
-                                                                          ),
+                                                                        CustomText(
+                                                                          text: "${index+1}.",
+                                                                          fontSize: isTablet?6.sp:14.sp,
+                                                                          color: AppColors.black_80,
+                                                                          fontWeight: FontWeight.w600,
                                                                         ),
 
-                                                                        Row(
-                                                                          children: [
-
-                                                                            Checkbox(
-                                                                              checkColor: AppColors.white,
-                                                                              activeColor: AppColors.primary,
-                                                                              shape: RoundedRectangleBorder(
-                                                                                borderRadius: BorderRadius.circular(3.0),
-                                                                              ),
-                                                                              side: const BorderSide(
-                                                                                // ======> CHANGE THE BORDER COLOR HERE <======
-                                                                                color: AppColors.primary,
-                                                                                // Give your checkbox border a custom width
-                                                                                width: 1.4,
-                                                                              ),
-                                                                              ///value: administratorController.selectedOranization.value,
-                                                                              value: administratorController.organizationIdList.contains(model.id),
-                                                                              onChanged: (bool? value) {
-
-                                                                                administratorController.selectedOranization.value = value!;
-
-                                                                                if(administratorController.selectedOranization.value){
-
-                                                                                  administratorController.organizationIdList.add(model.id.toString());
-                                                                                }else{
-                                                                                  administratorController.organizationIdList.remove(model.id.toString());
-                                                                                }
-
-                                                                              },
-                                                                            ),
-
-                                                                            /* CustomText(
-                                                                             text: "Select",
-                                                                             fontSize:isTablet?10.sp: 14.sp,
-                                                                             fontWeight: FontWeight.w600,
-                                                                             color: AppColors.primary,
-                                                                           ),*/
-
-
-                                                                          ],
+                                                                        CustomText(
+                                                                          text: "${model.name}",
+                                                                          fontSize:isTablet?6.sp: 14.sp,
+                                                                          color: AppColors.black_80,
+                                                                          fontWeight: FontWeight.w600,
+                                                                          overflow: TextOverflow.clip,
+                                                                          textAlign: TextAlign.start,
                                                                         ),
                                                                       ],
                                                                     ),
-                                                                  ),
 
-                                                                  const SizedBox(
-                                                                    height: 4,
-                                                                  ),
+                                                                /*    CustomText(
+                                                                      text: DateConverter.timeFormetString("${model.createdAt}"),
+                                                                      fontSize: 12,
+                                                                      color: AppColors.black_80,
+                                                                      fontWeight: FontWeight.w400,
+                                                                    ),*/
+                                                                  ],
+                                                                ),
 
-                                                                ],
-                                                              ),
+                                                                const SizedBox(
+                                                                  height: 4,
+                                                                ),
+
+                                                                Row(
+                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                  children: [
+
+                                                                    Flexible(
+                                                                      child: SizedBox(
+                                                                        width:isTablet?300.w: 250.w,
+                                                                        child: CustomText(
+                                                                          text: "${model.description}",
+                                                                          fontSize: 12,
+                                                                          color: AppColors.black_80,
+                                                                          fontWeight: FontWeight.w400,
+                                                                          textAlign: TextAlign.start,
+                                                                          overflow: TextOverflow.clip,
+                                                                          maxLines: 3,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+
+                                                                    Row(
+                                                                      children: [
+
+                                                                        Checkbox(
+                                                                          checkColor: AppColors.white,
+                                                                          activeColor: AppColors.primary,
+                                                                          shape: RoundedRectangleBorder(
+                                                                            borderRadius: BorderRadius.circular(3.0),
+                                                                          ),
+                                                                          side: const BorderSide(
+                                                                            // ======> CHANGE THE BORDER COLOR HERE <======
+                                                                            color: AppColors.primary,
+                                                                            // Give your checkbox border a custom width
+                                                                            width: 1.4,
+                                                                          ),
+                                                                          ///value: administratorController.selectedOranization.value,
+                                                                          value: administratorController.organizationIdList.contains(model.id),
+                                                                          onChanged: (bool? value) {
+
+                                                                            administratorController.selectedOranization.value = value!;
+
+                                                                            if(administratorController.selectedOranization.value){
+
+                                                                              administratorController.organizationIdList.add(model.id.toString());
+                                                                            }else{
+                                                                              administratorController.organizationIdList.remove(model.id.toString());
+                                                                            }
+
+                                                                          },
+                                                                        ),
+
+                                                                      ],
+                                                                    ),
+                                                                  ],
+                                                                ),
+
+                                                                const SizedBox(
+                                                                  height: 4,
+                                                                ),
+
+                                                              ],
                                                             ),
                                                           ),
+                                                        ),
 
-                                                        ],
-                                                      );
-                                                    }
-                                            ),
-                                          )
-                                        ],
-                                    )
+                                                      ],
+                                                    );
+                                                  }
+                                              ),
+                                            )
+                                          ],
+                                        )
                                     ),
 
 
-                                     const SizedBox(
+                                    const SizedBox(
                                       height: 12,
                                     ),
 
@@ -724,7 +776,7 @@ class _AdministratiorCreateScreenState extends State<AdministratiorCreateScreen>
                                     ),
 
                                     Container(
-                                 ///    padding: EdgeInsets.only(left: 8,right: 8),
+                                      ///    padding: EdgeInsets.only(left: 8,right: 8),
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(10),
                                           color: Colors.white,
@@ -744,13 +796,29 @@ class _AdministratiorCreateScreenState extends State<AdministratiorCreateScreen>
                                           children:  [
 
                                             ///======== Search Bar ==============
-                                            const CustomTextField(
-                                              hintText: "Search",
+                                            CustomTextField(
+                                              hintText: "Search Leader name",
                                               fillColor: AppColors.neutral02,
-                                              suffixIcon: Icon(
-                                                Icons.search,
-                                                color: AppColors.black_60,
+                                              suffixIcon:const Icon(
+                                                FluentIcons.search_24_regular,
+                                                size: 24,
                                               ),
+                                              onChanged: (String value){
+                                                if(value.isEmpty){
+
+                                                  FocusScope.of(context).unfocus();
+
+                                                  Future.delayed(Duration(seconds: 2), () {
+
+                                                    administratorController.searchLeaderList("");
+                                                  });
+
+                                                }else{
+
+                                                  administratorController.searchLeaderList(value);
+                                                }
+                                              },
+
                                             ),
 
                                             const SizedBox(
@@ -758,127 +826,118 @@ class _AdministratiorCreateScreenState extends State<AdministratiorCreateScreen>
                                             ),
                                             Column(
                                               children:  List.generate(
-                                                     administratorController.leaderShowList.length,
+                                                  administratorController.leaderShowList.length,
                                                       (index){
 
-                                                       final model = administratorController.leaderShowList[index];
+                                                    final model = administratorController.leaderShowList[index];
 
-                                                       return Column(
-                                                         children: [
-                                                           Padding(
-                                                             padding: const EdgeInsets.all(4.0),
-                                                             child: Container(
-                                                               height:isTablet?130.h: 100.h,
-                                                               decoration: BoxDecoration(
-                                                                 color: AppColors.grey_5.withOpacity(0.5),
-                                                                 borderRadius: BorderRadius.circular(15),
-                                                               ),
-                                                               padding: EdgeInsets.all(12),
-                                                               child: Column(
-                                                                 mainAxisAlignment: MainAxisAlignment.start,
-                                                                 children: [
+                                                    return Column(
+                                                      children: [
+                                                        Padding(
+                                                          padding: const EdgeInsets.all(4.0),
+                                                          child: Container(
+                                                            height:isTablet?130.h: 120.h,
+                                                            decoration: BoxDecoration(
+                                                              color: AppColors.grey_5.withOpacity(0.5),
+                                                              borderRadius: BorderRadius.circular(15),
+                                                            ),
+                                                            padding: EdgeInsets.all(12),
+                                                            child: Column(
+                                                              mainAxisAlignment: MainAxisAlignment.start,
+                                                              children: [
 
-                                                                   Row(
-                                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                     crossAxisAlignment: CrossAxisAlignment.start,
-                                                                     children: [
+                                                                Row(
+                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                  children: [
 
-                                                                       Row(
-                                                                         mainAxisAlignment: MainAxisAlignment.start,
-                                                                         crossAxisAlignment: CrossAxisAlignment.start,
-                                                                         children: [
+                                                                    Row(
+                                                                      mainAxisAlignment: MainAxisAlignment.start,
+                                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                                      children: [
 
-                                                                           CustomText(
-                                                                             text: "${index+1 }.",
-                                                                             fontSize: 16,
-                                                                             color: AppColors.black_80,
-                                                                             fontWeight: FontWeight.w600,
-                                                                           ),
+                                                                        CustomText(
+                                                                          text: "${index+1 }.",
+                                                                          fontSize: isTablet?6.sp:14.sp,
+                                                                          color: AppColors.black_80,
+                                                                          fontWeight: FontWeight.w600,
+                                                                        ),
 
-                                                                           CustomText(
-                                                                             text: "${model.fullName}",
-                                                                             fontSize:isTablet?6.sp: 14.sp,
-                                                                             color: AppColors.black_80,
-                                                                             fontWeight: FontWeight.w600,
-                                                                             overflow: TextOverflow.clip,
-                                                                           ),
-                                                                         ],
-                                                                       ),
+                                                                        CustomText(
+                                                                          text: "${model.fullName}",
+                                                                          fontSize:isTablet?6.sp: 14.sp,
+                                                                          color: AppColors.black_80,
+                                                                          fontWeight: FontWeight.w600,
+                                                                          overflow: TextOverflow.clip,
+                                                                        ),
+                                                                      ],
+                                                                    ),
 
-                                                                     ],
-                                                                   ),
+                                                                  ],
+                                                                ),
 
-                                                                   Row(
-                                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                Row(
+                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-                                                                     children: [
+                                                                  children: [
 
-                                                                       CustomText(
-                                                                         text: "${model.profession}",
-                                                                         fontSize: 12,
-                                                                         color: AppColors.black_80,
-                                                                         fontWeight: FontWeight.w400,
-                                                                         textAlign: TextAlign.start,
-                                                                         overflow: TextOverflow.clip,
-                                                                       ),
+                                                                    CustomText(
+                                                                      text: "${model.profession}",
+                                                                      fontSize: 12,
+                                                                      color: AppColors.black_80,
+                                                                      fontWeight: FontWeight.w400,
+                                                                      textAlign: TextAlign.start,
+                                                                      overflow: TextOverflow.clip,
+                                                                    ),
 
-                                                                       Row(
-                                                                         children: [
+                                                                    Row(
+                                                                      children: [
 
-                                                                           Checkbox(
-                                                                             checkColor: AppColors.white,
-                                                                             activeColor: AppColors.primary,
-                                                                             shape: RoundedRectangleBorder(
-                                                                               borderRadius: BorderRadius.circular(3.0),
-                                                                             ),
-                                                                             side: const BorderSide(
-                                                                               // ======> CHANGE THE BORDER COLOR HERE <======
-                                                                               color: AppColors.primary,
-                                                                               // Give your checkbox border a custom width
-                                                                               width: 1.4,
-                                                                             ),
-                                                                             ///value: administratorController.selectedOranization.value,
-                                                                             value: administratorController.leaderIdList.contains(model.id),
-                                                                             onChanged: (bool? value) {
+                                                                        Checkbox(
+                                                                          checkColor: AppColors.white,
+                                                                          activeColor: AppColors.primary,
+                                                                          shape: RoundedRectangleBorder(
+                                                                            borderRadius: BorderRadius.circular(3.0),
+                                                                          ),
+                                                                          side: const BorderSide(
+                                                                            // ======> CHANGE THE BORDER COLOR HERE <======
+                                                                            color: AppColors.primary,
+                                                                            // Give your checkbox border a custom width
+                                                                            width: 1.4,
+                                                                          ),
+                                                                          ///value: administratorController.selectedOranization.value,
+                                                                          value: administratorController.leaderIdList.contains(model.id),
+                                                                          onChanged: (bool? value) {
 
-                                                                               administratorController.selectedLeader.value = value!;
+                                                                            administratorController.selectedLeader.value = value!;
 
-                                                                               if(administratorController.selectedLeader.value){
+                                                                            if(administratorController.selectedLeader.value){
 
-                                                                                 administratorController.leaderIdList.add(model.id.toString());
-                                                                               }else{
-                                                                                 administratorController.leaderIdList.remove(model.id.toString());
-                                                                               }
+                                                                              administratorController.leaderIdList.add(model.id.toString());
+                                                                            }else{
+                                                                              administratorController.leaderIdList.remove(model.id.toString());
+                                                                            }
 
-                                                                             },
-                                                                           ),
+                                                                          },
+                                                                        ),
 
-                                                                          /* CustomText(
-                                                                             text: "Select",
-                                                                             fontSize:isTablet?10.sp: 14.sp,
-                                                                             fontWeight: FontWeight.w600,
-                                                                             color: AppColors.primary,
-                                                                           ),*/
+                                                                      ],
+                                                                    ),
 
+                                                                  ],
+                                                                ),
 
-                                                                         ],
-                                                                       ),
+                                                                const SizedBox(
+                                                                  height: 4,
+                                                                ),
 
-                                                                     ],
-                                                                   ),
-
-                                                                   const SizedBox(
-                                                                     height: 4,
-                                                                   ),
-
-                                                                 ],
-                                                               ),
-                                                             ),
-                                                           ),
-                                                         ],
-                                                       );
-                                                      }
-
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  }
                                               ),
                                             )
                                           ],
@@ -899,6 +958,7 @@ class _AdministratiorCreateScreenState extends State<AdministratiorCreateScreen>
                                         ),
                                       ),
                                     ):SizedBox(),
+
                                     const SizedBox(
                                       height: 12,
                                     ),
@@ -924,15 +984,28 @@ class _AdministratiorCreateScreenState extends State<AdministratiorCreateScreen>
 
                                     Padding(
                                       padding: const EdgeInsets.only(left: 12,right: 12,bottom: 12),
-                                      child: CustomButton(
+                                      child:administratorController.createMissionLoading.value?CustomLoader(): CustomButton(
                                         onTap: () {
 
-                                           if(administratorController.organizationIdList.isEmpty){
-                                             Toast.errorToast("Select Oranization is Empty!!");
-                                           }else if(administratorController.leaderIdList.isEmpty){
-                                             Toast.errorToast("Select Oranization is Empty!!");
-                                           }
-                                       //   administratorController.createMission();
+                                          if(administratorController.organizationIdList.isEmpty){
+                                            Toast.errorToast("Select oranization name is Empty!!");
+                                          }else if(administratorController.leaderIdList.isEmpty){
+                                            Toast.errorToast("Select leader name is Empty!!");
+
+                                          }else if(administratorController.missionNameController.value.text==""){
+                                            Toast.errorToast("Mission name is Empty!!");
+
+                                          }else if(administratorController.missionDescriptionController.value.text==""){
+                                            Toast.errorToast("Mission Description is Empty!!");
+                                          }else{
+
+                                            administratorController.createMission();
+
+                                            if(administratorController.createMissionLoading.value){
+                                              Navigator.of(context).pop();
+                                            }
+                                          }
+
                                         },
                                         title: "Done",
                                         height: 60.h,

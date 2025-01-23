@@ -377,6 +377,7 @@ class AuthController extends GetxController {
       Get.toNamed(AppRoutes.homeScreen);
 
     } else {
+
       loginLoading.value = false;
       refresh();
       if (response.statusText == ApiClient.somethingWentWrong) {
