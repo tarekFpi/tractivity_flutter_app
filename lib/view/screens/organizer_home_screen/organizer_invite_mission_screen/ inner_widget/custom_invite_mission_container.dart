@@ -17,6 +17,7 @@ class CustomInviteMissionContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context,constraints){
+
       final isTablet = constraints.maxWidth > 600;
 
         return Padding(
@@ -92,9 +93,10 @@ class CustomInviteMissionContainer extends StatelessWidget {
                       Get.toNamed(AppRoutes.organizerApprovedScreen);
 
                     }, title: "Accept",height:isTablet?30.h: 30.h,
-                      width:isTablet?70.sp: 60.sp,fontSize: 6.sp,),
+                      width:isTablet?70.sp: 60.sp,fontSize:isTablet?6.sp:14.sp,),
 
                     SizedBox(height: 10.h,),
+
                     CustomButton(onTap: (){
                       /*       showDialog(
                     context: context,
@@ -111,7 +113,7 @@ class CustomInviteMissionContainer extends StatelessWidget {
                   );*/
 
                     }, title: "Reject",height:isTablet?30.h: 30.h,
-                      width:isTablet?70.sp: 60.sp,fontSize: 6.sp,),
+                      width:isTablet?70.sp: 60.sp,fontSize:isTablet? 6.sp:14.sp,),
                   ],
                 )
 

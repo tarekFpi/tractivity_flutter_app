@@ -46,8 +46,8 @@ class _AdminstratorMemberState extends State<AdminstratorMember> {
                                 children: [
                                   CustomNetworkImage(
                                     imageUrl: AppConstants.profileImage,
-                                    height:isTablet?64: 60,
-                                    width:isTablet?64: 60,
+                                    height:isTablet?64.h: 60.h,
+                                    width:isTablet?64.w: 60.w,
                                     boxShape: BoxShape.circle,
                                   ),
                                   SizedBox(
@@ -59,7 +59,7 @@ class _AdminstratorMemberState extends State<AdminstratorMember> {
                                     children: [
                                       CustomText(
                                         text: "Mehedi Hassan",
-                                        fontSize: 8.sp,
+                                        fontSize:isTablet?8.sp:16.sp,
                                         fontWeight: FontWeight.w600,
                                         color: AppColors.black,
                                       ),

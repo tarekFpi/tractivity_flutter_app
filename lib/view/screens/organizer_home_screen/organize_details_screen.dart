@@ -24,200 +24,208 @@ class _OrganizeDetailsScreenState extends State<OrganizeDetailsScreen> {
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
-      appBar: const CustomRoyelAppbar(
-        titleName: "Organization Details",
-        leftIcon: true,
-      ),
+    return LayoutBuilder(builder: (context,constraints){
 
-      body: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+      final isTablet = constraints.maxWidth > 600;
 
+      return Scaffold(
+        appBar: const CustomRoyelAppbar(
+          titleName: "Organization Details",
+          leftIcon: true,
+        ),
 
-              SizedBox(
-                height: 16.h,
-              ),
-
-              Column(
-                  children: List.generate(1, (index){
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 10.0),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 10),
-                        decoration: BoxDecoration(
-                          color: AppColors.neutral02,
-                          borderRadius: BorderRadius.circular(13),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CustomText(
-                                    text: "Empower Tomorrow",
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    bottom: 8.h,
-                                  ),
-                                  CustomText(
-                                    text:
-                                    "Fostering opportunities for underprivileged communities through education and skill development programs.",
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w400,
-                                    maxLines: 5,
-                                    textAlign: TextAlign.start,
-                                    bottom: 10.h,
-                                  ),
-                                  Row(
-                                    children: [
-                                      CustomNetworkImage(
-                                        imageUrl: AppConstants.profileImage,
-                                        height: 40,
-                                        width: 40,
-                                        boxShape: BoxShape.circle,
-                                      ),
-                                      CustomText(
-                                        text: "Mehedi",
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        left: 8.h,
-                                        right: 8.h,
-                                      ),
-                                      CustomText(
-                                        text: "(Adminstrator)",
-                                        fontSize: 14,
-                                        color: AppColors.blue,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
+        body: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
 
 
-                          ],
-                        ),
-                      ),
-                    );
-                  })
-              ),
+                SizedBox(
+                  height: 16.h,
+                ),
 
-              const SizedBox(
-                height: 26,
-              ),
+                Column(
+                    children: List.generate(1, (index){
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 10.0),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 10),
+                          decoration: BoxDecoration(
+                            color: AppColors.neutral02,
+                            borderRadius: BorderRadius.circular(13),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
 
-              const CustomText(
-                text: "Mission",
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
-
-              SizedBox(
-                height: 16.h,
-              ),
-
-              Column(
-                  children: List.generate(3, (index){
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 10.0),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 10),
-                        decoration: BoxDecoration(
-                          color: AppColors.neutral02,
-                          borderRadius: BorderRadius.circular(13),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CustomText(
-                                    text: "Empower Tomorrow",
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    bottom: 8.h,
-                                  ),
-                                  CustomText(
-                                    text:
-                                    "Fostering opportunities for underprivileged communities through education and skill development programs.",
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w400,
-                                    maxLines: 5,
-                                    textAlign: TextAlign.start,
-                                    bottom: 10.h,
-                                  ),
-                                  Row(
-                                    children: [
-                                      CustomNetworkImage(
-                                        imageUrl: AppConstants.profileImage,
-                                        height: 40,
-                                        width: 40,
-                                        boxShape: BoxShape.circle,
-                                      ),
-                                      CustomText(
-                                        text: "Mehedi",
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        left: 8.h,
-                                        right: 8.h,
-                                      ),
-                                      CustomText(
-                                        text: "(Adminstrator)",
-                                        fontSize: 14,
-                                        color: AppColors.blue,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                            Column(
-                              children: [
-
-                                CustomText(
-                                  text: "17-12-2024",
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w400,
-                                  bottom: 8.h,
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CustomText(
+                                      text: "Empower Tomorrow",
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      bottom: 8.h,
+                                    ),
+                                    CustomText(
+                                      text:
+                                      "Fostering opportunities for underprivileged communities through education and skill development programs.",
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w400,
+                                      maxLines: 5,
+                                      textAlign: TextAlign.start,
+                                      bottom: 10.h,
+                                    ),
+                                    Row(
+                                      children: [
+                                        CustomNetworkImage(
+                                          imageUrl: AppConstants.profileImage,
+                                          height: 40.h,
+                                          width: 40.w,
+                                          boxShape: BoxShape.circle,
+                                        ),
+                                        CustomText(
+                                          text: "Mehedi",
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                          left: 8.h,
+                                          right: 8.h,
+                                        ),
+                                        CustomText(
+                                          text: "(Adminstrator)",
+                                          fontSize: 14,
+                                          color: AppColors.blue,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ],
+                                    )
+                                  ],
                                 ),
-
-                                CustomButton(onTap: (){
-                                  ///OrganizerApprovedScreen
-
-                                  Get.toNamed(AppRoutes.organizationEventListScreen);
-                                }, title: "Details",height: 30,width: 70,fontSize: 12,),
-
-                              ],
-                            )
+                              ),
 
 
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  })
-              )
-            ],
+                      );
+                    })
+                ),
+
+                const SizedBox(
+                  height: 26,
+                ),
+
+                const CustomText(
+                  text: "Mission",
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+
+                SizedBox(
+                  height: 16.h,
+                ),
+
+                Column(
+                    children: List.generate(3, (index){
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 10.0),
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 10),
+                          decoration: BoxDecoration(
+                            color: AppColors.neutral02,
+                            borderRadius: BorderRadius.circular(13),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CustomText(
+                                      text: "Empower Tomorrow",
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      bottom: 8.h,
+                                    ),
+                                    CustomText(
+                                      text:
+                                      "Fostering opportunities for underprivileged communities through education and skill development programs.",
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w400,
+                                      maxLines: 5,
+                                      textAlign: TextAlign.start,
+                                      bottom: 10.h,
+                                    ),
+                                    Row(
+                                      children: [
+                                        CustomNetworkImage(
+                                          imageUrl: AppConstants.profileImage,
+                                          height: 40.h,
+                                          width: 40.w,
+                                          boxShape: BoxShape.circle,
+                                        ),
+                                        CustomText(
+                                          text: "Mehedi",
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                          left: 8.h,
+                                          right: 8.h,
+                                        ),
+                                        CustomText(
+                                          text: "(Adminstrator)",
+                                          fontSize: 14,
+                                          color: AppColors.blue,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Column(
+                                children: [
+
+                                  CustomText(
+                                    text: "17-12-2024",
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w400,
+                                    bottom: 8.h,
+                                  ),
+
+                                  CustomButton(onTap: (){
+                                    ///OrganizerApprovedScreen
+
+                                    Get.toNamed(AppRoutes.organizationEventListScreen);
+                                  }, title: "Details",
+                                    height:isTablet?40.h: 30.h,
+                                    width:isTablet?70.w: 70.w
+                                    ,fontSize: 12,),
+
+                                ],
+                              )
+
+
+                            ],
+                          ),
+                        ),
+                      );
+                    })
+                )
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

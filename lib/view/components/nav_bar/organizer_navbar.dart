@@ -106,7 +106,7 @@ class _UserNavBarState extends State<OrganizerNavbar> {
       color: Colors.transparent,
       child: Container(
         height: isTablet ? 100.h : 85.h,
-        width: isTablet ? 90.w : 80.w,
+        width: isTablet ? 80.w : 80.w,
         decoration: BoxDecoration(
           color: AppColors.primary,
           borderRadius:  BorderRadius.only(

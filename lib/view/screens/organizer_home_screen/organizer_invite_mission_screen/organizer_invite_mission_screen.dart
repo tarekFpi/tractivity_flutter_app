@@ -57,7 +57,7 @@ class _OrganizerInviteMissionScreenState extends State<OrganizerInviteMissionScr
 
               GestureDetector(
                 onTap: (){
-                  Get.toNamed(AppRoutes.eventsProfileScreen);
+                  Get.toNamed(AppRoutes.userEventProfile);
                 },
                 child: Row(
                   children: [
@@ -157,7 +157,7 @@ class _OrganizerInviteMissionScreenState extends State<OrganizerInviteMissionScr
                                       CustomButton(onTap: (){
 
                                         Get.toNamed(AppRoutes.organizerApprovedScreen);
-                                      }, title: "Duplicate",height:isTablet?40.h: 30.h,width:80.w,
+                                      }, title: "Duplicate",height:isTablet?35.h: 30.h,width:70.w,
                                         fontSize: 12,textColor: Colors.black87,),
 
 
@@ -203,7 +203,7 @@ class _OrganizerInviteMissionScreenState extends State<OrganizerInviteMissionScr
                                           CustomText(
                                             text: "12/12/24",
                                             fontSize: 12,
-                                            color: AppColors.titleText,
+                                            color: AppColors.grey_1,
                                             fontWeight: FontWeight.w600,
                                             right: 10.w,
                                             left: 10.w,

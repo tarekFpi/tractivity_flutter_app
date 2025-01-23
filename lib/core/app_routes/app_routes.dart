@@ -5,6 +5,7 @@ import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrato
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrator_home_screen.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/event_complete_screen.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/member/adminstrator_member.dart';
+import 'package:tractivity_app/view/screens/auth_screen/signup_screen/location_map_screen.dart';
 import 'package:tractivity_app/view/screens/chat_screen/chat_screen.dart';
 import 'package:tractivity_app/view/screens/chat_screen/inner_widget/group_message_screen.dart';
 import 'package:tractivity_app/view/screens/chat_screen/inner_widget/single_message_screen.dart';
@@ -44,9 +45,7 @@ import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_invi
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_invite_mission_screen/organizer_approved.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_invite_mission_screen/organizer_invite_mission_screen.dart';
 import 'package:tractivity_app/view/screens/profile_screen/edit_profile_screen.dart';
-import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/events_profile_screen.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/explore_event_screen.dart';
-
 import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/setting_screen/about_us_screen.dart';
 import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/setting_screen/privacy_policy_screen.dart';
 import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/setting_screen/setting_screen.dart';
@@ -59,14 +58,13 @@ class AppRoutes {
   static const String homeScreen = "/HomeScreen";
   static const String onboardingScreen = "/OnboardingScreen";
   static const String loginScreen = "/LoginScreen";
-
-
+  static const String locationMapScreen = "/LocationMapScreen";
 
 
 
 
   ////============ Mededi =================
-  static const String eventsProfileScreen = "/EventsProfileScreen";
+
   static const String settingScreen = "/SettingScreen";
   static const String aboutUsScreen = "/AboutUsScreen";
   static const String privacyPolicyScreen = "/PrivacyPolicyScreen";
@@ -123,6 +121,7 @@ class AppRoutes {
     GetPage(name: onboardingScreen, page: () => OnboardingScreen()),
     GetPage(name: loginScreen, page: () => LoginScreen()),
     GetPage(name: signupScreen, page: () => SignupScreen()),
+    GetPage(name: locationMapScreen, page: () => LocationMapScreen()),
 
     GetPage(name: verificationMailScreen, page: () => VerificationMailScreen()),
     GetPage(name: verificationScreen, page: () => VerificationScreen()),
@@ -131,7 +130,7 @@ class AppRoutes {
 
 
     ///=========================== Mehedi ==========================
-   // GetPage(name: eventsProfileScreen, page: () => EventsProfileScreen()),
+
     GetPage(name: settingScreen, page: () => SettingScreen()),
     GetPage(name: aboutUsScreen, page: () => AboutUsScreen()),
     GetPage(name: privacyPolicyScreen, page: () => PrivacyPolicyScreen()),

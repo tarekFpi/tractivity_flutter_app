@@ -40,7 +40,7 @@ class OnboardingScreen extends StatelessWidget {
                     children: [
                       CustomText(
                         text: AppStrings.welcomeToAlterNet,
-                        fontSize: isTablet ? 64 : 48, // Bigger text for tablets
+                        fontSize: isTablet ? 42 : 48, // Bigger text for tablets
                         fontWeight: FontWeight.w700,
                         color: AppColors.white,
                         textAlign: TextAlign.center,

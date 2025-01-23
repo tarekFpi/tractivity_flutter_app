@@ -8,6 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
+import 'package:tractivity_app/helper/shared_prefe/shared_prefe.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_icons/app_icons.dart';
@@ -95,7 +96,7 @@ class _HomeSideDrawerState extends State<HomeSideDrawer> {
                           isTablet: isTablet,
                           onTap: () {
                             Navigator.pop(context);
-                            Get.toNamed(AppRoutes.eventsProfileScreen);
+                            Get.toNamed(AppRoutes.userEventProfile);
                           }),
 
                       ///====================== Volunteer ======================>
@@ -349,8 +350,12 @@ class _HomeSideDrawerState extends State<HomeSideDrawer> {
                           icon: Icons.logout,
                           isTablet: isTablet,
                           onTap: () {
+
                             Navigator.pop(context);
+
                             Get.offNamed(AppRoutes.loginScreen);
+
+                            SharePrefsHelper.remove(AppConstants.bearerToken);
                           }),
                     ],
                   ),
