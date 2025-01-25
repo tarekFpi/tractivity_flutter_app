@@ -22,8 +22,8 @@ class SpecificIdEventsResponeModel {
   DateTime? date;
   String? mode;
   String? status;
-  List<InvitedVolunteer>? invitedVolunteer;
-  List<dynamic>? joinedVolunteer;
+  List<EdVolunteer>? invitedVolunteer;
+  List<EdVolunteer>? joinedVolunteer;
   DateTime? createdAt;
   DateTime? updatedAt;
   int? v;
@@ -63,8 +63,8 @@ class SpecificIdEventsResponeModel {
     date: json["date"] == null ? null : DateTime.parse(json["date"]),
     mode: json["mode"],
     status: json["status"],
-    invitedVolunteer: json["invitedVolunteer"] == null ? [] : List<InvitedVolunteer>.from(json["invitedVolunteer"]!.map((x) => InvitedVolunteer.fromJson(x))),
-    joinedVolunteer: json["joinedVolunteer"] == null ? [] : List<dynamic>.from(json["joinedVolunteer"]!.map((x) => x)),
+    invitedVolunteer: json["invitedVolunteer"] == null ? [] : List<EdVolunteer>.from(json["invitedVolunteer"]!.map((x) => EdVolunteer.fromJson(x))),
+    joinedVolunteer: json["joinedVolunteer"] == null ? [] : List<EdVolunteer>.from(json["joinedVolunteer"]!.map((x) => EdVolunteer.fromJson(x))),
     createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
     updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
     v: json["__v"],
@@ -85,7 +85,7 @@ class SpecificIdEventsResponeModel {
     "mode": mode,
     "status": status,
     "invitedVolunteer": invitedVolunteer == null ? [] : List<dynamic>.from(invitedVolunteer!.map((x) => x.toJson())),
-    "joinedVolunteer": joinedVolunteer == null ? [] : List<dynamic>.from(joinedVolunteer!.map((x) => x)),
+    "joinedVolunteer": joinedVolunteer == null ? [] : List<dynamic>.from(joinedVolunteer!.map((x) => x.toJson())),
     "createdAt": createdAt?.toIso8601String(),
     "updatedAt": updatedAt?.toIso8601String(),
     "__v": v,
@@ -140,15 +140,15 @@ class Creator {
   };
 }
 
-class InvitedVolunteer {
+class EdVolunteer {
   StartInfo? startInfo;
-  String? volunteer;
+  Volunteer? volunteer;
   String? workTitle;
   String? workStatus;
   int? totalWorkedHour;
   String? id;
 
-  InvitedVolunteer({
+  EdVolunteer({
     this.startInfo,
     this.volunteer,
     this.workTitle,
@@ -157,9 +157,9 @@ class InvitedVolunteer {
     this.id,
   });
 
-  factory InvitedVolunteer.fromJson(Map<String, dynamic> json) => InvitedVolunteer(
+  factory EdVolunteer.fromJson(Map<String, dynamic> json) => EdVolunteer(
     startInfo: json["startInfo"] == null ? null : StartInfo.fromJson(json["startInfo"]),
-    volunteer: json["volunteer"],
+    volunteer: json["volunteer"] == null ? null : Volunteer.fromJson(json["volunteer"]),
     workTitle: json["workTitle"],
     workStatus: json["workStatus"],
     totalWorkedHour: json["totalWorkedHour"],
@@ -168,7 +168,7 @@ class InvitedVolunteer {
 
   Map<String, dynamic> toJson() => {
     "startInfo": startInfo?.toJson(),
-    "volunteer": volunteer,
+    "volunteer": volunteer?.toJson(),
     "workTitle": workTitle,
     "workStatus": workStatus,
     "totalWorkedHour": totalWorkedHour,
@@ -192,11 +192,39 @@ class StartInfo {
   };
 }
 
+class Volunteer {
+  String? id;
+  String? fullName;
+  String? profession;
+  String? image;
+
+  Volunteer({
+    this.id,
+    this.fullName,
+    this.profession,
+    this.image,
+  });
+
+  factory Volunteer.fromJson(Map<String, dynamic> json) => Volunteer(
+    id: json["_id"],
+    fullName: json["fullName"],
+    profession: json["profession"],
+    image: json["image"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "_id": id,
+    "fullName": fullName,
+    "profession": profession,
+    "image": image,
+  };
+}
+
 class MissionId {
   String? id;
   String? name;
   List<ConnectedOrganization>? connectedOrganizations;
-  List<ConnectedOrganizer>? connectedOrganizers;
+  List<Volunteer>? connectedOrganizers;
 
   MissionId({
     this.id,
@@ -209,7 +237,7 @@ class MissionId {
     id: json["_id"],
     name: json["name"],
     connectedOrganizations: json["connectedOrganizations"] == null ? [] : List<ConnectedOrganization>.from(json["connectedOrganizations"]!.map((x) => ConnectedOrganization.fromJson(x))),
-    connectedOrganizers: json["connectedOrganizers"] == null ? [] : List<ConnectedOrganizer>.from(json["connectedOrganizers"]!.map((x) => ConnectedOrganizer.fromJson(x))),
+    connectedOrganizers: json["connectedOrganizers"] == null ? [] : List<Volunteer>.from(json["connectedOrganizers"]!.map((x) => Volunteer.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -237,29 +265,5 @@ class ConnectedOrganization {
   Map<String, dynamic> toJson() => {
     "_id": id,
     "name": name,
-  };
-}
-
-class ConnectedOrganizer {
-  String? id;
-  String? fullName;
-  String? image;
-
-  ConnectedOrganizer({
-    this.id,
-    this.fullName,
-    this.image,
-  });
-
-  factory ConnectedOrganizer.fromJson(Map<String, dynamic> json) => ConnectedOrganizer(
-    id: json["_id"],
-    fullName: json["fullName"],
-    image: json["image"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "_id": id,
-    "fullName": fullName,
-    "image": image,
   };
 }

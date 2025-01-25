@@ -16,6 +16,7 @@ import 'package:tractivity_app/view/screens/adminstrator_home_screen/alert_dialo
 import 'package:tractivity_app/view/screens/home_screen/exolore_event_screen/inner_widget/custom_explore_container.dart';
 import 'package:tractivity_app/view/screens/home_screen/homepage_drawer.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_controller/organizer_controller.dart';
+import 'package:tractivity_app/view/screens/profile_screen/user_profile_screen.dart';
 
 class OrganizerHomeScreen extends StatefulWidget {
    OrganizerHomeScreen({super.key});
@@ -66,50 +67,7 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
           child: Column(
             children: [
 
-              GestureDetector(
-                onTap: (){
-                  Get.toNamed(AppRoutes.userEventProfile);
-                },
-                child: Row(
-                  children: [
-                    CustomNetworkImage(
-                      imageUrl: AppConstants.profileImage,
-                      height: 100.h,
-                      width: 100.w,
-                      boxShape: BoxShape.circle,
-                      border: Border.all(color: AppColors.primary, width: 3),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomText(
-                          text: "Mehedi Bin Ab. Salam",
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.location_on,
-                              color: AppColors.primary,
-                              size: 20,
-                            ),
-                            CustomText(
-                              text: "Bushwick Brooklyn, NY, USA",
-                              fontSize: 12,
-                              color: AppColors.primary,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ],
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
+              UserProfileScreen(),
 
               ///=============== Recemt Events Tab Bar ===============
               SizedBox(height: 16,),

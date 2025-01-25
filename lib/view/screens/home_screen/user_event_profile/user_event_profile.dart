@@ -11,6 +11,7 @@ import 'package:tractivity_app/view/components/custom_royel_appbar/custom_royel_
 import 'package:tractivity_app/view/components/custom_tab_selected/custom_tab_selected.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/events_controller/events_controller.dart';
+import 'package:tractivity_app/view/screens/profile_screen/user_profile_screen.dart';
 
 class UserEventProfile extends StatefulWidget {
   const UserEventProfile({super.key});
@@ -39,46 +40,8 @@ class _UserEventProfileState extends State<UserEventProfile> {
               children: [
           
                 ///================= Profile Image , Name and Location
-                Row(
-                  children: [
-                    CustomNetworkImage(
-                      imageUrl: AppConstants.profileImage,
-                      height: isTablet ? 120.h : 100.h,
-                      width: isTablet ? 120.w : 100.w,
-                      boxShape: BoxShape.circle,
-                      border: Border.all(color: AppColors.primary, width: 3),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomText(
-                          text: "Mehedi Bin Ab. Salam",
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.location_on,
-                              color: AppColors.primary,
-                              size: 20,
-                            ),
-                            CustomText(
-                              text: "Bushwick Brooklyn, NY, USA",
-                              fontSize: 12,
-                              color: AppColors.primary,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ],
-                        ),
-          
-                      ],
-                    )
-                  ],
-                ),
+                UserProfileScreen(),
+
                 SizedBox(height: 15,),
                 Row(
                   children: [
@@ -140,14 +103,17 @@ class _UserEventProfileState extends State<UserEventProfile> {
                                 children: [
           
                                   SizedBox(
-                                    width: 150.w,
-                                    child: CustomText(
-                                      textAlign: TextAlign.start,
-                                      text: "Cox’s Bazar Beach Helping Peolple",
-                                      maxLines: 3,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      bottom: 5,
+                                    width: 140.w,
+                                    child: Expanded(
+                                      child: CustomText(
+                                        textAlign: TextAlign.start,
+                                        text: "Cox’s Bazar Beach Helping Peolple",
+                                        maxLines: 3,
+                                        fontSize:isTablet?6.sp: 14.sp,
+                                        fontWeight: FontWeight.w500,
+                                        bottom: 5,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
                                     ),
                                   ),
                                   /// Location
@@ -158,11 +124,17 @@ class _UserEventProfileState extends State<UserEventProfile> {
                                         color: AppColors.black,
                                         size: 20,
                                       ),
-                                      CustomText(
-                                        text: "Cox’s Bazar, Bangladesh",
-                                        fontSize: 12,
-                                        color: AppColors.black_80,
-                                        fontWeight: FontWeight.w400,
+                                      SizedBox(
+                                        width: 140.w,
+                                        child: CustomText(
+                                          text: "Cox’s Bazar, Bangladesh",
+                                          maxLines: 3,
+                                          fontSize:isTablet?6.sp: 14.sp,
+                                          color: AppColors.black_80,
+                                          fontWeight: FontWeight.w400,
+                                          overflow: TextOverflow.ellipsis,
+                                         textAlign: TextAlign.start,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -180,18 +152,18 @@ class _UserEventProfileState extends State<UserEventProfile> {
                                       ),
                                       CustomText(
                                         text: "Mehedi",
-                                        fontSize: 14,
+                                        fontSize:isTablet?6.sp: 14.sp,
                                         color: AppColors.black,
                                         fontWeight: FontWeight.w600,
                                         right: 10.w,
                                         left: 10.w,
                                       ),
-                                      CustomText(
+                                    /*  CustomText(
                                         text: "Leader",
-                                        fontSize: 14,
+                                        fontSize:isTablet?6.sp: 14.sp,
                                         color: AppColors.blue,
                                         fontWeight: FontWeight.w600,
-                                      ),
+                                      ),*/
                                     ],
                                   ),
                                   SizedBox(

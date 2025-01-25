@@ -67,4 +67,7 @@ class ApiUrl {
 ///===================== retrive Specific event by Id event show =====================
 
   static String retriveBySpecificEventList ({required String eventId}) =>"/organizer/event/retrive/$eventId";
+
+  ///===================== retrive user profile show by user Id  =====================
+  static String retriveUserProfile ({required String userId}) =>"/user/retrive/$userId";
 }

@@ -17,6 +17,7 @@ import 'package:tractivity_app/view/screens/home_screen/exolore_event_screen/inn
 import 'package:tractivity_app/view/screens/home_screen/homepage_drawer.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_controller/organizer_controller.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_invite_mission_screen/%20inner_widget/custom_invite_mission_container.dart';
+import 'package:tractivity_app/view/screens/profile_screen/user_profile_screen.dart';
 
 class OrganizerInviteMissionScreen extends StatefulWidget {
   const OrganizerInviteMissionScreen({super.key});
@@ -55,50 +56,7 @@ class _OrganizerInviteMissionScreenState extends State<OrganizerInviteMissionScr
           child: Column(
             children: [
 
-              GestureDetector(
-                onTap: (){
-                  Get.toNamed(AppRoutes.userEventProfile);
-                },
-                child: Row(
-                  children: [
-                    CustomNetworkImage(
-                      imageUrl: AppConstants.profileImage,
-                      height: 100,
-                      width: 100,
-                      boxShape: BoxShape.circle,
-                      border: Border.all(color: AppColors.primary, width: 3),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomText(
-                          text: "Mehedi Bin Ab. Salam",
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.location_on,
-                              color: AppColors.primary,
-                              size: 20,
-                            ),
-                            CustomText(
-                              text: "Bushwick Brooklyn, NY, USA",
-                              fontSize: 12,
-                              color: AppColors.primary,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ],
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
+              UserProfileScreen(),
 
               ///=============== Invite Mission Event List Tab Bar ===============
               SizedBox(

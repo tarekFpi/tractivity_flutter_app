@@ -202,12 +202,12 @@ class   AppStrings {
   static const String addEvent = "Add Event";
   //static const String done = "Done";
   static const String allMember = "All Member";
-  static const String member = "Member";
+  static const String member = "Member";// Volunteer
   static const String history = "History";
   static const String exploreEvent = "Explore Event";
   static const String donation = "Donation";
   static const String completeEvent = "Completed Events";
-  static const String recentEvents = "Recent Events";
+  static const String recentEvents = "Running Events";
   static const String inviteEvent = "Invite Event";
   static const String eventListText = "Event List";
 

@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:open_file/open_file.dart';
@@ -50,6 +51,8 @@ class AdministratiorController extends GetxController {
 
   var addressList = <String>[].obs;
 
+  var getSingladdress = "Fetching address...".obs;
+
  ///var addressList = <String>{}.obs;
 
   Future<String> getAddressFromLatLng(double latitude, double longitude) async {
@@ -65,6 +68,8 @@ class AdministratiorController extends GetxController {
         ///Construct the address from the placemark
         String address =
             '${place.street}, ${place.locality}, ${place.administrativeArea}, ${place.country}';
+
+        getSingladdress.value=address;
 
         addressList.add(address);
       //  debugPrint("address:${address}");
@@ -597,74 +602,57 @@ class AdministratiorController extends GetxController {
 
   ///===================== retrive Specific event by Id event download  =====================
 
+  void startDownload(String url ,String fileName) async {
 
-  Future<void> downloadPdf(String url) async {
+    String filePath = await downloadPDF(url, fileName);
+
+    if (filePath.isNotEmpty) {
+      await showDownloadNotification(filePath);
+    }
+  }
+
+  Future<void> showDownloadNotification(String filePath) async {
+
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+    AndroidNotificationDetails(
+      'pdf_download_channel',
+      'PDF Downloads',
+      channelDescription: 'Notifications for PDF downloads',
+      importance: Importance.high,
+      priority: Priority.high,
+    );
+
+    const NotificationDetails platformChannelSpecifics =
+    NotificationDetails(android: androidPlatformChannelSpecifics);
+
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      'Download Complete',
+      'Tap to open PDF',
+      platformChannelSpecifics,
+      payload: filePath,
+    );
+  }
+
+
+  Future<String> downloadPDF(String url, String fileName) async {
     try {
-      final dir = await getApplicationDocumentsDirectory();
-      String filePath = "${dir.path}/${url.split('/').last}";
+      Directory tempDir = await getApplicationDocumentsDirectory();
+      String filePath = '${tempDir.path}/$fileName';
 
       await Dio().download(url, filePath);
-      ScaffoldMessenger.of(Get.context! ).showSnackBar(
-        SnackBar(content: Text("Downloaded: ${filePath}")),
-      );
 
-      OpenFile.open(filePath);
+      return filePath;
     } catch (e) {
-      ScaffoldMessenger.of(Get.context!).showSnackBar(
-        SnackBar(content: Text("Error downloading PDF")),
-      );
+      print('Download error: $e');
+      return '';
     }
   }
 
-  Future<bool> saveFile(String url, String fileName) async {
-    try {
-      if (await _requestPermission(Permission.storage)) {
-        Directory? directory;
-        directory = await getExternalStorageDirectory();
-        String newPath = "";
-        List<String> paths = directory!.path.split("/");
-        for (int x = 1; x < paths.length; x++) {
-          String folder = paths[x];
-          if (folder != "Android") {
-            newPath += "/" + folder;
-          } else {
-            break;
-          }
-        }
-        newPath = newPath + "/PDF_Download";
-        directory = Directory(newPath);
 
-        File saveFile = File(directory.path + "/$fileName");
-        if (kDebugMode) {
-          print(saveFile.path);
-        }
-        if (!await directory.exists()) {
-          await directory.create(recursive: true);
-        }
-        if (await directory.exists()) {
-          await Dio().download(
-            url,
-            saveFile.path,
-          );
-        }
-      }
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
-  Future<bool> _requestPermission(Permission permission) async {
-    if (await permission.isGranted) {
-      return true;
-    } else {
-      var result = await permission.request();
-      if (result == PermissionStatus.granted) {
-        return true;
-      }
-    }
-    return false;
-  }
 
   @override
   void onInit() {

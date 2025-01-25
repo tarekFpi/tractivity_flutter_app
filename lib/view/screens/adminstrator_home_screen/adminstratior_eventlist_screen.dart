@@ -88,6 +88,18 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                       height: 24,
                     ),
 
+                    administratorController.missionByEventShowList.value.isEmpty?
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height/2,
+                      child: Center(
+                        child: CustomText(
+                          text: "No Event yet!!",
+                          fontSize:isTablet?12.sp: 24.sp,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.lightRed,
+                        ),
+                      ),
+                    ):
                     administratorController.missionByEventShowLoading.value?CustomLoader():
                     Column(
                         children: List.generate(administratorController.missionByEventShowList.length, (index) {
@@ -154,6 +166,7 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                                     const SizedBox(
                                       height: 5,
                                     ),
+
                                     /// Leader
                                     Row(
                                       children: [
