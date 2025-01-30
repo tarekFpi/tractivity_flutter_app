@@ -38,7 +38,7 @@ class CustomTabSingleText extends StatelessWidget {
         ),
       ),
       padding: isPadding!
-          ? const EdgeInsets.symmetric(horizontal: 22)
+          ? const EdgeInsets.symmetric(horizontal: 8)
           : const EdgeInsets.symmetric(horizontal: 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

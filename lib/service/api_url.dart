@@ -70,4 +70,17 @@ class ApiUrl {
 
   ///===================== retrive user profile show by user Id  =====================
   static String retriveUserProfile ({required String userId}) =>"/user/retrive/$userId";
+
+
+///=========================== organizer api all  ===========================
+
+
+  ///===================== retrive Complelete by user Id  =====================
+
+  static String retriveCompleleteProfile ({required String userId}) =>"/organizer/event/retrive/organizer/$userId?status=deliveried";
+
+
+  ///===================== retrive running by user Id  =================================
+  static String retriveRunningProfile ({required String userId}) =>"/organizer/event/retrive/organizer/$userId?status=running";
+
 }

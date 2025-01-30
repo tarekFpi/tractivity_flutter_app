@@ -15,8 +15,9 @@ import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen
 class FriendScreen extends StatelessWidget {
   FriendScreen({super.key});
 
-  final EventsController eventsController = Get.find<EventsController>();
+  final EventsController eventsController = Get.put(EventsController());
 
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
