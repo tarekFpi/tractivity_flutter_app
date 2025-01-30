@@ -22,6 +22,7 @@ import 'package:tractivity_app/view/screens/adminstrator_home_screen/alert_dialo
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/controller/administratior_controller.dart';
 import 'package:tractivity_app/view/screens/home_screen/homepage_drawer.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_controller/organizer_controller.dart';
+import 'package:tractivity_app/view/screens/profile_screen/user_profile_screen.dart';
 class AdminstratorHomeScreen extends StatefulWidget {
   const AdminstratorHomeScreen({super.key});
 
@@ -79,53 +80,61 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
             )
           ],
         ),
-        body: Obx(
-                () {
+        body: Obx(() {
+
               return SingleChildScrollView(
                 child: Padding(
                   padding:   EdgeInsets.symmetric(horizontal: 8,vertical: isTablet?28:0),
                   child: Column(
                     children: [
 
-                      Row(
-                        children: [
-                          CustomNetworkImage(
-                            imageUrl: AppConstants.profileImage,
-                            height: 100.h,
-                            width: 100.w,
-                            boxShape: BoxShape.circle,
-                            border: Border.all(color: AppColors.primary, width: 3),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              CustomText(
-                                text: "Mehedi Bin Ab. Salam",
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.location_on,
-                                    color: AppColors.primary,
-                                    size: 20,
-                                  ),
-                                  CustomText(
-                                    text: "Bushwick Brooklyn, NY, USA",
-                                    fontSize: 12,
-                                    color: AppColors.primary,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ],
-                              )
-                            ],
-                          )
-                        ],
-                      ),
+                      UserProfileScreen(),
+
+                     /* GestureDetector(
+                        onTap: (){
+
+                          Get.toNamed(AppRoutes.userEventProfile);
+                        },
+                        child: Row(
+                          children: [
+                            CustomNetworkImage(
+                              imageUrl: AppConstants.profileImage,
+                              height: 100.h,
+                              width: 100.w,
+                              boxShape: BoxShape.circle,
+                              border: Border.all(color: AppColors.primary, width: 3),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CustomText(
+                                  text: "Mehedi Bin Ab. Salam",
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.location_on,
+                                      color: AppColors.primary,
+                                      size: 20,
+                                    ),
+                                    CustomText(
+                                      text: "Bushwick Brooklyn, NY, USA",
+                                      fontSize: 12,
+                                      color: AppColors.primary,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ],
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      ),*/
 
                       ///=============== Recemt Events Tab Bar ===============
 
@@ -149,6 +158,18 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                       ///============ Recent  Event ========
                       if(organizerController.adminstratior_currentIndex.value==0)
 
+                        administratorController.organizationShowList.isEmpty?
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height/2,
+                          child: Center(
+                            child: CustomText(
+                              text: "No organization  yet!!",
+                              fontSize:isTablet?12.sp: 24.sp,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.lightRed,
+                            ),
+                          ),
+                        ):
                         administratorController.organizationShowLoading.value?CustomLoader():
                         Column(
                             children: List.generate(administratorController.organizationShowList.length, (index) {
@@ -218,11 +239,66 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                               ),
                                             ),
 
-                                            administratorController.organizationDeleteLoading.value?CircularProgressIndicator(color: AppColors.primary,):
+
                                             CustomButton(
                                               onTap: () {
 
-                                                administratorController.organizationDelete("${model.id}");
+
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (ctx) => AlertDialog(
+                                                    backgroundColor: Colors.white,
+                                                    insetPadding: EdgeInsets.all(8),
+                                                    contentPadding: EdgeInsets.all(8),
+                                                    title: SizedBox(),
+                                                    content: SizedBox(
+                                                      width: MediaQuery.sizeOf(context).width,
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.all(8.0),
+                                                        child: Column(
+                                                          mainAxisSize: MainAxisSize.min,
+                                                          children: [
+
+                                                            const CustomText(
+                                                              text:"Are you sure you want to \n delete ?",
+                                                              fontSize: 22,
+                                                              fontWeight: FontWeight.w600,
+                                                              color: AppColors.black_80,
+                                                            ),
+
+                                                            SizedBox(
+                                                              height: 8.h,
+                                                            ),
+
+                                                            administratorController.organizationDeleteLoading.value?CircularProgressIndicator(color: AppColors.primary,):
+                                                            CustomButton(onTap: (){
+
+
+                                                              administratorController.organizationDelete("${model.id}");
+                                                              if(administratorController.organizationDeleteLoading.value){
+                                                                Navigator.of(context).pop();
+                                                              }
+
+                                                            },title:"Yes",height:isTablet?70.h: 45.h,fontSize: 12.sp,),
+
+                                                            SizedBox(
+                                                              height: 12.h,
+                                                            ),
+                                                            CustomButton(onTap: (){
+                                                              Navigator.of(context).pop();
+                                                            },title:"NO",height:isTablet?70.h: 45.h,
+                                                              fontSize: 12.sp,fillColor: AppColors.white,
+                                                              textColor: AppColors.primary,
+                                                              isBorder: true,borderWidth: 1,)
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      //  child: AlertDialogEvent(title: "Are you sure you want to \n delete ?",discription: "",),
+                                                    ),
+                                                  ),
+                                                );
+
+
                                               },
                                               title: "Delete",
                                               width: 60.w,
@@ -243,6 +319,19 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
 
 
                       if(organizerController.adminstratior_currentIndex.value==1)
+
+                        administratorController.missionShowList.isEmpty?
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height/2,
+                          child: Center(
+                            child: CustomText(
+                              text: "No mission  yet!!",
+                              fontSize:isTablet?12.sp: 24.sp,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.lightRed,
+                            ),
+                          ),
+                        ):
                         Column(
                             children: List.generate(administratorController.missionShowList.length, (index) {
 
@@ -374,7 +463,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                 ),
 
                                                 SizedBox(
-                                                  height:isTablet?12.h: 8.h,
+                                                  height:isTablet?16.h: 12.h,
                                                 ),
 
                                                 CustomButton(

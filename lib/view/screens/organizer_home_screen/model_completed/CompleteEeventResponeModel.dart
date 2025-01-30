@@ -1,18 +1,18 @@
 // To parse this JSON data, do
 //
-//     final specificIdEventsResponeModel = specificIdEventsResponeModelFromJson(jsonString);
+//     final completeEeventResponeModel = completeEeventResponeModelFromJson(jsonString);
 
 import 'dart:convert';
 
-SpecificIdEventsResponeModel specificIdEventsResponeModelFromJson(String str) => SpecificIdEventsResponeModel.fromJson(json.decode(str));
+CompleteEeventResponeModel completeEeventResponeModelFromJson(String str) => CompleteEeventResponeModel.fromJson(json.decode(str));
 
-String specificIdEventsResponeModelToJson(SpecificIdEventsResponeModel data) => json.encode(data.toJson());
+String completeEeventResponeModelToJson(CompleteEeventResponeModel data) => json.encode(data.toJson());
 
-class SpecificIdEventsResponeModel {
+class CompleteEeventResponeModel {
   Creator? creator;
   Cords? cords;
   String? id;
-  MissionId? missionId;
+  String? missionId;
   String? name;
   String? description;
   List<String>? images;
@@ -22,13 +22,13 @@ class SpecificIdEventsResponeModel {
   DateTime? date;
   String? mode;
   String? status;
-  List<EdVolunteer>? invitedVolunteer;
-  List<EdVolunteer>? joinedVolunteer;
+  List<InvitedVolunteer>? invitedVolunteer;
+  List<dynamic>? joinedVolunteer;
   DateTime? createdAt;
   DateTime? updatedAt;
   int? v;
 
-  SpecificIdEventsResponeModel({
+  CompleteEeventResponeModel({
     this.creator,
     this.cords,
     this.id,
@@ -49,11 +49,11 @@ class SpecificIdEventsResponeModel {
     this.v,
   });
 
-  factory SpecificIdEventsResponeModel.fromJson(Map<String, dynamic> json) => SpecificIdEventsResponeModel(
+  factory CompleteEeventResponeModel.fromJson(Map<String, dynamic> json) => CompleteEeventResponeModel(
     creator: json["creator"] == null ? null : Creator.fromJson(json["creator"]),
     cords: json["cords"] == null ? null : Cords.fromJson(json["cords"]),
     id: json["_id"],
-    missionId: json["missionId"] == null ? null : MissionId.fromJson(json["missionId"]),
+    missionId: json["missionId"],
     name: json["name"],
     description: json["description"],
     images: json["images"] == null ? [] : List<String>.from(json["images"]!.map((x) => x)),
@@ -63,8 +63,8 @@ class SpecificIdEventsResponeModel {
     date: json["date"] == null ? null : DateTime.parse(json["date"]),
     mode: json["mode"],
     status: json["status"],
-    invitedVolunteer: json["invitedVolunteer"] == null ? [] : List<EdVolunteer>.from(json["invitedVolunteer"]!.map((x) => EdVolunteer.fromJson(x))),
-    joinedVolunteer: json["joinedVolunteer"] == null ? [] : List<EdVolunteer>.from(json["joinedVolunteer"]!.map((x) => EdVolunteer.fromJson(x))),
+    invitedVolunteer: json["invitedVolunteer"] == null ? [] : List<InvitedVolunteer>.from(json["invitedVolunteer"]!.map((x) => InvitedVolunteer.fromJson(x))),
+    joinedVolunteer: json["joinedVolunteer"] == null ? [] : List<dynamic>.from(json["joinedVolunteer"]!.map((x) => x)),
     createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
     updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
     v: json["__v"],
@@ -74,7 +74,7 @@ class SpecificIdEventsResponeModel {
     "creator": creator?.toJson(),
     "cords": cords?.toJson(),
     "_id": id,
-    "missionId": missionId?.toJson(),
+    "missionId": missionId,
     "name": name,
     "description": description,
     "images": images == null ? [] : List<dynamic>.from(images!.map((x) => x)),
@@ -85,7 +85,7 @@ class SpecificIdEventsResponeModel {
     "mode": mode,
     "status": status,
     "invitedVolunteer": invitedVolunteer == null ? [] : List<dynamic>.from(invitedVolunteer!.map((x) => x.toJson())),
-    "joinedVolunteer": joinedVolunteer == null ? [] : List<dynamic>.from(joinedVolunteer!.map((x) => x.toJson())),
+    "joinedVolunteer": joinedVolunteer == null ? [] : List<dynamic>.from(joinedVolunteer!.map((x) => x)),
     "createdAt": createdAt?.toIso8601String(),
     "updatedAt": updatedAt?.toIso8601String(),
     "__v": v,
@@ -140,15 +140,15 @@ class Creator {
   };
 }
 
-class EdVolunteer {
+class InvitedVolunteer {
   StartInfo? startInfo;
-  Volunteer? volunteer;
+  String? volunteer;
   String? workTitle;
   String? workStatus;
   int? totalWorkedHour;
   String? id;
 
-  EdVolunteer({
+  InvitedVolunteer({
     this.startInfo,
     this.volunteer,
     this.workTitle,
@@ -157,9 +157,9 @@ class EdVolunteer {
     this.id,
   });
 
-  factory EdVolunteer.fromJson(Map<String, dynamic> json) => EdVolunteer(
+  factory InvitedVolunteer.fromJson(Map<String, dynamic> json) => InvitedVolunteer(
     startInfo: json["startInfo"] == null ? null : StartInfo.fromJson(json["startInfo"]),
-    volunteer: json["volunteer"] == null ? null : Volunteer.fromJson(json["volunteer"]),
+    volunteer: json["volunteer"],
     workTitle: json["workTitle"],
     workStatus: json["workStatus"],
     totalWorkedHour: json["totalWorkedHour"],
@@ -168,7 +168,7 @@ class EdVolunteer {
 
   Map<String, dynamic> toJson() => {
     "startInfo": startInfo?.toJson(),
-    "volunteer": volunteer?.toJson(),
+    "volunteer": volunteer,
     "workTitle": workTitle,
     "workStatus": workStatus,
     "totalWorkedHour": totalWorkedHour,
@@ -189,81 +189,5 @@ class StartInfo {
 
   Map<String, dynamic> toJson() => {
     "isStart": isStart,
-  };
-}
-
-class Volunteer {
-  String? id;
-  String? fullName;
-  String? profession;
-  String? image;
-
-  Volunteer({
-    this.id,
-    this.fullName,
-    this.profession,
-    this.image,
-  });
-
-  factory Volunteer.fromJson(Map<String, dynamic> json) => Volunteer(
-    id: json["_id"],
-    fullName: json["fullName"],
-    profession: json["profession"],
-    image: json["image"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "_id": id,
-    "fullName": fullName,
-    "profession": profession,
-    "image": image,
-  };
-}
-
-class MissionId {
-  String? id;
-  String? name;
-  List<ConnectedOrganization>? connectedOrganizations;
-  List<Volunteer>? connectedOrganizers;
-
-  MissionId({
-    this.id,
-    this.name,
-    this.connectedOrganizations,
-    this.connectedOrganizers,
-  });
-
-  factory MissionId.fromJson(Map<String, dynamic> json) => MissionId(
-    id: json["_id"],
-    name: json["name"],
-    connectedOrganizations: json["connectedOrganizations"] == null ? [] : List<ConnectedOrganization>.from(json["connectedOrganizations"]!.map((x) => ConnectedOrganization.fromJson(x))),
-    connectedOrganizers: json["connectedOrganizers"] == null ? [] : List<Volunteer>.from(json["connectedOrganizers"]!.map((x) => Volunteer.fromJson(x))),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "_id": id,
-    "name": name,
-    "connectedOrganizations": connectedOrganizations == null ? [] : List<dynamic>.from(connectedOrganizations!.map((x) => x.toJson())),
-    "connectedOrganizers": connectedOrganizers == null ? [] : List<dynamic>.from(connectedOrganizers!.map((x) => x.toJson())),
-  };
-}
-
-class ConnectedOrganization {
-  String? id;
-  String? name;
-
-  ConnectedOrganization({
-    this.id,
-    this.name,
-  });
-
-  factory ConnectedOrganization.fromJson(Map<String, dynamic> json) => ConnectedOrganization(
-    id: json["_id"],
-    name: json["name"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "_id": id,
-    "name": name,
   };
 }

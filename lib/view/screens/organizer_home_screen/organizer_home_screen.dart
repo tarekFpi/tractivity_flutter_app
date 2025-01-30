@@ -5,9 +5,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
+import 'package:tractivity_app/service/api_url.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
+import 'package:tractivity_app/view/components/custom_loader/custom_loader.dart';
 import 'package:tractivity_app/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tractivity_app/view/components/custom_tab_selected/custom_tab_single_text.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
@@ -16,6 +18,7 @@ import 'package:tractivity_app/view/screens/adminstrator_home_screen/alert_dialo
 import 'package:tractivity_app/view/screens/home_screen/exolore_event_screen/inner_widget/custom_explore_container.dart';
 import 'package:tractivity_app/view/screens/home_screen/homepage_drawer.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_controller/organizer_controller.dart';
+import 'package:tractivity_app/view/screens/profile_screen/user_profile_screen.dart';
 
 class OrganizerHomeScreen extends StatefulWidget {
    OrganizerHomeScreen({super.key});
@@ -31,6 +34,8 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
   final OrganizerController organizerController = Get.find<OrganizerController>();
 
   final storage = GetStorage();
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -63,341 +68,352 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
         ),
         body: Padding(
           padding:   EdgeInsets.symmetric(horizontal: 16, vertical: isTablet?28:0),
-          child: Column(
-            children: [
+          child: Obx(
+             () {
+              return Column(
+                children: [
 
-              GestureDetector(
-                onTap: (){
-                  Get.toNamed(AppRoutes.userEventProfile);
-                },
-                child: Row(
-                  children: [
-                    CustomNetworkImage(
-                      imageUrl: AppConstants.profileImage,
-                      height: 100.h,
-                      width: 100.w,
-                      boxShape: BoxShape.circle,
-                      border: Border.all(color: AppColors.primary, width: 3),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  UserProfileScreen(),
+
+                  ///=============== Recemt Events Tab Bar ===============
+                  SizedBox(height: 16,),
+
+                  CustomTabSingleText(
+                      fontSize: isTablet?24:16,
+                      tabs: organizerController.nameList,
+                      selectedIndex: organizerController.currentIndex.value,
+                      onTabSelected: (value) {
+                        organizerController.currentIndex.value = value;
+                       /// setState(() {});
+                      },
+                      selectedColor: AppColors.primary,
+                      unselectedColor: AppColors.grey_1
+                  ),
+                  SizedBox(height: 16,),
+                  ///============ completed Event ========
+                  Expanded(
+                    child: ListView(
+                      shrinkWrap: true,
                       children: [
-                        CustomText(
-                          text: "Mehedi Bin Ab. Salam",
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.location_on,
-                              color: AppColors.primary,
-                              size: 20,
+                        if(organizerController.currentIndex.value ==0)
+
+                        organizerController.completeEventShowList.isEmpty?
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height/2,
+                          child: Center(
+                            child: CustomText(
+                              text: "No completed Event  yet!!",
+                              fontSize:isTablet?12.sp: 24.sp,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.lightRed,
                             ),
-                            CustomText(
-                              text: "Bushwick Brooklyn, NY, USA",
-                              fontSize: 12,
-                              color: AppColors.primary,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ],
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
+                          ),
+                        ):
+                       organizerController.completeEventShowLoading.value?CustomLoader():
+                          Column(
+                              children: List.generate(organizerController.completeEventShowList.length, (index) {
 
-              ///=============== Recemt Events Tab Bar ===============
-              SizedBox(height: 16,),
+                                final model = organizerController.completeEventShowList[index];
 
-              CustomTabSingleText(
-                  fontSize: isTablet?24:16,
-                  tabs: organizerController.nameList,
-                  selectedIndex: organizerController.currentIndex.value,
-                  onTabSelected: (value) {
-                    organizerController.currentIndex.value = value;
-                    setState(() {});
-                  },
-                  selectedColor: AppColors.primary,
-                  unselectedColor: AppColors.grey_1
-              ),
-              SizedBox(height: 16,),
-              ///============ Recent Event ========
-              Expanded(
-                child: ListView(
-                  shrinkWrap: true,
-                  children: [
-                    if(organizerController.currentIndex.value ==0)
-                      Column(
-                          children: List.generate(2, (index) {
+                                organizerController.getAddressFromLatLng(model.cords?.lat??0.0,model.cords?.lng??0.0);
 
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 20.0),
-                              child: Row(
-                                children: [
-
-                                  CustomNetworkImage(
-                                    imageUrl: AppConstants.eventImage,
-                                    height:isTablet?200.h: 170.h,
-                                    width: isTablet?180.w: 170.w,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 20.0),
+                                  child: Row(
                                     children: [
-                                      SizedBox(
-                                        width: 150.w,
-                                        child: CustomText(
-                                          textAlign: TextAlign.start,
-                                          text: "Cox’s Bazar Beach Helping Peolple",
-                                          maxLines: 3,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                          bottom: 5,
-                                        ),
-                                      ),
-                                      /// Location
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.location_on,
-                                            color: AppColors.black,
-                                            size: 20,
-                                          ),
-                                          CustomText(
-                                            text: "Cox’s Bazar, Bangladesh",
-                                            fontSize: 12,
-                                            color: AppColors.black_80,
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      // Leader
-                                      Row(
-                                        children: [
-                                          CustomNetworkImage(
-                                            imageUrl: AppConstants.profileImage,
-                                            height: 30,
-                                            width: 30,
-                                            boxShape: BoxShape.circle,
-                                          ),
-                                          CustomText(
-                                            text: "Cox’s Bazar",
-                                            fontSize: 12,
-                                            color: AppColors.black,
-                                            fontWeight: FontWeight.w600,
-                                            right: 10.w,
-                                            left: 10.w,
-                                          ),
 
-                                        ],
+                                      CustomNetworkImage(
+                                        imageUrl:"${ApiUrl.imageUrl}${model.images?[0]}",
+                                        height:isTablet?200.h: 170.h,
+                                        width: isTablet?180.w: 170.w,
+                                        borderRadius: BorderRadius.circular(10),
                                       ),
 
                                       SizedBox(
-                                        height: 10,
+                                        width: 10,
                                       ),
 
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-
-                                          InkWell(
-                                            onTap: () {
-                                              Get.toNamed(AppRoutes.organizerRecentEventDetails);
-
-                                            },
-                                            child: Container(
-                                              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                                              decoration: BoxDecoration(
-                                                color: AppColors.primary,
-                                                borderRadius: BorderRadius.circular(10),
-                                              ),
-                                              child: CustomText(
-                                                text:"Explore",
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500,
-                                                color: AppColors.black,
-                                              ),
+                                          SizedBox(
+                                            width: 150.w,
+                                            child: CustomText(
+                                              textAlign: TextAlign.start,
+                                              text: "${model.name}",
+                                              maxLines: 3,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              bottom: 5,
                                             ),
                                           ),
-
-                                        ],
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            );
-                          })
-                      ),
-
-                    ///============ Complete Event ========
-                    if(organizerController.currentIndex.value ==1)
-
-                      Column(
-                          children: List.generate(5, (index) {
-
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 20.0),
-                              child: Row(
-                                children: [
-
-                                  CustomNetworkImage(
-                                    imageUrl: AppConstants.eventImage,
-                                    height:isTablet?200.h: 170.h,
-                                    width: isTablet?180.w: 170.w,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        width: 150.w,
-                                        child: CustomText(
-                                          textAlign: TextAlign.start,
-                                          text: "Cox’s Bazar Beach Helping Peolple",
-                                          maxLines: 3,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                          bottom: 5,
-                                        ),
-                                      ),
-                                      /// Location
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.location_on,
-                                            color: AppColors.black,
-                                            size: 20,
-                                          ),
-                                          CustomText(
-                                            text: "Cox’s Bazar, Bangladesh",
-                                            fontSize: 12,
-                                            color: AppColors.black_80,
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      // Leader
-                                      Row(
-                                        children: [
-
-                                          CustomNetworkImage(
-                                            imageUrl: AppConstants.profileImage,
-                                            height: 30,
-                                            width: 30,
-                                            boxShape: BoxShape.circle,
-                                          ),
-
-                                          CustomText(
-                                            text: "Cox’s Bazar",
-                                            fontSize: 12,
-                                            color: AppColors.black,
-                                            fontWeight: FontWeight.w600,
-                                            right: 10.w,
-                                            left: 10.w,
-                                          ),
-
-                                        ],
-                                      ),
-
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-
-                                          GestureDetector(
-                                            onTap: () {
-                                              Get.toNamed(AppRoutes.organizerRecentEventDetails);
-                                            },
-                                            child: Container(
-                                              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                                              decoration: BoxDecoration(
-                                                color: AppColors.primary,
-                                                borderRadius: BorderRadius.circular(10),
-                                              ),
-                                              child: CustomText(
-                                                text:"Explore",
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500,
+                                          /// Location
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.location_on,
                                                 color: AppColors.black,
+                                                size: 20,
                                               ),
-                                            ),
+                                              SizedBox(
+                                                width: 150.w,
+                                                child: CustomText(
+                                                  text: "${organizerController.addressList.isNotEmpty?organizerController.addressList[index]:""}",
+                                                  ///  text: "${administratorController.getAddressFromLatLng(model.cords?.lat??0.0,model.cords?.lng??0.0)}",
+                                                  fontSize: 12,
+                                                  color: AppColors.black_80,
+                                                  fontWeight: FontWeight.w400,
+                                                  maxLines: 3,
+                                                  textAlign: TextAlign.start,
+                                                  overflow: TextOverflow.clip,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          // Leader
+                                          Row(
+                                            children: [
+                                              CustomNetworkImage(
+                                               imageUrl: AppConstants.profileImage,
+                                                height: 30,
+                                                width: 30,
+                                                boxShape: BoxShape.circle,
+                                              ),
+                                              CustomText(
+                                                text: "${model.creator?.name}",
+                                                fontSize: 12,
+                                                color: AppColors.black,
+                                                fontWeight: FontWeight.w600,
+                                                right: 10.w,
+                                                left: 10.w,
+                                              ),
+
+                                            ],
                                           ),
 
                                           SizedBox(
-                                            width: 8,
+                                            height: 10,
                                           ),
 
-                                          GestureDetector(
-                                            onTap: () {
-                                              showDialog(
-                                                context: context,
-                                                builder: (ctx) => AlertDialog(
-                                                  backgroundColor: Colors.white,
-                                                  insetPadding: EdgeInsets.all(8),
-                                                  contentPadding: EdgeInsets.all(8),
-                                                  title: SizedBox(),
-                                                  content: SizedBox(
-                                                    width: MediaQuery.sizeOf(context).width,
-                                                    child: Padding(
-                                                      padding: const EdgeInsets.all(8.0),
-                                                      child: AlertDialogEvent(title: "Are you sure you want to \n Complete this Event?",discription: "",),
-                                                    ),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+
+                                              InkWell(
+                                                onTap: () {
+                                                  Get.toNamed(AppRoutes.organizerRecentEventDetails,
+                                                      arguments: [
+                                                        {
+                                                          "eventId":model.id
+                                                        }
+                                                      ]
+                                                  );
+
+                                                },
+                                                child: Container(
+                                                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                                  decoration: BoxDecoration(
+                                                    color: AppColors.primary,
+                                                    borderRadius: BorderRadius.circular(10),
+                                                  ),
+                                                  child: CustomText(
+                                                    text:"Explore",
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: AppColors.black,
                                                   ),
                                                 ),
-                                              );
-                                            },
-                                            child: Container(
-                                              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                                              decoration: BoxDecoration(
-                                                color: AppColors.primary,
-                                                borderRadius: BorderRadius.circular(10),
                                               ),
-                                              child: CustomText(
-                                                text:"Complete",
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500,
-                                                color: AppColors.black,
-                                              ),
-                                            ),
+
+                                            ],
                                           ),
                                         ],
-                                      ),
+                                      )
                                     ],
-                                  )
-                                ],
-                              ),
-                            );
-                          })
-                      ),
-                  ],
-                ),
-              )
-            ],
+                                  ),
+                                );
+                              })
+                          ),
+
+                        ///============ Complete Event ========
+                        if(organizerController.currentIndex.value ==1)
+
+                          Column(
+                              children: List.generate(organizerController.runningEventShowList.length, (index) {
+
+                                final model = organizerController.runningEventShowList[index];
+
+                                organizerController.getRunningAddressFromLatLng(model.cords?.lat??0.0,model.cords?.lng??0.0);
+
+
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 20.0),
+                                  child: Row(
+                                    children: [
+
+                                      CustomNetworkImage(
+                                        imageUrl:"${ApiUrl.imageUrl}${model.images?[0]}",
+                                        height:isTablet?200.h: 170.h,
+                                        width: isTablet?180.w: 170.w,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            width: 150.w,
+                                            child: CustomText(
+                                              textAlign: TextAlign.start,
+                                              text: "${model.name}",
+                                              maxLines: 3,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              bottom: 5,
+                                            ),
+                                          ),
+                                          /// Location
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.location_on,
+                                                color: AppColors.black,
+                                                size: 20,
+                                              ),
+                                              SizedBox(
+                                                width: 150.w,
+                                                child: CustomText(
+                                                  text: "${organizerController.addressRunningList.isNotEmpty?organizerController.addressList[index]:""}",
+                                                  ///  text: "${administratorController.getAddressFromLatLng(model.cords?.lat??0.0,model.cords?.lng??0.0)}",
+                                                  fontSize: 12,
+                                                  color: AppColors.black_80,
+                                                  fontWeight: FontWeight.w400,
+                                                  maxLines: 3,
+                                                  textAlign: TextAlign.start,
+                                                  overflow: TextOverflow.clip,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          // Leader
+                                          Row(
+                                            children: [
+
+                                              CustomNetworkImage(
+                                                imageUrl: AppConstants.profileImage,
+                                                height: 30,
+                                                width: 30,
+                                                boxShape: BoxShape.circle,
+                                              ),
+
+                                              CustomText(
+                                                text: "Cox’s Bazar",
+                                                fontSize: 12,
+                                                color: AppColors.black,
+                                                fontWeight: FontWeight.w600,
+                                                right: 10.w,
+                                                left: 10.w,
+                                              ),
+
+                                            ],
+                                          ),
+
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+
+                                              GestureDetector(
+                                                onTap: () {
+
+                                                  Get.toNamed(AppRoutes.organizerRecentEventDetails,
+                                                      arguments: [
+                                                        {
+                                                          "eventId":model.id
+                                                        }
+                                                      ]
+                                                  );
+                                                },
+                                                child: Container(
+                                                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                                  decoration: BoxDecoration(
+                                                    color: AppColors.primary,
+                                                    borderRadius: BorderRadius.circular(10),
+                                                  ),
+                                                  child: CustomText(
+                                                    text:"Explore",
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: AppColors.black,
+                                                  ),
+                                                ),
+                                              ),
+
+                                              SizedBox(
+                                                width: 8,
+                                              ),
+
+                                              GestureDetector(
+                                                onTap: () {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (ctx) => AlertDialog(
+                                                      backgroundColor: Colors.white,
+                                                      insetPadding: EdgeInsets.all(8),
+                                                      contentPadding: EdgeInsets.all(8),
+                                                      title: SizedBox(),
+                                                      content: SizedBox(
+                                                        width: MediaQuery.sizeOf(context).width,
+                                                        child: Padding(
+                                                          padding: const EdgeInsets.all(8.0),
+                                                          child: AlertDialogEvent(title: "Are you sure you want to \n Complete this Event?",discription: "",),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Container(
+                                                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                                  decoration: BoxDecoration(
+                                                    color: AppColors.primary,
+                                                    borderRadius: BorderRadius.circular(10),
+                                                  ),
+                                                  child: CustomText(
+                                                    text:"Complete",
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: AppColors.black,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                );
+                              })
+                          ),
+                      ],
+                    ),
+                  )
+                ],
+              );
+            }
           ),
         ),
         bottomNavigationBar: OrganizerNavbar(currentIndex: 0,),

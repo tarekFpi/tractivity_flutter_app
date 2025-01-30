@@ -7,12 +7,21 @@ class DateConverter {
     return DateFormat('dd MMM yyyy').format(dateTime);
   }
 
-  static String timeFormetString(String dateTimeStr) {
-    // Parse the input string to a DateTime object
-    DateTime dateTime = DateTime.parse(dateTimeStr);
+ static String timeFormetString(String? dateTimeStr) {
+    try {
+      if (dateTimeStr == null || dateTimeStr.isEmpty) {
+        throw FormatException("Input date is null or empty.");
+      }
 
-    // Format the DateTime object
-    return DateFormat('dd MMM yyyy').format(dateTime);
+      // Parse the input string to a DateTime object
+      DateTime dateTime = DateTime.parse(dateTimeStr);
+
+      // Format the DateTime object
+      return DateFormat('yyyy MMM dd').format(dateTime);
+    } catch (e) {
+      // Return a default message or handle the error
+      return 'Invalid date format';
+    }
   }
 
   ///=============== Calculate Time of Day ===============
