@@ -7,11 +7,13 @@ class HomeController extends GetxController{
   RxInt home_currentIndex = 0.obs;
 
   RxList<String> nameList = [
-    "Current Events",
-    "Organization",
+    "My Events",
+    "My Organization",
   ].obs;
 
+  RxBool donationStatues = false.obs;
 
+  RxBool isExpanded = false.obs;
 
 
 }

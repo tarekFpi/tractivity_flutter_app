@@ -12,6 +12,7 @@ class AppIcons {
   static const String users = "$basePath/users.svg";
   static const String pencilalt = "$basePath/pencil-alt.svg";
   static const String time = "$basePath/time.svg";
+  static const String donation = "$basePath/donation.svg";
 
   static const String google = "$basePath/google_icon.svg";
   static const String apple = "$basePath/apple_icon.svg";
@@ -27,7 +28,7 @@ class AppIcons {
   static const String uploadIcon = "$basePath/upload_icon.svg";
   static const String chart = "$basePath/chart.svg";
   static const String groupImage = "$basePath/group_image.png";
-
+  static const String event_notification = "$basePath/event_notification.svg";
 
 
 

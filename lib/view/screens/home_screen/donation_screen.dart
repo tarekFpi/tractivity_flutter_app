@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_icons/app_icons.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
@@ -8,6 +10,8 @@ import 'package:tractivity_app/view/components/custom_image/custom_image.dart';
 import 'package:tractivity_app/view/components/custom_royel_appbar/custom_royel_appbar.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:tractivity_app/view/components/custom_text_field/custom_text_field.dart';
+import 'package:tractivity_app/view/components/nav_bar/nav_bar.dart';
+import 'package:tractivity_app/view/screens/home_screen/controller/home_controller.dart';
 
 class DonationScreen extends StatefulWidget {
   const DonationScreen({super.key});
@@ -17,207 +21,442 @@ class DonationScreen extends StatefulWidget {
 }
 
 class _DonationScreenState extends State<DonationScreen> {
+
+  final  homeController = Get.find<HomeController>();
+
+
   @override
   Widget build(BuildContext context) {
+
+    String longText =
+        "100% of your donation will go towards building the infrastructure  of Serve Out. We have no paid staff.building the infrastructure  of Serve Out. We have no paid staff.500% of your donation will go towards building the infrastructure  of Serve Out. We have no paid staff.building the infrastructure  of Serve Out. We have no paid staff";
+
     return Scaffold(
-      appBar: CustomRoyelAppbar(
+      appBar: const CustomRoyelAppbar(
         titleName: AppStrings.donation,
         fontSize: 22,
-        leftIcon: true,
+        leftIcon: false,
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
           final isTablet = constraints.maxWidth > 600; // Detect if it's a tablet
 
-          return Padding(
-            padding: EdgeInsets.all(isTablet ? 20.0 : 12.0), // Adjust padding
-            child: SingleChildScrollView(
+          return Obx(
+                  () {
+                return Padding(
+                  padding: EdgeInsets.all(isTablet ? 20.0 : 12.0), // Adjust padding
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+
+                        SizedBox(height: isTablet ? 20 : 12),
+
+                        /// Donation Description**
+                        /*   CustomText(
+                        text: "100% of your donation will go towards building the infrastructure  of Serve Out. We have no paid staff.building the infrastructure  of Serve Out. We have no paid staff.",
+                        fontSize: isTablet ? 8.sp : 18.sp,
+                        fontWeight: FontWeight.w500,
+                        textAlign: TextAlign.start,
+                        maxLines: 3,
+                      ),*/
+
+                        CustomText(
+                          text: longText,
+                          fontSize:isTablet?6.sp: 14.sp,
+                          fontWeight: FontWeight.w500,
+                          textAlign: TextAlign.start,
+                          maxLines: 3,
+                        ),
+
+                        SizedBox(height: 4.h),
+                        // Show more/less button
+                        GestureDetector(
+                          onTap: () {
+
+                            homeController.isExpanded.value = !homeController.isExpanded.value;
+
+                            if(isTablet){
+
+                              showAlertDialog(context, longText,longText.length,isTablet);
+
+                            }else{
+
+                              ///Show BottomSheet when clicking on the text
+                              showBottomSheet(context, longText,longText.length,isTablet);
+                            }
+
+                          },
+                          child: Text(
+                            homeController.isExpanded.value ? 'Show less' : 'Show more',
+                            style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: isTablet?8.sp:14.sp),
+                          ),
+                        ),
+
+                        SizedBox(height: isTablet ? 20 : 16.h),
+
+                        CustomText(
+                          text: "Basic details",
+                          fontSize: isTablet ? 8.sp : 18,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.primary,
+                          bottom: 12,
+                        ),
+
+                        /// **Email Field**
+                        CustomFormCard(
+                          title: AppStrings.email,
+                          hintText: AppStrings.enterYourEmail,
+                          fontSize: isTablet?16:16,
+                          hasBackgroundColor: true,
+                          controller: TextEditingController(),
+                        ),
+
+                        SizedBox(height: isTablet ? 16 : 8),
+
+                        /// **First Name & Last Name**
+                        Row(
+                          children: [
+                            Expanded(
+                              child: CustomFormCard(
+                                title: AppStrings.firstName,
+                                hintText: AppStrings.enterFristName,
+                                fontSize: isTablet?16:16,
+                                hasBackgroundColor: true,
+                                controller: TextEditingController(),
+                              ),
+                            ),
+                            SizedBox(width: isTablet ? 16 : 8),
+                            Expanded(
+                              child: CustomFormCard(
+                                title: AppStrings.lastName,
+                                hintText: AppStrings.enterLastName,
+                                fontSize: isTablet?16:16,
+                                hasBackgroundColor: true,
+                                controller: TextEditingController(),
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        SizedBox(height: isTablet ? 16 : 8),
+
+                        ///Country & State**
+                        /*     Row(
+                        children: [
+                          Expanded(
+                            child: CustomFormCard(
+                              title: AppStrings.country,
+                              hintText: AppStrings.enterCountry,
+                              hasBackgroundColor: true,
+                              fontSize: isTablet?16:16,
+                              controller: TextEditingController(),
+                            ),
+                          ),
+                          SizedBox(width: isTablet ? 16 : 8),
+                          Expanded(
+                            child: CustomFormCard(
+                              title: AppStrings.state,
+                              hintText: AppStrings.enterState,
+                              hasBackgroundColor: true,
+                              fontSize: isTablet?16:16,
+                              controller: TextEditingController(),
+                            ),
+                          ),
+                        ],
+                      ),*/
+
+                        SizedBox(height: isTablet ? 16 : 8),
+
+                        CustomText(
+                          text: "Amount & card details",
+                          fontSize: isTablet ? 7.sp : 18.sp,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.primary,
+                          bottom: 8,
+                        ),
+                        /// amount
+                        CustomFormCard(
+                          title: "Amount",
+                          hintText: "\$0.00",
+                          hasBackgroundColor: true,
+                          fontSize: isTablet?16:16,
+                          keyboardType: TextInputType.number,
+                          controller: TextEditingController(),
+                        ),
+
+                        SizedBox(height: isTablet ? 20 : 12),
+
+                        ///Card Information**
+                        CustomText(
+                          text: AppStrings.card,
+                          fontSize: isTablet ? 16 : 14,
+                          fontWeight: FontWeight.w600,
+                          bottom: 8,
+                        ),
+
+
+                        ///Card Input
+                        Container(
+                          height: 60.h,
+                          width: constraints.maxWidth,
+                          decoration: BoxDecoration(
+                            color: AppColors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: AppColors.black_80, width: 1),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.only(right: 16.0),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: CustomTextField(
+                                    fillColor: AppColors.white,
+                                    hintText: "1234 1234 1234 1234",
+                                    keyboardType: TextInputType.number,
+                                  ),
+                                ),
+                                CustomImage(imageSrc: AppIcons.cardImage)
+                              ],
+                            ),
+                          ),
+                        ),
+
+                        SizedBox(height: isTablet ? 16 : 8),
+
+                        /// **Expiration Date & Security Code**
+                        Row(
+                          children: [
+                            Expanded(
+                              child: CustomFormCard(
+                                title: AppStrings.expiration,
+                                hintText: AppStrings.enterDay,
+                                hasBackgroundColor: true,
+                                fontSize: isTablet?16:16,
+                                controller: TextEditingController(),
+                              ),
+                            ),
+                            SizedBox(width: isTablet ? 16 : 8),
+                            Expanded(
+                              child: CustomFormCard(
+                                title: AppStrings.security,
+                                hintText: AppStrings.enterSecurity,
+                                fontSize: isTablet?16:16,
+                                hasBackgroundColor: true,
+                                controller: TextEditingController(),
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        SizedBox(height: isTablet ? 12.h : 8.h),
+
+                        CustomText(
+                          text: "Donation Type",
+                          fontSize: isTablet ? 8.sp : 18.sp,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.primary,
+                          bottom: 8,
+                        ),
+
+                        /*   CustomText(
+                        text: "Donation Type",
+                        fontSize: isTablet ? 8.sp : 12.sp,
+                        fontWeight: FontWeight.w600,
+
+                      ),*/
+
+                        Row(
+                          mainAxisAlignment:MainAxisAlignment.start,
+                          children: [
+
+                            Radio<bool>(
+                              value:
+                              false, // Value for "No"
+                              fillColor:
+                              WidgetStateColor.resolveWith((states) =>
+                              AppColors.primary),
+                              groupValue: homeController.donationStatues.value,
+                              onChanged:(bool? value) {
+
+                                homeController.donationStatues.value = value!;
+
+                              },
+                            ),
+                            CustomText(
+                              text:
+                              "One time gift",
+                              fontSize:
+                              isTablet?6.sp: 12.sp,
+                              color: AppColors
+                                  .black,
+                              fontWeight:FontWeight.w600,
+                            ),
+
+                            Radio<bool>(
+                              value:
+                              true, // Value for "Yes"
+                              fillColor:
+                              WidgetStateColor.resolveWith((states) =>
+                              AppColors.primary),
+                              groupValue: homeController.donationStatues.value,
+                              onChanged:(bool? value) {
+                                homeController.donationStatues.value = value!;
+                              },
+                            ),
+
+                            CustomText(
+                              text:
+                              "Recurring monthly gift",
+                              fontSize:
+                              isTablet?6.sp: 12.sp,
+                              color: AppColors
+                                  .primary,
+                              fontWeight:
+                              FontWeight
+                                  .w600,
+                            ),
+                          ],
+                        ),
+
+                        SizedBox(height: isTablet ? 16.h : 8.h),
+                        /// **Submit Button**
+                        CustomButton(
+                          onTap: () {},
+                          title: "Submit",
+                          height: isTablet ? 70 : 50,
+                          fontSize: isTablet ? 16 : 16,
+                        ),
+
+                        SizedBox(height: isTablet ? 24 : 16),
+                      ],
+                    ),
+                  ),
+                );
+              }
+          );
+        },
+      ),
+      bottomNavigationBar: NavBar(currentIndex: 4),
+    );
+  }
+
+
+  // Function to show the full text in a BottomSheet
+  void showBottomSheet(BuildContext context, String longText,int maxLines, bool isTablet) {
+    showModalBottomSheet(
+      context: context,
+      isDismissible: false,
+      builder: (BuildContext context) {
+        return SizedBox(
+          width: double.infinity,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
 
-                  SizedBox(height: isTablet ? 20 : 12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
 
-                  /// **Donation Description**
+                      const Text(
+                        '',
+                        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                      ),
+
+                      InkWell(
+                          onTap: (){
+                            Navigator.pop(context);
+
+                            homeController.isExpanded.value=false;
+                          },
+                          child: Icon(Icons.clear,size: 32,))
+                    ],
+                  ),
+                  SizedBox(height: 12.h),
+
                   CustomText(
-                    text: "100% of your donation will go towards \n building the infrastructure \n of Serve Out. We have no paid staff.",
-                    fontSize: isTablet ? 18 : 18,
+                    text: longText,
+                    fontSize:isTablet?6.sp:14.sp,
                     fontWeight: FontWeight.w500,
                     textAlign: TextAlign.start,
+                    maxLines: maxLines,
                   ),
+                  SizedBox(height: 10),
 
-                  SizedBox(height: isTablet ? 20 : 12),
-
-                  CustomText(
-                    text: "Your Details",
-                    fontSize: isTablet ? 18 : 18,
-                    fontWeight: FontWeight.w600,
-                    bottom: 12,
-                  ),
-
-                  /// **Email Field**
-                  CustomFormCard(
-                    title: AppStrings.email,
-                    hintText: AppStrings.enterYourEmail,
-                    fontSize: isTablet?16:16,
-                    hasBackgroundColor: true,
-                    controller: TextEditingController(),
-                  ),
-
-                  SizedBox(height: isTablet ? 16 : 8),
-
-                  /// **First Name & Last Name**
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CustomFormCard(
-                          title: AppStrings.firstName,
-                          hintText: AppStrings.enterFristName,
-                          fontSize: isTablet?16:16,
-                          hasBackgroundColor: true,
-                          controller: TextEditingController(),
-                        ),
-                      ),
-                      SizedBox(width: isTablet ? 16 : 8),
-                      Expanded(
-                        child: CustomFormCard(
-                          title: AppStrings.lastName,
-                          hintText: AppStrings.enterLastName,
-                          fontSize: isTablet?16:16,
-                          hasBackgroundColor: true,
-                          controller: TextEditingController(),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(height: isTablet ? 16 : 8),
-
-                  /// **Country & State**
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CustomFormCard(
-                          title: AppStrings.country,
-                          hintText: AppStrings.enterCountry,
-                          hasBackgroundColor: true,
-                          fontSize: isTablet?16:16,
-                          controller: TextEditingController(),
-                        ),
-                      ),
-                      SizedBox(width: isTablet ? 16 : 8),
-                      Expanded(
-                        child: CustomFormCard(
-                          title: AppStrings.state,
-                          hintText: AppStrings.enterState,
-                          hasBackgroundColor: true,
-                          fontSize: isTablet?16:16,
-                          controller: TextEditingController(),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(height: isTablet ? 16 : 8),
-
-                  /// **Summary Field**
-                  CustomFormCard(
-                    title: AppStrings.summary,
-                    hintText: AppStrings.enterSummary,
-                    hasBackgroundColor: true,
-                    fontSize: isTablet?16:16,
-                    controller: TextEditingController(),
-                  ),
-
-                  SizedBox(height: isTablet ? 20 : 12),
-
-                  /// **Recurring Monthly Gift**
-                  CustomText(
-                    text: "Recurring Monthly Gift",
-                    fontSize: isTablet ? 16 : 16,
-                    fontWeight: FontWeight.w600,
-                    bottom: 16,
-                  ),
-
-                  /// **Card Information**
-                  CustomText(
-                    text: AppStrings.card,
-                    fontSize: isTablet ? 16 : 14,
-                    fontWeight: FontWeight.w600,
-                    bottom: 8,
-                  ),
-
-                  SizedBox(height: isTablet ? 12 : 8),
-
-                  /// **Card Input**
-                  Container(
-                    height: 60,
-                    width: constraints.maxWidth,
-                    decoration: BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: AppColors.black_80, width: 1),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.only(right: 16.0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: CustomTextField(
-                              fillColor: AppColors.white,
-                              hintText: "1234 1234 1234 1234",
-                            ),
-                          ),
-                          CustomImage(imageSrc: AppIcons.cardImage)
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: isTablet ? 16 : 8),
-
-                  /// **Expiration Date & Security Code**
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CustomFormCard(
-                          title: AppStrings.expiration,
-                          hintText: AppStrings.enterDay,
-                          hasBackgroundColor: true,
-                          fontSize: isTablet?16:16,
-                          controller: TextEditingController(),
-                        ),
-                      ),
-                      SizedBox(width: isTablet ? 16 : 8),
-                      Expanded(
-                        child: CustomFormCard(
-                          title: AppStrings.security,
-                          hintText: AppStrings.enterSecurity,
-                          fontSize: isTablet?16:16,
-                          hasBackgroundColor: true,
-                          controller: TextEditingController(),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(height: isTablet ? 24 : 16),
-
-                  /// **Submit Button**
-                  CustomButton(
-                    onTap: () {},
-                    title: "Submit",
-                    height: isTablet ? 70 : 50,
-                    fontSize: isTablet ? 16 : 16,
-                  ),
-
-                  SizedBox(height: isTablet ? 24 : 16),
                 ],
               ),
             ),
-          );
-        },
+          ),
+        );
+      },
+    );
+  }
+
+  // Function to show the full text in a BottomSheet
+  void showAlertDialog(BuildContext context, String longText,int maxLines, bool isTablet) {
+
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: Colors.white,
+        insetPadding: EdgeInsets.all(8),
+        contentPadding: EdgeInsets.all(8),
+        //   clipBehavior: Clip.antiAliasWithSaveLayer,
+        title:Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+
+            Align(
+              alignment: Alignment.centerLeft,
+              child: CustomText(
+                text: "",
+                fontSize: 24,
+                color: AppColors.black,
+                fontWeight: FontWeight.w500,
+                bottom: 8,
+              ),
+            ),
+
+            Align(
+              alignment: Alignment.centerRight,
+              child: InkWell(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    homeController.isExpanded.value=false;
+                  },
+                  child: const Icon(
+                    Icons.close,
+                    size: 32,
+                    color: Colors.black,
+                  )),
+            )
+          ],
+        ),
+        content: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+
+                CustomText(
+                  text: longText,
+                  fontSize:isTablet?6.sp:14.sp,
+                  fontWeight: FontWeight.w500,
+                  textAlign: TextAlign.start,
+                  maxLines: maxLines,
+                ),
+                SizedBox(height: 10),
+
+              ],
+            ),
+          ),
+        ),
       ),
     );
+
   }
 }
