@@ -25,13 +25,13 @@ class ExoloreCompleteDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context,constraints){
+
       final isTablet = constraints.maxWidth > 600;
 
       return Scaffold(
-        appBar:   CustomRoyelAppbar(
+        appBar: CustomRoyelAppbar(
           leftIcon: true,
-          titleName: "Completed Event Details",
-          fontSize: isTablet?10.sp:22.sp,
+          titleName: "Event Details",
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -41,164 +41,65 @@ class ExoloreCompleteDetailsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomNetworkImage(
-                  imageUrl: AppConstants.profileImage,
+                  imageUrl: AppConstants.eventImage,
                   height:isTablet?200.h: 170.h,
                   width: MediaQuery.of(context).size.width,
                   borderRadius: BorderRadius.circular(10),
                 ),
-
                 SizedBox(
                   height: 12.h,
                 ),
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
                     CustomImage(imageSrc: AppIcons.dowanload),
-                    SizedBox(
+                    const SizedBox(
                       width: 8,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
 
-                        CustomText(
-                          text: "Rohingya refugee camp",
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.black_80,
-                        ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
 
-                        SizedBox(
-                          height: 4,
-                        ),
-                        CustomText(
-                          text: "Download",
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.lightBlue,
-                        ),
-                      ],
+                              const CustomText(
+                                text: "Rohingya refugee camp",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.black_80,
+                              ),
+
+                              GestureDetector(
+                                  onTap: (){
+                                    Get.toNamed(AppRoutes.volunteerChartScreen);
+                                  },
+                                  child: CustomImage(imageSrc: AppIcons.chart)),
+
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 4,
+                          ),
+                          CustomText(
+                            text: "Download",
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.lightBlue,
+                          ),
+                        ],
+                      ),
                     )
                   ],
                 ),
-                SizedBox(
-                  height: 12,
-                ),
-
-                CustomText(
-                  text: "Rohingya refugee camp",
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.black_80,
-                ),
-
-
                 const SizedBox(
                   height: 12,
                 ),
 
-
-                Row(
-                  children: [
-
-                    CustomText(
-                      text: "Rohingya refugee camp",
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.black_80,
-                    ),
-
-                    SizedBox(
-                      width: 4,
-                    ),
-                    CustomText(
-                      text: "(Event Name)",
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.lightBlue,
-                    ),
-                  ],
-                ),
-
-                const SizedBox(
-                  height: 8,
-                ),
-
-                Row(
-                  children: [
-
-                    CustomText(
-                      text: "Empower Tomorrow",
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.black_80,
-                    ),
-
-                    SizedBox(
-                      width: 4,
-                    ),
-                    CustomText(
-                      text: "(Mission Name)",
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.lightBlue,
-                    ),
-                  ],
-                ),
-
-                const SizedBox(
-                  height: 12,
-                ),
-
-                Row(
-                  children: [
-
-                    CustomText(
-                      text: "Global Horizons Foundation",
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.black_80,
-                    ),
-
-                    SizedBox(
-                      width: 4,
-                    ),
-                    CustomText(
-                      text: "(Organization)",
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.lightBlue,
-                    ),
-                  ],
-                ),
-
-                const SizedBox(
-                  height: 12,
-                ),
-
-                Row(
-                  children: [
-                    Icon(
-                      Icons.monetization_on_outlined,
-                      size: 18,
-                    ),
-                    SizedBox(
-                      width: 4,
-                    ),
-                    CustomText(
-                      text: "3500",
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.black_80,
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 8,
-                ),
                 Row(
                   children: [
                     Icon(
@@ -210,139 +111,294 @@ class ExoloreCompleteDetailsScreen extends StatelessWidget {
                     ),
                     CustomText(
                       text: "Cox’s Bazar",
-                      fontSize: 12,
+                      fontSize:isTablet?6.sp: 12.sp,
                       fontWeight: FontWeight.w400,
                       color: AppColors.black_80,
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 12,
+                SizedBox(
+                  height: 4.h,
                 ),
-                Row(
+
+                const Divider(
+                  color: Colors.black54,
+                ),
+
+                SizedBox(
+                  height: 8.h,
+                ),
+
+                CustomText(
+                  text: "Organization",
+                  fontSize:isTablet?6.sp: 14.sp,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.primary,
+                ),
+
+                SizedBox(
+                  height: 4.h,
+                ),
+                CustomText(
+                  text: "Global Horizons Foundation",
+                  fontSize:isTablet?6.sp: 14.sp,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.black_80,
+                  bottom: 6,
+                ),
+
+                const Divider(
+                  color: Colors.black54,
+                ),
+
+                SizedBox(
+                  height: 12.h,
+                ),
+
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomNetworkImage(
-                      imageUrl: AppConstants.profileImage,
-                      height:isTablet?32.h: 24.h,
-                      width:isTablet?32.w: 24.w,
-                      boxShape: BoxShape.circle,
-                      border: Border.all(color: AppColors.primary, width: 3),
-                    ),
-                    const SizedBox(
-                      width: 10,
+
+                    CustomText(
+                      text: "Mission Name",
+                      fontSize:isTablet?6.sp: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.primary,
                     ),
 
-                    Text.rich(
-                      TextSpan(
-                          text: 'Mehedi Bin',
-                          style: TextStyle(
-                              fontSize: 12.sp, fontWeight: FontWeight.w600),
-                          children: [
-                            TextSpan(
-                              text: ' Leader',
-                              style: TextStyle(
-                                  fontSize:  12.sp,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColors.lightBlue),
-                            ),
-                          ]),
+                    SizedBox(
+                      height: 4.h,
+                    ),
+
+                    CustomText(
+                      text: "Empower Tomorrow",
+                      fontSize:isTablet?6.sp: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.black_80,
+                      bottom: 6,
+                    ),
+
+                  ],
+                ),
+
+                const Divider(
+                  color: Colors.black54,
+                ),
+
+                SizedBox(
+                  height: 12.h,
+                ),
+
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+
+                    CustomText(
+                      text: "Event",
+                      fontSize:isTablet?6.sp: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.primary,
+
+                    ),
+                    SizedBox(
+                      height: 4.h,
+                    ),
+
+                    CustomText(
+                      text: "Rohingya refugee camp",
+                      fontSize:isTablet?6.sp: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.black_80,
+                      bottom: 6,
+                    ),
+
+                    const Divider(
+                      color: Colors.black54,
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 12,
+
+                SizedBox(
+                  height: 12.h,
+                ),
+
+                CustomText(
+                  text: "Organizer",
+                  fontSize:isTablet?6.sp: 14.sp,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.primary,
+                  bottom: 8,
                 ),
                 Row(
                   children: [
                     CustomNetworkImage(
                       imageUrl: AppConstants.profileImage,
-                      height:isTablet?32.h: 24.h,
-                      width:isTablet?32.w: 24.w,
+                      height:isTablet?42.h: 32.h,
+                      width:isTablet?42.w: 32.w,
                       boxShape: BoxShape.circle,
                       border: Border.all(color: AppColors.primary, width: 3),
                     ),
-                    const SizedBox(
-                      width: 10,
+
+                    SizedBox(
+                      width: 8.w,
                     ),
-                    Text.rich(
-                      TextSpan(
-                          text: 'Sujon',
-                          style: TextStyle(
-                              fontSize: 12.sp, fontWeight: FontWeight.w600),
-                          children: [
-                            TextSpan(
-                              text: ' Food Delivery',
-                              style: TextStyle(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColors.lightBlue),
-                            ),
-                          ]),
+                    CustomText(
+                      text: "Sujon",
+                      fontSize:isTablet?6.sp: 14.sp,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.black,
+                      bottom: 6,
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 24,
+
+                SizedBox(
+                  height: 8.h,
                 ),
-                const CustomText(
+                Row(
+                  children: [
+                    CustomNetworkImage(
+                      imageUrl: AppConstants.profileImage,
+                      height:isTablet?42.h: 32.h,
+                      width:isTablet?42.w: 32.w,
+                      boxShape: BoxShape.circle,
+                      border: Border.all(color: AppColors.primary, width: 3),
+                    ),
+
+                    SizedBox(
+                      width: 8.w,
+                    ),
+                    CustomText(
+                      text: "Mehedi",
+                      fontSize:isTablet?6.sp: 14.sp,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.black,
+                      bottom: 6,
+                    ),
+                  ],
+                ),
+
+                const Divider(
+                  color: Colors.black54,
+                ),
+                SizedBox(
+                  height: 12.h,
+                ),
+
+                CustomText(
                   text: "Description",
-                  fontSize: 16,
+                  fontSize:isTablet?6.sp: 16.sp,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.black_80,
+                  color: AppColors.primary,
                 ),
-                const SizedBox(
-                  height: 8,
+                SizedBox(
+                  height: 8.h,
                 ),
-                const CustomText(
+
+                CustomText(
                   text:
                   "The Rohingya have faced decades of discrimination \n and repression under successive Myanmar authorities. denied citizenship \n under the 1982 Citizenship Law, they are one of \n the largest stateless populations in the world.",
-                  fontSize: 12,
+                  fontSize:isTablet?6.sp: 12.sp,
                   fontWeight: FontWeight.w400,
                   color: AppColors.black_80,
                   textAlign: TextAlign.start,
                 ),
-                const SizedBox(
-                  height: 16,
+                SizedBox(
+                  height: 16.h,
                 ),
-                const CustomText(
+
+                const Divider(
+                  color: Colors.black54,
+                ),
+
+                CustomText(
                   text: "Time & Date",
-                  fontSize: 14,
+                  fontSize:isTablet?6.sp: 14.sp,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.black_80,
+                  color: AppColors.primary,
                 ),
-
-                const SizedBox(
-                  height: 8,
+                SizedBox(
+                  height: 8.h,
                 ),
-
-                const CustomText(
+                CustomText(
                   text: "22 December, 2024, 8.00 am-12.00 pm",
-                  fontSize: 12,
+                  fontSize:isTablet?6.sp: 14.sp,
                   fontWeight: FontWeight.w400,
                   color: AppColors.black_80,
                 ),
 
-                const SizedBox(
-                  height: 16,
+
+                SizedBox(
+                  height: 8.h,
+                ),
+                const Divider(
+                  color: Colors.black54,
                 ),
 
-                CustomButton(
-                  onTap: () {
-                    Get.toNamed(AppRoutes.eventCompleateMember);
-                  },
-                  title: "Details",
-                  width: 80.w,
-                  height: 32.h,
-                  textColor: AppColors.black,
-                  fillColor: AppColors.primary,
-                  fontSize: 12,
+                CustomText(
+                  text: "Street",
+                  fontSize:isTablet?6.sp: 14.sp,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.primary,
+                ),
+                SizedBox(
+                  height: 4.h,
+                ),
+                CustomText(
+                  text: "Bijoy Sarani",
+                  fontSize:isTablet?6.sp: 14.sp,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.black_80,
+                  bottom: 6,
+                ),
+
+                const Divider(
+                  color: Colors.black54,
+                ),
+
+                CustomText(
+                  text: "City",
+                  fontSize:isTablet?6.sp: 14.sp,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.primary,
+                ),
+                SizedBox(
+                  height: 4.h,
+                ),
+                CustomText(
+                  text: "Dhaka city, Keraniganj",
+                  fontSize:isTablet?6.sp: 14.sp,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.black_80,
+                  bottom: 6,
+                ),
+
+                const Divider(
+                  color: Colors.black54,
+                ),
+
+                CustomText(
+                  text: "My Role",
+                  fontSize:isTablet?6.sp: 14.sp,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.primary,
+                ),
+                SizedBox(
+                  height: 4.h,
+                ),
+                CustomText(
+                  text: "Food Delivery",
+                  fontSize:isTablet?6.sp: 14.sp,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.black_80,
+                  bottom: 6,
                 ),
               ],
             ),
           ),
         ),
-
-
       );
     });
   }

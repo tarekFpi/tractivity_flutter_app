@@ -34,6 +34,8 @@ class ApiUrl {
 
   static String createOranizer = "/organization/create";
 
+  static String editOranizer ({required String oranizerId}) => "/organization/update/$oranizerId";
+
   static String createMission = "/mission/create";
 
   static String fetchOrganization ({required String userId}) =>"/organization/retrive/creator/$userId";

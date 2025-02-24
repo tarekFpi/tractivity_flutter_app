@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:tractivity_app/view/screens/chat_screen/massage_list_screen.dart';
 import 'package:tractivity_app/view/screens/create_team_screen/create_team_screen.dart';
 import 'package:tractivity_app/view/screens/friend_screen/friend_screen.dart';
+import 'package:tractivity_app/view/screens/home_screen/donation_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/exolore_event_screen/exolore_event_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/home_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/join_event_screen/join_event_screen.dart';
@@ -32,6 +33,7 @@ class _NavBarState extends State<NavBar> {
     AppIcons.users,
     AppIcons.mail,
     AppIcons.pencilalt,
+    AppIcons.donation,
   ];
 
   final List<String> unselectedIcon = [
@@ -39,6 +41,7 @@ class _NavBarState extends State<NavBar> {
     AppIcons.users,
     AppIcons.mail,
     AppIcons.pencilalt,
+    AppIcons.donation,
   ];
 
   final List<String> userNavText = [
@@ -46,6 +49,7 @@ class _NavBarState extends State<NavBar> {
     AppStrings.friend,
     AppStrings.messages,
     AppStrings.team,
+    AppStrings.donation,
   ];
 
   @override
@@ -61,7 +65,7 @@ class _NavBarState extends State<NavBar> {
         final isTablet = constraints.maxWidth > 600;
 
         return Container(
-          padding: EdgeInsets.symmetric(horizontal: isTablet ? 12.w : 20.w),
+          padding: EdgeInsets.symmetric(horizontal: isTablet ? 12.w : 12.w),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
                 topLeft:Radius.circular(50),
@@ -71,7 +75,7 @@ class _NavBarState extends State<NavBar> {
             ),
           ),
           height: isTablet ? 110.h : 95.h, // Adjust height for tablets
-          width: constraints.maxWidth,
+          width: MediaQuery.sizeOf(context).width,
           alignment: Alignment.center,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -104,18 +108,18 @@ class _NavBarState extends State<NavBar> {
     return Card(
       elevation: 85,
       shadowColor: AppColors.primary,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topLeft:Radius.circular(50),
-              topRight: Radius.circular(50),
-              bottomLeft: Radius.circular(12),
-              bottomRight: Radius.circular(12)
-          ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+            topLeft:Radius.circular(50),
+            topRight: Radius.circular(50),
+            bottomLeft: Radius.circular(12),
+            bottomRight: Radius.circular(12)
         ),
+      ),
       color: Colors.transparent,
       child: Container(
         height: isTablet ? 100.h : 85.h,
-        width: isTablet ? 80.w : 80.w,
+        width: isTablet ? 80.w : 90.w,
         decoration: BoxDecoration(
           color: AppColors.primary,
           borderRadius:  BorderRadius.only(
@@ -183,6 +187,10 @@ class _NavBarState extends State<NavBar> {
           break;
         case 3:
           Get.to(() => JoinEventScreen());
+          break;
+
+        case 4:
+          Get.to(() => DonationScreen());
           break;
       }
     }

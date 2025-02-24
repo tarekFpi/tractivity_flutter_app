@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:tractivity_app/view/screens/adminstrator_home_screen/administratior_create.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrator_home_screen.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_home_screen.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_invite_mission_screen/organizer_invite_mission_screen.dart';
@@ -166,7 +165,7 @@ class _UserNavBarState extends State<AdminstratorNavbar> {
           Get.offAll(() => AdminstratorHomeScreen());
           break;
         case 1:
-          Get.to(() => AdministratiorCreateScreen());
+        //  Get.to(() => AdministratiorCreateScreen());
           break;
 
       }

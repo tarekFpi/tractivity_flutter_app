@@ -28,12 +28,14 @@ import 'package:tractivity_app/view/screens/home_screen/exolore_event_screen/eve
 import 'package:tractivity_app/view/screens/home_screen/exolore_event_screen/exolore_event_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/home_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/join_event_screen/join_details_screen.dart';
-import 'package:tractivity_app/view/screens/home_screen/join_event_screen/join_event_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/join_event_screen/join_event_details_screen.dart';
+import 'package:tractivity_app/view/screens/home_screen/join_event_screen/join_event_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/member_screen/event_compleate_member.dart';
 import 'package:tractivity_app/view/screens/home_screen/member_screen/member_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/recent_event_explore_details.dart';
 import 'package:tractivity_app/view/screens/home_screen/user_event_profile/user_event_profile.dart';
+import 'package:tractivity_app/view/screens/home_screen/user_event_profile/volunteer_report_screen.dart';
+import 'package:tractivity_app/view/screens/home_screen/volunteer_chart_screen.dart';
 import 'package:tractivity_app/view/screens/notification/notification_screen.dart';
 import 'package:tractivity_app/view/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/Invite_member_screen.dart';
@@ -104,14 +106,15 @@ class AppRoutes {
   static const String organizerApprovedScreen = "/OrganizerApprovedScreen";
   static const String organizeDetailsScreen = "/OrganizeDetailsScreen";
   static const String organizeMapScreen = "/OrganizeMapScreen";
-  static const String jonEventDetailsScreen = "/JonEventDetailsScreen";
+  static const String joinDetailsScreen = "/JoinDetailsScreen";
+  static const String joinEventDetailsScreen = "/JoinEventDetailsScreen";
   static const String addMemberScreen = "/AddMemberScreen";
   static const String editPersonProfileScreen = "/EditPersonProfileScreen";
   static const String exoloreEventCompletedScreen = "/ExoloreEventCompletedScreen";
-  static const String joinDetailsScreen = "/JoinDetailsScreen";
   static const String adminstratorEventDetailsScreen = "/AdminstratorEventDetailsScreen";
   static const String organizationEventListScreen = "/OrganizationEventListScreen";
-
+  static const String volunteerChartScreen = "/VolunteerChartScreen";
+  static const String volunteerEventReportScreen = "/VolunteerEventReportScreen";
 
 
   static List<GetPage> routes = [
@@ -172,12 +175,15 @@ class AppRoutes {
     GetPage(name: editPersonProfileScreen, page: () => EditPersonProfileScreen()),
 
     GetPage(name: organizerRecentEventDetails, page: () => OrganizerRecentEventDetails()),
-    GetPage(name: jonEventDetailsScreen, page: () => JonEventDetailsScreen()),
     GetPage(name: joinDetailsScreen, page: () => JoinDetailsScreen()),
+    GetPage(name: joinEventDetailsScreen, page: () => JoinEventDetailsScreen()),
     GetPage(name: adminstratorEventDetailsScreen, page: () => AdminstratorEventDetailsScreen()),
     GetPage(name: organizeDetailsScreen, page: () => OrganizeDetailsScreen()),
     GetPage(name: organizationEventListScreen, page: () => OrganizationEventListScreen()),
     GetPage(name: adminstratiorEventListScreen, page: () => AdminstratiorEventListScreen()),
+    GetPage(name: volunteerChartScreen, page: () => VolunteerChartScreen()),
+
+    GetPage(name: volunteerEventReportScreen, page: () => VolunteerEventReportScreen()),
 
 
 

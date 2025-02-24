@@ -47,8 +47,9 @@ class AdministratiorController extends GetxController {
     "Mission List",
   ].obs;
 
-  ///===================== get event List lat long get address =====================
+  RxBool missionStatues = false.obs;
 
+  ///===================== get event List lat long get address =====================
   var addressList = <String>[].obs;
 
   var getSingladdress = "Fetching address...".obs;
@@ -136,6 +137,54 @@ class AdministratiorController extends GetxController {
   }
 
 
+  ///===================== edit Organization =====================
+  Rx<TextEditingController> editOrganizationNameController =
+      TextEditingController().obs;
+
+  Rx<TextEditingController> editOrganizationDescriptionController =
+      TextEditingController().obs;
+
+  RxBool editOrganLoading = false.obs;
+
+  Future<void> editOrganization(String organizationId) async {
+
+    editOrganLoading.value = true;
+
+    var body = {
+      "name": editOrganizationNameController.value.text,
+      "description": editOrganizationDescriptionController.value.text
+    };
+
+    var response = await ApiClient.patchData(ApiUrl.editOranizer(oranizerId: organizationId), jsonEncode(body));
+
+    if (response.statusCode == 200) {
+
+      editOrganLoading.value = false;
+
+      Toast.successToast(response.body['message']!);
+
+      editOrganizationNameController.value.clear();
+      editOrganizationDescriptionController.value.clear();
+
+      organizationShow();
+
+    } else {
+
+      editOrganLoading.value = false;
+      if (response.statusText == ApiClient.somethingWentWrong) {
+
+        Toast.errorToast(AppStrings.checknetworkconnection);
+        return;
+
+      } else {
+
+        ApiChecker.checkApi(response);
+        return;
+      }
+    }
+  }
+
+
 ///===================== fetch  Organization by uid =====================
 
   RxList<OrganizationResponeModel> organizationShowList = <OrganizationResponeModel>[].obs;
@@ -144,20 +193,17 @@ class AdministratiorController extends GetxController {
 
   Future<void> organizationShow() async{
 
-
     organizationShowLoading.value = true;
 
     var userId = await SharePrefsHelper.getString(AppConstants.userId);
 
     var response = await ApiClient.getData(ApiUrl.fetchOrganization(userId: userId));
 
-
     if (response.statusCode == 200) {
 
       organizationShowList.value = List.from(response.body["data"].map((m)=> OrganizationResponeModel.fromJson(m)));
 
-      debugPrint("organizationShowList:${organizationShowList.toJson()}");
-
+      debugPrint("organizationShowList:${organizationShowList.value}");
 
       organizationShowLoading.value =false;
       refresh();
@@ -278,8 +324,9 @@ class AdministratiorController extends GetxController {
 
   Rx<TextEditingController> missionDescriptionController = TextEditingController().obs;
 
-
   RxBool createMissionLoading = false.obs;
+
+  RxString missionModeStatue="".obs;
 
   Future<void> createMission() async {
 
@@ -287,13 +334,26 @@ class AdministratiorController extends GetxController {
 
     var userId = await SharePrefsHelper.getString(AppConstants.userId);
 
+   ///private public
+    if(missionStatues.value==false){
+
+      missionModeStatue.value="private";
+
+    }if(missionStatues.value==true){
+
+      missionModeStatue.value="public";
+    }
+
     var body = {
       "creatorId": userId,
       "name": missionNameController.value.text,
+      "mode": missionModeStatue.value,
       "description": missionDescriptionController.value.text,
       "connectedOrganizations": organizationIdList,
       "requestedOrganizers": leaderIdList
     };
+
+    Toast.errorToast("missionModeStatue:${missionModeStatue.value}");
 
     var response = await ApiClient.postData(ApiUrl.createMission, jsonEncode(body));
 
@@ -424,7 +484,8 @@ class AdministratiorController extends GetxController {
     if (query.isEmpty) {
 
       organizationShow();
-
+      refresh();
+      Toast.errorToast("empty@@");
     }else{
 
       debugPrint("searchOragizationLoading:${query}");
@@ -433,7 +494,7 @@ class AdministratiorController extends GetxController {
 
       var response = await ApiClient.getData(ApiUrl.searchOrganization(query: query));
 
-      //organizationShowList.refresh();
+       organizationShowList.refresh();
 
       if (response.statusCode == 200) {
 
@@ -442,6 +503,7 @@ class AdministratiorController extends GetxController {
         organizationShowList.refresh();
 
         searchOragizationLoading.value =false;
+
         refresh();
 
       } else {

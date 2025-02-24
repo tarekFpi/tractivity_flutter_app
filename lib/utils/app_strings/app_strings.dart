@@ -100,7 +100,7 @@ class   AppStrings {
   static const String messages = "Messages";
   static const String profile = "Profile";
   static const String singleProfile = "User Message";
-  static const String team = "Join Event";
+  static const String team = "Join";
   ///===================================================
   static const String letsGo = "LET’S GO";
   static const String serveOut = "JoinUp";
