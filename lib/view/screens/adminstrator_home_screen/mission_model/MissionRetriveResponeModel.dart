@@ -9,77 +9,57 @@ MissionRetriveResponeModel missionRetriveResponeModelFromJson(String str) => Mis
 String missionRetriveResponeModelToJson(MissionRetriveResponeModel data) => json.encode(data.toJson());
 
 class MissionRetriveResponeModel {
-  Creator? creator;
   String? id;
   String? name;
   String? description;
-  List<String>? connectedOrganizations;
-  List<String>? requestedOrganizers;
-  List<dynamic>? connectedOrganizers;
+  List<ConnectedOrganizer>? connectedOrganizers;
+  String? mode;
   DateTime? updatedAt;
-  int? v;
 
   MissionRetriveResponeModel({
-    this.creator,
     this.id,
     this.name,
     this.description,
-    this.connectedOrganizations,
-    this.requestedOrganizers,
     this.connectedOrganizers,
+    this.mode,
     this.updatedAt,
-    this.v,
   });
 
   factory MissionRetriveResponeModel.fromJson(Map<String, dynamic> json) => MissionRetriveResponeModel(
-    creator: json["creator"] == null ? null : Creator.fromJson(json["creator"]),
     id: json["_id"],
     name: json["name"],
     description: json["description"],
-    connectedOrganizations: json["connectedOrganizations"] == null ? [] : List<String>.from(json["connectedOrganizations"]!.map((x) => x)),
-    requestedOrganizers: json["requestedOrganizers"] == null ? [] : List<String>.from(json["requestedOrganizers"]!.map((x) => x)),
-    connectedOrganizers: json["connectedOrganizers"] == null ? [] : List<dynamic>.from(json["connectedOrganizers"]!.map((x) => x)),
+    connectedOrganizers: json["connectedOrganizers"] == null ? [] : List<ConnectedOrganizer>.from(json["connectedOrganizers"]!.map((x) => ConnectedOrganizer.fromJson(x))),
+    mode: json["mode"],
     updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
-    v: json["__v"],
   );
 
   Map<String, dynamic> toJson() => {
-    "creator": creator?.toJson(),
     "_id": id,
     "name": name,
     "description": description,
-    "connectedOrganizations": connectedOrganizations == null ? [] : List<dynamic>.from(connectedOrganizations!.map((x) => x)),
-    "requestedOrganizers": requestedOrganizers == null ? [] : List<dynamic>.from(requestedOrganizers!.map((x) => x)),
-    "connectedOrganizers": connectedOrganizers == null ? [] : List<dynamic>.from(connectedOrganizers!.map((x) => x)),
+    "connectedOrganizers": connectedOrganizers == null ? [] : List<dynamic>.from(connectedOrganizers!.map((x) => x.toJson())),
+    "mode": mode,
     "updatedAt": updatedAt?.toIso8601String(),
-    "__v": v,
   };
 }
 
-class Creator {
-  String? creatorId;
-  String? name;
-  String? creatorRole;
-  bool? isActive;
+class ConnectedOrganizer {
+  String? id;
+  String? fullName;
 
-  Creator({
-    this.creatorId,
-    this.name,
-    this.creatorRole,
-    this.isActive,
+  ConnectedOrganizer({
+    this.id,
+    this.fullName,
   });
 
-  factory Creator.fromJson(Map<String, dynamic> json) => Creator(
-    creatorId: json["creatorId"],
-    name: json["name"],
-    creatorRole: json["creatorRole"],
-    isActive: json["isActive"],
+  factory ConnectedOrganizer.fromJson(Map<String, dynamic> json) => ConnectedOrganizer(
+    id: json["_id"],
+    fullName: json["fullName"],
   );
 
   Map<String, dynamic> toJson() => {
-    "creatorId": creatorId,
-    "name": name,
-    "creatorRole": creatorRole,
-    "isActive": isActive,
+    "_id": id,
+    "fullName": fullName,
   };
 }

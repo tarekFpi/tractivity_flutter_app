@@ -269,7 +269,6 @@ class AdministratiorController extends GetxController {
 
 
   ///===================== show leader List  =================
-
   RxList<LeaderResponeModel> leaderShowList = <LeaderResponeModel>[].obs;
 
   RxBool leaderShowLoading = false.obs;
@@ -314,7 +313,7 @@ class AdministratiorController extends GetxController {
 
   RxList<String> organizationIdList= <String>[].obs;
 
-  RxList<String> leaderIdList= <String>[].obs;
+
 
   RxBool selectedOranization = false.obs;
 
@@ -350,7 +349,7 @@ class AdministratiorController extends GetxController {
       "mode": missionModeStatue.value,
       "description": missionDescriptionController.value.text,
       "connectedOrganizations": organizationIdList,
-      "requestedOrganizers": leaderIdList
+      "requestedOrganizers": exitingLeaderIdList
     };
 
     debugPrint("mission_status:${jsonEncode(body)}");
@@ -368,7 +367,7 @@ class AdministratiorController extends GetxController {
       organizationNameController.value.clear();
       organizationDescriptionController.value.clear();
       organizationIdList.value.clear();
-      leaderIdList.value.clear();
+      exitingLeaderIdList.value.clear();
 
       missionListShow();
 
@@ -388,13 +387,100 @@ class AdministratiorController extends GetxController {
     }
   }
 
+
+
+  ///===================== edit mission =====================
+  Rx<TextEditingController> editMissionNameController = TextEditingController().obs;
+
+  Rx<TextEditingController> editMissionDescriptionController = TextEditingController().obs;
+
+  RxList<String> exitingLeaderIdList= <String>[].obs;
+
+  RxList<String> presentLeaderIdList= <String>[].obs;
+
+  RxList<String>removedOrganizers=<String>[].obs;
+
+  RxList<String>newOrganizers=<String>[].obs;
+
+  Future<void> editMission() async {
+
+    createMissionLoading.value = true;
+
+    var userId = await SharePrefsHelper.getString(AppConstants.userId);
+
+    ///Finding new and removed organizers
+    newOrganizers.value = presentLeaderIdList.where((id)=> !exitingLeaderIdList.contains(id)).toList();
+
+    removedOrganizers.value = exitingLeaderIdList.where((id)=> !presentLeaderIdList.contains(id)).toList();
+
+
+    print("New Organizer: ${newOrganizers.value}");
+
+    print("Removed Organizer: ${removedOrganizers.value}");
+
+    ///private public
+    if(missionStatues.value==false){
+
+      missionModeStatue.value="private";
+
+    }if(missionStatues.value==true){
+
+      missionModeStatue.value="public";
+    }
+
+
+    var body = {
+      "removedOrganizers": removedOrganizers,
+      "newOrganizers": newOrganizers,
+      "name": editOrganizationNameController.value.text,
+      "description": editOrganizationDescriptionController.value.text,
+      "mode": missionModeStatue.value,
+      "status": "inactive"
+    };
+
+    debugPrint("missionEdit:${jsonEncode(body)}");
+
+   /* var response = await ApiClient.patchData(ApiUrl.editMission(editId: userId), jsonEncode(body));
+
+    if (response.statusCode == 200) {
+
+      createMissionLoading.value = false;
+
+      Toast.successToast(response.body['message']!);
+
+      debugPrint("response:${body}");
+
+      organizationNameController.value.clear();
+      organizationDescriptionController.value.clear();
+      organizationIdList.value.clear();
+      exitingLeaderIdList.value.clear();
+
+      missionListShow();
+
+    } else {
+
+      createMissionLoading.value = false;
+      if (response.statusText == ApiClient.somethingWentWrong) {
+
+        Toast.errorToast(AppStrings.checknetworkconnection);
+        return;
+
+      } else {
+
+        ApiChecker.checkApi(response);
+        return;
+      }
+    }*/
+  }
+
+
+
   ///===================== fetch  Mission by uid =====================
   RxList<MissionRetriveResponeModel> missionShowList = <MissionRetriveResponeModel>[].obs;
 
   RxBool missionShowLoading = false.obs;
 
   Future<void> missionListShow() async{
-
 
     missionShowLoading.value = true;
 
@@ -411,7 +497,7 @@ class AdministratiorController extends GetxController {
 
       missionNameController.value.clear();
       missionDescriptionController.value.clear();
-      leaderIdList.clear();
+      exitingLeaderIdList.clear();
       organizationIdList.clear();
       missionShowLoading.value =false;
 

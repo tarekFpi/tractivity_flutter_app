@@ -32,12 +32,19 @@ class ApiUrl {
 
   ///=========================== adminstrator api  ===========================
 
+  ///=========================== organization create api  ===========================
   static String createOranizer = "/organization/create";
 
+  ///=========================== organization/update api  ===========================
   static String editOranizer ({required String oranizerId}) => "/organization/update/$oranizerId";
 
+  ///=========================== mission/create api ===========================
   static String createMission = "/mission/create";
 
+  ///=========================== mission/edit api ===========================
+  static String editMission ({required String editId}) => "/mission/update/$editId";
+
+  ///=========================== organization retrive by creator id api  ===========================
   static String fetchOrganization ({required String userId}) =>"/organization/retrive/creator/$userId";
 
   ///=================== search  Organization ==============
