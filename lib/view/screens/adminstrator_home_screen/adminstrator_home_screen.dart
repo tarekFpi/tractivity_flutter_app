@@ -845,7 +845,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                               ),
 
                                               CustomText(
-                                                text: DateConverter.timeFormetString("${model.createdAt}"),
+                                                text: DateConverter.timeFormetString("${model.updatedAt}"),
                                                 fontSize: 12,
                                                 color: AppColors.black_80,
                                                 fontWeight: FontWeight.w400,
@@ -853,8 +853,8 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                             ],
                                           ),
 
-                                          const SizedBox(
-                                            height: 6,
+                                            SizedBox(
+                                            height: 6.h,
                                           ),
                                           CustomText(
                                             text: "${model.description}",
@@ -936,12 +936,440 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                 ),
 
                                                 SizedBox(
-                                                  width:8.w,
+                                                  width:isTablet?16.w: 12.w,
                                                 ),
 
                                                 CustomButton(
                                                   onTap: () {
 
+                                                    showDialog(
+                                                      context: context,
+                                                      barrierDismissible: false,
+                                                      builder: (ctx) => AlertDialog(
+                                                        backgroundColor: Colors.white,
+                                                        insetPadding: EdgeInsets.all(8),
+                                                        contentPadding: EdgeInsets.all(8),
+                                                        //   clipBehavior: Clip.antiAliasWithSaveLayer,
+                                                        title:Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            ///Edit Mission
+                                                            const CustomText(
+                                                              text: "Edit Mission",
+                                                              fontSize: 24,
+                                                              color: AppColors.black,
+                                                              fontWeight: FontWeight.w500,
+                                                              bottom: 8,
+                                                            ),
+
+                                                            Align(
+                                                              alignment: Alignment.centerRight,
+                                                              child: InkWell(
+                                                                  onTap: () {
+
+                                                                    Navigator.of(context).pop();
+
+                                                                  },
+                                                                  child: const Icon(
+                                                                    Icons.close,
+                                                                    size: 32,
+                                                                    color: Colors.black,
+                                                                  )),
+                                                            )
+                                                          ],
+                                                        ),
+                                                        content: Obx(
+                                                                () {
+                                                              return SingleChildScrollView(
+                                                                child: SizedBox(
+                                                                  width: MediaQuery.sizeOf(context).width,
+                                                                  ///height: MediaQuery.sizeOf(context).height/1.4,
+
+                                                                  child: Column(
+                                                                    children: [
+
+                                                                      Align(
+                                                                        alignment: Alignment.topLeft,
+                                                                        child: CustomText(
+                                                                          text: "Organization",
+                                                                          fontSize:isTablet?6.sp: 14.sp,
+                                                                          color: AppColors.black,
+                                                                          fontWeight: FontWeight.bold,
+                                                                          bottom: 8,
+                                                                        ),
+                                                                      ),
+                                                                      Container(
+                                                                        padding: EdgeInsets.all(8),
+                                                                        decoration: BoxDecoration(
+                                                                          color: AppColors.grey_3.withOpacity(0.5),
+                                                                          borderRadius: BorderRadius.circular(15),
+                                                                        ),
+                                                                        child: Column(
+                                                                          mainAxisAlignment: MainAxisAlignment.start,
+                                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                                          children: [
+
+                                                                            CustomText(
+                                                                              text: "${model.name}",
+                                                                              fontSize: 16,
+                                                                              color: AppColors.black_80,
+                                                                              fontWeight: FontWeight.w600,
+                                                                              textAlign: TextAlign.start,
+                                                                              left: 8,
+                                                                            ),
+
+                                                                            Padding(
+                                                                              padding: const EdgeInsets.only(left: 8,right: 8),
+                                                                              child: CustomText(
+                                                                                text: "${model.description}",
+                                                                                fontSize:isTablet?6.sp: 12.sp,
+                                                                                color: AppColors.black_80,
+                                                                                fontWeight: FontWeight.w400,
+                                                                                textAlign: TextAlign.start,
+                                                                                maxLines: 3,
+                                                                                overflow: TextOverflow.ellipsis, // Add ellipsis at the end if the text overflows.
+                                                                                // maxLines: 3,
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                      const SizedBox(
+                                                                        height: 12,
+                                                                      ),
+
+                                                                      const Align(
+                                                                        alignment: Alignment.topLeft,
+                                                                        child: CustomText(
+                                                                          text: "Add Organizer",
+                                                                          fontSize: 14,
+                                                                          color: AppColors.black,
+                                                                          fontWeight: FontWeight.w500,
+                                                                          bottom: 8,
+                                                                        ),
+                                                                      ),
+
+                                                                      Container(
+                                                                        ///    padding: EdgeInsets.only(left: 8,right: 8),
+                                                                          decoration: BoxDecoration(
+                                                                            borderRadius: BorderRadius.circular(10),
+                                                                            color: Colors.white,
+                                                                            boxShadow: [
+                                                                              const BoxShadow(color: Colors.black, spreadRadius: 1),
+                                                                            ],
+                                                                          ),
+                                                                          /// height: 70.h,
+                                                                          child: ExpansionTile(
+                                                                            title: CustomText(
+                                                                              text: "Select Leader",
+                                                                              fontSize:isTablet? 6.sp:14.sp,
+                                                                              color: AppColors.black,
+                                                                              fontWeight: FontWeight.w500,
+                                                                              textAlign: TextAlign.start,
+                                                                            ),
+                                                                            children:  [
+
+                                                                              ///======== Search Bar ==============
+                                                                              CustomTextField(
+                                                                                hintText: "Search Leader name",
+                                                                                fillColor: AppColors.neutral02,
+                                                                                suffixIcon:const Icon(
+                                                                                  FluentIcons.search_24_regular,
+                                                                                  size: 24,
+                                                                                ),
+                                                                                onChanged: (String value){
+                                                                                  if(value.isEmpty){
+
+                                                                                    FocusScope.of(context).unfocus();
+
+                                                                                    Future.delayed(Duration(seconds: 2), () {
+
+                                                                                      administratorController.searchLeaderList("");
+                                                                                    });
+
+                                                                                  }else{
+
+                                                                                    administratorController.searchLeaderList(value);
+                                                                                  }
+                                                                                },
+
+                                                                              ),
+
+                                                                              const SizedBox(
+                                                                                height: 12,
+                                                                              ),
+                                                                              Column(
+                                                                                children:  List.generate(
+                                                                                    administratorController.leaderShowList.length,
+                                                                                        (index){
+
+                                                                                      final model = administratorController.leaderShowList[index];
+
+                                                                                      return Column(
+                                                                                        children: [
+                                                                                          Padding(
+                                                                                            padding: const EdgeInsets.all(4.0),
+                                                                                            child: Container(
+                                                                                              height:isTablet?130.h: 120.h,
+                                                                                              decoration: BoxDecoration(
+                                                                                                color: AppColors.grey_3.withOpacity(0.5),
+                                                                                                borderRadius: BorderRadius.circular(15),
+                                                                                              ),
+                                                                                              padding: EdgeInsets.all(12),
+                                                                                              child: Column(
+                                                                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                                                                children: [
+
+                                                                                                  Row(
+                                                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                    children: [
+
+                                                                                                      Row(
+                                                                                                        mainAxisAlignment: MainAxisAlignment.start,
+                                                                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                        children: [
+
+                                                                                                          CustomText(
+                                                                                                            text: "${index+1 }.",
+                                                                                                            fontSize: isTablet?6.sp:14.sp,
+                                                                                                            color: AppColors.black_80,
+                                                                                                            fontWeight: FontWeight.w600,
+                                                                                                          ),
+
+                                                                                                          CustomText(
+                                                                                                            text: "${model.fullName}",
+                                                                                                            fontSize:isTablet?6.sp: 14.sp,
+                                                                                                            color: AppColors.black_80,
+                                                                                                            fontWeight: FontWeight.w600,
+                                                                                                            overflow: TextOverflow.clip,
+                                                                                                          ),
+                                                                                                        ],
+                                                                                                      ),
+
+                                                                                                    ],
+                                                                                                  ),
+
+                                                                                                  Row(
+                                                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                                                                                                    children: [
+
+                                                                                                      CustomText(
+                                                                                                        text: "${model.profession}",
+                                                                                                        fontSize: 12,
+                                                                                                        color: AppColors.black_80,
+                                                                                                        fontWeight: FontWeight.w400,
+                                                                                                        textAlign: TextAlign.start,
+                                                                                                        overflow: TextOverflow.clip,
+                                                                                                      ),
+
+                                                                                                      Row(
+                                                                                                        children: [
+
+                                                                                                          Checkbox(
+                                                                                                            checkColor: AppColors.white,
+                                                                                                            activeColor: AppColors.primary,
+                                                                                                            shape: RoundedRectangleBorder(
+                                                                                                              borderRadius: BorderRadius.circular(3.0),
+                                                                                                            ),
+                                                                                                            side: const BorderSide(
+                                                                                                              // ======> CHANGE THE BORDER COLOR HERE <======
+                                                                                                              color: AppColors.primary,
+                                                                                                              // Give your checkbox border a custom width
+                                                                                                              width: 1.4,
+                                                                                                            ),
+                                                                                                            ///value: administratorController.selectedOranization.value,
+                                                                                                            value: administratorController.leaderIdList.contains(model.id),
+                                                                                                            onChanged: (bool? value) {
+
+                                                                                                              administratorController.selectedLeader.value = value!;
+
+                                                                                                              if(administratorController.selectedLeader.value){
+
+                                                                                                                administratorController.leaderIdList.add(model.id.toString());
+                                                                                                              }else{
+                                                                                                                administratorController.leaderIdList.remove(model.id.toString());
+                                                                                                              }
+
+                                                                                                            },
+                                                                                                          ),
+
+                                                                                                        ],
+                                                                                                      ),
+
+                                                                                                    ],
+                                                                                                  ),
+
+                                                                                                  const SizedBox(
+                                                                                                    height: 4,
+                                                                                                  ),
+
+                                                                                                ],
+                                                                                              ),
+                                                                                            ),
+                                                                                          ),
+                                                                                        ],
+                                                                                      );
+                                                                                    }
+                                                                                ),
+                                                                              )
+                                                                            ],
+                                                                          )
+                                                                      ),
+
+                                                                      administratorController.leaderIdList.value.isNotEmpty? Align(
+                                                                        alignment: Alignment.centerLeft,
+                                                                        child: Flexible(
+                                                                          child: CustomText(
+                                                                            text: "${jsonEncode(administratorController.leaderIdList.value)}",
+                                                                            fontSize:isTablet? 6.sp:12.sp,
+                                                                            color: AppColors.black,
+                                                                            fontWeight: FontWeight.w400,
+                                                                            textAlign: TextAlign.start,
+                                                                            overflow: TextOverflow.ellipsis,
+                                                                            maxLines: administratorController.leaderIdList.length,
+                                                                          ),
+                                                                        ),
+                                                                      ):SizedBox(),
+
+
+
+                                                                      const SizedBox(
+                                                                        height: 12,
+                                                                      ),
+                                                                      CustomFormCard(
+                                                                          title: "Name",
+                                                                          hintText: "Name",
+                                                                          fontSize: isTablet?16:16,
+                                                                          hasBackgroundColor: true,
+                                                                          controller: administratorController.missionNameController.value),
+
+                                                                      SizedBox(
+                                                                        height: 12.h,
+                                                                      ),
+
+                                                                      CustomFormCard(
+                                                                          title: "Description",
+                                                                          hintText: "Description",
+                                                                          fontSize: isTablet?16:16,
+                                                                          hasBackgroundColor: true,
+                                                                          controller: administratorController.missionDescriptionController.value),
+
+
+                                                                      SizedBox(
+                                                                        height: 8.h,
+                                                                      ),
+                                                                      Row(
+                                                                        mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .start,
+                                                                        children: [
+
+                                                                          CustomText(
+                                                                            text:
+                                                                            "Access mode:",
+                                                                            fontSize:
+                                                                            14,
+                                                                            color: AppColors
+                                                                                .primary,
+                                                                            fontWeight:
+                                                                            FontWeight
+                                                                                .w600,
+                                                                          ),
+
+                                                                          Radio<bool>(
+                                                                            value:
+                                                                            false, // Value for "No"
+                                                                            fillColor:
+                                                                            WidgetStateColor.resolveWith((states) =>
+                                                                            AppColors.primary),
+                                                                            groupValue: administratorController
+                                                                                .missionStatues
+                                                                                .value,
+                                                                            onChanged:
+                                                                                (bool?
+                                                                            value) {
+                                                                              administratorController
+                                                                                  .missionStatues
+                                                                                  .value = value!;
+
+
+                                                                            },
+                                                                          ),
+                                                                          const CustomText(
+                                                                            text:
+                                                                            "private",
+                                                                            fontSize:
+                                                                            14,
+                                                                            color: AppColors
+                                                                                .black,
+                                                                            fontWeight:
+                                                                            FontWeight
+                                                                                .w600,
+                                                                          ),
+                                                                          Radio<bool>(
+                                                                            value:
+                                                                            true, // Value for "Yes"
+                                                                            fillColor:
+                                                                            WidgetStateColor.resolveWith((states) =>
+                                                                            AppColors.primary),
+                                                                            groupValue: administratorController
+                                                                                .missionStatues
+                                                                                .value,
+                                                                            onChanged:(bool? value) {
+
+                                                                              administratorController
+                                                                                  .missionStatues
+                                                                                  .value = value!;
+
+                                                                            },
+                                                                          ),
+
+                                                                          const CustomText(
+                                                                            text:
+                                                                            "public",
+                                                                            fontSize:
+                                                                            14,
+                                                                            color: AppColors
+                                                                                .black,
+                                                                            fontWeight:
+                                                                            FontWeight
+                                                                                .w600,
+                                                                          ),
+                                                                        ],
+                                                                      ),
+
+                                                                      SizedBox(
+                                                                        height: 8.h,
+                                                                      ),
+                                                                      Padding(
+                                                                        padding: const EdgeInsets.only(left: 12,right: 12,bottom: 12),
+                                                                        child: CustomButton(
+                                                                          onTap: () {
+
+                                                                            if(administratorController.organizationIdList.isEmpty){
+                                                                              Toast.errorToast("Select Oranization is Empty!!");
+                                                                            }else if(administratorController.leaderIdList.isEmpty){
+                                                                              Toast.errorToast("Select Oranization is Empty!!");
+                                                                            }
+
+                                                                          },
+                                                                          title: "Edit",
+                                                                          height: 60.h,
+                                                                          textColor: AppColors.black,
+                                                                          fillColor: AppColors.primary,
+                                                                          fontSize: 12,
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            }
+                                                        ),
+                                                      ),
+                                                    );
                                                   },
                                                   title: "Edit",
                                                   width: 80.w,
@@ -1333,7 +1761,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                       const Align(
                                         alignment: Alignment.topLeft,
                                         child: CustomText(
-                                          text: "Add Leader",
+                                          text: "Add Organizer",
                                           fontSize: 14,
                                           color: AppColors.black,
                                           fontWeight: FontWeight.w500,
@@ -1659,7 +2087,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                             }
 
                                           },
-                                          title: "Done",
+                                          title: "Create",
                                           height: 60.h,
                                           textColor: AppColors.black,
                                           fillColor: AppColors.primary,

@@ -353,9 +353,9 @@ class AdministratiorController extends GetxController {
       "requestedOrganizers": leaderIdList
     };
 
-    Toast.errorToast("missionModeStatue:${missionModeStatue.value}");
+    debugPrint("mission_status:${jsonEncode(body)}");
 
-    var response = await ApiClient.postData(ApiUrl.createMission, jsonEncode(body));
+     var response = await ApiClient.postData(ApiUrl.createMission, jsonEncode(body));
 
     if (response.statusCode == 201) {
 

@@ -16,7 +16,6 @@ class MissionRetriveResponeModel {
   List<String>? connectedOrganizations;
   List<String>? requestedOrganizers;
   List<dynamic>? connectedOrganizers;
-  DateTime? createdAt;
   DateTime? updatedAt;
   int? v;
 
@@ -28,7 +27,6 @@ class MissionRetriveResponeModel {
     this.connectedOrganizations,
     this.requestedOrganizers,
     this.connectedOrganizers,
-    this.createdAt,
     this.updatedAt,
     this.v,
   });
@@ -41,7 +39,6 @@ class MissionRetriveResponeModel {
     connectedOrganizations: json["connectedOrganizations"] == null ? [] : List<String>.from(json["connectedOrganizations"]!.map((x) => x)),
     requestedOrganizers: json["requestedOrganizers"] == null ? [] : List<String>.from(json["requestedOrganizers"]!.map((x) => x)),
     connectedOrganizers: json["connectedOrganizers"] == null ? [] : List<dynamic>.from(json["connectedOrganizers"]!.map((x) => x)),
-    createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
     updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
     v: json["__v"],
   );
@@ -54,7 +51,6 @@ class MissionRetriveResponeModel {
     "connectedOrganizations": connectedOrganizations == null ? [] : List<dynamic>.from(connectedOrganizations!.map((x) => x)),
     "requestedOrganizers": requestedOrganizers == null ? [] : List<dynamic>.from(requestedOrganizers!.map((x) => x)),
     "connectedOrganizers": connectedOrganizers == null ? [] : List<dynamic>.from(connectedOrganizers!.map((x) => x)),
-    "createdAt": createdAt?.toIso8601String(),
     "updatedAt": updatedAt?.toIso8601String(),
     "__v": v,
   };
