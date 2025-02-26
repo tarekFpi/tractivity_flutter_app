@@ -39,8 +39,11 @@ import 'package:tractivity_app/view/screens/home_screen/volunteer_chart_screen.d
 import 'package:tractivity_app/view/screens/notification/notification_screen.dart';
 import 'package:tractivity_app/view/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/Invite_member_screen.dart';
+import 'package:tractivity_app/view/screens/organizer_home_screen/mission_to_volunteers_invite_screen.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organization_event_list_screen.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organize_details_screen.dart';
+import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_active_mission_details.dart';
+import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_inactive_mission_details.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_recent_event_details.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_home_screen.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_invite_mission_screen/organize_map.dart';
@@ -115,6 +118,12 @@ class AppRoutes {
   static const String organizationEventListScreen = "/OrganizationEventListScreen";
   static const String volunteerChartScreen = "/VolunteerChartScreen";
   static const String volunteerEventReportScreen = "/VolunteerEventReportScreen";
+  static const String organizerMissionDetailsScreen = "/OrganizerMissionDetailsScreen";
+  static const String organizerInactiveMissionDetails = "/OrganizerInactiveMissionDetails";
+  static const String organizerActiveMissionDetails = "/OrganizerActiveMissionDetails";
+  static const String missionToVolunteersInviteScreen = "/MissionToVolunteersInviteScreen";
+  static const String missionEventReportScreen = "/MissionEventReportScreen";
+  static const String organizerEventCreateScreen = "/OrganizerEventCreateScreen";
 
 
   static List<GetPage> routes = [
@@ -184,8 +193,13 @@ class AppRoutes {
     GetPage(name: volunteerChartScreen, page: () => VolunteerChartScreen()),
 
     GetPage(name: volunteerEventReportScreen, page: () => VolunteerEventReportScreen()),
+    GetPage(name: organizeDetailsScreen, page: () => OrganizeDetailsScreen()),
+    GetPage(name: organizerInactiveMissionDetails, page: () => OrganizerInactiveMissionDetails()),
+    GetPage(name: organizerActiveMissionDetails, page: () => OrganizerActiveMissionDetails()),
 
-
-
+    GetPage(name: missionToVolunteersInviteScreen, page: () => MissionToVolunteersInviteScreen()),
+    GetPage(name: missionEventReportScreen, page: () => MissionEventReportScreen()),
+    GetPage(name: organizerEventCreateScreen, page: () => OrganizerEventCreateScreen()),
   ];
+
 }

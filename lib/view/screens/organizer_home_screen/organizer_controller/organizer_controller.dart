@@ -10,7 +10,6 @@ import 'package:tractivity_app/service/api_url.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
 import 'package:tractivity_app/utils/toast.dart';
-import 'package:tractivity_app/view/screens/adminstrator_home_screen/specific_event_model/SpecificIdEventsResponeModel.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/model_completed/CompleteEeventResponeModel.dart';
 
 class OrganizerController extends GetxController{
@@ -18,8 +17,8 @@ class OrganizerController extends GetxController{
   RxInt currentIndex = 0.obs;
 
   RxList<String> nameList = [
-    AppStrings.completeEvent,
-    AppStrings.recentEvents,
+    "Invited Mission",
+    "Mission List",
   ].obs;
 
   RxList<String> inviteMissionNameList = [

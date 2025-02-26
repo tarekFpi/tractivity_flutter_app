@@ -1,16 +1,18 @@
 // To parse this JSON data, do
 //
-//     final specificIdEventsResponeModel = specificIdEventsResponeModelFromJson(jsonString);
+//     final retriveMissionEventsResponeModel = retriveMissionEventsResponeModelFromJson(jsonString);
 
 import 'dart:convert';
 
-SpecificIdEventsResponeModel specificIdEventsResponeModelFromJson(String str) => SpecificIdEventsResponeModel.fromJson(json.decode(str));
+RetriveMissionEventsResponeModel retriveMissionEventsResponeModelFromJson(String str) => RetriveMissionEventsResponeModel.fromJson(json.decode(str));
 
-String specificIdEventsResponeModelToJson(SpecificIdEventsResponeModel data) => json.encode(data.toJson());
+String retriveMissionEventsResponeModelToJson(RetriveMissionEventsResponeModel data) => json.encode(data.toJson());
 
-class SpecificIdEventsResponeModel {
+class RetriveMissionEventsResponeModel {
   Creator? creator;
+  Address? address;
   Cords? cords;
+  Report? report;
   String? id;
   MissionId? missionId;
   String? name;
@@ -22,15 +24,16 @@ class SpecificIdEventsResponeModel {
   DateTime? date;
   String? mode;
   String? status;
-  List<EdVolunteer>? invitedVolunteer;
-  List<EdVolunteer>? joinedVolunteer;
+  List<dynamic>? joinedVolunteer;
   DateTime? createdAt;
   DateTime? updatedAt;
   int? v;
 
-  SpecificIdEventsResponeModel({
+  RetriveMissionEventsResponeModel({
     this.creator,
+    this.address,
     this.cords,
+    this.report,
     this.id,
     this.missionId,
     this.name,
@@ -42,16 +45,17 @@ class SpecificIdEventsResponeModel {
     this.date,
     this.mode,
     this.status,
-    this.invitedVolunteer,
     this.joinedVolunteer,
     this.createdAt,
     this.updatedAt,
     this.v,
   });
 
-  factory SpecificIdEventsResponeModel.fromJson(Map<String, dynamic> json) => SpecificIdEventsResponeModel(
+  factory RetriveMissionEventsResponeModel.fromJson(Map<String, dynamic> json) => RetriveMissionEventsResponeModel(
     creator: json["creator"] == null ? null : Creator.fromJson(json["creator"]),
+    address: json["address"] == null ? null : Address.fromJson(json["address"]),
     cords: json["cords"] == null ? null : Cords.fromJson(json["cords"]),
+    report: json["report"] == null ? null : Report.fromJson(json["report"]),
     id: json["_id"],
     missionId: json["missionId"] == null ? null : MissionId.fromJson(json["missionId"]),
     name: json["name"],
@@ -63,8 +67,7 @@ class SpecificIdEventsResponeModel {
     date: json["date"] == null ? null : DateTime.parse(json["date"]),
     mode: json["mode"],
     status: json["status"],
-    invitedVolunteer: json["invitedVolunteer"] == null ? [] : List<EdVolunteer>.from(json["invitedVolunteer"]!.map((x) => EdVolunteer.fromJson(x))),
-    joinedVolunteer: json["joinedVolunteer"] == null ? [] : List<EdVolunteer>.from(json["joinedVolunteer"]!.map((x) => EdVolunteer.fromJson(x))),
+    joinedVolunteer: json["joinedVolunteer"] == null ? [] : List<dynamic>.from(json["joinedVolunteer"]!.map((x) => x)),
     createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
     updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
     v: json["__v"],
@@ -72,7 +75,9 @@ class SpecificIdEventsResponeModel {
 
   Map<String, dynamic> toJson() => {
     "creator": creator?.toJson(),
+    "address": address?.toJson(),
     "cords": cords?.toJson(),
+    "report": report?.toJson(),
     "_id": id,
     "missionId": missionId?.toJson(),
     "name": name,
@@ -84,11 +89,34 @@ class SpecificIdEventsResponeModel {
     "date": date?.toIso8601String(),
     "mode": mode,
     "status": status,
-    "invitedVolunteer": invitedVolunteer == null ? [] : List<dynamic>.from(invitedVolunteer!.map((x) => x.toJson())),
-    "joinedVolunteer": joinedVolunteer == null ? [] : List<dynamic>.from(joinedVolunteer!.map((x) => x.toJson())),
+    "joinedVolunteer": joinedVolunteer == null ? [] : List<dynamic>.from(joinedVolunteer!.map((x) => x)),
     "createdAt": createdAt?.toIso8601String(),
     "updatedAt": updatedAt?.toIso8601String(),
     "__v": v,
+  };
+}
+
+class Address {
+  String? state;
+  String? city;
+  String? zip;
+
+  Address({
+    this.state,
+    this.city,
+    this.zip,
+  });
+
+  factory Address.fromJson(Map<String, dynamic> json) => Address(
+    state: json["state"],
+    city: json["city"],
+    zip: json["zip"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "state": state,
+    "city": city,
+    "zip": zip,
   };
 }
 
@@ -140,111 +168,27 @@ class Creator {
   };
 }
 
-class EdVolunteer {
-  StartInfo? startInfo;
-  Volunteer? volunteer;
-  String? workTitle;
-  String? workStatus;
-  int? totalWorkedHour;
-  String? id;
-
-  EdVolunteer({
-    this.startInfo,
-    this.volunteer,
-    this.workTitle,
-    this.workStatus,
-    this.totalWorkedHour,
-    this.id,
-  });
-
-  factory EdVolunteer.fromJson(Map<String, dynamic> json) => EdVolunteer(
-    startInfo: json["startInfo"] == null ? null : StartInfo.fromJson(json["startInfo"]),
-    volunteer: json["volunteer"] == null ? null : Volunteer.fromJson(json["volunteer"]),
-    workTitle: json["workTitle"],
-    workStatus: json["workStatus"],
-    totalWorkedHour: json["totalWorkedHour"],
-    id: json["_id"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "startInfo": startInfo?.toJson(),
-    "volunteer": volunteer?.toJson(),
-    "workTitle": workTitle,
-    "workStatus": workStatus,
-    "totalWorkedHour": totalWorkedHour,
-    "_id": id,
-  };
-}
-
-class StartInfo {
-  bool? isStart;
-
-  StartInfo({
-    this.isStart,
-  });
-
-  factory StartInfo.fromJson(Map<String, dynamic> json) => StartInfo(
-    isStart: json["isStart"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "isStart": isStart,
-  };
-}
-
-class Volunteer {
-  String? id;
-  String? fullName;
-  String? profession;
-  String? image;
-
-  Volunteer({
-    this.id,
-    this.fullName,
-    this.profession,
-    this.image,
-  });
-
-  factory Volunteer.fromJson(Map<String, dynamic> json) => Volunteer(
-    id: json["_id"],
-    fullName: json["fullName"],
-    profession: json["profession"],
-    image: json["image"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "_id": id,
-    "fullName": fullName,
-    "profession": profession,
-    "image": image,
-  };
-}
-
 class MissionId {
   String? id;
   String? name;
   List<ConnectedOrganization>? connectedOrganizations;
-  List<Volunteer>? connectedOrganizers;
 
   MissionId({
     this.id,
     this.name,
     this.connectedOrganizations,
-    this.connectedOrganizers,
   });
 
   factory MissionId.fromJson(Map<String, dynamic> json) => MissionId(
     id: json["_id"],
     name: json["name"],
     connectedOrganizations: json["connectedOrganizations"] == null ? [] : List<ConnectedOrganization>.from(json["connectedOrganizations"]!.map((x) => ConnectedOrganization.fromJson(x))),
-    connectedOrganizers: json["connectedOrganizers"] == null ? [] : List<Volunteer>.from(json["connectedOrganizers"]!.map((x) => Volunteer.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "_id": id,
     "name": name,
     "connectedOrganizations": connectedOrganizations == null ? [] : List<dynamic>.from(connectedOrganizations!.map((x) => x.toJson())),
-    "connectedOrganizers": connectedOrganizers == null ? [] : List<dynamic>.from(connectedOrganizers!.map((x) => x.toJson())),
   };
 }
 
@@ -265,5 +209,25 @@ class ConnectedOrganization {
   Map<String, dynamic> toJson() => {
     "_id": id,
     "name": name,
+  };
+}
+
+class Report {
+  int? hours;
+  int? mileage;
+
+  Report({
+    this.hours,
+    this.mileage,
+  });
+
+  factory Report.fromJson(Map<String, dynamic> json) => Report(
+    hours: json["hours"],
+    mileage: json["mileage"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "hours": hours,
+    "mileage": mileage,
   };
 }

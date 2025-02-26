@@ -70,22 +70,21 @@ class ApiUrl {
 
 
   ///=================== mission id By Event  List ========================================
-  static String missionIDByEventList ({required String missionId}) =>"/organizer/event/retrive/mission/$missionId";
+  static String missionIdByMissionDetails ({required String missionId}) =>"/mission/retrive/$missionId";
+
+  ///=================== Retrive all events by missionId========================================
+
+  static String retriveAllEventByMissionId ({required String missionId}) =>"/organizer/event/retrive/mission/$missionId";
 
 
 ///===================== retrive Specific event by Id event show =====================
-
   static String retriveBySpecificEventList ({required String eventId}) =>"/organizer/event/retrive/$eventId";
 
   ///===================== retrive user profile show by user Id  =====================
   static String retriveUserProfile ({required String userId}) =>"/user/retrive/$userId";
 
 
-///=========================== organizer api all  ===========================
-
-
   ///===================== retrive Complelete by user Id  =====================
-
   static String retriveCompleleteProfile ({required String userId}) =>"/organizer/event/retrive/organizer/$userId?status=deliveried";
 
 

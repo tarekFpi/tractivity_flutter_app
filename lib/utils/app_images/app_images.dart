@@ -10,7 +10,7 @@ class AppImages {
   static const String image = "$basePath/imagei.png";
   static const String mapimage = "$basePath/mapimage.png";
   static const String confirmbooking = "$basePath/confirmbooking.png";
-
+  static const String userImage = "$basePath/user2.png";
 
 
 

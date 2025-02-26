@@ -67,7 +67,6 @@ class _AdminstratorEventDetailsScreenState extends State<AdminstratorEventDetail
 
                   var connectedOrgsLeader = administratorController.retriveSpecificByEventShowList.value.missionId?.connectedOrganizers;
 
-                  administratorController.getAddressFromLatLng(administratorController.retriveSpecificByEventShowList.value.cords?.lat??0.0, administratorController.retriveSpecificByEventShowList.value.cords?.lng??0.0);
 
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -100,7 +99,7 @@ class _AdminstratorEventDetailsScreenState extends State<AdminstratorEventDetail
                       ),
 
                       SizedBox(
-                        height: 24.h,
+                        height: 16.h,
                       ),
 
                       ///======== Dots ===========
@@ -111,7 +110,6 @@ class _AdminstratorEventDetailsScreenState extends State<AdminstratorEventDetail
                             (index) => buildDot(index, context),
                         ),
                       ),
-
 
                       SizedBox(
                         height: 12.h,
@@ -142,10 +140,10 @@ class _AdminstratorEventDetailsScreenState extends State<AdminstratorEventDetail
                               child: Icon(Icons.menu,size: 24,)),
                         ),
                       ),
+
                       SizedBox(
                         height: 12.h,
                       ),
-
                       Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -214,123 +212,117 @@ class _AdminstratorEventDetailsScreenState extends State<AdminstratorEventDetail
                         ),
                       ),
 
-                      const SizedBox(
-                        height: 8,
+                        SizedBox(
+                        height: 12.h,
                       ),
 
-                      Row(
+                      CustomText(
+                        text: "Organization",
+                        fontSize:isTablet?6.sp: 16.sp,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.primary,
+                      ),
+                        SizedBox(
+                        height: 8.h,
+                      ),
+
+                      if (connectedOrgs != null)
+                        for (int i = 0; i < connectedOrgs.length; i++)
+                        // Your logic here
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+
+                              CustomText(
+                                text: "${connectedOrgs[i].name}",
+                                fontSize: isTablet?6.sp:14.sp,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.black_80,
+                              ),
+                              const Divider(
+                                color: Colors.black,
+                                thickness: 1,
+                              ),
+                            ],
+                          ),
+
+
+                      SizedBox(
+                        height: 8.h,
+                      ),
+
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
 
                           CustomText(
-                            text: "${administratorController.retriveSpecificByEventShowList.value.name}",
-                            fontSize: isTablet?6.sp:14.sp,
+                            text: "Mission Name",
+                            fontSize:isTablet?6.sp: 16.sp,
                             fontWeight: FontWeight.w500,
-                            color: AppColors.black_80,
+                            color: AppColors.primary,
                           ),
 
-                          const SizedBox(
-                            width: 4,
+                          SizedBox(
+                            height: 4.h,
                           ),
-                          CustomText(
-                            text: "(Event Name)",
-                            fontSize: isTablet?6.sp:14.sp,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.lightBlue,
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(
-                        height: 8,
-                      ),
-
-                      Row(
-                        children: [
 
                           CustomText(
                             text: "${administratorController.retriveSpecificByEventShowList.value.missionId?.name}",
-                            fontSize: isTablet?6.sp:14.sp,
+                            fontSize:isTablet?6.sp: 14.sp,
                             fontWeight: FontWeight.w500,
                             color: AppColors.black_80,
+                            bottom: 6,
                           ),
 
-                          const SizedBox(
-                            width: 4,
-                          ),
-
-                            CustomText(
-                            text: "(Mission Name)",
-                            fontSize: isTablet?6.sp:14.sp,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.lightBlue,
-                          ),
-                      ],
-                      ),
-
-                      const SizedBox(
-                        height: 8,
-                      ),
-
-                  if (connectedOrgs != null)
-                  for (int i = 0; i < connectedOrgs.length; i++)
-                  // Your logic here
-
-                       Column(
-                         children: [
-                           const SizedBox(
-                             height: 8,
-                           ),
-                           Row(
-                             children: [
-
-                               CustomText(
-                                 text: "${connectedOrgs[i].name}",
-                                 fontSize: isTablet?6.sp:14.sp,
-                                 fontWeight: FontWeight.w500,
-                                 color: AppColors.black_80,
-                               ),
-
-                               const SizedBox(
-                                 width: 4,
-                               ),
-                               CustomText(
-                                 text: "(Organization)",
-                                 fontSize: isTablet?6.sp:14.sp,
-                                 fontWeight: FontWeight.w500,
-                                 color: AppColors.lightBlue,
-                               ),
-                             ],
-                           ),
-                         ],
-                       ),
-
-                      const SizedBox(
-                        height: 12,
-                      ),
-
-
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.location_pin,
-                            size: 18,
-                          ),
-                          const SizedBox(
-                            width: 4,
-                          ),
-                          CustomText(
-                            text: "${administratorController.getSingladdress.value}",
-                            fontSize: isTablet?6.sp:12.sp,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.black_80,
-                          ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 12,
+
+                      const Divider(
+                        color: Colors.black,
+                        thickness: 1,
+                      ),
+
+                      SizedBox(
+                        height: 12.h,
+                      ),
+
+                      CustomText(
+                        text: "Event",
+                        fontSize:isTablet?6.sp: 16.sp,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.primary,
+                      ),
+
+                      SizedBox(
+                        height: 4.h,
+                      ),
+                      CustomText(
+                        text: "${administratorController.retriveSpecificByEventShowList.value.name}",
+                        fontSize:isTablet?6.sp: 14.sp,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.black_80,
+                        bottom: 6,
+                      ),
+                      const Divider(
+                        color: Colors.black,
+                        thickness: 1,
+                      ),
+
+                        SizedBox(
+                        height: 8.h,
                       ),
                       //connectedOrgsLeader
-
+                      CustomText(
+                        text: "Organizers",
+                        fontSize:isTablet?6.sp: 16.sp,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.primary,
+                      ),
+                      SizedBox(
+                        height: 8.h,
+                      ),
                   if (connectedOrgsLeader != null)
                   for (int i = 0; i < connectedOrgsLeader.length; i++)
                       Row(
@@ -343,37 +335,35 @@ class _AdminstratorEventDetailsScreenState extends State<AdminstratorEventDetail
                             boxShape: BoxShape.circle,
                             border: Border.all(color: AppColors.primary, width: 3),
                           ),
-                          const SizedBox(
-                            width: 10,
+                            SizedBox(
+                            width: 10.w,
+                          ),
+                          CustomText(
+                            text: "${connectedOrgsLeader[i].fullName}",
+                            fontSize:isTablet?6.sp: 14.sp,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.black_80,
+                            bottom: 6,
                           ),
 
-                          Text.rich(
-                            TextSpan(
-                                text: '${connectedOrgsLeader[i].fullName}',
-                                style: TextStyle(
-                                    fontSize: 12.sp, fontWeight: FontWeight.w600),
-                                children: [
-                                  TextSpan(
-                                    text: ' Leader',
-                                    style: TextStyle(
-                                        fontSize:  12.sp,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColors.lightBlue),
-                                  ),
-                                ]),
-                          ),
                         ],
                       ),
 
-
-                        SizedBox(
-                        height: 16.h,
+                      SizedBox(
+                        height: 8.h,
                       ),
-                      const CustomText(
+                      const Divider(
+                        color: Colors.black,
+                        thickness: 1,
+                      ),
+                        SizedBox(
+                        height: 8.h,
+                      ),
+                        CustomText(
                         text: "Description",
-                        fontSize: 16,
+                        fontSize:isTablet?6.sp: 16.sp,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.black_80,
+                        color: AppColors.primary,
                       ),
                       const SizedBox(
                         height: 8,
@@ -390,14 +380,18 @@ class _AdminstratorEventDetailsScreenState extends State<AdminstratorEventDetail
                       ),
                         CustomText(
                         text: "Time & Date",
-                        fontSize:isTablet?6.sp: 14.sp,
+                        fontSize:isTablet?6.sp: 16.sp,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.black_80,
+                        color: AppColors.primary,
                        textAlign: TextAlign.start,
                       ),
 
-                      const SizedBox(
-                        height: 8,
+                      SizedBox(
+                        height: 8.h,
+                      ),
+                      const Divider(
+                        color: Colors.black,
+                        thickness: 1,
                       ),
 
                         CustomText(
@@ -407,10 +401,135 @@ class _AdminstratorEventDetailsScreenState extends State<AdminstratorEventDetail
                         color: AppColors.black_80,
                       ),
 
-                      const SizedBox(
-                        height: 16,
+                        SizedBox(
+                        height: 8.h,
                       ),
 
+                      Column(
+                        children: [
+                          CustomText(
+                            text: "City",
+                            fontSize:isTablet?6.sp: 16.sp,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.primary,
+                            textAlign: TextAlign.start,
+                          ),
+                          SizedBox(
+                            height: 8.h,
+                          ),
+                          CustomText(
+                            text: "${administratorController.retriveSpecificByEventShowList.value.address?.city}",
+                            fontSize:isTablet?6.sp: 12.sp,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.black_80,
+                          ),
+                        ],
+                      ),
+
+                      SizedBox(
+                        height: 4.h,
+                      ),
+
+                      const Divider(
+                        color: Colors.black,
+                        thickness: 1,
+                      ),
+
+                      SizedBox(
+                        height: 8.h,
+                      ),
+
+                      Column(
+                        children: [
+                          CustomText(
+                            text: "State",
+                            fontSize:isTablet?6.sp: 16.sp,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.primary,
+                            textAlign: TextAlign.start,
+                          ),
+                          SizedBox(
+                            height: 8.h,
+                          ),
+                          CustomText(
+                            text: "${administratorController.retriveSpecificByEventShowList.value.address?.state}",
+                            fontSize:isTablet?6.sp: 12.sp,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.black_80,
+                          ),
+                        ],
+                      ),
+
+                      SizedBox(
+                        height: 4.h,
+                      ),
+
+                      const Divider(
+                        color: Colors.black,
+                        thickness: 1,
+                      ),
+
+                      SizedBox(
+                        height: 8.h,
+                      ),
+
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: Column(
+                          children: [
+                            CustomText(
+                              text: "Zip",
+                              fontSize:isTablet?6.sp: 16.sp,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.primary,
+                              textAlign: TextAlign.start,
+                            ),
+                            SizedBox(
+                              height: 8.h,
+                            ),
+                            CustomText(
+                              text: "${administratorController.retriveSpecificByEventShowList.value.address?.zip}",
+                              fontSize:isTablet?6.sp: 12.sp,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.black_80,
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      SizedBox(
+                        height: 4.h,
+                      ),
+
+                      const Divider(
+                        color: Colors.black,
+                        thickness: 1,
+                      ),
+
+                      SizedBox(
+                        height: 8.h,
+                      ),
+                      Row(
+                        children: [
+
+                          CustomText(
+                            text: "working Time:${administratorController.retriveSpecificByEventShowList.value.report?.hours}",
+                            fontSize:isTablet?8.sp: 14.sp,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.primary,
+                          ),
+
+                          SizedBox(
+                            width: 8.w,
+                          ),
+                          CustomText(
+                            text: "Millage:${administratorController.retriveSpecificByEventShowList.value.report?.mileage}",
+                            fontSize:isTablet?8.sp: 14.sp,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.primary,
+                          ),
+                        ],
+                      )
                     ],
                   );
                 }

@@ -23,7 +23,8 @@ import 'package:tractivity_app/view/screens/adminstrator_home_screen/events_mode
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/leader_model/leaderResponeModel.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/mission_model/MissionRetriveResponeModel.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/organization_model/OrganizationResponeModel.dart';
-import 'package:tractivity_app/view/screens/adminstrator_home_screen/specific_event_model/SpecificIdEventsResponeModel.dart';
+import 'package:tractivity_app/view/screens/adminstrator_home_screen/specific_mission_event_model/retriveMissionEventsResponeModel.dart';
+import 'package:tractivity_app/view/screens/adminstrator_home_screen/specific_mission_model/SpecificIdEventsResponeModel.dart';
 
 
 class AdministratiorController extends GetxController {
@@ -313,7 +314,7 @@ class AdministratiorController extends GetxController {
 
   RxList<String> organizationIdList= <String>[].obs;
 
-
+  RxList<String> createLeaderIdList= <String>[].obs;
 
   RxBool selectedOranization = false.obs;
 
@@ -349,7 +350,7 @@ class AdministratiorController extends GetxController {
       "mode": missionModeStatue.value,
       "description": missionDescriptionController.value.text,
       "connectedOrganizations": organizationIdList,
-      "requestedOrganizers": exitingLeaderIdList
+      "requestedOrganizers": createLeaderIdList
     };
 
     debugPrint("mission_status:${jsonEncode(body)}");
@@ -367,7 +368,7 @@ class AdministratiorController extends GetxController {
       organizationNameController.value.clear();
       organizationDescriptionController.value.clear();
       organizationIdList.value.clear();
-      exitingLeaderIdList.value.clear();
+      createLeaderIdList.value.clear();
 
       missionListShow();
 
@@ -394,6 +395,10 @@ class AdministratiorController extends GetxController {
 
   Rx<TextEditingController> editMissionDescriptionController = TextEditingController().obs;
 
+  ///RxList<String> editOrganizationIdList= <String>[].obs;
+
+
+
   RxList<String> exitingLeaderIdList= <String>[].obs;
 
   RxList<String> presentLeaderIdList= <String>[].obs;
@@ -402,11 +407,11 @@ class AdministratiorController extends GetxController {
 
   RxList<String>newOrganizers=<String>[].obs;
 
-  Future<void> editMission() async {
+  RxBool updateMissionLoading = false.obs;
 
-    createMissionLoading.value = true;
+  Future<void> editMission(String missionId) async {
 
-    var userId = await SharePrefsHelper.getString(AppConstants.userId);
+    updateMissionLoading.value = true;
 
     ///Finding new and removed organizers
     newOrganizers.value = presentLeaderIdList.where((id)=> !exitingLeaderIdList.contains(id)).toList();
@@ -432,34 +437,37 @@ class AdministratiorController extends GetxController {
     var body = {
       "removedOrganizers": removedOrganizers,
       "newOrganizers": newOrganizers,
-      "name": editOrganizationNameController.value.text,
-      "description": editOrganizationDescriptionController.value.text,
+      "name": editMissionNameController.value.text,
+      "description": editMissionDescriptionController.value.text,
       "mode": missionModeStatue.value,
       "status": "inactive"
     };
 
     debugPrint("missionEdit:${jsonEncode(body)}");
 
-   /* var response = await ApiClient.patchData(ApiUrl.editMission(editId: userId), jsonEncode(body));
+   var response = await ApiClient.patchData(ApiUrl.editMission(editId: missionId), jsonEncode(body));
 
     if (response.statusCode == 200) {
 
-      createMissionLoading.value = false;
+      updateMissionLoading.value = false;
 
       Toast.successToast(response.body['message']!);
 
       debugPrint("response:${body}");
 
-      organizationNameController.value.clear();
-      organizationDescriptionController.value.clear();
-      organizationIdList.value.clear();
+      editMissionNameController.value.clear();
+      editMissionDescriptionController.value.clear();
+
       exitingLeaderIdList.value.clear();
+      newOrganizers.value.clear();
+      removedOrganizers.value.clear();
+      presentLeaderIdList.value.clear();
 
       missionListShow();
 
     } else {
 
-      createMissionLoading.value = false;
+      updateMissionLoading.value = false;
       if (response.statusText == ApiClient.somethingWentWrong) {
 
         Toast.errorToast(AppStrings.checknetworkconnection);
@@ -470,7 +478,7 @@ class AdministratiorController extends GetxController {
         ApiChecker.checkApi(response);
         return;
       }
-    }*/
+    }
   }
 
 
@@ -615,7 +623,6 @@ class AdministratiorController extends GetxController {
 
 
   ///===================== search  leader  =====================
-
   RxBool searchLeaderLoading = false.obs;
 
   Future<void> searchLeaderList(String query) async{
@@ -665,31 +672,27 @@ class AdministratiorController extends GetxController {
   }
 
 
-  ///===================== fetch Mission by uid event show =====================
+  ///===================== Retrive specific mission by mission Id=====================
+  Rx<retriveSpecificMissionByMissionResponeModel> missionDetailsShowList = retriveSpecificMissionByMissionResponeModel().obs;
 
-  RxList<EventsRetriveResponeModel> missionByEventShowList = <EventsRetriveResponeModel>[].obs;
+  RxBool missionDetailsShowLoading = false.obs;
+  Future<void> retriveSpecificMissionByMissionShow(String missionId) async{
 
-  RxBool missionByEventShowLoading = false.obs;
+    missionDetailsShowLoading.value = true;
 
-  Future<void> missionByEventShow(String missionId) async{
-
-    missionByEventShowLoading.value = true;
-
-    var response = await ApiClient.getData(ApiUrl.missionIDByEventList(missionId: missionId));
+    var response = await ApiClient.getData(ApiUrl.missionIdByMissionDetails(missionId: missionId));
 
     if (response.statusCode == 200) {
 
-      missionByEventShowList.value = List.from(response.body["data"].map((m)=> EventsRetriveResponeModel.fromJson(m)));
 
-      debugPrint("missionByEventShowList:${organizationShowList.value}");
+      missionDetailsShowList.value = retriveSpecificMissionByMissionResponeModel.fromJson(response.body["data"]);
 
-
-      missionByEventShowLoading.value =false;
+      missionDetailsShowLoading.value =false;
       refresh();
 
     } else {
 
-      missionByEventShowLoading.value =false;
+      missionDetailsShowLoading.value =false;
 
       if (response.statusText == ApiClient.somethingWentWrong) {
         Toast.errorToast(AppStrings.checknetworkconnection);
@@ -705,6 +708,44 @@ class AdministratiorController extends GetxController {
     }
   }
 
+
+
+  ///=================================================
+  ///Retrive all events by missionId
+
+  RxList<RetriveMissionEventsResponeModel> missionEventShowList = <RetriveMissionEventsResponeModel>[].obs;
+  RxBool missionEventShowLoading = false.obs;
+
+  Future<void> retriveAllEventByMissionShow(String missionId) async{
+
+    missionEventShowLoading.value = true;
+
+    var response = await ApiClient.getData(ApiUrl.retriveAllEventByMissionId(missionId: missionId));
+
+    if (response.statusCode == 200) {
+
+      missionEventShowList.value = List.from(response.body["data"].map((m)=> RetriveMissionEventsResponeModel.fromJson(m)));
+
+      missionEventShowLoading.value =false;
+      refresh();
+
+    } else {
+
+      missionEventShowLoading.value =false;
+
+      if (response.statusText == ApiClient.somethingWentWrong) {
+        Toast.errorToast(AppStrings.checknetworkconnection);
+        refresh();
+        return;
+      } else {
+
+        ApiChecker.checkApi(response);
+
+        refresh();
+        return;
+      }
+    }
+  }
 
   ///===================== retrive Specific event by Id event show =====================
   RxInt sliderCurrentIndex = 0.obs;

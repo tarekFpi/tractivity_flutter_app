@@ -8,6 +8,7 @@ import 'package:tractivity_app/service/api_url.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
+import 'package:tractivity_app/view/components/custom_button/custom_button.dart';
 import 'package:tractivity_app/view/components/custom_loader/custom_loader.dart';
 import 'package:tractivity_app/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tractivity_app/view/components/custom_royel_appbar/custom_royel_appbar.dart';
@@ -40,7 +41,8 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
 
       missionId = Get.arguments[0]["missionId"];
 
-     administratorController.missionByEventShow(missionId);
+     administratorController.retriveSpecificMissionByMissionShow(missionId);
+     administratorController.retriveAllEventByMissionShow(missionId);
 
     }
   }
@@ -54,8 +56,8 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
 
 
       return Scaffold(
-
         appBar:  AppBar(
+          scrolledUnderElevation: 0,
           leading: Builder(builder: (context) {
             return IconButton(
                 onPressed: () => Get.back(),
@@ -66,7 +68,7 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                 ));
           }),
           title: Text(
-            "Event List",
+            "Mission Details",
             style: TextStyle(
                 color: AppColors.black,
                 fontSize: 24.sp,
@@ -76,37 +78,302 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
         ),
         body: Obx(
            () {
-           //  administratorController.addressList.clear();
+
 
             return SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: Column(
+                child:administratorController.missionDetailsShowList.toString().isEmpty?
+                SizedBox(
+                  height: MediaQuery.of(context).size.height/2,
+                  child: Center(
+                    child: CustomText(
+                      text: "No mission details yet!!",
+                      fontSize:isTablet?12.sp: 24.sp,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.lightRed,
+                    ),
+                  ),
+                ):
+                administratorController.missionDetailsShowLoading.value?CustomLoader():
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
                     const SizedBox(
                       height: 24,
                     ),
 
-                    administratorController.missionByEventShowList.value.isEmpty?
+                    CustomText(
+                      textAlign: TextAlign.start,
+                      text: "Organizations",
+                      fontSize:isTablet?6.sp: 16.sp,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.primary,
+                      bottom: 5,
+                    ),
+
+                    ListView.builder(
+                        itemCount: administratorController.missionDetailsShowList.value.connectedOrganizations?.length,
+                        shrinkWrap: true, // ✅ Important: Makes ListView take only the space it needs
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (BuildContext context, int index) {
+
+                          final connectedOrganizations =administratorController.missionDetailsShowList.value.connectedOrganizations?[index];
+
+                          return  Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CustomText(
+                                text: "${connectedOrganizations?.name}",
+                                fontSize:isTablet?6.sp: 16.sp,
+                                color: AppColors.black_80,
+                                fontWeight: FontWeight.w600,
+                                bottom: 6.h,
+                                textAlign: TextAlign.start,
+                              ),
+
+                              CustomText(
+                                text: "${connectedOrganizations?.description}",
+                                fontSize: 12,
+                                color: AppColors.black_02,
+                                fontWeight: FontWeight.w400,
+                                textAlign: TextAlign.start,
+                                overflow: TextOverflow.clip,
+                                maxLines: 3,
+                                bottom: 4.h,// Add ellipsis at the end if the text overflows.
+                              ),
+                            ],
+                          );
+                        }),
+                    SizedBox(
+                      height: 4.h,
+                    ),
+                    const Divider(
+                      color: Colors.black54,
+                      // height: 16.h,
+                    ),
+
+                    SizedBox(
+                      height: 8.h,
+                    ),
+
+                    CustomText(
+                      textAlign: TextAlign.start,
+                      text: "Mission",
+                      fontSize:isTablet?6.sp: 16.sp,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.primary,
+                      bottom: 5,
+                    ),
+
+                    CustomText(
+                      text: "${administratorController.missionDetailsShowList.value.name}",
+                      fontSize:isTablet?6.sp: 16.sp,
+                      color: AppColors.black_80,
+                      fontWeight: FontWeight.w600,
+                      bottom: 6.h,
+                    ),
+
+
+                    CustomText(
+                      text: "${administratorController.missionDetailsShowList.value.description}",
+                      fontSize: 12,
+                      color: AppColors.black_02,
+                      fontWeight: FontWeight.w400,
+                      textAlign: TextAlign.start,
+                      overflow: TextOverflow.clip,
+                      maxLines: 3,
+                      bottom: 4.h,// Add ellipsis at the end if the text overflows.
+                    ),
+
+                    const Divider(
+                      color: Colors.black54,
+                      // height: 16.h,
+                    ),
+
+                    CustomText(
+                      textAlign: TextAlign.start,
+                      text: "Organizers",
+                      fontSize:isTablet?6.sp: 16.sp,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.primary,
+                      bottom: 8.h,
+                    ),
+
+
+                    ListView.builder(
+                        itemCount: administratorController.missionDetailsShowList.value.connectedOrganizers?.length,
+                        shrinkWrap: true, // ✅ Important: Makes ListView take only the space it needs
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (BuildContext context, int index) {
+
+                          final connectedOrganizers =administratorController.missionDetailsShowList.value.connectedOrganizers?[index];
+
+                          return  Padding(
+                            padding: EdgeInsets.only(bottom: 10.h),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+
+                                    connectedOrganizers?.image==""? CustomNetworkImage(
+                                      imageUrl: AppConstants.profileImage,
+                                      height:isTablet?64.h: 60.h,
+                                      width:isTablet?64.w: 60.w,
+                                      boxShape: BoxShape.circle,
+                                    ):CustomNetworkImage(
+                                      imageUrl: "${ApiUrl.imageUrl}${connectedOrganizers?.image}",
+                                      height:isTablet?64.h: 60.h,
+                                      width:isTablet?64.w: 60.w,
+                                      boxShape: BoxShape.circle,
+                                    ),
+                                    SizedBox(
+                                      width: 10.w,
+                                    ),
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        CustomText(
+                                          text: "${connectedOrganizers?.fullName}",
+                                          fontSize:isTablet?8.sp:12.sp,
+                                          fontWeight: FontWeight.w600,
+                                          color: AppColors.black,
+                                        ),
+                                        CustomText(
+                                          text: "${connectedOrganizers?.profession}",
+                                          fontSize:isTablet?6.sp: 12.sp,
+                                          fontWeight: FontWeight.w400,
+                                          color: AppColors.black_80,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+
+
+                                Container(
+                                  padding: EdgeInsets.all(6),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.primary,
+                                    borderRadius: BorderRadius.circular(10.r),
+                                    // border: Border.all(color: AppColors.primary,width: 2),
+                                  ),
+                                  child: GestureDetector(
+                                    onTap: (){
+
+                                    },
+                                    child:  Center(
+                                        child: CustomText(
+                                          text: "Remove",
+                                          color: AppColors.white,
+                                          fontSize:isTablet?6.sp: 12.sp,
+                                          fontWeight: FontWeight.w600,
+                                        )),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }),
+
+                    const Divider(
+                      color: Colors.black54,
+                    ),
+
+                    SizedBox(
+                      height: 12.h,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 4,vertical: 8),
+                          decoration: BoxDecoration(
+                            color: AppColors.neutral02,
+                            borderRadius: BorderRadius.circular(10),
+                          ),child: CustomText(text: "Hours: ${administratorController.missionDetailsShowList.value.report?.hours}",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
+                        ),
+
+                        SizedBox(
+                          width: 8.h,
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 8,vertical: 8),
+                          decoration: BoxDecoration(
+                            color: AppColors.neutral02,
+                            borderRadius: BorderRadius.circular(10),
+                          ),child: CustomText(text: "Millage: ${administratorController.missionDetailsShowList.value.report?.mileage}",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
+                        ),
+                      ],
+                    ),
+
+
+                    SizedBox(
+                      height: 12.h,
+                    ),
+
+                    Row(
+                      children: [
+                        CustomText(
+                          text:  "Mission mode:",
+                          fontSize:isTablet?6.sp: 16.sp,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.black,
+                        ),
+                        SizedBox(
+                          width: 8.w,
+                        ),
+                        CustomText(
+                          text:  "${administratorController.missionDetailsShowList.value.mode}",
+                          fontSize:isTablet?6.sp: 16.sp,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.cardBarClr,
+                        )
+                      ],
+
+                    ),
+                    SizedBox(
+                      height: 4.h,
+                    ),
+                    const Divider(
+                      color: Colors.black54,
+                    ),
+                    SizedBox(
+                      height: 8.h,
+                    ),
+                    CustomText(
+                      textAlign: TextAlign.start,
+                      text: "Events",
+                      fontSize:isTablet?6.sp: 16.sp,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primary,
+                      bottom: 8.h,
+                    ),
+
+                    administratorController.missionEventShowList.value.isEmpty?
                     SizedBox(
                       height: MediaQuery.of(context).size.height/2,
                       child: Center(
                         child: CustomText(
-                          text: "No Event yet!!",
+                          text: "No Events yet!!",
                           fontSize:isTablet?12.sp: 24.sp,
                           fontWeight: FontWeight.w700,
                           color: AppColors.lightRed,
                         ),
                       ),
                     ):
-                    administratorController.missionByEventShowLoading.value?CustomLoader():
-                    Column(
-                        children: List.generate(administratorController.missionByEventShowList.length, (index) {
+                    administratorController.missionEventShowLoading.value?CustomLoader():
+                    ListView.builder(
+                        itemCount: administratorController.missionEventShowList.length,
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (BuildContext context, int index) {
 
-                          final model = administratorController.missionByEventShowList[index];
-
-                          administratorController.getAddressFromLatLng(model.cords?.lat??0.0,model.cords?.lng??0.0);
+                          final model = administratorController.missionEventShowList[index];
 
                           return  Padding(
                             padding: const EdgeInsets.only(bottom: 20.0),
@@ -114,10 +381,10 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                               children: [
 
                                 CustomNetworkImage(
-                                 /// imageUrl: AppConstants.eventImage,
+                                  /// imageUrl: AppConstants.eventImage,
                                   imageUrl:"${ApiUrl.imageUrl}${model.images?[0]}",
                                   height: isTablet ? 200.h : 170.h,
-                                  width: isTablet ? 180.w : 170.w,
+                                  width: isTablet ? 180.w : 180.w,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
 
@@ -135,15 +402,15 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                                         textAlign: TextAlign.start,
                                         text: "${model.name}",
                                         maxLines: 3,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
+                                        fontSize:isTablet?8.sp: 14.sp,
+                                        fontWeight: FontWeight.w600,
                                         bottom: 5,
                                       ),
                                     ),
                                     /// Location
-                                      Row(
+                                    Row(
                                       children: [
-                                        Icon(
+                                        const Icon(
                                           Icons.location_on,
                                           color: AppColors.black,
                                           size: 20,
@@ -151,8 +418,8 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                                         SizedBox(
                                           width: 150.w,
                                           child: CustomText(
-                                            text: "${administratorController.addressList.isNotEmpty?administratorController.addressList[index]:""}",
-                                        ///  text: "${administratorController.getAddressFromLatLng(model.cords?.lat??0.0,model.cords?.lng??0.0)}",
+                                            text: "${model.address?.state},${model.address?.city},${model.address?.zip}",
+                                            ///  text: "${administratorController.getAddressFromLatLng(model.cords?.lat??0.0,model.cords?.lng??0.0)}",
                                             fontSize: 12,
                                             color: AppColors.black_80,
                                             fontWeight: FontWeight.w400,
@@ -187,12 +454,12 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                                           left: 4,
                                         ),
 
-                                          CustomText(
+                                        CustomText(
                                           text: "Leader",
                                           fontSize:isTablet?6.sp: 12.sp,
                                           color: AppColors.blue,
                                           fontWeight: FontWeight.w600,
-                                         left: 4,                                        ),
+                                          left: 4,                                        ),
                                       ],
                                     ),
                                     const SizedBox(
@@ -227,41 +494,7 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                                           ),
                                         ),
 
-                                      /*  const SizedBox(
-                                          width: 8,
-                                        ),
-                                        GestureDetector(
-                                          onTap: () {
 
-                                            showDialog(
-                                              context: context,
-                                              builder: (ctx) => AlertDialog(
-                                                backgroundColor: Colors.white,
-                                                insetPadding: EdgeInsets.all(8),
-                                                contentPadding: EdgeInsets.all(8),
-                                                //   clipBehavior: Clip.antiAliasWithSaveLayer,
-                                                title: SizedBox(),
-                                                content: SizedBox(
-                                                  width: MediaQuery.sizeOf(context).width,
-                                                  child: AlertDialogEvent(title: "Are you sure you want to \n Approved this Event?",discription: "",),
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                          child: Container(
-                                            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                                            decoration: BoxDecoration(
-                                              color: AppColors.primary,
-                                              borderRadius: BorderRadius.circular(10),
-                                            ),
-                                            child: const CustomText(
-                                              text:  "Approved",
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w500,
-                                              color: AppColors.black,
-                                            ),
-                                          ),
-                                        ),*/
 
                                       ],
                                     ),
@@ -270,8 +503,9 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                               ],
                             ),
                           );
-                        })
-                    )
+                        }),
+
+
                   ],
                 ),
               ),

@@ -75,6 +75,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: Column(
+
                     children: [
 
                       ///=============== Recemt Events Tab Bar ===============
@@ -86,7 +87,9 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                           selectedIndex: administratorController.adminstratior_currentIndex.value,
                           onTabSelected: (value) {
                             administratorController.adminstratior_currentIndex.value = value;
+                            setState(() {
 
+                            });
                           },
                           selectedColor: AppColors.primary,
                           unselectedColor: AppColors.grey_1
@@ -126,7 +129,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                   padding: const EdgeInsets.only(top: 12,left: 8,right: 12),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
 
                                       Row(
@@ -155,17 +158,14 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                       ),
 
                                       Flexible(
-                                        child: SizedBox(
-
-                                          child: CustomText(
-                                            text: "${model.description}",
-                                            fontSize:isTablet?6.sp: 12.sp,
-                                            color: AppColors.black_80,
-                                            fontWeight: FontWeight.w400,
-                                            textAlign: TextAlign.start,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
+                                        child: CustomText(
+                                          text: "${model.description}",
+                                          fontSize:isTablet?6.sp: 12.sp,
+                                          color: AppColors.black_80,
+                                          fontWeight: FontWeight.w400,
+                                          textAlign: TextAlign.start,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
 
@@ -208,6 +208,10 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
 
                                                                   Navigator.of(context).pop();
 
+                                                                  administratorController.createLeaderIdList.clear();
+                                                                  administratorController.missionNameController.value.clear();
+                                                                  administratorController.missionDescriptionController.value.clear();
+
                                                                 },
                                                                 child: const Icon(
                                                                   Icons.close,
@@ -225,6 +229,8 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                                 ///height: MediaQuery.sizeOf(context).height/1.4,
 
                                                                 child: Column(
+                                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                                   children: [
 
                                                                     Align(
@@ -238,6 +244,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                                       ),
                                                                     ),
                                                                     Container(
+                                                                      width: double.infinity,
                                                                       padding: EdgeInsets.all(8),
                                                                       decoration: BoxDecoration(
                                                                         color: AppColors.grey_3.withOpacity(0.5),
@@ -249,7 +256,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                                         children: [
 
                                                                           CustomText(
-                                                                            text: "Donation Administrator",
+                                                                            text: "${model.name}",
                                                                             fontSize: 16,
                                                                             color: AppColors.black_80,
                                                                             fontWeight: FontWeight.w600,
@@ -260,7 +267,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                                           Padding(
                                                                             padding: const EdgeInsets.only(left: 8,right: 8),
                                                                             child: CustomText(
-                                                                              text: "Empowering communities  worldwide  through education, healthcare.",
+                                                                              text: "${model.description}",
                                                                               fontSize:isTablet?6.sp: 12.sp,
                                                                               color: AppColors.black_80,
                                                                               fontWeight: FontWeight.w400,
@@ -273,8 +280,8 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                                         ],
                                                                       ),
                                                                     ),
-                                                                    const SizedBox(
-                                                                      height: 12,
+                                                                      SizedBox(
+                                                                      height: 12.h,
                                                                     ),
 
                                                                     Align(
@@ -309,142 +316,171 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                                           children:  [
 
                                                                             ///======== Search Bar ==============
-                                                                            const CustomTextField(
-                                                                              hintText: "Search",
+                                                                            CustomTextField(
+                                                                              hintText: "Search Organizer name",
                                                                               fillColor: AppColors.neutral02,
-                                                                              suffixIcon: Icon(
-                                                                                Icons.search,
-                                                                                color: AppColors.black_60,
+                                                                              suffixIcon:const Icon(
+                                                                                FluentIcons.search_24_regular,
+                                                                                size: 24,
                                                                               ),
+                                                                              onChanged: (String value){
+                                                                                if(value.isEmpty){
+
+                                                                                  FocusScope.of(context).unfocus();
+
+                                                                                  Future.delayed(Duration(seconds: 2), () {
+
+                                                                                    administratorController.searchLeaderList("");
+                                                                                  });
+
+                                                                                }else{
+
+                                                                                  administratorController.searchLeaderList(value);
+                                                                                }
+                                                                              },
+
                                                                             ),
 
                                                                             const SizedBox(
                                                                               height: 12,
                                                                             ),
-
                                                                             Column(
-                                                                              children: List.generate(
-                                                                                  3, (index){
+                                                                              children:  List.generate(
+                                                                                  administratorController.leaderShowList.length,
+                                                                                      (index){
 
-                                                                                return Column(
-                                                                                  children: [
-                                                                                    Padding(
-                                                                                      padding: const EdgeInsets.all(4.0),
-                                                                                      child: Container(
-                                                                                        height:isTablet?130.h: 110.h,
-                                                                                        decoration: BoxDecoration(
-                                                                                          color: AppColors.grey_5.withOpacity(0.5),
-                                                                                          borderRadius: BorderRadius.circular(15),
-                                                                                        ),
-                                                                                        padding: EdgeInsets.all(12),
-                                                                                        child: Column(
-                                                                                          mainAxisAlignment: MainAxisAlignment.start,
-                                                                                          children: [
+                                                                                    final model = administratorController.leaderShowList[index];
 
-                                                                                            Row(
-                                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                    return Column(
+                                                                                      children: [
+                                                                                        Padding(
+                                                                                          padding: const EdgeInsets.all(4.0),
+                                                                                          child: Container(
+                                                                                            height:isTablet?130.h: 120.h,
+                                                                                            decoration: BoxDecoration(
+                                                                                              color: AppColors.grey_3.withOpacity(0.5),
+                                                                                              borderRadius: BorderRadius.circular(15),
+                                                                                            ),
+                                                                                            padding: EdgeInsets.all(12),
+                                                                                            child: Column(
+                                                                                              mainAxisAlignment: MainAxisAlignment.start,
                                                                                               children: [
 
                                                                                                 Row(
-                                                                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                                                                   children: [
 
-                                                                                                    CustomText(
-                                                                                                      text: "${index+1 }.",
-                                                                                                      fontSize: isTablet?6.sp:14.sp,
-                                                                                                      color: AppColors.black_80,
-                                                                                                      fontWeight: FontWeight.w600,
+                                                                                                    Row(
+                                                                                                      mainAxisAlignment: MainAxisAlignment.start,
+                                                                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                      children: [
+
+                                                                                                        CustomText(
+                                                                                                          text: "${index+1 }.",
+                                                                                                          fontSize: isTablet?6.sp:14.sp,
+                                                                                                          color: AppColors.black_80,
+                                                                                                          fontWeight: FontWeight.w600,
+                                                                                                        ),
+
+                                                                                                        CustomText(
+                                                                                                          text: "${model.fullName}",
+                                                                                                          fontSize:isTablet?6.sp: 14.sp,
+                                                                                                          color: AppColors.black_80,
+                                                                                                          fontWeight: FontWeight.w600,
+                                                                                                          overflow: TextOverflow.clip,
+                                                                                                        ),
+                                                                                                      ],
                                                                                                     ),
 
-                                                                                                    CustomText(
-                                                                                                      text: "Jamal",
-                                                                                                      fontSize:isTablet?6.sp: 16.sp,
-                                                                                                      color: AppColors.black_80,
-                                                                                                      fontWeight: FontWeight.w600,
-                                                                                                      overflow: TextOverflow.clip,
-                                                                                                    ),
                                                                                                   ],
                                                                                                 ),
 
-                                                                                              ],
-                                                                                            ),
+                                                                                                Row(
+                                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-                                                                                            Row(
-                                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                                  children: [
 
-                                                                                              children: [
-
-                                                                                                Flexible(
-                                                                                                  child: SizedBox(
-                                                                                                    width:isTablet?300.w: 250.w,
-                                                                                                    child: CustomText(
-                                                                                                      text: "Empowering communities  worldwide  through education, healthcare,  and sustainable development initiatives.",
+                                                                                                    CustomText(
+                                                                                                      text: "${model.profession}",
                                                                                                       fontSize: 12,
                                                                                                       color: AppColors.black_80,
                                                                                                       fontWeight: FontWeight.w400,
                                                                                                       textAlign: TextAlign.start,
                                                                                                       overflow: TextOverflow.clip,
-                                                                                                      maxLines: 2,
                                                                                                     ),
-                                                                                                  ),
-                                                                                                ),
 
-                                                                                                Row(
-                                                                                                  children: [
+                                                                                                    Row(
+                                                                                                      children: [
 
-                                                                                                    Checkbox(
-                                                                                                      checkColor: AppColors.white,
-                                                                                                      activeColor: AppColors.primary,
-                                                                                                      shape: RoundedRectangleBorder(
-                                                                                                        borderRadius: BorderRadius.circular(3.0),
-                                                                                                      ),
-                                                                                                      side: const BorderSide(
-                                                                                                        // ======> CHANGE THE BORDER COLOR HERE <======
-                                                                                                        color: AppColors.primary,
-                                                                                                        // Give your checkbox border a custom width
-                                                                                                        width: 1.4,
-                                                                                                      ),
-                                                                                                      value: administratorController.organizationIdList.contains(index.toString()),
-                                                                                                      onChanged: (bool? value) {
+                                                                                                        Checkbox(
+                                                                                                          checkColor: AppColors.white,
+                                                                                                          activeColor: AppColors.primary,
+                                                                                                          shape: RoundedRectangleBorder(
+                                                                                                            borderRadius: BorderRadius.circular(3.0),
+                                                                                                          ),
+                                                                                                          side: const BorderSide(
+                                                                                                            // ======> CHANGE THE BORDER COLOR HERE <======
+                                                                                                            color: AppColors.primary,
+                                                                                                            // Give your checkbox border a custom width
+                                                                                                            width: 1.4,
+                                                                                                          ),
+                                                                                                          ///value: administratorController.selectedOranization.value,
+                                                                                                          value: administratorController.createLeaderIdList.contains(model.id),
+                                                                                                          onChanged: (bool? value) {
 
-                                                                                                        administratorController.selectedOranization.value = value!;
+                                                                                                            administratorController.selectedLeader.value = value!;
 
-                                                                                                        if(administratorController.selectedOranization.value){
+                                                                                                            if(administratorController.selectedLeader.value){
 
-                                                                                                          administratorController.organizationIdList.add(index.toString());
-                                                                                                        }else{
-                                                                                                          administratorController.organizationIdList.remove(index.toString());
-                                                                                                        }
+                                                                                                              administratorController.createLeaderIdList.add(model.id.toString());
+                                                                                                            }else{
+                                                                                                              administratorController.createLeaderIdList.remove(model.id.toString());
+                                                                                                            }
 
-                                                                                                      },
+                                                                                                          },
+                                                                                                        ),
+
+                                                                                                      ],
                                                                                                     ),
 
                                                                                                   ],
                                                                                                 ),
 
+                                                                                                const SizedBox(
+                                                                                                  height: 4,
+                                                                                                ),
+
                                                                                               ],
                                                                                             ),
-
-                                                                                            const SizedBox(
-                                                                                              height: 4,
-                                                                                            ),
-
-                                                                                          ],
+                                                                                          ),
                                                                                         ),
-                                                                                      ),
-                                                                                    ),
-                                                                                  ],
-                                                                                );
-                                                                              }
-
+                                                                                      ],
+                                                                                    );
+                                                                                  }
                                                                               ),
                                                                             )
                                                                           ],
                                                                         )
                                                                     ),
 
+                                                                    SizedBox(
+                                                                      height: 4.h,
+                                                                    ),
+                                                                    administratorController.createLeaderIdList.value.isNotEmpty? Align(
+                                                                      alignment: Alignment.centerLeft,
+                                                                      child: Flexible(
+                                                                        child: CustomText(
+                                                                          text: "${jsonEncode(administratorController.createLeaderIdList.value)}",
+                                                                          fontSize:isTablet? 6.sp:12.sp,
+                                                                          color: AppColors.black,
+                                                                          fontWeight: FontWeight.w400,
+                                                                          textAlign: TextAlign.start,
+                                                                          overflow: TextOverflow.ellipsis,
+                                                                          maxLines: administratorController.createLeaderIdList.length,
+                                                                        ),
+                                                                      ),
+                                                                    ):SizedBox(),
 
                                                                     const SizedBox(
                                                                       height: 12,
@@ -555,14 +591,31 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                                     ),
                                                                     Padding(
                                                                       padding: const EdgeInsets.only(left: 12,right: 12,bottom: 12),
-                                                                      child: CustomButton(
+                                                                      child:administratorController.createMissionLoading.value?CustomLoader():
+                                                                      CustomButton(
                                                                         onTap: () {
 
-                                                                          if(administratorController.organizationIdList.isEmpty){
-                                                                            Toast.errorToast("Select Oranization is Empty!!");
-                                                                          }else if(administratorController.exitingLeaderIdList.isEmpty){
-                                                                            Toast.errorToast("Select Oranization is Empty!!");
-                                                                          }
+                                                                            if(administratorController.createLeaderIdList.isEmpty){
+
+                                                                            Toast.errorToast("Select Oranizer name is Empty!!");
+
+                                                                          }else if(administratorController.missionNameController.value.text==""){
+
+                                                                              Toast.errorToast("Mission name is Empty!!");
+
+                                                                         }else if(administratorController.missionDescriptionController.value.text==""){
+
+                                                                              Toast.errorToast("Mission description is Empty!!");
+                                                                         }else{
+
+                                                                              administratorController.organizationIdList.add(model.id.toString());
+
+                                                                              administratorController.createMission();
+
+                                                                              if(administratorController.createMissionLoading.value){
+                                                                                Navigator.of(context).pop();
+                                                                              }
+                                                                            }
 
                                                                         },
                                                                         title: "create",
@@ -787,7 +840,6 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                             })),
 
                       ///============  Mission show  Event ==============================
-
                       if(administratorController.adminstratior_currentIndex.value==1)
 
                         administratorController.missionShowList.isEmpty?
@@ -806,15 +858,6 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                             children: List.generate(administratorController.missionShowList.length, (index) {
 
                               final modelmission = administratorController.missionShowList[index];
-
-                               modelmission.connectedOrganizers?.forEach((element) {
-
-                                if (!administratorController.exitingLeaderIdList.contains(element.id.toString())) {
-                                  ///Do something with each organizer
-                                  administratorController.exitingLeaderIdList.add(element.id.toString());
-                                  debugPrint("exitingLeaderIdAll:${administratorController.exitingLeaderIdList.value}");
-                                }
-                              });
 
 
                               return GestureDetector(
@@ -840,11 +883,12 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                       padding: const EdgeInsets.only(left: 8,right: 8),
                                       child: Column(
                                         mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
 
                                           Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
 
                                               CustomText(
@@ -952,11 +996,13 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                 CustomButton(
                                                   onTap: () {
 
-                                                   ///administratorController.exitingLeaderIdList.value.clear();
+
+                                                    administratorController.editMissionNameController.value.text=modelmission.name.toString();
+                                                    administratorController.editOrganizationDescriptionController.value.text=modelmission.name.toString();
 
                                                     if(administratorController.presentLeaderIdList.isEmpty){
                                                      administratorController.missionShowList();
-                                                   }
+                                                    }
 
                                                     if(modelmission.connectedOrganizers!.isNotEmpty){
 
@@ -968,14 +1014,21 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
 
                                                           debugPrint("presentLeaderIdList:${administratorController.presentLeaderIdList.value}");
 
-                                                          administratorController.presentLeaderIdList.refresh();
+                                                        //  administratorController.presentLeaderIdList.refresh();
+
+                                                          administratorController.exitingLeaderIdList.add(element.id.toString());
+
+                                                          debugPrint("exitingLeaderIdList:${administratorController.exitingLeaderIdList.value}");
                                                         }
+
                                                         /// example: Print the name of the organizer
                                                       });
+
 
                                                     }else{
 
                                                       administratorController.presentLeaderIdList.value.clear();
+                                                      administratorController.exitingLeaderIdList.clear();
                                                     }
 
 
@@ -1004,7 +1057,8 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                               child: InkWell(
                                                                   onTap: () {
                                                                     Navigator.of(context).pop();
-                                                                    administratorController.presentLeaderIdList.value.clear();
+                                                                    administratorController.presentLeaderIdList.clear();
+                                                                    administratorController.exitingLeaderIdList.clear();
                                                                   },
                                                                   child: const Icon(
                                                                     Icons.close,
@@ -1217,38 +1271,25 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                                                                               // Give your checkbox border a custom width
                                                                                                               width: 1.4,
                                                                                                             ),
-                                                                                                            value: administratorController.presentLeaderIdList.contains(model.id.toString()),
+                                                                                                             value: administratorController.presentLeaderIdList.contains(model.id.toString()),
                                                                                                             onChanged: (bool? value) {
 
                                                                                                               administratorController.selectedLeader.value = value!;
 
-                                                                                                              ///When the checkbox is checked
                                                                                                               if (administratorController.selectedLeader.value) {
 
-                                                                                                                ///Add leader ID to the present leader list
-                                                                                                                ///if (!administratorController.presentLeaderIdList.contains(model.id.toString())) {
-
                                                                                                                 administratorController.presentLeaderIdList.add(model.id.toString());
-
-                                                                                                                debugPrint("presentLeaderIdList1:${administratorController.presentLeaderIdList},,,${administratorController.exitingLeaderIdList.contains(model.id.toString())}");
-
                                                                                                               } else {
-
                                                                                                                  administratorController.presentLeaderIdList.remove(model.id.toString());
 
-                                                                                                                debugPrint("presentLeaderIdList2:${administratorController.exitingLeaderIdList},---${administratorController.exitingLeaderIdList.contains(model.id.toString())}");
                                                                                                               }
-
                                                                                                             },
                                                                                                           ),
-
-
                                                                                                         ],
                                                                                                       ),
 
                                                                                                     ],
                                                                                                   ),
-
                                                                                                   const SizedBox(
                                                                                                     height: 4,
                                                                                                   ),
@@ -1318,7 +1359,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                                           hintText: "Name",
                                                                           fontSize: isTablet?16:16,
                                                                           hasBackgroundColor: true,
-                                                                          controller: administratorController.missionNameController.value),
+                                                                          controller: administratorController.editMissionNameController.value),
 
                                                                       SizedBox(
                                                                         height: 12.h,
@@ -1329,7 +1370,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                                           hintText: "Description",
                                                                           fontSize: isTablet?16:16,
                                                                           hasBackgroundColor: true,
-                                                                          controller: administratorController.missionDescriptionController.value),
+                                                                          controller: administratorController.editMissionDescriptionController.value),
 
 
                                                                       SizedBox(
@@ -1368,7 +1409,6 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                                               administratorController
                                                                                   .missionStatues
                                                                                   .value = value!;
-
 
                                                                             },
                                                                           ),
@@ -1420,7 +1460,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                                       ),
                                                                       Padding(
                                                                         padding: const EdgeInsets.only(left: 12,right: 12,bottom: 12),
-                                                                        child: CustomButton(
+                                                                        child:administratorController.updateMissionLoading.value?CustomLoader(): CustomButton(
                                                                           onTap: () {
 
                                                                             if(administratorController.presentLeaderIdList.isEmpty){
@@ -1431,12 +1471,27 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
 
                                                                               Toast.errorToast("Mission Name is Empty!!");
 
-                                                                            }else if(administratorController.editMissionNameController.value.text==""){
+                                                                            }else if(administratorController.editMissionDescriptionController.value.text==""){
 
                                                                               Toast.errorToast("Mission description is Empty!!");
                                                                             }else{
 
-                                                                              administratorController.editOrganization(modelmission.id.toString());
+                                                                             administratorController.editMission(modelmission.id.toString());
+
+                                                                             if(administratorController.updateMissionLoading.value){
+                                                                               Navigator.of(context).pop();
+                                                                             }
+
+                                                                           /*   administratorController.newOrganizers.value = administratorController.presentLeaderIdList.where((id)=> !administratorController.exitingLeaderIdList.contains(id)).toList();
+                                                                              administratorController.removedOrganizers.value = administratorController.exitingLeaderIdList.where((id)=> !administratorController.presentLeaderIdList.contains(id)).toList();
+                                                                              print("New Organizer: ${administratorController.newOrganizers.value}");
+
+                                                                              print("Removed Organizer: ${administratorController.removedOrganizers.value}");
+
+                                                                              print("presentLeaderIdList1:${administratorController.presentLeaderIdList}");
+
+                                                                              print("exitingLeaderIdList:${administratorController.exitingLeaderIdList}");*/
+
                                                                             }
 
                                                                           },
@@ -1629,8 +1684,8 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                   onTap: () {
 
                                     Navigator.of(context).pop();
-                                    administratorController.organizationIdList.value.clear();
-                                    administratorController.exitingLeaderIdList.value.clear();
+                                    administratorController.organizationIdList.clear();
+                                    administratorController.createLeaderIdList.clear();
                                     administratorController.organizationShow();
                                     administratorController.leaderShow();
                                   },
@@ -1985,16 +2040,16 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                                               width: 1.4,
                                                                             ),
                                                                             ///value: administratorController.selectedOranization.value,
-                                                                            value: administratorController.exitingLeaderIdList.contains(model.id),
+                                                                            value: administratorController.createLeaderIdList.contains(model.id),
                                                                             onChanged: (bool? value) {
 
                                                                               administratorController.selectedLeader.value = value!;
 
                                                                               if(administratorController.selectedLeader.value){
 
-                                                                                administratorController.exitingLeaderIdList.add(model.id.toString());
+                                                                                administratorController.createLeaderIdList.add(model.id.toString());
                                                                               }else{
-                                                                                administratorController.exitingLeaderIdList.remove(model.id.toString());
+                                                                                administratorController.createLeaderIdList.remove(model.id.toString());
                                                                               }
 
                                                                             },
@@ -2023,17 +2078,20 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                           )
                                       ),
 
-                                      administratorController.exitingLeaderIdList.value.isNotEmpty? Align(
+                                      SizedBox(
+                                        height: 4.h,
+                                      ),
+                                      administratorController.createLeaderIdList.value.isNotEmpty? Align(
                                         alignment: Alignment.centerLeft,
                                         child: Flexible(
                                           child: CustomText(
-                                            text: "${jsonEncode(administratorController.exitingLeaderIdList.value)}",
+                                            text: "${jsonEncode(administratorController.createLeaderIdList.value)}",
                                             fontSize:isTablet? 6.sp:12.sp,
                                             color: AppColors.black,
                                             fontWeight: FontWeight.w400,
                                             textAlign: TextAlign.start,
                                             overflow: TextOverflow.ellipsis,
-                                            maxLines: administratorController.exitingLeaderIdList.length,
+                                            maxLines: administratorController.createLeaderIdList.length,
                                           ),
                                         ),
                                       ):SizedBox(),
@@ -2154,7 +2212,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
 
                                             if(administratorController.organizationIdList.isEmpty){
                                               Toast.errorToast("Select oranization name is Empty!!");
-                                            }else if(administratorController.exitingLeaderIdList.isEmpty){
+                                            }else if(administratorController.createLeaderIdList.isEmpty){
                                               Toast.errorToast("Select leader name is Empty!!");
 
                                             }else if(administratorController.missionNameController.value.text==""){
