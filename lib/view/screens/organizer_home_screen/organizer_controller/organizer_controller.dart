@@ -10,7 +10,7 @@ import 'package:tractivity_app/service/api_url.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
 import 'package:tractivity_app/utils/toast.dart';
-import 'package:tractivity_app/view/screens/organizer_home_screen/model_completed/CompleteEeventResponeModel.dart';
+import 'package:tractivity_app/view/screens/organizer_home_screen/model_invited_mission/retriveInvitedMissionsResponse.dart';
 
 class OrganizerController extends GetxController{
 
@@ -85,45 +85,45 @@ class OrganizerController extends GetxController{
   }
 
 
-  ///===================== fetch  completed event show by uid ===============================
+  ///===================== Retrive invited missions by organizer ===============================
 
-   RxList<CompleteEeventResponeModel> completeEventShowList = <CompleteEeventResponeModel>[].obs;
+   RxList<RetriveInvitedMissionsResponse> retriveInvitedMissionsList = <RetriveInvitedMissionsResponse>[].obs;
 
-  RxBool completeEventShowLoading = false.obs;
+  RxBool retriveInvitedMissionsLoading = false.obs;
 
-  Future<void> completedEventListShow() async{
+  Future<void> retriveInvitedMissionsShow() async{
 
-    completeEventShowLoading.value = true;
+    retriveInvitedMissionsLoading.value = true;
 
     var userId = await SharePrefsHelper.getString(AppConstants.userId);
 
-    var response = await ApiClient.getData(ApiUrl.retriveCompleleteProfile(userId: userId));
+    var response = await ApiClient.getData(ApiUrl.retriveInvitedMissionOrganizer(userId: userId));
 
 
     if (response.statusCode == 200) {
 
-      completeEventShowList.value = List.from(response.body["data"].map((m)=> CompleteEeventResponeModel.fromJson(m)));
+      retriveInvitedMissionsList.value = List.from(response.body["data"].map((m)=> RetriveInvitedMissionsResponse.fromJson(m)));
 
-      debugPrint("completeEventShowList:${completeEventShowList.value}");
+      debugPrint("retriveInvitedMissionsResponse:${retriveInvitedMissionsList.value}");
 
 
-      completeEventShowLoading.value =false;
+      retriveInvitedMissionsLoading.value =false;
 
       refresh();
 
     } else {
 
-      completeEventShowLoading.value =false;
+      retriveInvitedMissionsLoading.value =false;
 
       if (response.statusText == ApiClient.somethingWentWrong) {
         Toast.errorToast(AppStrings.checknetworkconnection);
         refresh();
-        completeEventShowLoading.value =false;
+        retriveInvitedMissionsLoading.value =false;
         return;
       } else {
 
         ApiChecker.checkApi(response);
-        completeEventShowLoading.value =false;
+        retriveInvitedMissionsLoading.value =false;
         refresh();
         return;
       }
@@ -133,7 +133,7 @@ class OrganizerController extends GetxController{
 
   ///===================== fetch  Running event show by uid ===============================
 
-  RxList<CompleteEeventResponeModel> runningEventShowList = <CompleteEeventResponeModel>[].obs;
+/*  RxList<CompleteEeventResponeModel> runningEventShowList = <CompleteEeventResponeModel>[].obs;
 
   RxBool runningEventShowLoading = false.obs;
 
@@ -174,7 +174,7 @@ class OrganizerController extends GetxController{
         return;
       }
     }
-  }
+  }*/
 
 
   ///===================== get event List lat long get address =====================
@@ -248,9 +248,7 @@ class OrganizerController extends GetxController{
     // TODO: implement onInit
     super.onInit();
 
-    completedEventListShow();
-
-    runningEventListShow();
+    retriveInvitedMissionsShow();
 
   }
 }

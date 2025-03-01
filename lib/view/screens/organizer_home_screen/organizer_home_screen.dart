@@ -36,11 +36,11 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final OrganizerController organizerController = Get.find<OrganizerController>();
+  final   organizerController = Get.find<OrganizerController>();
 
   final administratorController = Get.put(AdministratiorController());
-  final storage = GetStorage();
 
+  final storage = GetStorage();
 
 
   @override
@@ -94,6 +94,7 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
                       unselectedColor: AppColors.grey_1
                   ),
                   SizedBox(height: 16,),
+
                   ///============ Invited Mission ==================
                   Expanded(
                     child: ListView(
@@ -101,203 +102,209 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
                       children: [
 
                         if(organizerController.currentIndex.value ==0)
-                          Column(
-                              children: List.generate(3, (index) {
-                                return InkWell(
-                                  onTap: (){
-                                    Get.toNamed(AppRoutes.organizerMissionDetailsScreen);
-                                    storage.write("status_charts", "Inactive");
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      height:isTablet?150.h: 140.h,
-                                      decoration: BoxDecoration(
-                                        color: AppColors.grey_3.withOpacity(0.5),
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                      padding: const EdgeInsets.only(top: 12),
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
 
-                                          Padding(
-                                            padding: const EdgeInsets.only(left: 8,right: 8),
-                                            child: Row(
-                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
+                          ListView.builder(
+                            itemCount: organizerController.retriveInvitedMissionsList.length,
+                              itemBuilder: (BuildContext context,index){
 
-                                                CustomText(
-                                                  text: "${index+1}.Mission Horizons Foundation",
-                                                  fontSize: 16,
-                                                  color: AppColors.black_80,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
+                              final model =organizerController.retriveInvitedMissionsList[index];
 
-                                                const CustomText(
-                                                  text: "22-12-2025",
-                                                  fontSize: 12,
-                                                  color: AppColors.black_80,
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                              ],
+                            return InkWell(
+                              onTap: (){
+                                Get.toNamed(AppRoutes.organizerMissionDetailsScreen);
+                                storage.write("status_charts", "Inactive");
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height:isTablet?150.h: 140.h,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.grey_3.withOpacity(0.5),
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  padding: const EdgeInsets.only(top: 12),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 8,right: 8),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+
+                                            CustomText(
+                                              text: "${index+1}.${model.contentId?.name}",
+                                              fontSize: 16,
+                                              color: AppColors.black_80,
+                                              fontWeight: FontWeight.w600,
                                             ),
-                                          ),
 
-                                          Padding(
-                                            padding: const EdgeInsets.only(left: 12,right: 8),
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              CustomText(
+                                              text: "${model.contentId?.createdAt}",
+                                              fontSize: 12,
+                                              color: AppColors.black_80,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 12,right: 8),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+
+                                            CustomText(
+                                              text: "Empowering communities  worldwide  through education, healthcare,  and sustainable development initiatives.",
+                                              fontSize:isTablet?6.sp: 12.sp,
+                                              color: AppColors.black_80,
+                                              fontWeight: FontWeight.w400,
+                                              textAlign: TextAlign.start,
+                                              overflow: TextOverflow.clip,
+                                              maxLines: 2,// Add ellipsis at the end if the text overflows.
+                                            ),
+
+                                            SizedBox(
+                                              height: 6.h,
+                                            ),
+                                            Row(
                                               children: [
 
-                                                CustomText(
-                                                  text: "Empowering communities  worldwide  through education, healthcare,  and sustainable development initiatives.",
-                                                  fontSize:isTablet?6.sp: 12.sp,
-                                                  color: AppColors.black_80,
-                                                  fontWeight: FontWeight.w400,
-                                                  textAlign: TextAlign.start,
-                                                  overflow: TextOverflow.clip,
-                                                  maxLines: 2,// Add ellipsis at the end if the text overflows.
-                                                ),
+                                                CustomButton(
+                                                  onTap: () {
 
-                                                SizedBox(
-                                                  height: 6.h,
-                                                ),
-                                                Row(
-                                                  children: [
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (ctx) => AlertDialog(
+                                                        backgroundColor: Colors.white,
+                                                        insetPadding: EdgeInsets.all(8),
+                                                        contentPadding: EdgeInsets.all(8),
+                                                        title: Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
 
-                                                    CustomButton(
-                                                      onTap: () {
+                                                            const CustomText(
+                                                              text: "",
+                                                              fontSize: 24,
+                                                              color: AppColors.black,
+                                                              fontWeight: FontWeight.w500,
+                                                              bottom: 8,
+                                                            ),
 
-                                                        showDialog(
-                                                          context: context,
-                                                          builder: (ctx) => AlertDialog(
-                                                            backgroundColor: Colors.white,
-                                                            insetPadding: EdgeInsets.all(8),
-                                                            contentPadding: EdgeInsets.all(8),
-                                                            title: Row(
-                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            Align(
+                                                              alignment: Alignment.centerRight,
+                                                              child: InkWell(
+                                                                  onTap: () {
+
+                                                                    Navigator.of(context).pop();
+
+                                                                  },
+                                                                  child: const Icon(
+                                                                    Icons.close,
+                                                                    size: 32,
+                                                                    color: Colors.black,
+                                                                  )),
+                                                            )
+                                                          ],
+                                                        ),
+                                                        content: SizedBox(
+                                                          width: MediaQuery.sizeOf(context).width,
+                                                          child: SingleChildScrollView(
+                                                            child: Column(
+                                                              mainAxisAlignment: MainAxisAlignment.center,
+                                                              crossAxisAlignment: CrossAxisAlignment.center,
                                                               children: [
 
-                                                                const CustomText(
-                                                                  text: "",
-                                                                  fontSize: 24,
-                                                                  color: AppColors.black,
-                                                                  fontWeight: FontWeight.w500,
-                                                                  bottom: 8,
+                                                                SvgPicture.asset(
+                                                                  'assets/images/join_mission.svg',
+                                                                  semanticsLabel: 'My SVG Image',
+                                                                  height:isTablet?200.h: 170.h,
+                                                                  width: MediaQuery.of(context).size.width,
                                                                 ),
 
-                                                                Align(
-                                                                  alignment: Alignment.centerRight,
-                                                                  child: InkWell(
-                                                                      onTap: () {
-
-                                                                        Navigator.of(context).pop();
-
-                                                                      },
-                                                                      child: const Icon(
-                                                                        Icons.close,
-                                                                        size: 32,
-                                                                        color: Colors.black,
-                                                                      )),
-                                                                )
-                                                              ],
-                                                            ),
-                                                            content: SizedBox(
-                                                              width: MediaQuery.sizeOf(context).width,
-                                                              child: SingleChildScrollView(
-                                                                child: Column(
+                                                                Row(
                                                                   mainAxisAlignment: MainAxisAlignment.center,
                                                                   crossAxisAlignment: CrossAxisAlignment.center,
                                                                   children: [
 
-                                                                    SvgPicture.asset(
-                                                                      'assets/images/join_mission.svg',
-                                                                      semanticsLabel: 'My SVG Image',
-                                                                      height:isTablet?200.h: 170.h,
-                                                                      width: MediaQuery.of(context).size.width,
-                                                                    ),
-
-                                                                    Row(
-                                                                      mainAxisAlignment: MainAxisAlignment.center,
-                                                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                                                      children: [
-
-                                                                        Image.asset("assets/images/check.png",width: 24.w,height: 24.h,),
-
-                                                                        CustomText(
-                                                                          text: "Joined",
-                                                                          fontSize: 24,
-                                                                          color: AppColors.black,
-                                                                          fontWeight: FontWeight.w500,
-                                                                          bottom: 8,
-                                                                        )
-                                                                      ],
-                                                                    ),
+                                                                    Image.asset("assets/images/check.png",width: 24.w,height: 24.h,),
 
                                                                     CustomText(
-                                                                      text: "Thanks for join the mission 🎉",
-                                                                      fontSize:isTablet?8.sp: 18.sp,
+                                                                      text: "Joined",
+                                                                      fontSize: 24,
                                                                       color: AppColors.black,
                                                                       fontWeight: FontWeight.w500,
                                                                       bottom: 8,
                                                                     )
                                                                   ],
                                                                 ),
-                                                              ),
+
+                                                                CustomText(
+                                                                  text: "Thanks for join the mission 🎉",
+                                                                  fontSize:isTablet?8.sp: 18.sp,
+                                                                  color: AppColors.black,
+                                                                  fontWeight: FontWeight.w500,
+                                                                  bottom: 8,
+                                                                )
+                                                              ],
                                                             ),
                                                           ),
-                                                        );
-                                                      },
-                                                      title: "Accept",
-                                                      width: 80.w,
-                                                      height: 32.h,
-                                                      textColor: AppColors.black,
-                                                      fillColor: AppColors.primary,
-                                                      fontSize: 12,
-                                                    ),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                  title: "Accept",
+                                                  width: 80.w,
+                                                  height: 32.h,
+                                                  textColor: AppColors.black,
+                                                  fillColor: AppColors.primary,
+                                                  fontSize: 12,
+                                                ),
 
-                                                    SizedBox(
-                                                      width:isTablet?12.h: 8.h,
-                                                    ),
+                                                SizedBox(
+                                                  width:isTablet?12.h: 8.h,
+                                                ),
 
-                                                    CustomButton(
-                                                      onTap: () {
+                                                CustomButton(
+                                                  onTap: () {
 
-                                                        showDialog(
-                                                          context: context,
-                                                          builder: (ctx) => AlertDialog(
-                                                            backgroundColor: Colors.white,
-                                                            insetPadding: EdgeInsets.all(8),
-                                                            contentPadding: EdgeInsets.all(8),
-                                                            title: SizedBox(),
-                                                            content: SizedBox(
-                                                              width: MediaQuery.sizeOf(context).width,
-                                                              child: AlertDialogEvent(title: "Are you sure you want to \n Reject this Mission?",discription: "",),
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
-                                                      title: "Reject",
-                                                      width: 70.w,
-                                                      height: 32.h,
-                                                      textColor: AppColors.black,
-                                                      fillColor: AppColors.primary,
-                                                      fontSize: 12,
-                                                    ),
-                                                  ],
-                                                )
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (ctx) => AlertDialog(
+                                                        backgroundColor: Colors.white,
+                                                        insetPadding: EdgeInsets.all(8),
+                                                        contentPadding: EdgeInsets.all(8),
+                                                        title: SizedBox(),
+                                                        content: SizedBox(
+                                                          width: MediaQuery.sizeOf(context).width,
+                                                          child: AlertDialogEvent(title: "Are you sure you want to \n Reject this Mission?",discription: "",),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                  title: "Reject",
+                                                  width: 70.w,
+                                                  height: 32.h,
+                                                  textColor: AppColors.black,
+                                                  fillColor: AppColors.primary,
+                                                  fontSize: 12,
+                                                ),
                                               ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                );
-                              })),
+                                ),
+                              ),
+                            );
+                          }),
+
 
                         ///============ mission List ========
                         if(organizerController.currentIndex.value ==1)
@@ -324,9 +331,7 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
                                         AppColors.primary),
                                         groupValue: organizerController.missionActiveInactiveStatus.value,
                                         onChanged:(bool?value) {
-
                                           organizerController.missionActiveInactiveStatus.value = value!;
-
                                         },
                                       ),
                                       CustomText(

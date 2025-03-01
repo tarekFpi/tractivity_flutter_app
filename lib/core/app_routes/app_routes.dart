@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstratior_eventlist_screen.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrator_event_details_screen.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrator_home_screen.dart';
+import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrator_mission_details_screen.dart';
+import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrator_organization_details_screen.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/event_complete_screen.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/member/adminstrator_member.dart';
 import 'package:tractivity_app/view/screens/auth_screen/signup_screen/location_map_screen.dart';
@@ -44,6 +46,7 @@ import 'package:tractivity_app/view/screens/organizer_home_screen/organization_e
 import 'package:tractivity_app/view/screens/organizer_home_screen/organize_details_screen.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_active_mission_details.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_inactive_mission_details.dart';
+import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_invite_mission_screen/mission_event_report_screen.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_recent_event_details.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_home_screen.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_invite_mission_screen/organize_map.dart';
@@ -124,7 +127,7 @@ class AppRoutes {
   static const String missionToVolunteersInviteScreen = "/MissionToVolunteersInviteScreen";
   static const String missionEventReportScreen = "/MissionEventReportScreen";
   static const String organizerEventCreateScreen = "/OrganizerEventCreateScreen";
-
+  static const String adminstratorOrganizationDetailsScreen = "/AdminstratorOrganizationDetailsScreen";
 
   static List<GetPage> routes = [
 
@@ -200,6 +203,8 @@ class AppRoutes {
     GetPage(name: missionToVolunteersInviteScreen, page: () => MissionToVolunteersInviteScreen()),
     GetPage(name: missionEventReportScreen, page: () => MissionEventReportScreen()),
     GetPage(name: organizerEventCreateScreen, page: () => OrganizerEventCreateScreen()),
+
+    GetPage(name: adminstratorOrganizationDetailsScreen, page: () => AdminstratorOrganizationDetailsScreen()),
   ];
 
 }

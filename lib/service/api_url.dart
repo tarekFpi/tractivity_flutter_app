@@ -65,12 +65,23 @@ class ApiUrl {
   static String deleteMission ({required String mission_Id}) =>"/mission/delete/$mission_Id";
 
 
+
+  ///=================== Remove specific organizer from a mission  ==============
+
+  static String removeSpecificOrganizer ({required String organizerId}) =>"/mission/remove/organizer/$organizerId";
+
+
   ///=================== show Mission List ==============
   static String showMission ({required String userId}) =>"/mission/retrive/creator/$userId";
 
 
   ///=================== mission id By Event  List ========================================
   static String missionIdByMissionDetails ({required String missionId}) =>"/mission/retrive/$missionId";
+
+
+  ///=================== Retrieve all mission by specific organization ==================================
+  static String organizationByMissionList({required String organizationId}) =>"/mission/retrive/organization/$organizationId";
+
 
   ///=================== Retrive all events by missionId========================================
 
@@ -84,8 +95,9 @@ class ApiUrl {
   static String retriveUserProfile ({required String userId}) =>"/user/retrive/$userId";
 
 
-  ///===================== retrive Complelete by user Id  =====================
-  static String retriveCompleleteProfile ({required String userId}) =>"/organizer/event/retrive/organizer/$userId?status=deliveried";
+  ///===================== Retrive invited missions by organizer =====================
+
+  static String retriveInvitedMissionOrganizer({required String userId}) =>"/organizer/invited-missions/$userId";
 
 
   ///===================== retrive running by user Id  =================================

@@ -12,7 +12,8 @@ import 'package:tractivity_app/view/components/custom_netwrok_image/custom_netwo
 import 'package:tractivity_app/view/components/custom_royel_appbar/custom_royel_appbar.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/controller/administratior_controller.dart';
-import 'package:tractivity_app/view/screens/adminstrator_home_screen/specific_mission_model/SpecificIdEventsResponeModel.dart';
+import 'package:tractivity_app/view/screens/adminstrator_home_screen/specific_mission_event_model/SpecificIdEventsResponeModel.dart';
+
 
 class AdminstratorMember extends StatefulWidget {
   const AdminstratorMember({super.key});
