@@ -159,7 +159,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                               text: DateConverter.timeFormetString("${model.createdAt}"),
                                               fontSize: 12,
                                               color: AppColors.black_80,
-                                              fontWeight: FontWeight.w400,
+                                              fontWeight: FontWeight.w600,
                                             ),
                                           ],
                                         ),
@@ -863,7 +863,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                               color: AppColors.lightRed,
                             ),
                           ),
-                        ):
+                        ):administratorController.missionShowLoading.value?CustomLoader():
                         Column(
                             children: List.generate(administratorController.missionShowList.length, (index) {
 
@@ -912,7 +912,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                 text: DateConverter.timeFormetString("${modelmission.updatedAt}"),
                                                 fontSize: 12,
                                                 color: AppColors.black_80,
-                                                fontWeight: FontWeight.w400,
+                                                fontWeight: FontWeight.w600,
                                               ),
                                             ],
                                           ),
@@ -927,7 +927,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                             fontWeight: FontWeight.w400,
                                             textAlign: TextAlign.start,
                                             overflow: TextOverflow.ellipsis,
-                                            maxLines: 3,// Add ellipsis at the end if the text overflows.
+                                            maxLines: 2,// Add ellipsis at the end if the text overflows.
                                           ),
 
                                           Expanded(

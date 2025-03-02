@@ -47,6 +47,7 @@ import 'package:tractivity_app/view/screens/organizer_home_screen/organize_detai
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_active_mission_details.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_inactive_mission_details.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_invite_mission_screen/mission_event_report_screen.dart';
+import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_mission_details_screen.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_recent_event_details.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_home_screen.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_invite_mission_screen/organize_map.dart';
@@ -203,7 +204,7 @@ class AppRoutes {
     GetPage(name: missionToVolunteersInviteScreen, page: () => MissionToVolunteersInviteScreen()),
     GetPage(name: missionEventReportScreen, page: () => MissionEventReportScreen()),
     GetPage(name: organizerEventCreateScreen, page: () => OrganizerEventCreateScreen()),
-
+    GetPage(name: organizerMissionDetailsScreen, page: () => OrganizerMissionDetailsScreen()),
     GetPage(name: adminstratorOrganizationDetailsScreen, page: () => AdminstratorOrganizationDetailsScreen()),
   ];
 

@@ -707,9 +707,9 @@ class AdministratiorController extends GetxController {
     }
   }
 
-   ///==================================================
 
   ///Retrieve all mission by specific organization
+
   RxList<RetriveAllMissionByOrganizationResponse> organizationMissionDetailsShow = <RetriveAllMissionByOrganizationResponse>[].obs;
   RxBool organizationMissionDetailsShowLoading = false.obs;
 
@@ -790,11 +790,15 @@ class AdministratiorController extends GetxController {
 
   RxBool specificOrganizerDeleteLoading = false.obs;
 
-  Future<void> removeSpecificOrganizer(String organizerId) async{
+  Future<void> removeSpecificOrganizer(String organizerId,String missionId) async{
 
     specificOrganizerDeleteLoading.value = true;
 
-    var response = await ApiClient.deleteData(ApiUrl.removeSpecificOrganizer(organizerId: organizerId));
+    var body = {
+      "organizerId": organizerId,
+    };
+
+    var response = await ApiClient.deleteData(ApiUrl.removeSpecificOrganizer(missionId: missionId),body: jsonEncode(body));
 
     if (response.statusCode == 200) {
 
@@ -802,8 +806,10 @@ class AdministratiorController extends GetxController {
 
       specificOrganizerDeleteLoading.value =false;
 
+      retriveSpecificMissionByMissionShow(missionId);
       missionDetailsShowList.refresh();
 
+      refresh();
     } else {
 
       specificOrganizerDeleteLoading.value =false;

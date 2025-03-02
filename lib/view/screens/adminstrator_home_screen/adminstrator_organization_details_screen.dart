@@ -46,7 +46,6 @@ class _AdminstratorOrganizationDetailsScreenState extends State<AdminstratorOrga
 
       organizationResponeModel = Get.arguments[0]["organizationShowList"];
 
-     ///administratorController.retriveAllEventByMissionShow(organizationId);
     }
   }
 
@@ -129,19 +128,16 @@ class _AdminstratorOrganizationDetailsScreenState extends State<AdminstratorOrga
                      fontSize: 12,
                    ),
                  ],
-                           ),
+                ),
 
                       SizedBox(
                       height: 16.h,
                     ),
 
-                /*    Column(
-                        children: List.generate(administratorController.organizationMissionDetailsShow.length, (index) {
-                          return ;
-                        })),*/
-                    administratorController.organizationMissionDetailsShow.toString().isEmpty?
+
+                    administratorController.organizationMissionDetailsShow.isEmpty?
                     SizedBox(
-                      height: MediaQuery.of(context).size.height/2,
+                       height: MediaQuery.of(context).size.height/2,
                       child: Center(
                         child: CustomText(
                           text: "No mission yet!!",

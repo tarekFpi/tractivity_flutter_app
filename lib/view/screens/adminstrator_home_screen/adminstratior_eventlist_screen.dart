@@ -197,15 +197,18 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                     SizedBox(
                       height: 4.h,
                     ),
-                    administratorController.missionDetailsShowList.value.connectedOrganizers.toString().isNotEmpty?  CustomText(
+
+                    if((administratorController.missionDetailsShowList.value.connectedOrganizers?.isNotEmpty ??true)  && (administratorController.missionDetailsShowList.value.requestedOrganizers?.isNotEmpty ??true))
+                     CustomText(
                       textAlign: TextAlign.start,
                       text: "Organizers",
                       fontSize:isTablet?6.sp: 16.sp,
                       fontWeight: FontWeight.w500,
                       color: AppColors.primary,
                       bottom: 8.h,
-                    ):SizedBox(),
+                    ),
 
+                ///Organizers connectedOrganizers
                     ListView.builder(
                         itemCount: administratorController.missionDetailsShowList.value.connectedOrganizers?.length,
                         shrinkWrap: true, //
@@ -217,73 +220,72 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                           return  Padding(
                             padding: EdgeInsets.only(bottom: 10.h),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Row(
-                                  children: [
 
-                                    connectedOrganizers?.image==""? CustomNetworkImage(
-                                      imageUrl: AppConstants.profileImage,
-                                      height:isTablet?64.h: 60.h,
-                                      width:isTablet?64.w: 60.w,
-                                      boxShape: BoxShape.circle,
-                                    ):CustomNetworkImage(
-                                      imageUrl: "${ApiUrl.imageUrl}${connectedOrganizers?.image}",
-                                      height:isTablet?64.h: 60.h,
-                                      width:isTablet?64.w: 60.w,
-                                      boxShape: BoxShape.circle,
-                                    ),
-                                    SizedBox(
-                                      width: 10.w,
-                                    ),
-                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                     children: [
-
-                                       Column(
-                                         mainAxisAlignment: MainAxisAlignment.start,
-                                         crossAxisAlignment: CrossAxisAlignment.start,
-                                         children: [
-                                           CustomText(
-                                             text: "${connectedOrganizers?.fullName}",
-                                             fontSize:isTablet?8.sp:12.sp,
-                                             fontWeight: FontWeight.w600,
-                                             color: AppColors.black,
-                                           ),
-                                           CustomText(
-                                             text: "${connectedOrganizers?.profession}",
-                                             fontSize:isTablet?6.sp: 12.sp,
-                                             fontWeight: FontWeight.w400,
-                                             color: AppColors.black_80,
-                                           ),
-                                         ],
-                                       ),
-
-                                       Container(
-                                         padding: EdgeInsets.all(6),
-                                         decoration: BoxDecoration(
-                                           color: AppColors.primary,
-                                           borderRadius: BorderRadius.circular(10.r),
-                                           // border: Border.all(color: AppColors.primary,width: 2),
-                                         ),
-                                         child: GestureDetector(
-                                           onTap: (){
-
-                                           },
-                                           child: Center(
-                                               child: CustomText(
-                                                 text: "Remove",
-                                                 color: AppColors.white,
-                                                 fontSize:isTablet?6.sp: 12.sp,
-                                                 fontWeight: FontWeight.w600,
-                                               )),
-                                         ),
-                                       ),
-
-                                     ],
-                                   )
-                                  ],
+                                connectedOrganizers?.image==""? CustomNetworkImage(
+                                  imageUrl: AppConstants.profileImage,
+                                  height:isTablet?64.h: 60.h,
+                                  width:isTablet?64.w: 60.w,
+                                  boxShape: BoxShape.circle,
+                                ):CustomNetworkImage(
+                                  imageUrl: "${ApiUrl.imageUrl}${connectedOrganizers?.image}",
+                                  height:isTablet?64.h: 60.h,
+                                  width:isTablet?64.w: 60.w,
+                                  boxShape: BoxShape.circle,
                                 ),
+                                SizedBox(
+                                  width: 10.w,
+                                ),
+                                Expanded(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                  
+                                      Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          CustomText(
+                                            text: "${connectedOrganizers?.fullName}",
+                                            fontSize:isTablet?8.sp:12.sp,
+                                            fontWeight: FontWeight.w600,
+                                            color: AppColors.black,
+                                          ),
+                                          CustomText(
+                                            text: "${connectedOrganizers?.profession}",
+                                            fontSize:isTablet?6.sp: 12.sp,
+                                            fontWeight: FontWeight.w400,
+                                            color: AppColors.black_80,
+                                          ),
+                                        ],
+                                      ),
+
+                                      administratorController.specificOrganizerDeleteLoading.value?CustomLoader():
+                                      Container(
+                                        padding: EdgeInsets.all(6),
+                                        decoration: BoxDecoration(
+                                          color: AppColors.primary,
+                                          borderRadius: BorderRadius.circular(10.r),
+                                          // border: Border.all(color: AppColors.primary,width: 2),
+                                        ),
+                                        child:  GestureDetector(
+                                          onTap: (){
+                                           administratorController.removeSpecificOrganizer(connectedOrganizers!.id.toString(),missionId);
+
+                                          },
+                                          child:  Center(
+                                              child: CustomText(
+                                                text: "Remove",
+                                                color: AppColors.white,
+                                                fontSize:isTablet?6.sp: 12.sp,
+                                                fontWeight: FontWeight.w600,
+                                              )),
+                                        ),
+                                      ),
+                                  
+                                    ],
+                                  ),
+                                )
                               ],
                             ),
                           );
@@ -293,7 +295,7 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                       height: 4.h,
                     ),
 
-
+                    ///Organizers requestedOrganizers
                     ListView.builder(
                         itemCount: administratorController.missionDetailsShowList.value.requestedOrganizers?.length,
                         shrinkWrap: true, //
@@ -382,9 +384,9 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                                         borderRadius: BorderRadius.circular(10.r),
                                         // border: Border.all(color: AppColors.primary,width: 2),
                                       ),
-                                      child: GestureDetector(
+                                      child:  GestureDetector(
                                         onTap: (){
-                                        administratorController.removeSpecificOrganizer(requestedOrganizers!.id.toString());
+                                        administratorController.removeSpecificOrganizer(requestedOrganizers!.id.toString(),missionId);
 
                                         },
                                         child:  Center(

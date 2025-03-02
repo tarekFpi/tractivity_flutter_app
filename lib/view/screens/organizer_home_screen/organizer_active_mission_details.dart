@@ -13,6 +13,7 @@ import 'package:tractivity_app/view/components/custom_netwrok_image/custom_netwo
 import 'package:tractivity_app/view/components/custom_royel_appbar/custom_royel_appbar.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/alert_dialog_event.dart';
+import 'package:tractivity_app/view/screens/adminstrator_home_screen/controller/administratior_controller.dart';
 
 class OrganizerActiveMissionDetails extends StatefulWidget {
   const OrganizerActiveMissionDetails({super.key});
@@ -24,6 +25,25 @@ class OrganizerActiveMissionDetails extends StatefulWidget {
 class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDetails> {
 
   final storage = GetStorage();
+
+  String missionId="";
+
+  final administratorController = Get.put(AdministratiorController());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    if(Get.arguments[0]["missionId"]!=null){
+
+      missionId = Get.arguments[0]["missionId"];
+
+      administratorController.retriveSpecificMissionByMissionShow(missionId);
+      administratorController.retriveAllEventByMissionShow(missionId);
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {

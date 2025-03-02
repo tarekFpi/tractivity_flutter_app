@@ -68,7 +68,7 @@ class ApiUrl {
 
   ///=================== Remove specific organizer from a mission  ==============
 
-  static String removeSpecificOrganizer ({required String organizerId}) =>"/mission/remove/organizer/$organizerId";
+  static String removeSpecificOrganizer ({required String missionId}) =>"/mission/remove/organizer/$missionId";
 
 
   ///=================== show Mission List ==============
@@ -96,9 +96,20 @@ class ApiUrl {
 
 
   ///===================== Retrive invited missions by organizer =====================
-
   static String retriveInvitedMissionOrganizer({required String userId}) =>"/organizer/invited-missions/$userId";
 
+  ///Accept mission invitation for organizer
+   static String acceptmissionInvitation({required String invit_Id}) =>"/organizer/accept-invitation/$invit_Id";
+
+ ///rejectMissionsInvitationLoading
+  static String rejectMissionInvitation({required String invit_Id}) =>"/organizer/reject-invitation/$invit_Id";
+
+
+  ///Retrieve all Active missions by organizer
+  static String retrieveMissionActivie({required String userId}) =>"/organizer/all-missions/$userId?status=active";
+
+  ///Retrieve all InActive missions by organizer
+  static String retrieveMissionInActivie({required String userId}) =>"/organizer/all-missions/$userId?status=inactive";
 
   ///===================== retrive running by user Id  =================================
   static String retriveRunningProfile ({required String userId}) =>"/organizer/event/retrive/organizer/$userId?status=running";
