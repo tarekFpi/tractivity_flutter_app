@@ -24,6 +24,7 @@ class OrganizerEventCreateScreen extends StatefulWidget {
 class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen> {
   @override
   Widget build(BuildContext context) {
+
     return LayoutBuilder(builder: (context,constraints){
 
       final isTablet = constraints.maxWidth > 600;
@@ -132,8 +133,8 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                   ],
                 ),
 
-                const SizedBox(
-                  height: 12,
+                  SizedBox(
+                  height: 12.h,
                 ),
                 ///============ Event Name ============
                 CustomFormCard(
@@ -151,19 +152,19 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                     hasBackgroundColor: true,
                     controller: TextEditingController()),
 
-                ///============ Event Street ============
-                CustomFormCard(
-                    fontSize: isTablet?16:16,
-                    title: "Street",
-                    hintText: "Street",
-                    hasBackgroundColor: true,
-                    controller: TextEditingController()),
-
                 ///============ Event City ============
                 CustomFormCard(
                     fontSize: isTablet?16:16,
                     title: "City",
                     hintText: "City",
+                    hasBackgroundColor: true,
+                    controller: TextEditingController()),
+
+                ///============ Event Street ============
+                CustomFormCard(
+                    fontSize: isTablet?16:16,
+                    title: "State",
+                    hintText: "State",
                     hasBackgroundColor: true,
                     controller: TextEditingController()),
 
@@ -179,7 +180,7 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                   ///mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
 
-                   /* const Icon(
+                    /* const Icon(
                       Icons.location_on,
                       size: 24,
                     ),
@@ -261,7 +262,7 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                   ],
                 ),
 
-                  SizedBox(
+                SizedBox(
                   height:isTablet?16.h: 12.h,
                 ),
 
@@ -287,7 +288,7 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                   ],
                 ),
 
-                  SizedBox(
+                SizedBox(
                   height:isTablet?16.h: 12.h,
                 ),
 
@@ -299,7 +300,7 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                   textColor: AppColors.black,
                 ),
 
-                  SizedBox(
+                SizedBox(
                   height:isTablet?16.h: 12.h,
                 ),
 

@@ -61,13 +61,11 @@ class ApiUrl {
 
 
   ///=================== deleteOrganization  ==============
-
   static String deleteMission ({required String mission_Id}) =>"/mission/delete/$mission_Id";
 
 
 
   ///=================== Remove specific organizer from a mission  ==============
-
   static String removeSpecificOrganizer ({required String missionId}) =>"/mission/remove/organizer/$missionId";
 
 
@@ -82,9 +80,7 @@ class ApiUrl {
   ///=================== Retrieve all mission by specific organization ==================================
   static String organizationByMissionList({required String organizationId}) =>"/mission/retrive/organization/$organizationId";
 
-
   ///=================== Retrive all events by missionId========================================
-
   static String retriveAllEventByMissionId ({required String missionId}) =>"/organizer/event/retrive/mission/$missionId";
 
 
@@ -113,5 +109,12 @@ class ApiUrl {
 
   ///===================== retrive running by user Id  =================================
   static String retriveRunningProfile ({required String userId}) =>"/organizer/event/retrive/organizer/$userId?status=running";
+
+
+  ///Get all organizations except me as a volunteer
+   static String retriveOrganizationVolunteer ({required String userId}) =>"/volunteer/retrieve/organizations/without/$userId";
+
+  ///Join organization as volunteer
+  static String joinOrganizationVolunteer ="/volunteer/join-organization";
 
 }

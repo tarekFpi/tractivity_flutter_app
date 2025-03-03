@@ -1638,7 +1638,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
 
                                         }
                                       },
-                                      title: "Done",
+                                      title: "Create",
                                       height: 45.h,
                                       textColor: AppColors.black,
                                       fillColor: AppColors.primary,
@@ -1761,8 +1761,12 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
 
                                                     FocusScope.of(context).unfocus();
 
+                                                  Future.delayed(Duration(seconds: 1), () {
+
                                                     administratorController.searchOragizationLoading.value?CircularProgressIndicator(color: AppColors.primary,):
                                                     administratorController.searchOrganizationList("");
+                                                  });
+
 
                                                   }else{
 
@@ -1959,7 +1963,10 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
 
                                                   }else{
 
-                                                    administratorController.searchLeaderList(value);
+                                                       Future.delayed(Duration(seconds: 1), () {
+
+                                                         administratorController.searchLeaderList(value);
+                                                       });
                                                   }
                                                 },
 

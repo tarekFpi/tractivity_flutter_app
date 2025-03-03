@@ -15,16 +15,13 @@ import 'package:tractivity_app/utils/toast.dart';
 import 'package:tractivity_app/view/components/custom_button/custom_button.dart';
 import 'package:tractivity_app/view/components/custom_from_card/custom_from_card.dart';
 import 'package:tractivity_app/view/components/custom_loader/custom_loader.dart';
-import 'package:tractivity_app/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tractivity_app/view/components/custom_tab_selected/custom_tab_single_text.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
-import 'package:tractivity_app/view/components/nav_bar/organizer_navbar.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/alert_dialog_event.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/controller/administratior_controller.dart';
-import 'package:tractivity_app/view/screens/home_screen/exolore_event_screen/inner_widget/custom_explore_container.dart';
 import 'package:tractivity_app/view/screens/home_screen/homepage_drawer.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_controller/organizer_controller.dart';
-import 'package:tractivity_app/view/screens/profile_screen/user_profile_screen.dart';
+
 
 class OrganizerHomeScreen extends StatefulWidget {
    OrganizerHomeScreen({super.key});
@@ -380,7 +377,11 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
                               return InkWell(
                                 onTap: (){
 
-                                  Get.toNamed(AppRoutes.organizerActiveMissionDetails);
+                                  Get.toNamed(AppRoutes.organizerActiveMissionDetails,arguments: [
+                                    {
+                                      "missionId":modeActiveMissions.id,
+                                    }
+                                  ]);
 
                                   storage.write("status_charts", "active");
                                 },

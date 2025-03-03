@@ -229,8 +229,8 @@ class AdministratiorController extends GetxController {
 
 
 
-  ///===================== fetch Organization delete by  uid =====================
 
+  ///===================== fetch Organization delete by  uid =====================
   RxBool organizationDeleteLoading = false.obs;
 
   Future<void> organizationDelete(String organization_Id) async{
@@ -578,7 +578,7 @@ class AdministratiorController extends GetxController {
     if (query.isEmpty) {
 
       organizationShow();
-      refresh();
+     refresh();
 
     }else{
 
@@ -594,15 +594,12 @@ class AdministratiorController extends GetxController {
 
         organizationShowList.value = List.from(response.body["data"].map((m)=> OrganizationResponeModel.fromJson(m)));
 
-        organizationShowList.refresh();
-
         searchOragizationLoading.value =false;
 
         refresh();
 
       } else {
 
-        organizationShowList.refresh();
         searchOragizationLoading.value =false;
 
         if (response.statusText == ApiClient.somethingWentWrong) {
@@ -652,7 +649,6 @@ class AdministratiorController extends GetxController {
 
       } else {
 
-        leaderShowList.refresh();
         searchLeaderLoading.value =false;
 
         if (response.statusText == ApiClient.somethingWentWrong) {
@@ -683,7 +679,6 @@ class AdministratiorController extends GetxController {
 
     if (response.statusCode == 200) {
 
-
       missionDetailsShowList.value = RetriveSpecificMissionByMissionResponeModel.fromJson(response.body["data"]);
 
       missionDetailsShowLoading.value =false;
@@ -691,6 +686,7 @@ class AdministratiorController extends GetxController {
 
     } else {
 
+      refresh();
       missionDetailsShowLoading.value =false;
 
       if (response.statusText == ApiClient.somethingWentWrong) {
