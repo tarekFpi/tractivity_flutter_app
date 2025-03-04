@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:tractivity_app/helper/shared_prefe/shared_prefe.dart';
 import 'package:tractivity_app/service/api_check.dart';
@@ -16,6 +18,7 @@ import 'package:tractivity_app/utils/app_strings/app_strings.dart';
 import 'package:tractivity_app/utils/toast.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/model_invited_mission/retriveInvitedMissionsResponse.dart';
+import 'package:tractivity_app/view/screens/organizer_home_screen/retrieve_volunteer_mission_model/RetriVolunteerTomissionResponeModel.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/retrive_active_mission_model/RetriveActiveMissionResponeModel.dart';
 
 class OrganizerController extends GetxController{
@@ -39,7 +42,6 @@ class OrganizerController extends GetxController{
     "Organization List",
    "Mission List",
   ].obs;
-
 
 
 
@@ -100,6 +102,7 @@ class OrganizerController extends GetxController{
 
     retriveInvitedMissionsLoading.value = true;
 
+
     var userId = await SharePrefsHelper.getString(AppConstants.userId);
 
     var response = await ApiClient.getData(ApiUrl.retriveInvitedMissionOrganizer(userId: userId));
@@ -107,17 +110,16 @@ class OrganizerController extends GetxController{
     if (response.statusCode == 200) {
 
       retriveInvitedMissionsList.value = List.from(response.body["data"].map((m)=> RetriveInvitedMissionsResponse.fromJson(m)));
-
-      debugPrint("retriveInvitedMissionsResponse:${retriveInvitedMissionsList.value}");
-
       retriveInvitedMissionsLoading.value =false;
+
+      debugPrint("retriveInvitedMissionsResponse:${retriveInvitedMissionsList.toJson()},,${retriveInvitedMissionsLoading.value}");
 
       refresh();
 
     } else {
 
       retriveInvitedMissionsLoading.value =false;
-
+      refresh();
       if (response.statusText == ApiClient.somethingWentWrong) {
         Toast.errorToast(AppStrings.checknetworkconnection);
         refresh();
@@ -303,7 +305,6 @@ class OrganizerController extends GetxController{
 
 
   ///===================== fetch Mission delete by uid =====================
-
   RxBool missionInactiveDeleteLoading = false.obs;
 
   Future<void> missionDelete(String mission_Id) async{
@@ -338,6 +339,8 @@ class OrganizerController extends GetxController{
       }
     }
   }
+
+
 
 
   void showJoinMissionDialog() {
@@ -478,6 +481,22 @@ class OrganizerController extends GetxController{
     }
   }
 
+///
+
+
+  //========= Image Picker GetX Controller Code ===========//
+
+  final RxList<File> selectedImages = <File>[].obs;
+  final ImagePicker _picker = ImagePicker();
+
+// Pick multiple images from the gallery
+  Future<void> pickImagesFromGallery() async {
+    final List<XFile> images = await _picker.pickMultiImage();
+    if (images.isNotEmpty) {
+      selectedImages.addAll(images.map((image) => File(image.path)));
+    }
+  }
+
 
   ///===================== Retrieve  Inactive to active missions by organizer =====================
   RxBool updateInActiveMissionLoading = false.obs;
@@ -570,7 +589,6 @@ class OrganizerController extends GetxController{
 
 
   ///===================== running event List lat long get address =====================
-
   var addressRunningList = <String>[].obs;
 
   Future<String> getRunningAddressFromLatLng(double latitude, double longitude) async {
@@ -605,7 +623,7 @@ class OrganizerController extends GetxController{
     // TODO: implement onInit
     super.onInit();
 
-    retriveInvitedMissionsShow();
+     retriveInvitedMissionsShow();
 
     retrieveMissionsActive();
 

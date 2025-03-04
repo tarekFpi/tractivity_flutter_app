@@ -40,6 +40,15 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
 
   final storage = GetStorage();
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    //organizerController.retriveInvitedMissionsShow();
+   // organizerController.retrieveMissionsActive();
+   // organizerController.retrieveMissionsInActive();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +61,18 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
         key: _scaffoldKey,
         drawer: HomeSideDrawer(),
         //drawerScrimColor: Colors.black,
+        floatingActionButton: FloatingActionButton(onPressed: (){
+
+         if(organizerController.currentIndex.value==0){
+           organizerController.retriveInvitedMissionsShow();
+         }
+
+         if(organizerController.currentIndex.value==1){
+           organizerController.retrieveMissionsActive();
+           organizerController.retrieveMissionsInActive();
+         }
+
+        },child: Icon(Icons.refresh,color: Colors.white,),backgroundColor: AppColors.primary,),
         appBar: AppBar(
           leading: Builder(builder: (context) {
             return IconButton(
@@ -78,6 +99,7 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
                 return Column(
                   children: [
 
+
                     ///=============== Recemt Events Tab Bar ===============
                     SizedBox(height: 16,),
 
@@ -87,7 +109,7 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
                         selectedIndex: organizerController.currentIndex.value,
                         onTabSelected: (value) {
                           organizerController.currentIndex.value = value;
-                         setState(() {});
+                        // setState(() {});
                         },
                         selectedColor: AppColors.primary,
                         unselectedColor: AppColors.grey_1
@@ -96,193 +118,207 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
 
                     ///============ Invited Mission ==================
                     if(organizerController.currentIndex.value ==0)
-                      organizerController.retriveInvitedMissionsList.isEmpty?
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height/2,
-                        child: Center(
-                          child: CustomText(
-                            text: "No invited Mission yet!!",
-                            fontSize:isTablet?12.sp: 24.sp,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.lightRed,
-                          ),
+
+                   /* organizerController.retriveInvitedMissionsList.isEmpty?
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height/2,
+                      child: Center(
+                        child: CustomText(
+                          text: "No invited Mission yet!!",
+                          fontSize:isTablet?12.sp: 24.sp,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.lightRed,
                         ),
-                      ):organizerController.retriveInvitedMissionsLoading.value?CustomLoader():
-                      ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: organizerController.retriveInvitedMissionsList.length,
-                          itemBuilder: (BuildContext context,index){
+                      ),
+                    ):organizerController.retriveInvitedMissionsLoading.value?CircularProgressIndicator(color: Colors.amber,):*/
 
-                            final model = organizerController.retriveInvitedMissionsList[index];
+                    RefreshIndicator(child:organizerController.retriveInvitedMissionsList.isEmpty?
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height/2,
+                      child: Center(
+                        child: CustomText(
+                          text: "No invited Mission yet!!",
+                          fontSize:isTablet?12.sp: 24.sp,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.lightRed,
+                        ),
+                      ),
+                    ):organizerController.retriveInvitedMissionsLoading.value?CircularProgressIndicator(color: Colors.amber,): ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: organizerController.retriveInvitedMissionsList.length,
+                        itemBuilder: (BuildContext context,index){
 
-                            return InkWell(
-                              onTap: (){
-                                Get.toNamed(AppRoutes.organizerMissionDetailsScreen,arguments: [
-                                  {
-                                    "missionId":model.contentId?.id,
-                                  }
-                                ]);
-                                storage.write("status_charts", "Inactive");
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  height:isTablet?150.h: 140.h,
-                                  decoration: BoxDecoration(
-                                    color: AppColors.grey_3.withOpacity(0.5),
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  padding: const EdgeInsets.only(top: 12),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
+                          final model = organizerController.retriveInvitedMissionsList[index];
 
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 8,right: 8),
-                                        child: Row(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
+                          return InkWell(
+                            onTap: (){
+                              Get.toNamed(AppRoutes.organizerMissionDetailsScreen,arguments: [
+                                {
+                                  "missionId":model.contentId?.id,
+                                }
+                              ]);
+                              storage.write("status_charts", "Inactive");
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                height:isTablet?150.h: 140.h,
+                                decoration: BoxDecoration(
+                                  color: AppColors.grey_3.withOpacity(0.5),
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                padding: const EdgeInsets.only(top: 12),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
 
-                                            CustomText(
-                                              text: "${index+1}.${model.contentId?.name}",
-                                              fontSize: 16,
-                                              color: AppColors.black_80,
-                                              fontWeight: FontWeight.w600,
-                                            ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 8,right: 8),
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
 
-                                            CustomText(
-                                              text: DateConverter.timeFormetString("${model.contentId?.createdAt}"),
-                                              fontSize: 12,
-                                              color: AppColors.black_80,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ],
-                                        ),
+                                          CustomText(
+                                            text: "${index+1}.${model.contentId?.name}",
+                                            fontSize: 16,
+                                            color: AppColors.black_80,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+
+                                          CustomText(
+                                            text: DateConverter.timeFormetString("${model.contentId?.createdAt}"),
+                                            fontSize: 12,
+                                            color: AppColors.black_80,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ],
                                       ),
+                                    ),
 
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 12,right: 8),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 12,right: 8),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
 
-                                            CustomText(
-                                              text: "${model.contentId?.description}",
-                                              fontSize:isTablet?6.sp: 12.sp,
-                                              color: AppColors.black_80,
-                                              fontWeight: FontWeight.w400,
-                                              textAlign: TextAlign.start,
-                                              overflow: TextOverflow.clip,
-                                              maxLines: 2,// Add ellipsis at the end if the text overflows.
-                                            ),
+                                          CustomText(
+                                            text: "${model.contentId?.description}",
+                                            fontSize:isTablet?6.sp: 12.sp,
+                                            color: AppColors.black_80,
+                                            fontWeight: FontWeight.w400,
+                                            textAlign: TextAlign.start,
+                                            overflow: TextOverflow.clip,
+                                            maxLines: 2,// Add ellipsis at the end if the text overflows.
+                                          ),
 
-                                            SizedBox(
-                                              height: 6.h,
-                                            ),
-                                            Row(
-                                              children: [
+                                          SizedBox(
+                                            height: 6.h,
+                                          ),
+                                          Row(
+                                            children: [
 
-                                               organizerController.acceptMissionsInvitationLoading.value?CustomLoader():
-                                               CustomButton(
-                                                  onTap: () {
+                                              organizerController.acceptMissionsInvitationLoading.value?CustomLoader():
+                                              CustomButton(
+                                                onTap: () {
 
-                                                    organizerController.acceptMissionsInvitationShow(model.id.toString());
-                                                  },
-                                                  title: "Accept",
-                                                  width: 80.w,
-                                                  height: 32.h,
-                                                  textColor: AppColors.black,
-                                                  fillColor: AppColors.primary,
-                                                  fontSize: 12,
-                                                ),
+                                                  organizerController.acceptMissionsInvitationShow(model.id.toString());
+                                                },
+                                                title: "Accept",
+                                                width: 80.w,
+                                                height: 32.h,
+                                                textColor: AppColors.black,
+                                                fillColor: AppColors.primary,
+                                                fontSize: 12,
+                                              ),
 
 
-                                                SizedBox(
-                                                  width:isTablet?12.h: 8.h,
-                                                ),
+                                              SizedBox(
+                                                width:isTablet?12.h: 8.h,
+                                              ),
 
-                                                CustomButton(
-                                                  onTap: () {
+                                              CustomButton(
+                                                onTap: () {
 
-                                                    showDialog(
-                                                      context: context,
-                                                      builder: (ctx) => AlertDialog(
-                                                        backgroundColor: Colors.white,
-                                                        insetPadding: EdgeInsets.all(8),
-                                                        contentPadding: EdgeInsets.all(8),
-                                                        title: SizedBox(),
-                                                        content: SizedBox(
-                                                          width: MediaQuery.sizeOf(context).width,
-                                                          child: Padding(
-                                                            padding: const EdgeInsets.all(8.0),
-                                                            child: Column(
-                                                              mainAxisSize: MainAxisSize.min,
-                                                              children: [
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (ctx) => AlertDialog(
+                                                      backgroundColor: Colors.white,
+                                                      insetPadding: EdgeInsets.all(8),
+                                                      contentPadding: EdgeInsets.all(8),
+                                                      title: SizedBox(),
+                                                      content: SizedBox(
+                                                        width: MediaQuery.sizeOf(context).width,
+                                                        child: Padding(
+                                                          padding: const EdgeInsets.all(8.0),
+                                                          child: Column(
+                                                            mainAxisSize: MainAxisSize.min,
+                                                            children: [
 
-                                                                const CustomText(
-                                                                  text:"Are you sure you want to \n Reject this Mission?",
-                                                                  fontSize: 22,
-                                                                  fontWeight: FontWeight.w600,
-                                                                  color: AppColors.black_80,
-                                                                ),
+                                                              const CustomText(
+                                                                text:"Are you sure you want to \n Reject this Mission?",
+                                                                fontSize: 22,
+                                                                fontWeight: FontWeight.w600,
+                                                                color: AppColors.black_80,
+                                                              ),
 
-                                                                SizedBox(
-                                                                  height: 8.h,
-                                                                ),
+                                                              SizedBox(
+                                                                height: 8.h,
+                                                              ),
 
-                                                                organizerController.rejectMissionsInvitationLoading.value?CustomLoader():
-                                                                CustomButton(onTap: (){
+                                                              organizerController.rejectMissionsInvitationLoading.value?CustomLoader():
+                                                              CustomButton(onTap: (){
 
-                                                                  organizerController.rejectMissionsInvitation(model.id.toString());
+                                                                organizerController.rejectMissionsInvitation(model.id.toString());
 
-                                                                  if(organizerController.rejectMissionsInvitationLoading.value){
-                                                                    Navigator.of(context).pop();
-                                                                  }
-
-                                                                },title:"Yes",height:isTablet?70.h: 45.h,fontSize: 12.sp,),
-
-                                                                SizedBox(
-                                                                  height: 12.h,
-                                                                ),
-                                                                CustomButton(onTap: (){
+                                                                if(organizerController.rejectMissionsInvitationLoading.value){
                                                                   Navigator.of(context).pop();
-                                                                },title:"NO",height:isTablet?70.h: 45.h,
-                                                                  fontSize: 12.sp,fillColor: AppColors.white,
-                                                                  textColor: AppColors.primary,
-                                                                  isBorder: true,borderWidth: 1,)
-                                                              ],
-                                                            ),
+                                                                }
+
+                                                              },title:"Yes",height:isTablet?70.h: 45.h,fontSize: 12.sp,),
+
+                                                              SizedBox(
+                                                                height: 12.h,
+                                                              ),
+                                                              CustomButton(onTap: (){
+                                                                Navigator.of(context).pop();
+                                                              },title:"NO",height:isTablet?70.h: 45.h,
+                                                                fontSize: 12.sp,fillColor: AppColors.white,
+                                                                textColor: AppColors.primary,
+                                                                isBorder: true,borderWidth: 1,)
+                                                            ],
                                                           ),
-                                                          //  child: AlertDialogEvent(title: "Are you sure you want to \n delete ?",discription: "",),
                                                         ),
+                                                        //  child: AlertDialogEvent(title: "Are you sure you want to \n delete ?",discription: "",),
                                                       ),
-                                                    );
+                                                    ),
+                                                  );
 
 
-                                                  },
-                                                  title: "Reject",
-                                                  width: 70.w,
-                                                  height: 32.h,
-                                                  textColor: AppColors.black,
-                                                  fillColor: AppColors.primary,
-                                                  fontSize: 12,
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
+                                                },
+                                                title: "Reject",
+                                                width: 70.w,
+                                                height: 32.h,
+                                                textColor: AppColors.black,
+                                                fillColor: AppColors.primary,
+                                                fontSize: 12,
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
                                 ),
                               ),
-                            );
-                          }),
-
+                            ),
+                          );
+                        }),
+                       onRefresh:organizerController.retriveInvitedMissionsShow,
+                    ) ,
 
                     ///============ mission List ========
                     if(organizerController.currentIndex.value ==1)
@@ -425,7 +461,8 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
                                         Padding(
                                           padding: const EdgeInsets.only(left: 12,right: 8),
                                           child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.start,
                                             children: [
 
                                               CustomText(
@@ -751,7 +788,7 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
                                 ),
                               ),
                             ):organizerController.retriveInvitedMissionsLoading.value?CustomLoader():
-                                ListView.builder(
+                            ListView.builder(
                                     shrinkWrap: true,
                                     physics: NeverScrollableScrollPhysics(),
                                   itemCount: organizerController.retriveInactivieMissionsList.length,

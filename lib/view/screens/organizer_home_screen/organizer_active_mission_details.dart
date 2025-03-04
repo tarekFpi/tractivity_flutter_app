@@ -831,7 +831,13 @@ class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDe
               padding: const EdgeInsets.all(8.0),
               child: CustomButton(
                 onTap: () {
-                  Get.toNamed(AppRoutes.organizerEventCreateScreen);
+                  Get.toNamed(AppRoutes.organizerEventCreateScreen,
+                      arguments: [
+                        {
+                          "missionOrganization":"${administratorController.missionDetailsShowList.value}",
+                        }
+                      ]
+                  );
                 },
                 title: "Create Event",
                 height: 45.h,

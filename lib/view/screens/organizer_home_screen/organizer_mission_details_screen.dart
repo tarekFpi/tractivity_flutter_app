@@ -621,7 +621,6 @@ class _OrganizerMissionDetailsScreenState extends State<OrganizerMissionDetailsS
                             );
                           }),
 
-
                     ],
                   ),
                 ),

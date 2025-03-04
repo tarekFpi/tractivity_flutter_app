@@ -1956,7 +1956,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
 
                                                     FocusScope.of(context).unfocus();
 
-                                                    Future.delayed(Duration(seconds: 2), () {
+                                                    Future.delayed(Duration(seconds: 1), () {
 
                                                       administratorController.searchLeaderList("");
                                                     });

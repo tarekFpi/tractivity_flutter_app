@@ -117,4 +117,12 @@ class ApiUrl {
   ///Join organization as volunteer
   static String joinOrganizationVolunteer ="/volunteer/join-organization";
 
+
+  /// Retrieve volunteers for sending invitation by mission Id
+  static String retrieveVolunteerToMissionInvite ({required String missionId}) =>"/organizer/retrieve-volunteers/$missionId";
+
+
+  /// Invite volunteers to a specific mission by mission Id
+  static String inviteVolunteerToMissionByMission ({required String missionId}) =>"/organizer/invite-volunteers/$missionId";
+
 }

@@ -37,6 +37,7 @@ class _JoinOrganizationScreenState extends State<JoinOrganizationScreen> {
 
     homeController.organizationShow();
 
+
   }
 
   @override
@@ -101,92 +102,102 @@ class _JoinOrganizationScreenState extends State<JoinOrganizationScreen> {
 
                   homeController.obx((state){
 
-                    return  state?.isEmpty??true? SizedBox(
-                      height: MediaQuery.of(context).size.height/2,
-                      child: Center(
-                        child: CustomText(
-                          text: "No Organization yet!!",
-                          fontSize:isTablet?12.sp: 24.sp,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.lightRed,
+                   // Toast.errorToast("No Organization yet!!");
+
+                    if (state == null || state.isEmpty) {
+
+                     return SizedBox(
+                        height: MediaQuery.of(context).size.height/2,
+                        child: Center(
+                          child: CustomText(
+                            text: "No Organization yet!!",
+                            fontSize:isTablet?12.sp: 24.sp,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.red,
+                          ),
                         ),
-                      ),
-                    ):ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: state?.length,
-                        itemBuilder: (BuildContext context,index){
+                      );
 
-                          final model = state?[index];
 
-                          return Column(
-                            children: [
+                    }else{
 
-                              Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Container(
-                                  height:isTablet?130.h: 110.h,
-                                  decoration: BoxDecoration(
-                                    color: AppColors.grey_3.withOpacity(0.5),
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  padding: EdgeInsets.all(12),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
+                    //  Toast.errorToast("  Organization yet!!");
+                      return ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: state?.length,
+                          itemBuilder: (BuildContext context,index){
 
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
+                            final model = state?[index];
 
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              CustomText(
-                                                text: "${index+1}.",
-                                                fontSize: isTablet?6.sp:14.sp,
-                                                color: AppColors.black_80,
-                                                fontWeight: FontWeight.w600,
-                                              ),
+                            return Column(
+                              children: [
 
-                                              CustomText(
-                                                text: "${model?.name}",
-                                                fontSize:isTablet?6.sp: 14.sp,
-                                                color: AppColors.black_80,
-                                                fontWeight: FontWeight.w600,
-                                                overflow: TextOverflow.clip,
-                                                textAlign: TextAlign.start,
-                                              ),
-                                            ],
-                                          ),
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Container(
+                                    height:isTablet?130.h: 110.h,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.grey_3.withOpacity(0.5),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    padding: EdgeInsets.all(12),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
 
-                                        ],
-                                      ),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
 
-                                      const SizedBox(
-                                        height: 4,
-                                      ),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                CustomText(
+                                                  text: "${index+1}.",
+                                                  fontSize: isTablet?6.sp:14.sp,
+                                                  color: AppColors.black_80,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
 
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        //  crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-
-                                          Expanded(
-                                            child: CustomText(
-                                              text: "${model?.description}",
-                                              fontSize: 12,
-                                              color: AppColors.black_80,
-                                              fontWeight: FontWeight.w400,
-                                              textAlign: TextAlign.start,
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 3,
+                                                CustomText(
+                                                  text: "${model?.name}",
+                                                  fontSize:isTablet?6.sp: 14.sp,
+                                                  color: AppColors.black_80,
+                                                  fontWeight: FontWeight.w600,
+                                                  overflow: TextOverflow.clip,
+                                                  textAlign: TextAlign.start,
+                                                ),
+                                              ],
                                             ),
-                                          ),
 
-                                          Obx(()=> Checkbox(
+                                          ],
+                                        ),
+
+                                        const SizedBox(
+                                          height: 4,
+                                        ),
+
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          //  crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+
+                                            Expanded(
+                                              child: CustomText(
+                                                text: "${model?.description}",
+                                                fontSize: 12,
+                                                color: AppColors.black_80,
+                                                fontWeight: FontWeight.w400,
+                                                textAlign: TextAlign.start,
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 3,
+                                              ),
+                                            ),
+
+                                            Obx(()=> Checkbox(
                                               checkColor: AppColors.white,
                                               activeColor: AppColors.primary,
                                               shape: RoundedRectangleBorder(
@@ -207,27 +218,30 @@ class _JoinOrganizationScreenState extends State<JoinOrganizationScreen> {
                                                 if(homeController.selectedOranization.value){
 
                                                   homeController.organizationIdList.add(model!.id.toString());
+
                                                 }else{
                                                   homeController.organizationIdList.remove(model?.id.toString());
                                                 }
 
                                               },
                                             ),
-                                          ),
-                                        ],
-                                      ),
+                                            ),
+                                          ],
+                                        ),
 
-                                      const SizedBox(
-                                        height: 4,
-                                      ),
+                                        const SizedBox(
+                                          height: 4,
+                                        ),
 
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          );
-                        });
+                              ],
+                            );
+                          });
+                    }
+
                      })
 
                 ],
@@ -240,7 +254,7 @@ class _JoinOrganizationScreenState extends State<JoinOrganizationScreen> {
            children: [
              Padding(
                padding: const EdgeInsets.only(left: 12,right: 12,bottom: 12),
-               child:homeController.joinOrganLoading.value?CustomLoader(): CustomButton(
+               child:homeController.joinOrganLoading.value?CustomLoader():CustomButton(
                  onTap: () {
 
                    if(homeController.organizationIdList.isEmpty){

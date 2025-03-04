@@ -31,6 +31,7 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
   RxList<String> organizationIdList= <String>[].obs;
 
   RxBool selectedOranization = false.obs;
+
   RxList<OrganizationResponeModel> organizationShowList = <OrganizationResponeModel>[].obs;
 
   Future<void> organizationShow() async{
@@ -41,34 +42,43 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
 
     var response = await ApiClient.getData(ApiUrl.retriveOrganizationVolunteer(userId: userId));
 
-    if (response.statusCode == 200) {
+    try{
+      if (response.statusCode == 200) {
 
-      organizationShowList.value = List.from(response.body["data"].map((m)=> OrganizationResponeModel.fromJson(m)));
+        organizationShowList.value = List.from(response.body["data"].map((m)=> OrganizationResponeModel.fromJson(m)));
 
-      debugPrint("organizationShowList:${organizationShowList.value}");
+        debugPrint("organizationShowList:${organizationShowList.value}");
 
-      change(organizationShowList.value, status: RxStatus.success());
+        change(organizationShowList.value, status: RxStatus.success());
 
-      refresh();
-
-      if(organizationShowList.isEmpty){
-
-        change(null, status: RxStatus.empty());
-      }
-
-    } else {
-
-      if (response.statusText == ApiClient.somethingWentWrong) {
-        Toast.errorToast(AppStrings.checknetworkconnection);
         refresh();
-        return;
+
+        if(organizationShowList.isEmpty){
+
+          change(null, status: RxStatus.empty());
+        }
+
       } else {
 
-        ApiChecker.checkApi(response);
+        change(null, status: RxStatus.empty());
+        if (response.statusText == ApiClient.somethingWentWrong) {
+          Toast.errorToast(AppStrings.checknetworkconnection);
+          refresh();
+          return;
+        } else {
 
-        refresh();
-        return;
+          ApiChecker.checkApi(response);
+
+          refresh();
+          return;
+        }
       }
+    }catch(e){
+      Toast.errorToast("${e.toString()}");
+
+      debugPrint(e.toString());
+
+      change(null, status: RxStatus.error(e.toString()));
     }
   }
 
@@ -100,6 +110,8 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
       organizationIdList.clear();
 
       selectedOranization.value=false;
+
+      organizationShow();
     } else {
 
       joinOrganLoading.value = false;
@@ -156,6 +168,6 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
     // TODO: implement onInit
     super.onInit();
     selectedOranization.value=false;
-
+    //organizationIdList.clear();
   }
 }
