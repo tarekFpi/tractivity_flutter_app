@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -64,7 +64,6 @@ class OrganizerController extends GetxController{
       initialDate: DateTime(2007, 12, 31), // Latest selectable date
       firstDate: DateTime(2000), // Earliest selectable date
       lastDate: DateTime(2100),  // Needed for future filtering
-
     );
 
     if (pickedDate != null) {
@@ -225,6 +224,7 @@ class OrganizerController extends GetxController{
 
 
   ///==================== Retrieve all Active missions by organizer ========================
+
   RxBool retrieveMissionsActiveLoading = false.obs;
 
   RxList<RetriveActiveMissionResponeModel> retriveActivieMissionsList = <RetriveActiveMissionResponeModel>[].obs;
@@ -340,9 +340,6 @@ class OrganizerController extends GetxController{
     }
   }
 
-
-
-
   void showJoinMissionDialog() {
     if (Get.context != null) {
       showDialog(
@@ -431,6 +428,8 @@ class OrganizerController extends GetxController{
   RxString missionStatus = "".obs;
   RxBool missionActiveStatus = false.obs;
 
+  RxList<String> invitedVolunteerList= <String>[].obs;
+
   Future<void> editActiveMission(String missionId) async {
 
     updateActiveMissionLoading.value = true;
@@ -481,22 +480,248 @@ class OrganizerController extends GetxController{
     }
   }
 
-///
 
 
-  //========= Image Picker GetX Controller Code ===========//
+  ///========= Image Picker GetX Controller Code ===========//
 
-  final RxList<File> selectedImages = <File>[].obs;
+  RxList<File> selectedImages = <File>[].obs;
   final ImagePicker _picker = ImagePicker();
 
-// Pick multiple images from the gallery
+  // Method to pick multiple images
   Future<void> pickImagesFromGallery() async {
-    final List<XFile> images = await _picker.pickMultiImage();
-    if (images.isNotEmpty) {
-      selectedImages.addAll(images.map((image) => File(image.path)));
+    try {
+      // Pick multiple images
+      final pickedFiles = await _picker.pickMultiImage();
+
+      if (pickedFiles != null) {
+        // Convert picked files to File objects and add them to the list
+        selectedImages.value = pickedFiles.map((e) => File(e.path)).toList();
+      } else {
+        print('No images selected');
+      }
+    } catch (e) {
+      print('Error picking images: $e');
     }
   }
 
+
+  // Observable list to store selected PDF files
+  RxList<File> pickedFiles = <File>[].obs;
+
+  // Method to pick multiple PDF files
+  Future<void> pickFiles() async {
+    try {
+      // Pick multiple files, restrict to PDFs
+      final result = await FilePicker.platform.pickFiles(
+        allowMultiple: true, // Allow multiple file selection
+        type: FileType.custom, // We use custom type for selecting PDFs
+        allowedExtensions: ['pdf'], // Allow only PDF files
+      );
+
+      // Check if files are picked
+      if (result != null && result.files.isNotEmpty) {
+        // Convert picked files to File objects and add them to the list
+        pickedFiles.value = result.files
+            .map((e) => File(e.path!)) // Convert file paths to File objects
+            .toList();
+        print("Picked files: ${pickedFiles.length}");
+      } else {
+        print('No files selected');
+      }
+    } catch (e) {
+      print('Error picking files: $e');
+    }
+  }
+
+  ///===================== Create new event =====================
+  RxBool createEventLoading = false.obs;
+
+  Rx<TextEditingController> eventNameController = TextEditingController().obs;
+
+  Rx<TextEditingController> eventDescriptionController = TextEditingController().obs;
+
+  Rx<TextEditingController> stateController = TextEditingController().obs;
+
+  Rx<TextEditingController> cityController = TextEditingController().obs;
+
+  Rx<TextEditingController> zipController = TextEditingController().obs;
+
+  Rx<TextEditingController> latitudeController = TextEditingController().obs;
+
+  Rx<TextEditingController> longitudeController = TextEditingController().obs;
+
+  Rx<TextEditingController> startTimeController = TextEditingController().obs;
+
+  Rx<TextEditingController> endTimeController = TextEditingController().obs;
+
+  Rx<TextEditingController> dateController = TextEditingController().obs;
+
+  RxList<String> volunteersIdList= <String>[].obs;
+
+  RxList<String> volunteersSelectedList= <String>[].obs;
+
+  RxBool selectedVolunteers = false.obs;
+
+  Future<void> createEvent(String missionId) async {
+
+    createEventLoading.value = true;
+
+    var userId = await SharePrefsHelper.getString(AppConstants.userId);
+
+    var body = {
+      "creatorId": userId,
+      "missionId": missionEditNameController.value.text,
+      "name": missionEditNameController.value.text,
+      "description": missionEditNameController.value.text,
+      "images": selectedImages,
+      "documents": pickedFiles,
+      "state": missionEditNameController.value.text,
+      "city": missionEditNameController.value.text,
+      "zip": missionEditNameController.value.text,
+      "latitude": missionEditNameController.value.text,
+      "longitude": missionEditNameController.value.text,
+      "startTime": missionEditNameController.value.text,
+      "endTime": missionEditNameController.value.text,
+      "date": missionEditNameController.value.text,
+      "mode": missionEditNameController.value.text,
+      "invitedVolunteer": missionEditNameController.value.text,
+    };
+
+    debugPrint("editInActiveMission:${jsonEncode(body)}");
+
+    var response = await ApiClient.postData(ApiUrl.createEvent, jsonEncode(body));
+
+    if (response.statusCode == 200) {
+
+      createEventLoading.value = false;
+
+      Toast.successToast(response.body['message']!);
+
+      debugPrint("response:${body}");
+
+      missionEditNameController.value.clear();
+      missionEditDescriptionController.value.clear();
+
+    } else {
+
+      createEventLoading.value = false;
+      if (response.statusText == ApiClient.somethingWentWrong) {
+
+        Toast.errorToast(AppStrings.checknetworkconnection);
+        return;
+
+      } else {
+
+        ApiChecker.checkApi(response);
+        return;
+      }
+    }
+  }
+
+
+
+  ///======================================>> event open time <<================================
+
+  RxString timeOpenPicker = "start Time".obs;
+
+  RxString timeClosePicker = "end Time".obs;
+  final DateFormat openTimeFormat = DateFormat("hh:mm a");
+
+  final DateFormat closeTimeFormat = DateFormat("hh:mm a");
+
+  Future<void> selectOpenTime() async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: Get.context!,
+      initialTime: TimeOfDay.now(),
+    );
+    if (picked != null) {
+      final DateTime now = DateTime.now();
+      final DateTime formattedTime = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        picked.hour,
+        picked.minute,
+      );
+
+      timeOpenPicker.value = openTimeFormat.format(formattedTime);
+    }
+  }
+
+
+  ///======================================>> event close time <<================================
+  Future<void> selectCloseTime() async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: Get.context!,
+      initialTime: TimeOfDay.now(),
+    );
+    if (picked != null) {
+      final DateTime now = DateTime.now();
+      final DateTime formattedTime = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        picked.hour,
+        picked.minute,
+      );
+
+      timeClosePicker.value = closeTimeFormat.format(formattedTime);
+    }
+  }
+
+
+  ///======================================>> event date time <<================================
+
+  var now = DateTime.now();
+
+  RxString selectedDate="00/00/0000".obs;
+
+  void selectDate() async {
+
+    DateTime? pickedDate = await showDatePicker(
+      context: Get.context!, initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+
+    if(pickedDate != null ){
+
+      String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+
+      selectedDate.value = formattedDate;
+
+    }else{
+
+      selectedDate.value="00/00/0000";
+
+    }
+  }
+
+
+  RxString eventAccessmode="".obs;
+
+  // Observable variables for button selection
+  var isButton1Selected = false.obs;
+  var isButton2Selected = false.obs;
+
+  // Colors for selected and unselected states
+  var selectedColor = Rx<Color>(Colors.orange);
+  var unselectedColor = Rx<Color>(AppColors.white);
+
+  // Toggle button selection
+  void toggleButton(int buttonNumber) {
+    if (buttonNumber == 1) {
+      isButton1Selected.value = !isButton1Selected.value;
+      if (isButton1Selected.value) {
+        isButton2Selected.value = false; // Deselect the other button
+      }
+    } else if (buttonNumber == 2) {
+      isButton2Selected.value = !isButton2Selected.value;
+      if (isButton2Selected.value) {
+        isButton1Selected.value = false; // Deselect the other button
+      }
+    }
+  }
 
   ///===================== Retrieve  Inactive to active missions by organizer =====================
   RxBool updateInActiveMissionLoading = false.obs;

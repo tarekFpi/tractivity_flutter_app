@@ -413,129 +413,149 @@ class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDe
                           ),
                           children:  [
 
+                            ListView.builder(
+                                itemCount: administratorController.missionDetailsShowList.value.connectedVolunteers?.length,
+                                shrinkWrap: true, //
+                                physics: NeverScrollableScrollPhysics(),
+                                itemBuilder: (BuildContext context, int index) {
 
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                GestureDetector(
-                                  onTap: (){},
-                                  child: Row(
-                                    children: [
+                                  final connectedVolunteers =administratorController.missionDetailsShowList.value.connectedVolunteers?[index];
 
-                                    Container(
-                                      height: 60.h,
-                                      width:60.w,
-                                     decoration: BoxDecoration(
-                                      shape: BoxShape.circle,  // Circle shape
-                                       color: Colors.grey,
-                                      image: DecorationImage(
-                                        image: AssetImage(AppImages.userImage), // Your image path
-                                        fit: BoxFit.cover,  // Ensures the image fills the circle
-                                      ),
+                                  return  Padding(
+                                    padding: EdgeInsets.only(bottom: 10.h),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+
+                                            connectedVolunteers?.image==""? CustomNetworkImage(
+                                              imageUrl: AppConstants.profileImage,
+                                              height:isTablet?64.h: 60.h,
+                                              width:isTablet?64.w: 60.w,
+                                              boxShape: BoxShape.circle,
+                                            ):CustomNetworkImage(
+                                              imageUrl: "${ApiUrl.imageUrl}${connectedVolunteers?.image}",
+                                              height:isTablet?64.h: 60.h,
+                                              width:isTablet?64.w: 60.w,
+                                              boxShape: BoxShape.circle,
+                                            ),
+                                            SizedBox(
+                                              width: 10.w,
+                                            ),
+                                            Row(
+                                              children: [
+
+                                                Column(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    CustomText(
+                                                      text: "${connectedVolunteers?.fullName}",
+                                                      fontSize:isTablet?8.sp:12.sp,
+                                                      fontWeight: FontWeight.w600,
+                                                      color: AppColors.black,
+                                                    ),
+                                                    CustomText(
+                                                      text: "${connectedVolunteers?.profession}",
+                                                      fontSize:isTablet?6.sp: 12.sp,
+                                                      fontWeight: FontWeight.w400,
+                                                      color: AppColors.black_80,
+                                                    ),
+                                                  ],
+                                                ),
+
+                                              ],),
+                                          ],
+                                        )
+
+                                      ],
                                     ),
-                                    ),
-
-
-                                      SizedBox(
-                                        width: 10.w,
-                                      ),
-                                      Column(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          CustomText(
-                                            text: "Farhad Hossain",
-                                            fontSize:isTablet?6.sp:12.sp,
-                                            fontWeight: FontWeight.w600,
-                                            color: AppColors.black,
-                                          ),
-                                          CustomText(
-                                            text: "Student",
-                                            fontSize:isTablet?6.sp: 12.sp,
-                                            fontWeight: FontWeight.w400,
-                                            color: AppColors.black_80,
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-
-                              ],
-                            ),
+                                  );
+                                }),
 
                             SizedBox(
                               height: 12.h,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                GestureDetector(
-                                  onTap: (){},
-                                  child: Row(
-                                    children: [
-
-                                      CustomNetworkImage(
-                                        imageUrl: AppConstants.profileImage,
-                                        height:isTablet?64.h: 60.h,
-                                        width:isTablet?64.w: 60.w,
-                                        boxShape: BoxShape.circle,
-                                      ),
-                                      SizedBox(
-                                        width: 10.w,
-                                      ),
-                                      Column(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          CustomText(
-                                            text: "Jamal Hasan",
-                                            fontSize:isTablet?6.sp:12.sp,
-                                            fontWeight: FontWeight.w600,
-                                            color: AppColors.black,
-                                          ),
-                                          CustomText(
-                                            text: "worker",
-                                            fontSize:isTablet?6.sp: 12.sp,
-                                            fontWeight: FontWeight.w400,
-                                            color: AppColors.black_80,
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
 
 
-                                Row(
+                            ListView.builder(
+                                itemCount: administratorController.missionDetailsShowList.value.requestedVolunteers?.length,
+                                shrinkWrap: true, //
+                                physics: NeverScrollableScrollPhysics(),
+                                itemBuilder: (BuildContext context, index) {
 
-                                  children: [
+                                  final requestedVolunteers = administratorController.missionDetailsShowList.value.requestedVolunteers?[index];
 
-                                    Container(
-                                      padding: EdgeInsets.all(6),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.black_04,
-                                        borderRadius: BorderRadius.circular(10.r),
-                                        // border: Border.all(color: AppColors.primary,width: 2),
-                                      ),
-                                      child: GestureDetector(
-                                        onTap: (){
+                                  return  Padding(
+                                    padding: EdgeInsets.only(bottom: 10.h),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
 
-                                        },
-                                        child:  Center(
-                                            child: CustomText(
-                                              text: "Invited",
-                                              color: AppColors.white,
-                                              fontSize:isTablet?6.sp: 12.sp,
-                                              fontWeight: FontWeight.w600,
-                                            )),
-                                      ),
+                                        Row(
+                                          children: [
+
+                                            requestedVolunteers?.image==""?
+                                            CustomNetworkImage(
+                                              imageUrl: AppConstants.profileImage,
+                                              height:isTablet?64.h: 60.h,
+                                              width:isTablet?64.w: 60.w,
+                                              boxShape: BoxShape.circle,
+                                            ):CustomNetworkImage(
+                                              imageUrl: "${ApiUrl.imageUrl}${requestedVolunteers?.image}",
+                                              height:isTablet?64.h: 60.h,
+                                              width:isTablet?64.w: 60.w,
+                                              boxShape: BoxShape.circle,
+                                            ),
+                                            SizedBox(
+                                              width: 10.w,
+                                            ),
+
+                                            Row(
+                                              children: [
+                                                Column(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    CustomText(
+                                                      text: "${requestedVolunteers?.fullName}",
+                                                      fontSize:isTablet?8.sp:12.sp,
+                                                      fontWeight: FontWeight.w600,
+                                                      color: AppColors.black,
+                                                    ),
+                                                    CustomText(
+                                                      text: "${requestedVolunteers?.profession}",
+                                                      fontSize:isTablet?6.sp: 12.sp,
+                                                      fontWeight: FontWeight.w400,
+                                                      color: AppColors.black_80,
+                                                    ),
+                                                  ],
+                                                ),
+
+                                                Container(
+                                                  padding: EdgeInsets.all(6),
+                                                  decoration: BoxDecoration(
+                                                    color: AppColors.black_04,
+                                                    borderRadius: BorderRadius.circular(10.r),
+                                                    // border: Border.all(color: AppColors.primary,width: 2),
+                                                  ),
+                                                  child: Center(
+                                                      child: CustomText(
+                                                        text: "Invited",
+                                                        color: AppColors.white,
+                                                        fontSize:isTablet?6.sp: 12.sp,
+                                                        fontWeight: FontWeight.w600,
+                                                      )),
+                                                )
+                                              ],),
+                                          ],
+                                        )
+
+                                      ],
                                     ),
-
-                                  ],
-                                )
-                              ],
-                            ),
+                                  );
+                                }),
 
                           ],
                         ),
@@ -628,12 +648,14 @@ class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDe
 
                     Row(
                       children: [
+
                         CustomText(
                           text:  "Mission mode:",
                           fontSize:isTablet?6.sp: 16.sp,
                           fontWeight: FontWeight.bold,
                           color: AppColors.black,
                         ),
+
                         SizedBox(
                           width: 8.w,
                         ),

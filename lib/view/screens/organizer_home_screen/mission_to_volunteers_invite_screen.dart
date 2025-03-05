@@ -334,9 +334,6 @@ class _MissionToVolunteersInviteScreenState extends State<MissionToVolunteersInv
 
                          missionToVoluntController.inviteVolunteerToMission(administratorController.missionDetailsShowList.value.id.toString());
 
-                         if(missionToVoluntController.voluteersLoading.value){
-                           Navigator.of(context).pop();
-                         }
                        }
 
                      }, title: "Submit",fontSize:isTablet?8.sp: 14.sp,),

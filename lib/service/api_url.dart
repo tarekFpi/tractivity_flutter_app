@@ -125,4 +125,11 @@ class ApiUrl {
   /// Invite volunteers to a specific mission by mission Id
   static String inviteVolunteerToMissionByMission ({required String missionId}) =>"/organizer/invite-volunteers/$missionId";
 
+  ///Create new event
+  static String createEvent ="/organizer/event/create";
+
+
+  /// inviteVolunteer event to event
+  static String inviteVolunteer({required String missionId}) =>"/organizer/event/volunteer/mission/$missionId";
+
 }
