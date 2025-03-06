@@ -1,37 +1,36 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/service/api_url.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
-import 'package:tractivity_app/utils/app_strings/app_strings.dart';
-import 'package:tractivity_app/utils/toast.dart';
+import 'package:tractivity_app/utils/app_images/app_images.dart';
 import 'package:tractivity_app/view/components/custom_button/custom_button.dart';
 import 'package:tractivity_app/view/components/custom_loader/custom_loader.dart';
 import 'package:tractivity_app/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tractivity_app/view/components/custom_royel_appbar/custom_royel_appbar.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
-import 'package:tractivity_app/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/alert_dialog_event.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/controller/administratior_controller.dart';
 
-
-class AdminstratiorEventListScreen extends StatefulWidget {
-  const AdminstratiorEventListScreen({super.key});
+class OrganizerActiveMissionDetails extends StatefulWidget {
+  const OrganizerActiveMissionDetails({super.key});
 
   @override
-  State<AdminstratiorEventListScreen> createState() => _AdminstratiorEventListScreenState();
+  State<OrganizerActiveMissionDetails> createState() => _OrganizerActiveMissionDetailsState();
 }
 
-class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScreen> {
+class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDetails> {
+
+  final storage = GetStorage();
 
   String missionId="";
 
   final administratorController = Get.put(AdministratiorController());
-
 
   @override
   void initState() {
@@ -42,9 +41,8 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
 
       missionId = Get.arguments[0]["missionId"];
 
-     administratorController.retriveSpecificMissionByMissionShow(missionId);
-     administratorController.retriveAllEventByMissionShow(missionId);
-
+      administratorController.retriveSpecificMissionByMissionShow(missionId);
+      administratorController.retriveAllEventByMissionShow(missionId);
     }
   }
 
@@ -55,35 +53,17 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
 
       final isTablet = constraints.maxWidth > 600;
 
-
       return Scaffold(
-        appBar:  AppBar(
-          scrolledUnderElevation: 0,
-          leading: Builder(builder: (context) {
-            return IconButton(
-                onPressed: () => Get.back(),
-                icon:   Icon(
-                  Icons.arrow_back_rounded,
-                  color: AppColors.black,
-                  size: isTablet?42:24,
-                ));
-          }),
-          title: Text(
-            "Mission Details",
-            style: TextStyle(
-                color: AppColors.black,
-                fontSize: 24.sp,
-                fontWeight: FontWeight.w600),
-          ),
-
+         appBar: const CustomRoyelAppbar(
+          leftIcon: true,
+          titleName: "Mission Details",
         ),
-        body: Obx(
-           () {
 
-
-            return SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+        body: SingleChildScrollView(
+          child: Obx(
+             () {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 16),
                 child:administratorController.missionDetailsShowList.toString().isEmpty?
                 SizedBox(
                   height: MediaQuery.of(context).size.height/2,
@@ -96,7 +76,7 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                     ),
                   ),
                 ):
-                administratorController.missionDetailsShowLoading.value?CustomLoader():
+                administratorController.missionDetailsShowLoading.value?Center(child: CustomLoader()):
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,7 +97,7 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
 
                     ListView.builder(
                         itemCount: administratorController.missionDetailsShowList.value.connectedOrganizations?.length,
-                        shrinkWrap: true, // ✅ Important: Makes ListView take only the space it needs
+                        shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         itemBuilder: (BuildContext context, int index) {
 
@@ -199,16 +179,16 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                     ),
 
                     if((administratorController.missionDetailsShowList.value.connectedOrganizers?.isNotEmpty ??true)  && (administratorController.missionDetailsShowList.value.requestedOrganizers?.isNotEmpty ??true))
-                     CustomText(
-                      textAlign: TextAlign.start,
-                      text: "Organizers",
-                      fontSize:isTablet?6.sp: 16.sp,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.primary,
-                      bottom: 8.h,
-                    ),
+                      CustomText(
+                        textAlign: TextAlign.start,
+                        text: "Organizers",
+                        fontSize:isTablet?6.sp: 16.sp,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.primary,
+                        bottom: 8.h,
+                      ),
 
-                ///Organizers connectedOrganizers
+                    ///Organizers connectedOrganizers
                     ListView.builder(
                         itemCount: administratorController.missionDetailsShowList.value.connectedOrganizers?.length,
                         shrinkWrap: true, //
@@ -240,7 +220,7 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                  
+
                                       Column(
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -270,7 +250,7 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                                         ),
                                         child:  GestureDetector(
                                           onTap: (){
-                                           administratorController.removeSpecificOrganizer(connectedOrganizers!.id.toString(),missionId);
+                                            administratorController.removeSpecificOrganizer(connectedOrganizers!.id.toString(),missionId);
 
                                           },
                                           child:  Center(
@@ -282,7 +262,7 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                                               )),
                                         ),
                                       ),
-                                  
+
                                     ],
                                   ),
                                 )
@@ -326,37 +306,35 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                                     SizedBox(
                                       width: 10.w,
                                     ),
-                                   Row(
-                                     children: [
+                                    Row(
+                                      children: [
 
-                                     Column(
-                                       mainAxisAlignment: MainAxisAlignment.start,
-                                       crossAxisAlignment: CrossAxisAlignment.start,
-                                       children: [
-                                         CustomText(
-                                           text: "${requestedOrganizers?.fullName}",
-                                           fontSize:isTablet?8.sp:12.sp,
-                                           fontWeight: FontWeight.w600,
-                                           color: AppColors.black,
-                                         ),
-                                         CustomText(
-                                           text: "${requestedOrganizers?.profession}",
-                                           fontSize:isTablet?6.sp: 12.sp,
-                                           fontWeight: FontWeight.w400,
-                                           color: AppColors.black_80,
-                                         ),
-                                       ],
-                                     ),
+                                        Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            CustomText(
+                                              text: "${requestedOrganizers?.fullName}",
+                                              fontSize:isTablet?8.sp:12.sp,
+                                              fontWeight: FontWeight.w600,
+                                              color: AppColors.black,
+                                            ),
+                                            CustomText(
+                                              text: "${requestedOrganizers?.profession}",
+                                              fontSize:isTablet?6.sp: 12.sp,
+                                              fontWeight: FontWeight.w400,
+                                              color: AppColors.black_80,
+                                            ),
+                                          ],
+                                        ),
 
-                                   ],),
+                                      ],),
                                   ],
                                 ),
 
 
                                 Row(
-
                                   children: [
-
                                     Container(
                                       padding: EdgeInsets.all(6),
                                       decoration: BoxDecoration(
@@ -376,8 +354,8 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                                     SizedBox(
                                       width: 8.w,
                                     ),
-                                   administratorController.specificOrganizerDeleteLoading.value?CustomLoader():
-                                   Container(
+                                    administratorController.specificOrganizerDeleteLoading.value?CustomLoader():
+                                    Container(
                                       padding: EdgeInsets.all(6),
                                       decoration: BoxDecoration(
                                         color: AppColors.primary,
@@ -386,7 +364,7 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                                       ),
                                       child:  GestureDetector(
                                         onTap: (){
-                                        administratorController.removeSpecificOrganizer(requestedOrganizers!.id.toString(),missionId);
+                                          administratorController.removeSpecificOrganizer(requestedOrganizers!.id.toString(),missionId);
 
                                         },
                                         child:  Center(
@@ -409,6 +387,233 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                     const Divider(
                       color: Colors.black54,
                     ):const SizedBox(),
+
+                    const Divider(
+                      color: Colors.black54,
+                    ),
+
+                    SizedBox(
+                      height: 8.h,
+                    ),
+
+                    Card(
+                      color: Colors.white,
+                      elevation: 0.2,
+                      child: Padding(
+                        padding: const EdgeInsets.all(6.0),
+                        child: ExpansionTile(
+                          shape: Border(),
+                          title:  CustomText(
+                            textAlign: TextAlign.start,
+                            text: "volunteers",
+                            fontSize:isTablet?6.sp: 16.sp,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.primary,
+                            bottom: 8.h,
+                          ),
+                          children:  [
+
+                            ListView.builder(
+                                itemCount: administratorController.missionDetailsShowList.value.connectedVolunteers?.length,
+                                shrinkWrap: true, //
+                                physics: NeverScrollableScrollPhysics(),
+                                itemBuilder: (BuildContext context, int index) {
+
+                                  final connectedVolunteers =administratorController.missionDetailsShowList.value.connectedVolunteers?[index];
+
+                                  return  Padding(
+                                    padding: EdgeInsets.only(bottom: 10.h),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+
+                                            connectedVolunteers?.image==""? CustomNetworkImage(
+                                              imageUrl: AppConstants.profileImage,
+                                              height:isTablet?64.h: 60.h,
+                                              width:isTablet?64.w: 60.w,
+                                              boxShape: BoxShape.circle,
+                                            ):CustomNetworkImage(
+                                              imageUrl: "${ApiUrl.imageUrl}${connectedVolunteers?.image}",
+                                              height:isTablet?64.h: 60.h,
+                                              width:isTablet?64.w: 60.w,
+                                              boxShape: BoxShape.circle,
+                                            ),
+                                            SizedBox(
+                                              width: 10.w,
+                                            ),
+                                            Row(
+                                              children: [
+
+                                                Column(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    CustomText(
+                                                      text: "${connectedVolunteers?.fullName}",
+                                                      fontSize:isTablet?8.sp:12.sp,
+                                                      fontWeight: FontWeight.w600,
+                                                      color: AppColors.black,
+                                                    ),
+                                                    CustomText(
+                                                      text: "${connectedVolunteers?.profession}",
+                                                      fontSize:isTablet?6.sp: 12.sp,
+                                                      fontWeight: FontWeight.w400,
+                                                      color: AppColors.black_80,
+                                                    ),
+                                                  ],
+                                                ),
+
+                                              ],),
+                                          ],
+                                        )
+
+                                      ],
+                                    ),
+                                  );
+                                }),
+
+                            SizedBox(
+                              height: 12.h,
+                            ),
+
+
+                            ListView.builder(
+                                itemCount: administratorController.missionDetailsShowList.value.requestedVolunteers?.length,
+                                shrinkWrap: true, //
+                                physics: NeverScrollableScrollPhysics(),
+                                itemBuilder: (BuildContext context, index) {
+
+                                  final requestedVolunteers = administratorController.missionDetailsShowList.value.requestedVolunteers?[index];
+
+                                  return  Padding(
+                                    padding: EdgeInsets.only(bottom: 10.h),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+
+                                        Row(
+                                          children: [
+
+                                            requestedVolunteers?.image==""?
+                                            CustomNetworkImage(
+                                              imageUrl: AppConstants.profileImage,
+                                              height:isTablet?64.h: 60.h,
+                                              width:isTablet?64.w: 60.w,
+                                              boxShape: BoxShape.circle,
+                                            ):CustomNetworkImage(
+                                              imageUrl: "${ApiUrl.imageUrl}${requestedVolunteers?.image}",
+                                              height:isTablet?64.h: 60.h,
+                                              width:isTablet?64.w: 60.w,
+                                              boxShape: BoxShape.circle,
+                                            ),
+                                            SizedBox(
+                                              width: 10.w,
+                                            ),
+
+                                            Row(
+                                              children: [
+                                                Column(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    CustomText(
+                                                      text: "${requestedVolunteers?.fullName}",
+                                                      fontSize:isTablet?8.sp:12.sp,
+                                                      fontWeight: FontWeight.w600,
+                                                      color: AppColors.black,
+                                                    ),
+                                                    CustomText(
+                                                      text: "${requestedVolunteers?.profession}",
+                                                      fontSize:isTablet?6.sp: 12.sp,
+                                                      fontWeight: FontWeight.w400,
+                                                      color: AppColors.black_80,
+                                                    ),
+                                                  ],
+                                                ),
+
+                                                Container(
+                                                  padding: EdgeInsets.all(6),
+                                                  decoration: BoxDecoration(
+                                                    color: AppColors.black_04,
+                                                    borderRadius: BorderRadius.circular(10.r),
+                                                    // border: Border.all(color: AppColors.primary,width: 2),
+                                                  ),
+                                                  child: Center(
+                                                      child: CustomText(
+                                                        text: "Invited",
+                                                        color: AppColors.white,
+                                                        fontSize:isTablet?6.sp: 12.sp,
+                                                        fontWeight: FontWeight.w600,
+                                                      )),
+                                                )
+                                              ],),
+                                          ],
+                                        )
+
+                                      ],
+                                    ),
+                                  );
+                                }),
+
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(
+                      height: 8.h,
+                    ),
+
+                    const Divider(
+                      color: Colors.black54,
+                    ),
+
+                    SizedBox(
+                      height: 8.h,
+                    ),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+
+                          CustomButton(
+                            onTap: () {
+
+                             Get.toNamed(AppRoutes.missionToVolunteersInviteScreen,arguments: [
+                               {
+                                /// "missionName":"${administratorController.missionDetailsShowList.value.name}",
+                                /// "missionDescription":"${administratorController.missionDetailsShowList.value.description}",
+                                 "missionOrganization":"${administratorController.missionDetailsShowList.value}",
+                               }
+                             ]);
+                            },
+                            title: "Invite volunteers",
+                            height:isTablet?40.h: 35.h,
+                            width: 120.w,
+                            textColor: AppColors.white,
+                            fillColor: AppColors.primary,
+                            fontSize: 12,
+                          ),
+
+                          CustomButton(
+                            onTap: () {
+                              Get.toNamed(AppRoutes.missionEventReportScreen);
+                            },
+                            title: "Report",
+                            height:isTablet?40.h: 35.h,
+                            width: 100.w,
+                            textColor: AppColors.white,
+                            fillColor: AppColors.primary,
+                            fontSize: 12,
+                          ),
+                        ],
+                      ),
+
+                      SizedBox(
+                      height: 12.h,
+                    ),
 
                     SizedBox(
                       height: 12.h,
@@ -443,12 +648,14 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
 
                     Row(
                       children: [
+
                         CustomText(
                           text:  "Mission mode:",
                           fontSize:isTablet?6.sp: 16.sp,
                           fontWeight: FontWeight.bold,
                           color: AppColors.black,
                         ),
+
                         SizedBox(
                           width: 8.w,
                         ),
@@ -473,13 +680,13 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                     CustomText(
                       textAlign: TextAlign.start,
                       text: "Events",
-                      fontSize:isTablet?6.sp: 16.sp,
+                      fontSize:isTablet?6.sp: 18.sp,
                       fontWeight: FontWeight.bold,
                       color: AppColors.primary,
                       bottom: 8.h,
                     ),
 
-                    administratorController.missionEventShowList.value.isEmpty?
+                    administratorController.missionEventShowList.isEmpty?
                     SizedBox(
                       height: MediaQuery.of(context).size.height/2,
                       child: Center(
@@ -491,7 +698,7 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                         ),
                       ),
                     ):
-                    administratorController.missionEventShowLoading.value?CustomLoader():
+                    administratorController.missionEventShowLoading.value?const CustomLoader():
                     ListView.builder(
                         itemCount: administratorController.missionEventShowList.length,
                         shrinkWrap: true,
@@ -633,9 +840,35 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
 
                   ],
                 ),
+              );
+            }
+          ),
+        ),
+        bottomNavigationBar: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CustomButton(
+                onTap: () {
+                  Get.toNamed(AppRoutes.organizerEventCreateScreen,
+                      arguments: [
+                        {
+                          "missionOrganization":"${administratorController.missionDetailsShowList.value}",
+                        }
+                      ]
+                  );
+                },
+                title: "Create Event",
+                height: 45.h,
+                textColor: AppColors.black,
+                fillColor: AppColors.primary,
+                fontSize: 12,
               ),
-            );
-          }
+            ),
+          ],
         ),
       );
     });

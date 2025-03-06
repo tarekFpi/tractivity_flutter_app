@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstratior_eventlist_screen.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrator_event_details_screen.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrator_home_screen.dart';
+import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrator_mission_details_screen.dart';
+import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrator_organization_details_screen.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/event_complete_screen.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/member/adminstrator_member.dart';
 import 'package:tractivity_app/view/screens/auth_screen/signup_screen/location_map_screen.dart';
@@ -30,6 +32,7 @@ import 'package:tractivity_app/view/screens/home_screen/home_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/join_event_screen/join_details_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/join_event_screen/join_event_details_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/join_event_screen/join_event_screen.dart';
+import 'package:tractivity_app/view/screens/home_screen/join_organization_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/member_screen/event_compleate_member.dart';
 import 'package:tractivity_app/view/screens/home_screen/member_screen/member_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/recent_event_explore_details.dart';
@@ -39,12 +42,17 @@ import 'package:tractivity_app/view/screens/home_screen/volunteer_chart_screen.d
 import 'package:tractivity_app/view/screens/notification/notification_screen.dart';
 import 'package:tractivity_app/view/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/Invite_member_screen.dart';
+import 'package:tractivity_app/view/screens/organizer_home_screen/mission_to_volunteers_invite_screen.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organization_event_list_screen.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organize_details_screen.dart';
+import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_active_mission_details.dart';
+import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_inactive_mission_details.dart';
+import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_invite_mission_screen/mission_event_report_screen.dart';
+import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_invite_mission_screen/organizer_create_event.dart';
+import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_mission_details_screen.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_recent_event_details.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_home_screen.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_invite_mission_screen/organize_map.dart';
-import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_invite_mission_screen/organizer_approved.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_invite_mission_screen/organizer_invite_mission_screen.dart';
 import 'package:tractivity_app/view/screens/profile_screen/edit_profile_screen.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/explore_event_screen.dart';
@@ -115,7 +123,14 @@ class AppRoutes {
   static const String organizationEventListScreen = "/OrganizationEventListScreen";
   static const String volunteerChartScreen = "/VolunteerChartScreen";
   static const String volunteerEventReportScreen = "/VolunteerEventReportScreen";
-
+  static const String organizerMissionDetailsScreen = "/OrganizerMissionDetailsScreen";
+  static const String organizerInactiveMissionDetails = "/OrganizerInactiveMissionDetails";
+  static const String organizerActiveMissionDetails = "/OrganizerActiveMissionDetails";
+  static const String missionToVolunteersInviteScreen = "/MissionToVolunteersInviteScreen";
+  static const String missionEventReportScreen = "/MissionEventReportScreen";
+  static const String organizerEventCreateScreen = "/OrganizerEventCreateScreen";
+  static const String adminstratorOrganizationDetailsScreen = "/AdminstratorOrganizationDetailsScreen";
+  static const String joinOrganizationScreen = "/joinOrganizationScreen";
 
   static List<GetPage> routes = [
 
@@ -168,7 +183,6 @@ class AppRoutes {
     GetPage(name: joinEventScreen, page: () => JoinEventScreen()),
     GetPage(name: eventCompleteScreen, page: () => EventCompleteScreen()),
     GetPage(name: termsConditionScreen, page: () => TermsConditionScreen()),
-    GetPage(name: organizerApprovedScreen, page: () => OrganizerEventCreateScreen()),
     GetPage(name: organizeMapScreen, page: () => OrganizeMapScreen()),
     GetPage(name: addMemberScreen, page: () => InviteMemberScreen()),
 
@@ -184,8 +198,16 @@ class AppRoutes {
     GetPage(name: volunteerChartScreen, page: () => VolunteerChartScreen()),
 
     GetPage(name: volunteerEventReportScreen, page: () => VolunteerEventReportScreen()),
+    GetPage(name: organizeDetailsScreen, page: () => OrganizeDetailsScreen()),
+    GetPage(name: organizerInactiveMissionDetails, page: () => OrganizerInactiveMissionDetails()),
+    GetPage(name: organizerActiveMissionDetails, page: () => OrganizerActiveMissionDetails()),
 
-
-
+    GetPage(name: missionToVolunteersInviteScreen, page: () => MissionToVolunteersInviteScreen()),
+    GetPage(name: missionEventReportScreen, page: () => MissionEventReportScreen()),
+    GetPage(name: organizerEventCreateScreen, page: () => OrganizerEventCreateScreen()),
+    GetPage(name: organizerMissionDetailsScreen, page: () => OrganizerMissionDetailsScreen()),
+    GetPage(name: adminstratorOrganizationDetailsScreen, page: () => AdminstratorOrganizationDetailsScreen()),
+    GetPage(name: joinOrganizationScreen, page: () => JoinOrganizationScreen()),
   ];
+
 }

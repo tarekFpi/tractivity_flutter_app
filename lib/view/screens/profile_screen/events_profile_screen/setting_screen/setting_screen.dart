@@ -42,14 +42,22 @@ class SettingScreen extends StatelessWidget {
                       ///======= Profile Person====
                       CustomSettingRow(
                           onTap: (){
-                            Get.toNamed(AppRoutes.userEventProfile);
+                            Get.toNamed(AppRoutes.editPersonProfileScreen);
                           },
                           text: AppStrings.profileSetting,
                           isTablet: isTablet,
                           icon: Icons.person),
 
-                      ///======= about ====
+                      ///======= Join Organization ====
+                      CustomSettingRow(
+                          onTap: (){
+                            Get.toNamed(AppRoutes.joinOrganizationScreen);
+                          },
+                          text: "Join organization",
+                          isTablet: isTablet,
+                          icon: Icons.join_inner_outlined),
 
+                      ///======= about ====
                       CustomSettingRow(
                           onTap: (){
                             Get.toNamed(AppRoutes.aboutUsScreen);

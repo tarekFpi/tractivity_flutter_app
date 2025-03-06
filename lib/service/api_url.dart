@@ -32,12 +32,19 @@ class ApiUrl {
 
   ///=========================== adminstrator api  ===========================
 
+  ///=========================== organization create api  ===========================
   static String createOranizer = "/organization/create";
 
+  ///=========================== organization/update api  ===========================
   static String editOranizer ({required String oranizerId}) => "/organization/update/$oranizerId";
 
+  ///=========================== mission/create api ===========================
   static String createMission = "/mission/create";
 
+  ///=========================== mission/edit api ===========================
+  static String editMission ({required String editId}) => "/mission/update/$editId";
+
+  ///=========================== organization retrive by creator id api  ===========================
   static String fetchOrganization ({required String userId}) =>"/organization/retrive/creator/$userId";
 
   ///=================== search  Organization ==============
@@ -54,8 +61,12 @@ class ApiUrl {
 
 
   ///=================== deleteOrganization  ==============
-
   static String deleteMission ({required String mission_Id}) =>"/mission/delete/$mission_Id";
+
+
+
+  ///=================== Remove specific organizer from a mission  ==============
+  static String removeSpecificOrganizer ({required String missionId}) =>"/mission/remove/organizer/$missionId";
 
 
   ///=================== show Mission List ==============
@@ -63,26 +74,62 @@ class ApiUrl {
 
 
   ///=================== mission id By Event  List ========================================
-  static String missionIDByEventList ({required String missionId}) =>"/organizer/event/retrive/mission/$missionId";
+  static String missionIdByMissionDetails ({required String missionId}) =>"/mission/retrive/$missionId";
+
+
+  ///=================== Retrieve all mission by specific organization ==================================
+  static String organizationByMissionList({required String organizationId}) =>"/mission/retrive/organization/$organizationId";
+
+  ///=================== Retrive all events by missionId========================================
+  static String retriveAllEventByMissionId ({required String missionId}) =>"/organizer/event/retrive/mission/$missionId";
 
 
 ///===================== retrive Specific event by Id event show =====================
-
   static String retriveBySpecificEventList ({required String eventId}) =>"/organizer/event/retrive/$eventId";
 
   ///===================== retrive user profile show by user Id  =====================
   static String retriveUserProfile ({required String userId}) =>"/user/retrive/$userId";
 
 
-///=========================== organizer api all  ===========================
+  ///===================== Retrive invited missions by organizer =====================
+  static String retriveInvitedMissionOrganizer({required String userId}) =>"/organizer/invited-missions/$userId";
+
+  ///Accept mission invitation for organizer
+   static String acceptmissionInvitation({required String invit_Id}) =>"/organizer/accept-invitation/$invit_Id";
+
+ ///rejectMissionsInvitationLoading
+  static String rejectMissionInvitation({required String invit_Id}) =>"/organizer/reject-invitation/$invit_Id";
 
 
-  ///===================== retrive Complelete by user Id  =====================
+  ///Retrieve all Active missions by organizer
+  static String retrieveMissionActivie({required String userId}) =>"/organizer/all-missions/$userId?status=active";
 
-  static String retriveCompleleteProfile ({required String userId}) =>"/organizer/event/retrive/organizer/$userId?status=deliveried";
-
+  ///Retrieve all InActive missions by organizer
+  static String retrieveMissionInActivie({required String userId}) =>"/organizer/all-missions/$userId?status=inactive";
 
   ///===================== retrive running by user Id  =================================
   static String retriveRunningProfile ({required String userId}) =>"/organizer/event/retrive/organizer/$userId?status=running";
+
+
+  ///Get all organizations except me as a volunteer
+   static String retriveOrganizationVolunteer ({required String userId}) =>"/volunteer/retrieve/organizations/without/$userId";
+
+  ///Join organization as volunteer
+  static String joinOrganizationVolunteer ="/volunteer/join-organization";
+
+
+  /// Retrieve volunteers for sending invitation by mission Id
+  static String retrieveVolunteerToMissionInvite ({required String missionId}) =>"/organizer/retrieve-volunteers/$missionId";
+
+
+  /// Invite volunteers to a specific mission by mission Id
+  static String inviteVolunteerToMissionByMission ({required String missionId}) =>"/organizer/invite-volunteers/$missionId";
+
+  ///Create new event
+  static String createEvent ="/organizer/event/create";
+
+
+  /// inviteVolunteer event to event
+  static String inviteVolunteer({required String missionId}) =>"/organizer/event/volunteer/mission/$missionId";
 
 }

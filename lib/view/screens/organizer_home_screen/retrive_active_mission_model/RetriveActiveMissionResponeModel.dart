@@ -1,14 +1,14 @@
 // To parse this JSON data, do
 //
-//     final retriveSpecificMissionByMissionResponeModel = retriveSpecificMissionByMissionResponeModelFromJson(jsonString);
+//     final retriveActiveMissionResponeModel = retriveActiveMissionResponeModelFromJson(jsonString);
 
 import 'dart:convert';
 
-RetriveSpecificMissionByMissionResponeModel retriveSpecificMissionByMissionResponeModelFromJson(String str) => RetriveSpecificMissionByMissionResponeModel.fromJson(json.decode(str));
+RetriveActiveMissionResponeModel retriveActiveMissionResponeModelFromJson(String str) => RetriveActiveMissionResponeModel.fromJson(json.decode(str));
 
-String retriveSpecificMissionByMissionResponeModelToJson(RetriveSpecificMissionByMissionResponeModel data) => json.encode(data.toJson());
+String retriveActiveMissionResponeModelToJson(RetriveActiveMissionResponeModel data) => json.encode(data.toJson());
 
-class RetriveSpecificMissionByMissionResponeModel {
+class RetriveActiveMissionResponeModel {
   Creator? creator;
   Report? report;
   String? id;
@@ -25,7 +25,7 @@ class RetriveSpecificMissionByMissionResponeModel {
   DateTime? updatedAt;
   int? v;
 
-  RetriveSpecificMissionByMissionResponeModel({
+  RetriveActiveMissionResponeModel({
     this.creator,
     this.report,
     this.id,
@@ -43,7 +43,7 @@ class RetriveSpecificMissionByMissionResponeModel {
     this.v,
   });
 
-  factory RetriveSpecificMissionByMissionResponeModel.fromJson(Map<String, dynamic> json) => RetriveSpecificMissionByMissionResponeModel(
+  factory RetriveActiveMissionResponeModel.fromJson(Map<String, dynamic> json) => RetriveActiveMissionResponeModel(
     creator: json["creator"] == null ? null : Creator.fromJson(json["creator"]),
     report: json["report"] == null ? null : Report.fromJson(json["report"]),
     id: json["_id"],
@@ -81,50 +81,54 @@ class RetriveSpecificMissionByMissionResponeModel {
 }
 
 class ConnectedOrganization {
-  Creator? creator;
-  Report? report;
   String? id;
   String? name;
   String? description;
-  List<dynamic>? connectedVolunteers;
-  DateTime? createdAt;
-  DateTime? updatedAt;
-  int? v;
 
   ConnectedOrganization({
-    this.creator,
-    this.report,
     this.id,
     this.name,
     this.description,
-    this.connectedVolunteers,
-    this.createdAt,
-    this.updatedAt,
-    this.v,
   });
 
   factory ConnectedOrganization.fromJson(Map<String, dynamic> json) => ConnectedOrganization(
-    creator: json["creator"] == null ? null : Creator.fromJson(json["creator"]),
-    report: json["report"] == null ? null : Report.fromJson(json["report"]),
     id: json["_id"],
     name: json["name"],
     description: json["description"],
-    connectedVolunteers: json["connectedVolunteers"] == null ? [] : List<dynamic>.from(json["connectedVolunteers"]!.map((x) => x)),
-    createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
-    updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
-    v: json["__v"],
   );
 
   Map<String, dynamic> toJson() => {
-    "creator": creator?.toJson(),
-    "report": report?.toJson(),
     "_id": id,
     "name": name,
     "description": description,
-    "connectedVolunteers": connectedVolunteers == null ? [] : List<dynamic>.from(connectedVolunteers!.map((x) => x)),
-    "createdAt": createdAt?.toIso8601String(),
-    "updatedAt": updatedAt?.toIso8601String(),
-    "__v": v,
+  };
+}
+
+class TedOrganizer {
+  String? id;
+  String? fullName;
+  String? profession;
+  String? image;
+
+  TedOrganizer({
+    this.id,
+    this.fullName,
+    this.profession,
+    this.image,
+  });
+
+  factory TedOrganizer.fromJson(Map<String, dynamic> json) => TedOrganizer(
+    id: json["_id"],
+    fullName: json["fullName"],
+    profession: json["profession"],
+    image: json["image"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "_id": id,
+    "fullName": fullName,
+    "profession": profession,
+    "image": image,
   };
 }
 
@@ -173,33 +177,5 @@ class Report {
   Map<String, dynamic> toJson() => {
     "hours": hours,
     "mileage": mileage,
-  };
-}
-
-class TedOrganizer {
-  String? id;
-  String? fullName;
-  String? profession;
-  String? image;
-
-  TedOrganizer({
-    this.id,
-    this.fullName,
-    this.profession,
-    this.image,
-  });
-
-  factory TedOrganizer.fromJson(Map<String, dynamic> json) => TedOrganizer(
-    id: json["_id"],
-    fullName: json["fullName"],
-    profession: json["profession"],
-    image: json["image"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "_id": id,
-    "fullName": fullName,
-    "profession": profession,
-    "image": image,
   };
 }

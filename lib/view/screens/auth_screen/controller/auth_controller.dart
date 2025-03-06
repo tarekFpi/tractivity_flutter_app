@@ -376,6 +376,8 @@ class AuthController extends GetxController {
 
       Get.toNamed(AppRoutes.homeScreen);
 
+      Toast.successToast(response.body['message']!);
+
     } else {
 
       loginLoading.value = false;

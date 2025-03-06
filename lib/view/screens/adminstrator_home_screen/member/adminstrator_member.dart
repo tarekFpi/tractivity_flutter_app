@@ -12,7 +12,8 @@ import 'package:tractivity_app/view/components/custom_netwrok_image/custom_netwo
 import 'package:tractivity_app/view/components/custom_royel_appbar/custom_royel_appbar.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/controller/administratior_controller.dart';
-import 'package:tractivity_app/view/screens/adminstrator_home_screen/specific_event_model/SpecificIdEventsResponeModel.dart';
+import 'package:tractivity_app/view/screens/adminstrator_home_screen/specific_mission_event_model/SpecificIdEventsResponeModel.dart';
+
 
 class AdminstratorMember extends StatefulWidget {
   const AdminstratorMember({super.key});
@@ -135,7 +136,7 @@ class _AdminstratorMemberState extends State<AdminstratorMember> {
 
                                       workingTimeController.text =invitedVolunteer[index].totalWorkedHour.toString();
 
-                                      workingRoleController.text =invitedVolunteer[index].workTitle.toString();
+                                      workingRoleController.text =invitedVolunteer[index].mileage.toString();
 
                                       showDialog(
                                         context: context,
@@ -165,28 +166,19 @@ class _AdminstratorMemberState extends State<AdminstratorMember> {
                                                 ///============ Working Time ============
                                                 CustomFormCard(
                                                     fontSize: isTablet?16:16,
-                                                    title: "Working Time",
+                                                    title: "Hours",
                                                     hintText:"04:30 Hours",
                                                     readOnly: true,
                                                     hasBackgroundColor: true,
                                                     controller: workingTimeController),
 
 
-                                                ///============ Working Distance ============
-                                                CustomFormCard(
-                                                    fontSize: isTablet?16:16,
-                                                    title: "Working Distance",
-                                                    hintText:"12 Km",
-                                                    readOnly: true,
-                                                    hasBackgroundColor: true,
-                                                    controller: TextEditingController()),
-
 
                                                 ///============ Working Role ============
                                                 CustomFormCard(
                                                     fontSize: isTablet?16:16,
-                                                    title: "Working Role",
-                                                    hintText:"Food Delivery",
+                                                    title: "Millage",
+                                                    hintText:"Millage",
                                                     hasBackgroundColor: true,
                                                     readOnly: true,
                                                     controller: workingRoleController),

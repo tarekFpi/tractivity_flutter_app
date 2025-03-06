@@ -64,8 +64,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        /// Title
 
+                        /// Title
                         Container(
                           height: 1.h,
                           width: MediaQuery.sizeOf(context).width,

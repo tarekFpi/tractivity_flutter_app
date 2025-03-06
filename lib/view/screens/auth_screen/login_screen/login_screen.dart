@@ -1,5 +1,4 @@
 
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -59,7 +58,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Title
+
+                      ///title
                    /*   Center(
                         child: CustomText(
                           text: AppStrings.serveOut,
@@ -77,14 +77,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontWeight: FontWeight.w600,
                         bottom: 30.h,
                       ),
+
                       Container(
                         height: 1.h,
                         width: double.infinity,
                         color: AppColors.grey_2,
                       ),
+
                       const SizedBox(height: 20),
 
-                      /// Email Field
+                      /// email Field
                       CustomFormCard(
                         title: AppStrings.email,
                         hintText: AppStrings.enterYourEmail,
@@ -93,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         controller: authController.loginEmailController.value,
                       ),
 
-                      /// Password Field
+                      /// password Field
                       CustomFormCard(
                         titleColor: Colors.black,
                         title: AppStrings.password,
@@ -107,7 +109,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          // Remember Me Checkbox
+
+                         ///remember Me Checkbox
                           Row(
                             children: [
 
@@ -130,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ],
                           ),
 
-                          /// Forgot Password
+                          ///forgot Password
                           GestureDetector(
                             onTap: () {
                               Get.toNamed(AppRoutes.verificationMailScreen);
@@ -147,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       SizedBox(height: isTablet ? 30.h : 20.h),
 
-                      /// Login Button
+                      ///login Button
                       authController.loginLoading.value?CustomLoader():
                       CustomButton(
                         height: isTablet?70:60,
@@ -160,11 +163,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       SizedBox(height: isTablet ? 40.h : 30.h),
 
-                      /// Divider with Text
+                      ///divider with Text
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+
                           Expanded(
                             child: Container(
                               height: 1.h,
@@ -192,7 +196,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       SizedBox(height: isTablet ? 40.h : 30.h),
 
-                      /// Social Login Icons
+                      /// social Login Icons
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -204,7 +208,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       const SizedBox(height: 20),
 
-                      /// Sign-Up Prompt
+                      /// sign-Up Prompt
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
