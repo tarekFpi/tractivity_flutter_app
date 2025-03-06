@@ -11,6 +11,7 @@ import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_icons/app_icons.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
+import 'package:tractivity_app/utils/toast.dart';
 import 'package:tractivity_app/view/components/custom_button/custom_button.dart';
 import 'package:tractivity_app/view/components/custom_from_card/custom_from_card.dart';
 import 'package:tractivity_app/view/components/custom_image/custom_image.dart';
@@ -18,8 +19,11 @@ import 'package:tractivity_app/view/components/custom_netwrok_image/custom_netwo
 import 'package:tractivity_app/view/components/custom_royel_appbar/custom_royel_appbar.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:tractivity_app/view/components/custom_text_field/custom_text_field.dart';
+import 'package:tractivity_app/view/screens/adminstrator_home_screen/alert_dialog_event.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/controller/administratior_controller.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/specific_missionby_mission_model/RetriveSpecificMissionByMissionResponeModel.dart';
+import 'package:tractivity_app/view/screens/organizer_home_screen/invite_volunteers_model/InviteVolunteerResponeModel.dart';
+import 'package:tractivity_app/view/screens/organizer_home_screen/invite_volunteers_model/volunteer_slotList_model/volunteers_listmodel.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_controller/invite_volunteers_controller.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_controller/mission_to_volunteer_controller.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_controller/organizer_controller.dart';
@@ -60,8 +64,7 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
 
     organizerController.pickedFiles.clear();
     organizerController.selectedImages.clear();
-
-
+    organizerController.getUserCurrentLocation();
   }
 
 
@@ -173,9 +176,9 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                                 CustomImage(imageSrc: AppIcons.dowanload,width: 45,height: 45,),
 
                                 SizedBox(
-                                  height: 4,
+                                  height: 4.h,
                                 ),
-                                CustomText(
+                                const CustomText(
                                   text: "Upload PDF",
                                   fontSize: 12,
                                   color: AppColors.black_80,
@@ -248,97 +251,98 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                         hasBackgroundColor: true,
                         controller: organizerController.zipController.value),
 
-                    Row(
-                      ///mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        ///mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
 
 
-                        GestureDetector(
-                          onTap: (){
-                            organizerController.selectOpenTime();
-                          },
-                          child: Card(
-                            color: Colors.white,
-                            child: Padding(
-                              padding: const EdgeInsets.all(6.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
+                          GestureDetector(
+                            onTap: (){
+                              organizerController.selectOpenTime();
+                            },
+                            child: Card(
+                              color: Colors.white,
+                              child: Padding(
+                                padding: const EdgeInsets.all(6.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
 
-                                  const Icon(
-                                    Icons.lock_clock,
-                                    size: 24,
-                                  ),
+                                    const Icon(
+                                      Icons.lock_clock,
+                                      size: 24,
+                                    ),
 
-                                  SizedBox(
-                                    width: 4.w,
-                                  ),
-                                  CustomText(
-                                    text: "${organizerController.timeOpenPicker.value}",
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                                    SizedBox(
+                                      width: 4.w,
+                                    ),
+                                    CustomText(
+                                      text: "${organizerController.timeOpenPicker.value}",
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                    ),
 
-                                  const Icon(
-                                    Icons.keyboard_arrow_down,
-                                    size: 24,
-                                  ),
-                                ],
+                                    const Icon(
+                                      Icons.keyboard_arrow_down,
+                                      size: 24,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
 
-                          SizedBox(
-                          width: 4.w,
-                        ),
+                            SizedBox(
+                            width: 4.w,
+                          ),
 
-                        GestureDetector(
-                          onTap: (){
-                           organizerController.selectCloseTime();
-                          },
-                          child: Card(
-                            color: Colors.white,
-                            child: Padding(
-                              padding: const EdgeInsets.all(6.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
+                          GestureDetector(
+                            onTap: (){
+                             organizerController.selectCloseTime();
+                            },
+                            child: Card(
+                              color: Colors.white,
+                              child: Padding(
+                                padding: const EdgeInsets.all(6.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
 
-                                  const Icon(
-                                    Icons.lock_clock,
-                                    size: 24,
-                                  ),
+                                    const Icon(
+                                      Icons.lock_clock,
+                                      size: 24,
+                                    ),
 
-                                  SizedBox(
-                                    width: 4.w,
-                                  ),
-                                  CustomText(
-                                    text: "${organizerController.timeClosePicker.value}",
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                                    SizedBox(
+                                      width: 4.w,
+                                    ),
+                                    CustomText(
+                                      text: "${organizerController.timeClosePicker.value}",
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                    ),
 
-                                  const Icon(
-                                    Icons.keyboard_arrow_down,
-                                    size: 24,
-                                  ),
-                                ],
+                                    const Icon(
+                                      Icons.keyboard_arrow_down,
+                                      size: 24,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
 
 
-                        const SizedBox(
-                          width: 8,
-                        ),
+                          const SizedBox(
+                            width: 8,
+                          ),
 
-                        GestureDetector(
-                          onTap: (){
-                           organizerController.selectDate();
-                          },
-                          child: Expanded(
+                          GestureDetector(
+                            onTap: (){
+                             organizerController.selectDate();
+                            },
                             child: Row(
                               children: [
 
@@ -356,9 +360,9 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                                 ),
                               ],
                             ),
-                          ),
-                        )
-                      ],
+                          )
+                        ],
+                      ),
                     ),
 
                     SizedBox(
@@ -367,6 +371,7 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
 
                     Row(
                       children: [
+
                         CustomButton(onTap: (){
                           organizerController.toggleButton(1);
                           organizerController.eventAccessmode.value="private";
@@ -398,7 +403,7 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                          : organizerController.unselectedColor.value,
                      isBorder: true,
                      borderWidth: .5,
-                 )
+                     )
 
                       ],
                     ),
@@ -413,20 +418,19 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
 
                       invitedController.inviteVolunteers(administratorController.missionDetailsShowList.value.id.toString());
 
-                      // adding some properties
+                      ///adding some properties
                       showModalBottomSheet(
                         context: context,
-
-                        //background color for modal bottom screen
+                        ///background color for modal bottom screen
                         backgroundColor: Colors.white,
-                        //elevates modal bottom screen
+                        ///elevates modal bottom screen
                         elevation: 10,
-                        // gives rounded corner to modal bottom screen
+                        /// gives rounded corner to modal bottom screen
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         builder: (BuildContext context) {
-                          // UDE : SizedBox instead of Container for whitespaces
+                          ///UDE : SizedBox instead of Container for whitespaces
                           return SizedBox(
                             height: MediaQuery.sizeOf(context).height/1,
                             child: Padding(
@@ -449,7 +453,12 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
 
                                          InkWell(
                                              onTap: (){
+
                                                Navigator.pop(context);
+
+                                               organizerController.volunteersSelectedList.clear();
+
+                                               organizerController.selectedVolunteers.value=false;
                                              },
                                              child: Icon(Icons.clear,size: 32,))
                                        ],
@@ -491,9 +500,6 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                                      ),
 
 
-                                     const SizedBox(
-                                       height: 12,
-                                     ),
                                      SizedBox(
                                        height: 12.h,
                                      ),
@@ -516,12 +522,12 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
 
                                        }else{
                                          return ListView.builder(
-                                             itemCount:state?.length,
+                                             itemCount:state.length,
                                              shrinkWrap: true,
                                              physics: NeverScrollableScrollPhysics(),
                                              itemBuilder: (BuildContext context, int index) {
 
-                                               final model =state?[index];
+                                               final model = state[index];
 
                                                return Card(
                                                  elevation: 0.5,
@@ -536,7 +542,7 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                                                          child: Row(
                                                            children: [
 
-                                                             model?.image==""? CustomNetworkImage(
+                                                             model.image==""? CustomNetworkImage(
                                                                imageUrl: AppConstants.profileImage,
                                                                height:isTablet?64.h: 60.h,
                                                                width:isTablet?64.w: 60.w,
@@ -556,7 +562,7 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                                children: [
                                                                  CustomText(
-                                                                   text: "${model?.fullName}",
+                                                                   text: "${model.fullName}",
                                                                    fontSize: 16,
                                                                    fontWeight: FontWeight.w600,
                                                                    color: AppColors.black,
@@ -585,19 +591,31 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                                                            width: 1.4,
                                                          ),
                                                          ///value: administratorController.selectedOranization.value,
-                                                         value: organizerController.volunteersIdList.contains(model?.id),
+                                                         value: organizerController.volunteersIdList.contains(model.id),
                                                          onChanged: (bool? value) {
 
                                                            organizerController.selectedVolunteers.value = value!;
 
+
                                                            if(organizerController.selectedVolunteers.value){
 
-                                                             organizerController.volunteersIdList.add(model!.id.toString());
+                                                             organizerController.volunteersIdList.add(model.id.toString());
 
-                                                           //  organizerController.volunteersSelectedList.add();
-
+                                                             InviteVolunteerResponeModel addItem = InviteVolunteerResponeModel(
+                                                               id: model.id.toString(),
+                                                               fullName: model.fullName.toString(),
+                                                               image: model.image.toString(),
+                                                               profession:model.profession
+                                                             );
+                                                             
+                                                              if(!organizerController.volunteersSelectedList.contains(model.id.toString())){
+                                                                
+                                                                organizerController.volunteersSelectedList.add(addItem);
+                                                                
+                                                              }
+                                                            
                                                            }else{
-                                                             organizerController.volunteersIdList.remove(model?.id.toString());
+                                                             organizerController.volunteersIdList.remove(model.id.toString());
                                                            }
 
                                                          },
@@ -608,8 +626,7 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                                                  ),
                                                );
                                              });
-                                       }
-
+                                         }
                                      }),
                                    ],
                                  ),
@@ -618,8 +635,18 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                                      alignment: Alignment.bottomCenter,
                                     child: CustomButton(onTap: (){
 
+                                      if(organizerController.volunteersSelectedList.isEmpty){
 
-                                    }, title: "Selected",fontSize: 12,),
+                                        Toast.errorToast("Please Select Volunteer..!!");
+
+                                      }else{
+
+                                        Navigator.pop(context);
+                                        organizerController.setSelectedVolunteersToggle();
+
+                                      }
+
+                                    }, title: "Done",fontSize: 12,),
                                   ),
                                 ],
                               ),
@@ -637,19 +664,351 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                     ),
 
                     CustomButton(onTap: (){
-                      Get.toNamed(AppRoutes.memberScreen);
+
+                     // Get.toNamed(AppRoutes.memberScreen);
+
+                      // adding some properties
+                      showModalBottomSheet(
+                        context: context,
+
+                        //background color for modal bottom screen
+                        backgroundColor: Colors.white,
+                        //elevates modal bottom screen
+                        elevation: 10,
+                        // gives rounded corner to modal bottom screen
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        builder: (BuildContext context) {
+                          // UDE : SizedBox instead of Container for whitespaces
+                          return SizedBox(
+                            height: MediaQuery.sizeOf(context).height/1,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+
+                                  Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+
+                                          const Text(
+                                            'Sell all Volunteers',
+                                            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                                          ),
+
+                                          InkWell(
+                                              onTap: (){
+
+                                                Navigator.pop(context);
+                                                organizerController.volunteersRoleList.clear();
+                                              },
+                                              child: Icon(Icons.clear,size: 32,))
+                                        ],
+                                      ),
+
+                                      SizedBox(
+                                        height: 8.h,
+                                      ),
+                                      organizerController.volunteersSelectedList.isEmpty?
+                                      SizedBox(
+                                        height: MediaQuery.of(context).size.height/2,
+                                        child: Center(
+                                          child: CustomText(
+                                            text: "No volunteers yet!!",
+                                            fontSize:isTablet?12.sp: 24.sp,
+                                            fontWeight: FontWeight.w700,
+                                            color: AppColors.lightRed,
+                                          ),
+                                        ),
+                                      ):
+                                      Column(
+                                          children: List.generate(organizerController.volunteersSelectedList.length, (index) {
+
+                                            final model = organizerController.volunteersSelectedList[index];
+
+                                            return Card(
+                                              color: AppColors.white,
+                                              child: Padding(
+                                                padding: EdgeInsets.only(bottom: 16.h,left: 6,right: 6,top: 8),
+                                                child: Column(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        model.image==""? CustomNetworkImage(
+                                                          imageUrl: AppConstants.profileImage,
+                                                          height:isTablet?64.h: 60.h,
+                                                          width:isTablet?64.w: 60.w,
+                                                          boxShape: BoxShape.circle,
+                                                        ):CustomNetworkImage(
+                                                          imageUrl: "${ApiUrl.imageUrl}${model.image}",
+                                                          height:isTablet?64.h: 60.h,
+                                                          width:isTablet?64.w: 60.w,
+                                                          boxShape: BoxShape.circle,
+                                                        ),
+                                                        SizedBox(
+                                                          width: 10.w,
+                                                        ),
+                                                        Column(
+                                                          mainAxisAlignment: MainAxisAlignment.start,
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: [
+                                                            CustomText(
+                                                              text: "${model.fullName}",
+                                                              fontSize:isTablet?8.sp: 18,
+                                                              fontWeight: FontWeight.w600,
+                                                              color: AppColors.black,
+                                                            ),
+                                                            CustomText(
+                                                              text: "${model.profession}",
+                                                              fontSize: 12,
+                                                              fontWeight: FontWeight.w400,
+                                                              color: AppColors.black_80,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+
+                                                    SizedBox(
+                                                      height: 12.h,
+                                                    ),
+                                                    Obx(
+                                                       () {
+                                                        return Row(
+                                                          mainAxisAlignment: MainAxisAlignment.start,
+                                                          children: [
+
+                                                            if((organizerController.volunteersRoleList
+                                                                .any((volunteer) => volunteer.volunteer == model.id.toString()))!=true)
+                                                            CustomButton(onTap: (){
+                                                              showDialog(
+                                                                context: context,
+                                                                builder: (ctx) => AlertDialog(
+                                                                  backgroundColor: Colors.white,
+                                                                  insetPadding: EdgeInsets.all(16),
+                                                                  contentPadding: EdgeInsets.all(16),
+                                                                  ///clipBehavior: Clip.antiAliasWithSaveLayer,
+                                                                  title: Row(
+                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                    children: [
+
+                                                                      const CustomText(
+                                                                        text: "Add Role",
+                                                                        fontSize: 24,
+                                                                        color: AppColors.black,
+                                                                        fontWeight: FontWeight.w500,
+                                                                        bottom: 8,
+                                                                      ),
+
+                                                                      Align(
+                                                                        alignment: Alignment.centerRight,
+                                                                        child: InkWell(
+                                                                            onTap: () {
+
+                                                                              Navigator.of(context).pop();
+                                                                            //  organizerController.volunteersRoleList.clear();
+                                                                            },
+                                                                            child: const Icon(
+                                                                              Icons.close,
+                                                                              size: 32,
+                                                                              color: Colors.black,
+                                                                            )),
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                  content: SizedBox(
+                                                                    width: MediaQuery.sizeOf(context).width,
+                                                                    height:MediaQuery.sizeOf(context).height/3.3,
+                                                                    child:Column(
+                                                                      children: [
+
+                                                                        ///============ Add role ============
+                                                                        CustomFormCard(
+                                                                            title: "Add role",
+                                                                            hintText:"Add role",
+                                                                            fontSize: isTablet ? 16 : 14,
+                                                                            hasBackgroundColor: true,
+                                                                            controller: organizerController.volunteersRoleController.value),
+
+
+
+                                                                        Padding(
+                                                                          padding: const EdgeInsets.all(8.0),
+                                                                          child: CustomButton(onTap: (){
+
+                                                                            VolunteersListModel addRole = VolunteersListModel(
+                                                                                 volunteer: model.id.toString(),
+                                                                                 workTitle: organizerController.volunteersRoleController.value.text
+                                                                            );
+
+                                                                            bool isMatch = organizerController.volunteersRoleList
+                                                                                .any((volunteer) => volunteer.volunteer == model.id.toString());
+
+                                                                             if(!isMatch){
+                                                                             organizerController.volunteersRoleList.add(addRole);
+                                                                               debugPrint("volunteersRoleList1:${jsonEncode(organizerController.volunteersRoleList)}");
+
+                                                                               Navigator.of(context).pop();
+                                                                               organizerController.volunteersRoleController.value.clear();
+
+                                                                             }else{
+                                                                               Navigator.of(context).pop();
+
+                                                                             }
+
+                                                                          }, title: "Done",fontSize:isTablet?6.sp: 12.sp,),
+                                                                        ),
+
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            }, title: "add role",fontSize: 12, height: isTablet?40.h:30.h,width: isTablet?80.w
+                                                                :70.w,),
+
+
+                                                            SizedBox(
+                                                              width: 12.w,
+                                                            ),
+
+                                                            if(organizerController.volunteersRoleList
+                                                                .any((volunteer) => volunteer.volunteer == model.id.toString()))
+                                                            CustomButton(onTap: (){
+
+                                                                  organizerController.volunteersRoleList.forEach((item){
+
+                                                                    if(item.volunteer.contains(model.id.toString())){
+                                                                      organizerController.volunteersEditRoleController.value.text =item.workTitle.toString();
+                                                                    }
+                                                                  });
+
+
+                                                              showDialog(
+                                                                context: context,
+                                                                builder: (ctx) => AlertDialog(
+                                                                  backgroundColor: Colors.white,
+                                                                  insetPadding: EdgeInsets.all(16),
+                                                                  contentPadding: EdgeInsets.all(16),
+                                                                  ///clipBehavior: Clip.antiAliasWithSaveLayer,
+                                                                  title:Row(
+                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                    children: [
+
+                                                                      const CustomText(
+                                                                        text: "Edit Role",
+                                                                        fontSize: 24,
+                                                                        color: AppColors.black,
+                                                                        fontWeight: FontWeight.w500,
+                                                                        bottom: 8,
+                                                                      ),
+
+                                                                      Align(
+                                                                        alignment: Alignment.centerRight,
+                                                                        child: InkWell(
+                                                                            onTap: () {
+                                                                              Navigator.of(context).pop();
+                                                                             //
+                                                                            },
+                                                                            child: const Icon(
+                                                                              Icons.close,
+                                                                              size: 32,
+                                                                              color: Colors.black,
+                                                                            )),
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                  content: SizedBox(
+                                                                    width: MediaQuery.sizeOf(context).width,
+                                                                    height:MediaQuery.sizeOf(context).height/4,
+                                                                    child:Column(
+                                                                      children: [
+
+                                                                        ///============ edit role ============
+                                                                        CustomFormCard(
+                                                                            title: "Edit role",
+                                                                            hintText:"edit role",
+                                                                            fontSize: isTablet ? 16 : 14,
+                                                                            hasBackgroundColor: true,
+                                                                            controller: organizerController.volunteersEditRoleController.value),
+
+                                                                        CustomButton(onTap: (){
+
+
+                                                                          organizerController.volunteersRoleList.remove(model.id.toString());
+
+                                                                          VolunteersListModel editRole = VolunteersListModel(
+                                                                              volunteer: model.id.toString(),
+                                                                              workTitle: organizerController.volunteersEditRoleController.value.text
+                                                                          );
+
+
+                                                                          organizerController.volunteersRoleList.add(editRole);
+
+                                                                          debugPrint("volunteersEditRole:${jsonEncode(organizerController.volunteersRoleList)}");
+
+                                                                          organizerController.volunteersEditRoleController.value.clear();
+                                                                          Navigator.of(context).pop();
+
+                                                                          /*if(isMatch){
+                                                                          // var index= organizerController.volunteersRoleList.indexOf(model.id.toString());
+                                                                          }*/
+
+                                                                        }, title: "Edit",fontSize: isTablet?6.sp: 12.sp,),
+
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            }, title: "Edit",fontSize: 12, height: isTablet?40.h:30.h,width: isTablet?80.w
+                                                                :70.w,),
+                                                          ],
+                                                        );
+                                                      }
+                                                    )
+
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          })
+                                      ),
+                                    ],
+                                  ),
+
+                                  Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: CustomButton(onTap: (){
+
+                                      Navigator.pop(context);
+
+                                    }, title: "Done",fontSize: 12,),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
                     }, title: "Add Role to Volunteers",height: 30.h,width:isTablet?170.w: 160.w,fontSize:isTablet? 6.sp:12.sp,
                       textColor: AppColors.black,
-
                     ),
 
 
-                    SizedBox(
+                    const SizedBox(
                       height: 16,
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CustomButton(onTap: (){
+
+                        organizerController.createEvent(administratorController.missionDetailsShowList.value.id.toString());
                       }, title: "Submit",fontSize: 12, height: isTablet?70:60,),
                     ),
                   ],

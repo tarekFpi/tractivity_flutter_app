@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -17,6 +18,8 @@ import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
 import 'package:tractivity_app/utils/toast.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
+import 'package:tractivity_app/view/screens/organizer_home_screen/invite_volunteers_model/InviteVolunteerResponeModel.dart';
+import 'package:tractivity_app/view/screens/organizer_home_screen/invite_volunteers_model/volunteer_slotList_model/volunteers_listmodel.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/model_invited_mission/retriveInvitedMissionsResponse.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/retrieve_volunteer_mission_model/RetriVolunteerTomissionResponeModel.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/retrive_active_mission_model/RetriveActiveMissionResponeModel.dart';
@@ -534,6 +537,41 @@ class OrganizerController extends GetxController{
   }
 
   ///===================== Create new event =====================
+
+  Position? _currentPosition;
+
+  Future<void> getUserCurrentLocation() async {
+    try {
+
+      await Geolocator.requestPermission();
+      Position position = await Geolocator.getCurrentPosition();
+
+      _currentPosition = position;
+
+      latitudeController.value.text ="${_currentPosition?.latitude}";
+
+      longitudeController.value.text ="${_currentPosition?.longitude}";
+
+      debugPrint("_currentPosition: ${_currentPosition?.latitude},${_currentPosition?.longitude}");
+
+      List<Placemark> placemarks = await placemarkFromCoordinates(_currentPosition?.latitude??0.0, _currentPosition?.longitude??0.0);
+
+      if (placemarks.isNotEmpty) {
+
+        Placemark place = placemarks[0];
+        ///  setState(() { });
+
+     ///address.value ="${place.street}, ${place.locality}, ${place.administrativeArea}, ${place.country}";
+
+      } else {
+       // address.value = "No address found.";
+      }
+
+    } catch (e) {
+      print("Error getting location: $e");
+    }
+  }
+
   RxBool createEventLoading = false.obs;
 
   Rx<TextEditingController> eventNameController = TextEditingController().obs;
@@ -556,9 +594,15 @@ class OrganizerController extends GetxController{
 
   Rx<TextEditingController> dateController = TextEditingController().obs;
 
+  Rx<TextEditingController> volunteersRoleController = TextEditingController().obs;
+
+  Rx<TextEditingController> volunteersEditRoleController = TextEditingController().obs;
+
   RxList<String> volunteersIdList= <String>[].obs;
 
-  RxList<String> volunteersSelectedList= <String>[].obs;
+  RxList<VolunteersListModel> volunteersRoleList= <VolunteersListModel>[].obs;
+
+  RxList<InviteVolunteerResponeModel> volunteersSelectedList= <InviteVolunteerResponeModel>[].obs;
 
   RxBool selectedVolunteers = false.obs;
 
@@ -570,26 +614,30 @@ class OrganizerController extends GetxController{
 
     var body = {
       "creatorId": userId,
-      "missionId": missionEditNameController.value.text,
-      "name": missionEditNameController.value.text,
-      "description": missionEditNameController.value.text,
-      "images": selectedImages,
-      "documents": pickedFiles,
-      "state": missionEditNameController.value.text,
-      "city": missionEditNameController.value.text,
-      "zip": missionEditNameController.value.text,
-      "latitude": missionEditNameController.value.text,
-      "longitude": missionEditNameController.value.text,
-      "startTime": missionEditNameController.value.text,
-      "endTime": missionEditNameController.value.text,
-      "date": missionEditNameController.value.text,
-      "mode": missionEditNameController.value.text,
-      "invitedVolunteer": missionEditNameController.value.text,
+      "missionId": missionId,
+      "name": eventNameController.value.text,
+      "description": eventDescriptionController.value.text,
+    //  "images": selectedImages,
+     // "documents": pickedFiles,
+      "state": stateController.value.text,
+      "city": cityController.value.text,
+      "zip": zipController.value.text,
+      "latitude": latitudeController.value.text,
+      "longitude": longitudeController.value.text,
+      "startTime": timeOpenPicker.value,
+      "endTime": timeClosePicker.value,
+      "date": selectedDate.value,
+      "mode": eventAccessmode.value,
+      "invitedVolunteer": volunteersRoleList,
     };
 
-    debugPrint("editInActiveMission:${jsonEncode(body)}");
+    debugPrint("createEvent:${body}");
 
-    var response = await ApiClient.postData(ApiUrl.createEvent, jsonEncode(body));
+  ///var response = await ApiClient.postMultipartData(ApiUrl.createEvent, jsonEncode(body));
+
+
+    var response = await ApiClient.postMultipartData(ApiUrl.createEvent, body,
+        multipartBody: [MultipartBody('images', selectedImages.value as File),MultipartBody('documents', selectedImages.value as File)]);
 
     if (response.statusCode == 200) {
 
@@ -618,7 +666,10 @@ class OrganizerController extends GetxController{
     }
   }
 
+ void setSelectedVolunteersToggle(){
 
+   selectedVolunteers.value=false;
+ }
 
   ///======================================>> event open time <<================================
 
@@ -829,9 +880,7 @@ class OrganizerController extends GetxController{
         ///Construct the address from the placemark
         String address =
             '${place.street}, ${place.locality}, ${place.administrativeArea}, ${place.country}';
-
         addressRunningList.add(address);
-
 
         return address;
       } else {
@@ -853,5 +902,9 @@ class OrganizerController extends GetxController{
     retrieveMissionsActive();
 
     retrieveMissionsInActive();
+
+    volunteersSelectedList.clear();
+
+    volunteersRoleList.clear();
   }
 }
