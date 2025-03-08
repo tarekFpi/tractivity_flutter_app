@@ -15,10 +15,10 @@ class RetriveSpecificMissionByMissionResponeModel {
   String? name;
   String? description;
   List<ConnectedOrganization>? connectedOrganizations;
-  List<TedOrganizer>? requestedOrganizers;
-  List<TedOrganizer>? connectedOrganizers;
-  List<dynamic>? requestedVolunteers;
-  List<dynamic>? connectedVolunteers;
+  List<ConnectedOrganizer>? requestedOrganizers;
+  List<ConnectedOrganizer>? connectedOrganizers;
+  List<ConnectedOrganizer>? requestedVolunteers;
+  List<ConnectedOrganizer>? connectedVolunteers;
   String? mode;
   String? status;
   DateTime? createdAt;
@@ -50,10 +50,10 @@ class RetriveSpecificMissionByMissionResponeModel {
     name: json["name"],
     description: json["description"],
     connectedOrganizations: json["connectedOrganizations"] == null ? [] : List<ConnectedOrganization>.from(json["connectedOrganizations"]!.map((x) => ConnectedOrganization.fromJson(x))),
-    requestedOrganizers: json["requestedOrganizers"] == null ? [] : List<TedOrganizer>.from(json["requestedOrganizers"]!.map((x) => TedOrganizer.fromJson(x))),
-    connectedOrganizers: json["connectedOrganizers"] == null ? [] : List<TedOrganizer>.from(json["connectedOrganizers"]!.map((x) => TedOrganizer.fromJson(x))),
-    requestedVolunteers: json["requestedVolunteers"] == null ? [] : List<dynamic>.from(json["requestedVolunteers"]!.map((x) => x)),
-    connectedVolunteers: json["connectedVolunteers"] == null ? [] : List<dynamic>.from(json["connectedVolunteers"]!.map((x) => x)),
+    requestedOrganizers: json["requestedOrganizers"] == null ? [] : List<ConnectedOrganizer>.from(json["requestedOrganizers"]!.map((x) => ConnectedOrganizer.fromJson(x))),
+    connectedOrganizers: json["connectedOrganizers"] == null ? [] : List<ConnectedOrganizer>.from(json["connectedOrganizers"]!.map((x) => ConnectedOrganizer.fromJson(x))),
+    requestedVolunteers: json["requestedVolunteers"] == null ? [] : List<ConnectedOrganizer>.from(json["requestedVolunteers"]!.map((x) => ConnectedOrganizer.fromJson(x))),
+    connectedVolunteers: json["connectedVolunteers"] == null ? [] : List<ConnectedOrganizer>.from(json["connectedVolunteers"]!.map((x) => ConnectedOrganizer.fromJson(x))),
     mode: json["mode"],
     status: json["status"],
     createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
@@ -70,8 +70,8 @@ class RetriveSpecificMissionByMissionResponeModel {
     "connectedOrganizations": connectedOrganizations == null ? [] : List<dynamic>.from(connectedOrganizations!.map((x) => x.toJson())),
     "requestedOrganizers": requestedOrganizers == null ? [] : List<dynamic>.from(requestedOrganizers!.map((x) => x.toJson())),
     "connectedOrganizers": connectedOrganizers == null ? [] : List<dynamic>.from(connectedOrganizers!.map((x) => x.toJson())),
-    "requestedVolunteers": requestedVolunteers == null ? [] : List<dynamic>.from(requestedVolunteers!.map((x) => x)),
-    "connectedVolunteers": connectedVolunteers == null ? [] : List<dynamic>.from(connectedVolunteers!.map((x) => x)),
+    "requestedVolunteers": requestedVolunteers == null ? [] : List<dynamic>.from(requestedVolunteers!.map((x) => x.toJson())),
+    "connectedVolunteers": connectedVolunteers == null ? [] : List<dynamic>.from(connectedVolunteers!.map((x) => x.toJson())),
     "mode": mode,
     "status": status,
     "createdAt": createdAt?.toIso8601String(),
@@ -86,7 +86,7 @@ class ConnectedOrganization {
   String? id;
   String? name;
   String? description;
-  List<dynamic>? connectedVolunteers;
+  List<String>? connectedVolunteers;
   DateTime? createdAt;
   DateTime? updatedAt;
   int? v;
@@ -109,7 +109,7 @@ class ConnectedOrganization {
     id: json["_id"],
     name: json["name"],
     description: json["description"],
-    connectedVolunteers: json["connectedVolunteers"] == null ? [] : List<dynamic>.from(json["connectedVolunteers"]!.map((x) => x)),
+    connectedVolunteers: json["connectedVolunteers"] == null ? [] : List<String>.from(json["connectedVolunteers"]!.map((x) => x)),
     createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
     updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
     v: json["__v"],
@@ -176,20 +176,20 @@ class Report {
   };
 }
 
-class TedOrganizer {
+class ConnectedOrganizer {
   String? id;
   String? fullName;
   String? profession;
   String? image;
 
-  TedOrganizer({
+  ConnectedOrganizer({
     this.id,
     this.fullName,
     this.profession,
     this.image,
   });
 
-  factory TedOrganizer.fromJson(Map<String, dynamic> json) => TedOrganizer(
+  factory ConnectedOrganizer.fromJson(Map<String, dynamic> json) => ConnectedOrganizer(
     id: json["_id"],
     fullName: json["fullName"],
     profession: json["profession"],

@@ -65,6 +65,7 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
     organizerController.pickedFiles.clear();
     organizerController.selectedImages.clear();
     organizerController.getUserCurrentLocation();
+    organizerController.volunteersIdList.clear();
   }
 
 
@@ -190,7 +191,7 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                         ),
                       ],
                     ),
-                    SizedBox(
+                   /* SizedBox(
                       height: 4.h,
                     ),
                     organizerController.pickedFiles.value.isNotEmpty? Align(
@@ -205,7 +206,7 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                           maxLines: organizerController.pickedFiles.length,
                         ),
                       ),
-                    ):SizedBox(),
+                    ):SizedBox(),*/
 
 
                       SizedBox(
@@ -1006,9 +1007,47 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: CustomButton(onTap: (){
+                      child:organizerController.createEventLoading.value?Center(child: CircularProgressIndicator(color: Colors.orange,)):
+                      CustomButton(onTap: (){
 
-                        organizerController.createEvent(administratorController.missionDetailsShowList.value.id.toString());
+                        if(organizerController.eventNameController.value.text==""){
+                          Toast.errorToast("Event name is empty!!");
+                        }else if(organizerController.eventDescriptionController.value.text==""){
+                          Toast.errorToast("description is empty!!");
+
+                        }else if(organizerController.cityController.value.text==""){
+                          Toast.errorToast("City is empty!!");
+                        } else if (organizerController.stateController.value.text.isEmpty) {
+
+                          Toast.errorToast("State is empty!!");
+
+                        } else if (organizerController.zipController.value.text.isEmpty) {
+
+                          Toast.errorToast("Zip code is empty!!");
+
+                        }else if (organizerController.timeOpenPicker.value=="start Time") {
+
+                          Toast.errorToast("Start time  is empty!!");
+
+                        }else if (organizerController.timeClosePicker.value=="end Time") {
+
+                          Toast.errorToast("End time  is empty!!");
+
+                        } else if (organizerController.selectedDate.value=="00/00/0000") {
+
+                          Toast.errorToast("Date is empty!!");
+                        } else if (organizerController.eventAccessmode.value.isEmpty) {
+
+                          Toast.errorToast("Event Access mode is empty!!");
+
+                        }else if (organizerController.volunteersRoleList.isEmpty) {
+                          Toast.errorToast("volunteer role is empty!!");
+                        }else{
+
+                          organizerController.createEvent(administratorController.missionDetailsShowList.value.id.toString());
+                        }
+
+
                       }, title: "Submit",fontSize: 12, height: isTablet?70:60,),
                     ),
                   ],

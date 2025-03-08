@@ -1,16 +1,21 @@
 
 import 'dart:io';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
+import 'package:tractivity_app/utils/toast.dart';
 import 'package:tractivity_app/view/components/custom_royel_appbar/custom_royel_appbar.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
 import 'package:open_file/open_file.dart';
+import 'package:tractivity_app/view/components/custom_text_field/custom_text_field.dart';
+import 'package:tractivity_app/view/screens/adminstrator_home_screen/controller/administratior_controller.dart';
+import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_controller/mission_report_controller.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_controller/organizer_controller.dart';
 
 class MissionEventReportScreen extends StatefulWidget {
@@ -25,6 +30,34 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
   final _searchController =TextEditingController();
 
   final  organizerController = Get.find<OrganizerController>();
+
+  String missionId="";
+
+  String missionDescription="";
+
+  final administratorController = Get.put(AdministratiorController());
+
+  final missionReportController = Get.put(MissionToReportController());
+
+
+  final queryEditingController = TextEditingController();
+
+  String query = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    if(Get.arguments[0]["missionId"]!=null){
+
+      missionId = Get.arguments[0]["missionId"];
+
+      missionReportController.retriveAllEventByMissionShow(missionId);
+    }
+
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -71,124 +104,75 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
-                    SizedBox(
-                      height: 8.h,
-                    ),
                     CustomText(
-                      text: "Mission Horizons Foundation",
-                      fontSize:isTablet?6.sp: 16.sp,
-                      color: AppColors.black_80,
-                      fontWeight: FontWeight.w600,
-                      bottom: 6.h,
-                    ),
-
-                    CustomText(
-                      text: "Empowering communities  worldwide  through education, healthcare,  and sustainable development initiatives.",
-                      fontSize: 12,
-                      color: AppColors.black_02,
-                      fontWeight: FontWeight.w400,
                       textAlign: TextAlign.start,
-                      overflow: TextOverflow.clip,
-                      maxLines: 3,
-                      bottom: 4.h,// Add ellipsis at the end if the text overflows.
+                      text: "Organizations",
+                      fontSize:isTablet?6.sp: 16.sp,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.primary,
+                      bottom: 5,
                     ),
 
+                    ListView.builder(
+                        itemCount: administratorController.missionDetailsShowList.value.connectedOrganizations?.length,
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (BuildContext context, int index) {
+
+                          final connectedOrganizations =administratorController.missionDetailsShowList.value.connectedOrganizations?[index];
+
+                          return  Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CustomText(
+                                text: "${connectedOrganizations?.name}",
+                                fontSize:isTablet?6.sp: 16.sp,
+                                color: AppColors.black_80,
+                                fontWeight: FontWeight.w600,
+                                bottom: 6.h,
+                                textAlign: TextAlign.start,
+                              ),
+
+                              CustomText(
+                                text: "${connectedOrganizations?.description}",
+                                fontSize: 12,
+                                color: AppColors.black_02,
+                                fontWeight: FontWeight.w400,
+                                textAlign: TextAlign.start,
+                                overflow: TextOverflow.clip,
+                                maxLines: 3,
+                                bottom: 4.h,// Add ellipsis at the end if the text overflows.
+                              ),
+                            ],
+                          );
+                        }),
+
+                    SizedBox(
+                      height: 12.h,
+                    ),
                     const Divider(
                       color: Colors.black54,
                       // height: 16.h,
                     ),
-
                     CustomText(
                       textAlign: TextAlign.start,
-                      text: "Organizers",
+                      text: "Mission",
                       fontSize:isTablet?6.sp: 16.sp,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w500,
                       color: AppColors.primary,
-                      bottom: 8.h,
+                      bottom: 5,
+                    ),
+                    CustomText(
+                      text: "${administratorController.missionDetailsShowList.value.name}",
+                      fontSize:isTablet?6.sp: 16.sp,
+                      color: AppColors.black_80,
+                      fontWeight: FontWeight.w600,
                     ),
 
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 10.h),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            onTap: (){},
-                            child: Row(
-                              children: [
 
-                           /*     CustomNetworkImage(
-                                  imageUrl: AppConstants.profileImage,
-                                  height:isTablet?64.h: 60.h,
-                                  width:isTablet?64.w: 60.w,
-                                  boxShape: BoxShape.circle,
-                                ),*/
-                                SizedBox(
-                                  width: 10.w,
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CustomText(
-                                      text: "Farhad Hossain",
-                                      fontSize:isTablet?6.sp:12.sp,
-                                      fontWeight: FontWeight.w600,
-                                      color: AppColors.black,
-                                    ),
-                                    CustomText(
-                                      text: "Student",
-                                      fontSize:isTablet?6.sp: 12.sp,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColors.black_80,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-
-                        ],
-                      ),
-                    ),
-
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 10.h),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            onTap: (){},
-                            child: Row(
-                              children: [
-
-                                SizedBox(
-                                  width: 10.w,
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CustomText(
-                                      text: "Jamal Hasan",
-                                      fontSize:isTablet?6.sp:12.sp,
-                                      fontWeight: FontWeight.w600,
-                                      color: AppColors.black,
-                                    ),
-                                    CustomText(
-                                      text: "worker",
-                                      fontSize:isTablet?6.sp: 12.sp,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColors.black_80,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-
-                        ],
-                      ),
+                    const SizedBox(
+                      height: 12,
                     ),
 
                     const Divider(
@@ -205,7 +189,7 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
                           decoration: BoxDecoration(
                             color: AppColors.neutral02,
                             borderRadius: BorderRadius.circular(10),
-                          ),child: CustomText(text: "Hours: 4:30 Hours",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
+                          ),child: CustomText(text: "Hours: ${administratorController.missionDetailsShowList.value.report?.hours}",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
                         ),
 
                         SizedBox(
@@ -216,37 +200,47 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
                           decoration: BoxDecoration(
                             color: AppColors.neutral02,
                             borderRadius: BorderRadius.circular(10),
-                          ),child: CustomText(text: "Millage: 8Km",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
+                          ),child: CustomText(text: "Millage: ${administratorController.missionDetailsShowList.value.report?.mileage}",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
                         ),
                       ],
                     ),
 
-
                     SizedBox(
                       height: 12.h,
                     ),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        hintText: 'search event..',
-                        hintStyle: TextStyle(fontSize: 14.0),
-                        filled: true,
-                        fillColor:AppColors.grey_3.withOpacity(0.5),
-                        prefixIcon: Icon(Icons.search, color: Colors.black54),
-                        suffixIcon: _searchController.text.isNotEmpty
-                            ? IconButton(
-                          icon: Icon(Icons.clear, color: Colors.black54),
-                          onPressed: (){},
-                        )
-                            : null,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide: BorderSide.none,
-                        ),
-                        contentPadding: EdgeInsets.all(4),
-                      ),
-                      onChanged: (query) {
-                        // Handle search query change (e.g., filtering data)
+                    ///============ search ======================================
+
+                    CustomTextField(
+                      textEditingController:queryEditingController,
+                      fillColor: AppColors.neutral02,
+                      //  hintText: AppStrings.search,
+                      hintText: "Search for event name...",
+                      hintStyle: TextStyle(fontSize:isTablet?6.sp: 14.sp),
+                      onChanged: (value){
+                        setState(() {
+                          query = value;
+                        });
+                        missionReportController.searchMissionReport(query);
                       },
+
+                      suffixIcon: query.isBlank == true || query.isEmpty
+                          ? Icon(
+                        FluentIcons.search_24_regular,
+                        size: 24,
+                      )
+                          : IconButton(
+                          icon: Icon(Icons.close,size: 24,),
+                          onPressed: () {
+                            setState(() {
+                              query = "";
+                            });
+                            queryEditingController.clear();
+                            FocusScope.of(context).unfocus();
+
+                            missionReportController.searchMissionReport("");
+
+                          }),
+
                     ),
 
                     SizedBox(
@@ -280,28 +274,28 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
                                ),
                                TextFormField(
                                  textAlign: TextAlign.center,
-                                 showCursor: false,
-                                 readOnly: true,
+                                 //showCursor: false,
+                                // readOnly: true,
                                  onTap: (){
-                                   organizerController.eventSartSearchDate();
-                           
+                                   //organizerController.eventSartSearchDate();
                                  },
-                                 controller: organizerController.eventStartSearchDateController.value,
+                                 controller: missionReportController.eventStartSearchDateController.value,
                                  decoration: InputDecoration(
-                                   hintText: "00/00/0000",
+                                   hintText: "0000-00-00",
                                    hintStyle: TextStyle(fontSize: 12.0,),
                                    filled: true,
                                    fillColor:AppColors.grey_3.withOpacity(0.5),
                                    ///prefixIcon: Icon(Icons.search, color: Colors.black54),
-                                   suffixIcon: organizerController.eventStartSearchDateController.value.text.isNotEmpty
+                                   suffixIcon: missionReportController.eventStartSearchDateController.value.text.isNotEmpty
                                        ? IconButton(
                                      icon: Icon(Icons.clear, color: Colors.black54),
                                      onPressed: (){
-                                       organizerController.eventStartSearchDateController.value.clear();
+                                       missionReportController.eventStartSearchDateController.value.clear();
+                                       missionReportController.filterDateToDateMissionReport("","");
                                        FocusScope.of(context).unfocus();
                                      },
                                    ) : IconButton(onPressed: (){
-                                     organizerController.eventSartSearchDate();
+                                   //  organizerController.eventSartSearchDate();
                                    }, icon: Icon(Icons.calendar_month)),
                                    border: OutlineInputBorder(
                                      borderRadius: BorderRadius.circular(8),
@@ -335,28 +329,29 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
                                ),
                                TextFormField(
                                  textAlign: TextAlign.center,
-                                 showCursor: false,
-                                 readOnly: true,
+                                // showCursor: false,
+                              //   readOnly: true,
                                  onTap: (){
-                                   organizerController.eventSartSearchDate();
+                                 //  organizerController.eventSartSearchDate();
                            
                                  },
-                                 controller: organizerController.eventEndSearchDateController.value,
+                                 controller: missionReportController.eventEndSearchDateController.value,
                                  decoration: InputDecoration(
-                                   hintText: "00/00/0000",
+                                   hintText: "0000-00-00",
                                    hintStyle: TextStyle(fontSize: 12.0,),
                                    filled: true,
                                    fillColor:AppColors.grey_3.withOpacity(0.5),
                                    ///prefixIcon: Icon(Icons.search, color: Colors.black54),
-                                   suffixIcon: organizerController.eventEndSearchDateController.value.text.isNotEmpty
+                                   suffixIcon: missionReportController.eventEndSearchDateController.value.text.isNotEmpty
                                        ? IconButton(
                                      icon: Icon(Icons.clear, color: Colors.black54),
                                      onPressed: (){
-                                       organizerController.eventEndSearchDateController.value.clear();
+                                       missionReportController.eventEndSearchDateController.value.clear();
                                        FocusScope.of(context).unfocus();
+                                       missionReportController.filterDateToDateMissionReport("","");
                                      },
                                    ) : IconButton(onPressed: (){
-                                     organizerController.eventEndSearchDate();
+                                    // organizerController.eventEndSearchDate();
                                    }, icon: Icon(Icons.calendar_month)),
                                    border: OutlineInputBorder(
                                      borderRadius: BorderRadius.circular(8),
@@ -366,6 +361,19 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
                                  ),
                                  onChanged: (query) {
                                    // Handle search query change (e.g., filtering data)
+
+                                  /*   if(missionReportController.eventStartSearchDateController.value.text=="" && missionReportController.eventEndSearchDateController.value.text==""){
+                                       Toast.errorToast("please two date select!!..");
+                                     }else{
+                                     }*/
+
+                                 //  Toast.successToast("start:${missionReportController.eventStartSearchDateController.value.text},end:${missionReportController.eventEndSearchDateController.value.text}");
+
+                                     /* missionReportController.filterDateToDateMissionReport(missionReportController.eventStartSearchDateController.value.text,
+                                           missionReportController.eventEndSearchDateController.value.text);
+*/
+
+                                      missionReportController.filterDateToDateMissionReport("2025","2025");
                                  },
                                ),
                              ],
@@ -390,71 +398,83 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
                     SizedBox(
                       height: 8.h,
                     ),
-                    Column(children: List.generate(3, (index) {
-                          return Card(
-                            color: Colors.white,
+
+                   missionReportController.obx((state){
+                     return  ListView.builder(
+                         itemCount: state?.length,
+                         shrinkWrap: true,
+                         physics: NeverScrollableScrollPhysics(),
+                         itemBuilder: (BuildContext context, int index) {
+
+                           final model = state?[index];
+
+                           return Card(
+                             color: Colors.white,
                              elevation: 0.2,
-                            child: ExpansionTile(
-                              shape: Border(),
-                              title: Text("Helping Hands",style: TextStyle(fontSize: isTablet?9.sp:14.sp),),
+                             child: ExpansionTile(
+                               shape: Border(),
+                               title: Text("${model?.name}",style: TextStyle(fontSize: isTablet?9.sp:14.sp),),
 
-                              children: [
+                               children: [
 
-                                Container(
-                                  alignment: Alignment.centerLeft,
-                                  decoration: BoxDecoration(
-                                    color: AppColors.grey_3.withOpacity(0.3),
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
+                                 Container(
+                                   alignment: Alignment.centerLeft,
+                                   decoration: BoxDecoration(
+                                     color: AppColors.grey_3.withOpacity(0.3),
+                                     borderRadius: BorderRadius.circular(15),
+                                   ),
 
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
+                                   child: Padding(
+                                     padding: const EdgeInsets.all(8.0),
+                                     child: Column(
+                                       mainAxisAlignment: MainAxisAlignment.start,
+                                       crossAxisAlignment: CrossAxisAlignment.start,
+                                       children: [
 
-                                        CustomText(
-                                          textAlign: TextAlign.start,
-                                          text: "Hours 3.5 ",
-                                          maxLines: 3,
-                                          fontSize:isTablet?6.sp: 14,
-                                          fontWeight: FontWeight.w500,
-                                        ),
+                                         CustomText(
+                                           textAlign: TextAlign.start,
+                                           text: "Hours: ${model?.report?.hours}",
+                                           maxLines: 3,
+                                           fontSize:isTablet?6.sp: 14,
+                                           fontWeight: FontWeight.w500,
+                                         ),
 
-                                        SizedBox(
-                                          height: 4.h,
-                                        ),
+                                         SizedBox(
+                                           height: 4.h,
+                                         ),
 
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
+                                         Row(
+                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                           children: [
 
-                                            CustomText(
-                                              textAlign: TextAlign.start,
-                                              text: "Mileage: 186.9 ",
-                                              maxLines: 3,
-                                              fontSize:isTablet?6.sp: 14,
-                                              fontWeight: FontWeight.w500,
-                                              bottom: 5,
-                                            ),
+                                             CustomText(
+                                               textAlign: TextAlign.start,
+                                               text: "Mileage: ${model?.report?.mileage}",
+                                               maxLines: 3,
+                                               fontSize:isTablet?6.sp: 14,
+                                               fontWeight: FontWeight.w500,
+                                               bottom: 5,
+                                             ),
 
-                                            FloatingActionButton.small(onPressed: (){},
-                                              backgroundColor: Colors.amber,
-                                              child: Icon(Icons.arrow_circle_down_outlined,color: Colors.white,),)
-                                          ],
-                                        ),
+                                             FloatingActionButton.small(onPressed: (){
 
-                                      ],
-                                    ),
-                                  ),
-                                )
+                                             },
+                                               backgroundColor: Colors.amber,
+                                               child: Icon(Icons.arrow_circle_down_outlined,color: Colors.white,),)
+                                           ],
+                                         ),
 
-                              ],
-                            ),
-                          );
-                        })
-                    )
+                                       ],
+                                     ),
+                                   ),
+                                 )
+
+                               ],
+                             ),
+                           );
+                         });
+                   })
+
                   ],
                 ),
               );

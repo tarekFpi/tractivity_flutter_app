@@ -128,7 +128,6 @@ class ApiUrl {
   ///Create new event
   static String createEvent ="/organizer/event/create";
 
-
   /// inviteVolunteer event to event
   static String inviteVolunteer({required String missionId}) =>"/organizer/event/volunteer/mission/$missionId";
 
