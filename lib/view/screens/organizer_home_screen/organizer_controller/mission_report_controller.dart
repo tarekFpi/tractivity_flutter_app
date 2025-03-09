@@ -16,9 +16,116 @@ import 'package:tractivity_app/view/screens/adminstrator_home_screen/specific_mi
 
 class MissionToReportController extends GetxController with StateMixin<List<SpecificIdEventsResponeModel>>{
 
+  ///search date starting
+  RxString selectedStartMonthValue="select month".obs;
+  RxString selected_day="select day".obs;
+
+  RxList<String> monthItems = [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+  ].obs;
+
+  RxList<String> dayItems = [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19",
+    "20",
+    "21",
+    "22",
+    "23",
+    "24",
+    "25",
+    "26",
+    "27",
+    "28",
+    "29",
+    "30",
+    "31",
+  ].obs;
+
+
+  ///search end date ending
+  RxString selectedEndingMonthValue="select month".obs;
+  RxString selectedEnding_day="select day".obs;
+
+  RxList<String> monthEndItems = [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+  ].obs;
+
+  RxList<String> dayEndItems = [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19",
+    "20",
+    "21",
+    "22",
+    "23",
+    "24",
+    "25",
+    "26",
+    "27",
+    "28",
+    "29",
+    "30",
+    "31",
+  ].obs;
 
   ///===== Retrive all events by missionId ========================
-
   RxList<SpecificIdEventsResponeModel> missionEventShowList = <SpecificIdEventsResponeModel>[].obs;
   
   Future<void> retriveAllEventByMissionShow(String missionId) async{
@@ -45,7 +152,6 @@ class MissionToReportController extends GetxController with StateMixin<List<Spec
       debugPrint("missionEventShowList:${missionEventShowList.value}");
 
     } else {
-
 
       if (response.statusText == ApiClient.somethingWentWrong) {
         Toast.errorToast(AppStrings.checknetworkconnection);
@@ -177,6 +283,51 @@ class MissionToReportController extends GetxController with StateMixin<List<Spec
   Rx<TextEditingController> eventStartSearchDateController = TextEditingController().obs;
 
   Rx<TextEditingController> eventEndSearchDateController = TextEditingController().obs;
+
+  int selectedYear = DateTime.now().year;
+
+  Future<void> pickYear() async {
+
+    DateTime? picked = await showDatePicker(
+      context: Get.context!,
+      initialDate: DateTime(DateTime.now().year), // Set initial date to Jan 1 of the current year
+      firstDate: DateTime(1900), // Set the range for year selection
+      lastDate: DateTime(2100),
+      selectableDayPredicate: (DateTime date) => date.month == 1 && date.day == 1, // Only allow Jan 1st of the selected year
+    );
+
+    if (picked != null && picked != DateTime.now()) {
+
+        selectedYear = picked.year; // Update the selected year
+
+       eventStartSearchDateController.value.text = picked.year.toString(); // Update the selected year
+
+    }
+
+  }
+
+
+  int? selectedMonth;
+  int? selectedDay;
+  Future<void> pickMonthDay() async {
+    if (selectedYear == null) return;
+
+    // Open the month and day picker after selecting the year
+    DateTime? picked = await showDatePicker(
+      context: Get.context!,
+      initialDate: DateTime(selectedYear!, 1, 1),
+      firstDate: DateTime(selectedYear!, 1, 1),
+      lastDate: DateTime(selectedYear!, 12, 31),
+    );
+
+    if (picked != null && picked != DateTime(selectedYear!, 1, 1)) {
+
+        selectedMonth = picked.month;  // Set the selected month
+        selectedDay = picked.day;  // Set the selected day
+
+      Toast.successToast("selectedDay:${selectedMonth},,selectedDay:${selectedDay}");
+    }
+  }
 
   void eventSartSearchDate() async {
 
