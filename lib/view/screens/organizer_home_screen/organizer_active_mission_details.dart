@@ -722,12 +722,9 @@ class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDe
                                   height: isTablet ? 200.h : 170.h,
                                   width: isTablet ? 180.w : 180.w,
                                   borderRadius: BorderRadius.circular(10),
-                                ):CustomNetworkImage(
-                                  imageUrl: "assets/images/event_image.png",
+                                ):Image.asset("assets/images/event_image.png",
                                   height: isTablet ? 200.h : 170.h,
-                                  width: isTablet ? 180.w : 180.w,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
+                                  width: isTablet ? 180.w : 180.w,fit: BoxFit.fill,),
 
                                 const SizedBox(
                                   width: 10,

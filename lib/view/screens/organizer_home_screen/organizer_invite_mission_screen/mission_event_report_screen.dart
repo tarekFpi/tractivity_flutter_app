@@ -17,6 +17,7 @@ import 'package:tractivity_app/view/components/custom_text_field/custom_text_fie
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/controller/administratior_controller.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_controller/mission_report_controller.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_controller/organizer_controller.dart';
+import 'package:tractivity_app/view/screens/adminstrator_home_screen/specific_mission_event_model/SpecificIdEventsResponeModel.dart';
 
 class MissionEventReportScreen extends StatefulWidget {
   const MissionEventReportScreen({super.key});
@@ -70,6 +71,7 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
         floatingActionButton: FloatingActionButton.extended(onPressed: ()async{
 
             await requestPermissions();
+
             await generateAndDownloadPDF();
         },
           backgroundColor: Colors.amber,
@@ -274,10 +276,10 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
                                ),
                                TextFormField(
                                  textAlign: TextAlign.center,
-                                 //showCursor: false,
-                                // readOnly: true,
+                                 ///showCursor: false,
+                                ///readOnly: true,
                                  onTap: (){
-                                   //organizerController.eventSartSearchDate();
+                                   ///missionReportController.eventSartSearchDate();
                                  },
                                  controller: missionReportController.eventStartSearchDateController.value,
                                  decoration: InputDecoration(
@@ -291,7 +293,7 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
                                      icon: Icon(Icons.clear, color: Colors.black54),
                                      onPressed: (){
                                        missionReportController.eventStartSearchDateController.value.clear();
-                                       missionReportController.filterDateToDateMissionReport("","");
+                                     //  missionReportController.filterDateToDateMissionReport("","");
                                        FocusScope.of(context).unfocus();
                                      },
                                    ) : IconButton(onPressed: (){
@@ -330,9 +332,9 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
                                TextFormField(
                                  textAlign: TextAlign.center,
                                 // showCursor: false,
-                              //   readOnly: true,
+                               //  readOnly: true,
                                  onTap: (){
-                                 //  organizerController.eventSartSearchDate();
+
                            
                                  },
                                  controller: missionReportController.eventEndSearchDateController.value,
@@ -348,7 +350,7 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
                                      onPressed: (){
                                        missionReportController.eventEndSearchDateController.value.clear();
                                        FocusScope.of(context).unfocus();
-                                       missionReportController.filterDateToDateMissionReport("","");
+                                       //missionReportController.filterDateToDateMissionReport("","");
                                      },
                                    ) : IconButton(onPressed: (){
                                     // organizerController.eventEndSearchDate();
@@ -367,13 +369,10 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
                                      }else{
                                      }*/
 
-                                 //  Toast.successToast("start:${missionReportController.eventStartSearchDateController.value.text},end:${missionReportController.eventEndSearchDateController.value.text}");
+                                       missionReportController.filterDateToDateMissionReport(missionReportController.eventStartSearchDateController.value.text,
+                                       missionReportController.eventEndSearchDateController.value.text);
 
-                                     /* missionReportController.filterDateToDateMissionReport(missionReportController.eventStartSearchDateController.value.text,
-                                           missionReportController.eventEndSearchDateController.value.text);
-*/
 
-                                      missionReportController.filterDateToDateMissionReport("2025","2025");
                                  },
                                ),
                              ],
@@ -507,6 +506,62 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
             crossAxisAlignment: pw.CrossAxisAlignment.start,
             mainAxisAlignment: pw.MainAxisAlignment.start,
             children: [
+
+              pw.SizedBox(height: 8.h),
+
+              pw.Row(
+                children: [
+                  pw.SizedBox(width: 10),
+                  pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                    children: [
+                      pw.Text(
+                        "Farhad Hossain",
+                        style: pw.TextStyle(fontSize: 12, fontWeight: pw.FontWeight.bold),
+                      ),
+                      pw.Text(
+                        "Student",
+                        style: pw.TextStyle(fontSize: 12, color: PdfColors.black),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+
+            /*  pw.ListView.builder(
+                  itemCount: administratorController.missionDetailsShowList.value.connectedOrganizations?.length,
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (BuildContext context, int index) {
+
+                    final connectedOrganizations =administratorController.missionDetailsShowList.value.connectedOrganizations?[index];
+
+                    return  pw.Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomText(
+                          text: "${connectedOrganizations?.name}",
+                          fontSize:isTablet?6.sp: 16.sp,
+                          color: AppColors.black_80,
+                          fontWeight: FontWeight.w600,
+                          bottom: 6.h,
+                          textAlign: TextAlign.start,
+                        ),
+
+                        CustomText(
+                          text: "${connectedOrganizations?.description}",
+                          fontSize: 12,
+                          color: AppColors.black_02,
+                          fontWeight: FontWeight.w400,
+                          textAlign: TextAlign.start,
+                          overflow: TextOverflow.clip,
+                          maxLines: 3,
+                          bottom: 4.h,// Add ellipsis at the end if the text overflows.
+                        ),
+                      ],
+                    );
+                  }),*/
               // Mission Horizons Foundation Section
               pw.SizedBox(height: 8),
               pw.Text(
@@ -526,25 +581,7 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
                 "Organizers",
                 style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold, color: PdfColors.blue),
               ),
-              pw.SizedBox(height: 8.h),
-              pw.Row(
-                children: [
-                  pw.SizedBox(width: 10),
-                  pw.Column(
-                    crossAxisAlignment: pw.CrossAxisAlignment.start,
-                    children: [
-                      pw.Text(
-                        "Farhad Hossain",
-                        style: pw.TextStyle(fontSize: 12, fontWeight: pw.FontWeight.bold),
-                      ),
-                      pw.Text(
-                        "Student",
-                        style: pw.TextStyle(fontSize: 12, color: PdfColors.black),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+
               pw.SizedBox(height: 10),
               pw.Row(
                 children: [
