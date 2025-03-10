@@ -266,75 +266,7 @@ class _AdminstratorMissionDetailsScreenState extends State<AdminstratorMissionDe
                   ),
                 ),
 
-               /* Column(
-                    children: List.generate(3, (index) {
-                      return Padding(
-                        padding: EdgeInsets.only(bottom: 10.h),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            GestureDetector(
-                              onTap: (){},
-                              child: Row(
-                                children: [
-                                  CustomNetworkImage(
-                                    imageUrl: AppConstants.profileImage,
-                                    height:isTablet?64.h: 60.h,
-                                    width:isTablet?64.w: 60.w,
-                                    boxShape: BoxShape.circle,
-                                  ),
-                                  SizedBox(
-                                    width: 10.w,
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      CustomText(
-                                        text: "Mehedi Hassan",
-                                        fontSize:isTablet?8.sp:16.sp,
-                                        fontWeight: FontWeight.w600,
-                                        color: AppColors.black,
-                                      ),
-                                      const CustomText(
-                                        text: "Student",
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColors.black_80,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: AppColors.primary,
-                                borderRadius: BorderRadius.circular(10.r),
-                                // border: Border.all(color: AppColors.primary,width: 2),
-                              ),
-                              child: GestureDetector(
-                                onTap: (){
 
-
-                                },
-                                child: const Center(
-                                    child: CustomText(
-                                      text: "Details",
-                                      color: AppColors.white,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                    )),
-                              ),
-                            ),
-
-
-                          ],
-                        ),
-                      );
-                    })
-                ),*/
 
                 const Divider(
                   color: Colors.black54,

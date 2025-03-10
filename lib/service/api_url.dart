@@ -83,8 +83,20 @@ class ApiUrl {
   ///=================== Retrive all events by missionId========================================
   static String retriveAllEventByMissionId ({required String missionId}) =>"/organizer/event/retrive/mission/$missionId";
 
+  ///=================== Retrive  Specific fromDate events by missionId========================================
+  static String retriveSpecificFromDateEventByMissionId ({required String missionId,required String fromDate}) =>"/organizer/event/retrive/report/mission/$missionId?fromDate=$fromDate";
 
-///===================== retrive Specific event by Id event show =====================
+  ///=================== Retrive  Specific fromDate events by missionId========================================
+  static String retriveSpecificFromDateToDateEventByMissionId ({required String missionId,required String fromDate,required String toDate}) =>"/organizer/event/retrive/report/mission/$missionId?fromDate=$fromDate&toDate=$toDate";
+
+
+  ///=================== Retrive  Specific fromDate  mission report ========================================
+  static String retriveSpecificFromDateMissionByReport ({required String missionId,required String fromDate}) =>"/mission/retrive/organization/report/$missionId?fromDate=$fromDate";
+
+  ///=================== Retrive  Specific fromDate mission by mission ========================================
+  static String retriveSpecificFromDateToDateMissionReport ({required String missionId,required String fromDate,required String toDate}) =>"/mission/retrive/organization/report/$missionId?fromDate=$fromDate&toDate=$toDate";
+
+  ///===================== retrive Specific event by Id event show =====================
   static String retriveBySpecificEventList ({required String eventId}) =>"/organizer/event/retrive/$eventId";
 
   ///===================== retrive user profile show by user Id  =====================

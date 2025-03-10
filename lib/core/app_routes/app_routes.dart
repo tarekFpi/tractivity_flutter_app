@@ -5,6 +5,7 @@ import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrato
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrator_home_screen.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrator_mission_details_screen.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrator_organization_details_screen.dart';
+import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrator_organization_report_screen.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/event_complete_screen.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/member/adminstrator_member.dart';
 import 'package:tractivity_app/view/screens/auth_screen/signup_screen/location_map_screen.dart';
@@ -131,6 +132,7 @@ class AppRoutes {
   static const String organizerEventCreateScreen = "/OrganizerEventCreateScreen";
   static const String adminstratorOrganizationDetailsScreen = "/AdminstratorOrganizationDetailsScreen";
   static const String joinOrganizationScreen = "/joinOrganizationScreen";
+  static const String adminstratorOrganizationReportScreen = "/AdminstratorOrganizationReportScreen";
 
   static List<GetPage> routes = [
 
@@ -146,8 +148,6 @@ class AppRoutes {
     GetPage(name: forgotPassword, page: () => ForgotPassword()),
 
 
-
-    ///=========================== Mehedi ==========================
 
     GetPage(name: settingScreen, page: () => SettingScreen()),
     GetPage(name: aboutUsScreen, page: () => AboutUsScreen()),
@@ -208,6 +208,7 @@ class AppRoutes {
     GetPage(name: organizerMissionDetailsScreen, page: () => OrganizerMissionDetailsScreen()),
     GetPage(name: adminstratorOrganizationDetailsScreen, page: () => AdminstratorOrganizationDetailsScreen()),
     GetPage(name: joinOrganizationScreen, page: () => JoinOrganizationScreen()),
+    GetPage(name: adminstratorOrganizationReportScreen, page: () => AdminstratorOrganizationReportScreen()),
   ];
 
 }

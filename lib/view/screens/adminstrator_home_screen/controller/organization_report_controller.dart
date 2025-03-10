@@ -12,9 +12,10 @@ import 'package:tractivity_app/service/api_url.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
 import 'package:tractivity_app/utils/toast.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/specific_mission_event_model/SpecificIdEventsResponeModel.dart';
+import 'package:tractivity_app/view/screens/adminstrator_home_screen/specific_organization_mission/retriveAllMissionByOrganizationResponse.dart';
 
 
-class MissionToReportController extends GetxController with StateMixin<List<SpecificIdEventsResponeModel>>{
+class OrganizationReportController extends GetxController with StateMixin<List<RetriveAllMissionByOrganizationResponse>>{
 
   ///search date starting
   RxString selectedStartMonthValue="select month".obs;
@@ -130,33 +131,31 @@ class MissionToReportController extends GetxController with StateMixin<List<Spec
   ].obs;
 
   ///Retrieve Specific from date filter
-
   RxString formateDate="".obs;
   RxString formateToDate="".obs;
 
-  Future<void> retriveSpecificFromDateEventReportShow(String missionId,String fromDate) async{
+  Future<void> retriveSpecificFromDateMissiontReportShow(String missionId,String fromDate) async{
 
     change(null, status: RxStatus.loading());
 
     try{
 
-
-      var response = await ApiClient.getData(ApiUrl.retriveSpecificFromDateEventByMissionId(missionId: missionId,fromDate: fromDate));
+      var response = await ApiClient.getData(ApiUrl.retriveSpecificFromDateMissionByReport(missionId: missionId,fromDate: fromDate));
 
       if (response.statusCode == 200) {
 
-        missionEventShowList.value = List.from(response.body["data"].map((m)=> SpecificIdEventsResponeModel.fromJson(m)));
+        organizationMissionDetailsShow.value = List.from(response.body["data"].map((m)=> RetriveAllMissionByOrganizationResponse.fromJson(m)));
 
-        change(missionEventShowList.value, status: RxStatus.success());
+        change(organizationMissionDetailsShow.value, status: RxStatus.success());
 
-        if(missionEventShowList.isEmpty){
+        if(organizationMissionDetailsShow.isEmpty){
 
           change(null, status: RxStatus.empty());
         }
 
         refresh();
 
-        debugPrint("missionEventShowList:${missionEventShowList.value}");
+        debugPrint("missionEventShowList:${organizationMissionDetailsShow.value}");
 
       } else {
 
@@ -184,30 +183,30 @@ class MissionToReportController extends GetxController with StateMixin<List<Spec
 
 
   ///Retrieve Specific from date to date filter
-  Future<void> retriveSpecificDateToDateEventReportShow(String missionId,String fromDate,String toDate) async{
+  Future<void> retriveSpecificDateToDateMissionReportShow(String missionId,String fromDate,String toDate) async{
 
     change(null, status: RxStatus.loading());
 
     try{
 
-      var response = await ApiClient.getData(ApiUrl.retriveSpecificFromDateToDateEventByMissionId(missionId: missionId,fromDate: fromDate,toDate: toDate));
+      var response = await ApiClient.getData(ApiUrl.retriveSpecificFromDateToDateMissionReport(missionId: missionId,fromDate: fromDate,toDate: toDate));
 
       if (response.statusCode == 200) {
 
-        missionEventShowList.value = List.from(response.body["data"].map((m)=> SpecificIdEventsResponeModel.fromJson(m)));
+        organizationMissionDetailsShow.value = List.from(response.body["data"].map((m)=> RetriveAllMissionByOrganizationResponse.fromJson(m)));
 
 
-        change(missionEventShowList.value, status: RxStatus.success());
-       /// formateDate.value="";
+        change(organizationMissionDetailsShow.value, status: RxStatus.success());
+        /// formateDate.value="";
 
-        if(missionEventShowList.isEmpty){
+        if(organizationMissionDetailsShow.isEmpty){
 
           change(null, status: RxStatus.empty());
         }
 
         refresh();
 
-        debugPrint("retriveSpecificDateToDateEventReportShow:${jsonEncode(missionEventShowList.value)}");
+        debugPrint("retriveSpecificDateToDateEventReportShow:${jsonEncode(organizationMissionDetailsShow.value)}");
 
       } else {
 
@@ -233,72 +232,69 @@ class MissionToReportController extends GetxController with StateMixin<List<Spec
     }
   }
 
-  ///===== Retrive all events by missionId ========================
-  RxList<SpecificIdEventsResponeModel> missionEventShowList = <SpecificIdEventsResponeModel>[].obs;
-  
-  Future<void> retriveAllEventByMissionShow(String missionId) async{
 
-    change(null, status: RxStatus.loading());
+  ///Retrieve all mission by specific organization
+  RxList<RetriveAllMissionByOrganizationResponse> organizationMissionDetailsShow = <RetriveAllMissionByOrganizationResponse>[].obs;
+
+  Future<void> retriveAllMissionByOrganization(String organizationId) async{
 
   try{
-    var response = await ApiClient.getData(ApiUrl.retriveAllEventByMissionId(missionId: missionId));
 
-    if (response.statusCode == 200) {
+  var response = await ApiClient.getData(ApiUrl.organizationByMissionList(organizationId: organizationId));
 
-      missionEventShowList.value = List.from(response.body["data"].map((m)=> SpecificIdEventsResponeModel.fromJson(m)));
+  if (response.statusCode == 200) {
 
-      change(missionEventShowList.value, status: RxStatus.success());
+    organizationMissionDetailsShow.value = List.from(response.body["data"].map((m)=> RetriveAllMissionByOrganizationResponse.fromJson(m)));
 
-      if(missionEventShowList.isEmpty){
+    change(organizationMissionDetailsShow.value, status: RxStatus.success());
 
-        change(null, status: RxStatus.empty());
-      }
+    if(organizationMissionDetailsShow.isEmpty){
 
+      change(null, status: RxStatus.empty());
+    }
+
+    debugPrint("missionEventShowList:${organizationMissionDetailsShow.value}");
+    refresh();
+
+  } else {
+
+    if (response.statusText == ApiClient.somethingWentWrong) {
+      Toast.errorToast(AppStrings.checknetworkconnection);
       refresh();
-
-
-      debugPrint("missionEventShowList:${missionEventShowList.value}");
-
+      return;
     } else {
 
-      if (response.statusText == ApiClient.somethingWentWrong) {
-        Toast.errorToast(AppStrings.checknetworkconnection);
-        refresh();
-        return;
-      } else {
+      ApiChecker.checkApi(response);
 
-        ApiChecker.checkApi(response);
-
-        refresh();
-        return;
-      }
+      refresh();
+      return;
     }
-  }catch(e){
-    Toast.errorToast("${e.toString()}");
+  }
+}catch(e){
 
-    debugPrint(e.toString());
+  Toast.errorToast("${e.toString()}");
 
-    change(null, status: RxStatus.error(e.toString()));
+  debugPrint(e.toString());
 
+  change(null, status: RxStatus.error(e.toString()));
   }
   }
-
 
 
   ///=====================   search MissionReport  =====================
-  Future<void> searchMissionReport(String query) async{
+  Future<void> searchOrgnaizationReport(String query) async{
 
     change(null, status: RxStatus.loading());
 
     if (query == null || query.isEmpty) {
 
-      change(missionEventShowList.value, status: RxStatus.success());
+      change(organizationMissionDetailsShow.value, status: RxStatus.success());
 
     }else{
 
       try{
 
-        final filteredList = missionEventShowList.value
+        final filteredList = organizationMissionDetailsShow.value
             .where((element) =>element.name!.toLowerCase().contains(query.toLowerCase().trim())
         ).toList();
 
@@ -319,71 +315,7 @@ class MissionToReportController extends GetxController with StateMixin<List<Spec
   }
 
 
-
-  ///=====================  search date filter MissionReport  =====================
-
-  Future<void> filterDateToDateMissionReport(String startDate, String endDate) async {
-    change(null, status: RxStatus.loading());
-
-    // Check if either startDate or endDate is empty or null
-    if (startDate.isEmpty || endDate.isEmpty) {
-      // If either date is empty, return the original list unfiltered
-      change(missionEventShowList.value, status: RxStatus.success());
-      return;
-    }
-
-    try {
-      // Parse the start and end dates. Handle year-based filtering (e.g., "2024").
-      DateTime start;
-      DateTime end;
-
-      // If only the year is provided, set the date to January 1st and December 31st of that year
-      if (startDate.length == 4 && endDate.length == 4) {
-        // For year-based filtering (e.g., "2024" to "2024")
-        start = DateTime(int.parse(startDate), 1, 1); // Start of the year
-        end = DateTime(int.parse(endDate), 12, 31, 23, 59, 59, 999); // End of the year
-      } else {
-        // Handle full date range (e.g., "2025-03-08" to "2025-03-09")
-        start = DateTime.parse(startDate);
-        end = DateTime.parse(endDate);
-      }
-
-      // Ensure the end date is after the start date
-      if (end.isBefore(start)) {
-        change([], status: RxStatus.error('End date cannot be before start date.'));
-        return;
-      }
-
-      // Filter the list based on the date range
-      final filteredList = missionEventShowList.value.where((element) {
-        DateTime eventDate = DateTime.parse(element.date.toString());
-
-        // Ensure the event date is within the range (inclusive of start and end dates)
-        return !eventDate.isBefore(start) && eventDate.isBefore(end);
-      }).toList();
-
-      // Handle empty or valid filtered results
-      if (filteredList.isEmpty) {
-        change([], status: RxStatus.empty());
-      } else {
-        change(filteredList, status: RxStatus.success());
-      }
-
-      debugPrint("filteredList:${jsonEncode(filteredList)}, Start: ${start}, End: ${end}");
-
-    } catch (e) {
-      // Handle any errors related to date parsing or filtering
-      debugPrint("Error: ${e.toString()}");
-      change([], status: RxStatus.error('An error occurred while filtering events: ${e.toString()}'));
-    }
-  }
-
-
-
-
-
-
-/// filtered date to
+  /// filtered date to
   RxString formattedEndDate="".obs;
 
   RxString formattedStartDate="".obs;
@@ -408,9 +340,9 @@ class MissionToReportController extends GetxController with StateMixin<List<Spec
 
     if (picked != null && picked != DateTime.now()) {
 
-        selectedYear = picked.year; // Update the selected year
+      selectedYear = picked.year; // Update the selected year
 
-       eventStartSearchDateController.value.text = picked.year.toString(); // Update the selected year
+      eventStartSearchDateController.value.text = picked.year.toString(); // Update the selected year
 
     }
 
@@ -450,8 +382,8 @@ class MissionToReportController extends GetxController with StateMixin<List<Spec
 
     if (picked != null && picked != DateTime(selectedYear!, 1, 1)) {
 
-        selectedMonth = picked.month;  // Set the selected month
-        selectedDay = picked.day;  // Set the selected day
+      selectedMonth = picked.month;  // Set the selected month
+      selectedDay = picked.day;  // Set the selected day
 
       Toast.successToast("selectedDay:${selectedMonth},,selectedDay:${selectedDay}");
     }
@@ -459,7 +391,7 @@ class MissionToReportController extends GetxController with StateMixin<List<Spec
 
   void eventSartSearchDate() async {
 
-     DateTime? pickedDate = await showDatePicker(
+    DateTime? pickedDate = await showDatePicker(
       context: Get.context!,
       initialDate: DateTime(2007, 12, 31), // Latest selectable date
       firstDate: DateTime(2000), // Earliest selectable date

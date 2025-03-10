@@ -49,7 +49,6 @@ class _AdminstratorOrganizationDetailsScreenState extends State<AdminstratorOrga
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context,constraints){
@@ -60,6 +59,7 @@ class _AdminstratorOrganizationDetailsScreenState extends State<AdminstratorOrga
         appBar: CustomRoyelAppbar(
           leftIcon: true,
           titleName: "Organization Details",
+          fontSize: 22,
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -118,7 +118,16 @@ class _AdminstratorOrganizationDetailsScreenState extends State<AdminstratorOrga
 
                    CustomButton(
                      onTap: () {
-                       //Get.toNamed(AppRoutes.adminstratorOrganizationReportScreen);
+                      ///Get.toNamed(AppRoutes.adminstratorOrganizationReportScreen);
+                       Get.toNamed(AppRoutes.adminstratorOrganizationReportScreen,
+                          arguments: [
+                            {
+                              "organizationId":organizationId,
+                            }
+                          ]
+                      );
+
+
                      },
                      title: "Report",
                      height:isTablet?40.h: 35.h,
