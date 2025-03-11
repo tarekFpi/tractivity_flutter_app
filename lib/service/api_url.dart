@@ -143,4 +143,22 @@ class ApiUrl {
   /// inviteVolunteer event to event
   static String inviteVolunteer({required String missionId}) =>"/organizer/event/volunteer/mission/$missionId";
 
+
+
+  //================== Volunteer api endpoint =============================
+
+
+  ///Retrive all invitation event notification by volunteer
+  static String inviteVolunteerEvent({required String userId}) =>"/volunteer/notification/$userId?type=event";
+
+  ///Retrive all invitation mission notification by volunteer
+  static String inviteVolunteerMission({required String userId}) =>"/volunteer/notification/$userId?type=mission";
+
+  ///Accept event invitation
+  static String acceptEventVolunteer="/volunteer/join-invitation";
+
+
+  ///=================== delete event invitation   ==============
+  static String deleteEventInviation ({required String eventId}) =>"/volunteer/event/invitation/reject/$eventId";
+
 }

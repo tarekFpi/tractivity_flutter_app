@@ -235,9 +235,9 @@ class OrganizationReportController extends GetxController with StateMixin<List<R
 
   ///Retrieve all mission by specific organization
   RxList<RetriveAllMissionByOrganizationResponse> organizationMissionDetailsShow = <RetriveAllMissionByOrganizationResponse>[].obs;
-
+  RxBool missionDetailsShowLoading = false.obs;
   Future<void> retriveAllMissionByOrganization(String organizationId) async{
-
+    missionDetailsShowLoading.value=true;
   try{
 
   var response = await ApiClient.getData(ApiUrl.organizationByMissionList(organizationId: organizationId));
@@ -252,12 +252,12 @@ class OrganizationReportController extends GetxController with StateMixin<List<R
 
       change(null, status: RxStatus.empty());
     }
-
+    missionDetailsShowLoading.value=false;
     debugPrint("missionEventShowList:${organizationMissionDetailsShow.value}");
     refresh();
 
   } else {
-
+    missionDetailsShowLoading.value=false;
     if (response.statusText == ApiClient.somethingWentWrong) {
       Toast.errorToast(AppStrings.checknetworkconnection);
       refresh();

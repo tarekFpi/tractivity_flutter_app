@@ -76,7 +76,7 @@ class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDe
                     ),
                   ),
                 ):
-                administratorController.missionDetailsShowLoading.value?Center(child: CustomLoader()):
+                administratorController.missionDetailsShowLoading.value?Center(child: CircularProgressIndicator(color: Colors.orange,)):
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -240,7 +240,7 @@ class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDe
                                         ],
                                       ),
 
-                                      administratorController.specificOrganizerDeleteLoading.value?CustomLoader():
+                                      administratorController.specificOrganizerDeleteLoading.value?Center(child: CircularProgressIndicator(color: Colors.orange,)):
                                       Container(
                                         padding: EdgeInsets.all(6),
                                         decoration: BoxDecoration(
@@ -354,7 +354,7 @@ class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDe
                                     SizedBox(
                                       width: 8.w,
                                     ),
-                                    administratorController.specificOrganizerDeleteLoading.value?CustomLoader():
+                                    administratorController.specificOrganizerDeleteLoading.value?Center(child: CircularProgressIndicator(color: Colors.orange,)):
                                     Container(
                                       padding: EdgeInsets.all(6),
                                       decoration: BoxDecoration(
@@ -701,7 +701,7 @@ class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDe
                         ),
                       ),
                     ):
-                    administratorController.missionEventShowLoading.value?const CustomLoader():
+                    administratorController.missionEventShowLoading.value?const Center(child: CircularProgressIndicator(color: Colors.orange,)):
                     ListView.builder(
                         itemCount: administratorController.missionEventShowList.length,
                         shrinkWrap: true,

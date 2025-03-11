@@ -4,12 +4,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
+import 'package:tractivity_app/helper/time_converter/time_converter.dart';
 import 'package:tractivity_app/main.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_icons/app_icons.dart';
 import 'package:tractivity_app/view/components/custom_royel_appbar/custom_royel_appbar.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/alert_dialog_event.dart';
+import 'package:tractivity_app/view/screens/home_screen/controller/home_controller.dart';
 import 'package:tractivity_app/view/screens/notification/notification_alert.dart';
 
 import '../../components/custom_button/custom_button.dart';
@@ -22,6 +24,19 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
+
+  final   homeController = Get.find<HomeController>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    homeController.notificationInvitationEventShow();
+
+    homeController.notificationInvitationMissionShow();
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context,constraints){
@@ -37,301 +52,318 @@ class _NotificationScreenState extends State<NotificationScreen> {
         body: Padding(
           padding: const EdgeInsets.all(12.0),
           child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-
-                CustomText(
-                  text: "Event invitation",
-                  fontSize:isTablet?12.sp: 18.sp,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.primary,
-                ),
-
-                SizedBox(
-                  height: 16.h,
-                ),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+            child: Obx(
+                () {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
-                    SvgPicture.asset(
-                      AppIcons.userIcons,
-                      width: isTablet?60.w:45.w,
-                      height: isTablet?60.h:45.h,
+                    CustomText(
+                      text: "Event invitation",
+                      fontSize:isTablet?12.sp: 18.sp,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.primary,
                     ),
 
                     SizedBox(
-                        width: 8.w
+                      height: 16.h,
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
 
-                        const CustomText(
-                          text: "Nahid Hossain invite you for a event.",
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
+
+                    /// event notification list
+                    homeController.notificationInvitaionEventList.isEmpty?
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height/8,
+                      child: Center(
+                        child: CustomText(
+                          text: "No event invitation  yet!!",
+                          fontSize:isTablet?12.sp: 24.sp,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.lightRed,
                         ),
+                      ),
+                    ):
+                    homeController.notificationInvitationEventLodding.value?Center(child: Center(child: CircularProgressIndicator(color: Colors.orange,))):
+                    RefreshIndicator(child:ListView.builder(
+                       itemCount: homeController.notificationInvitaionEventList.value.length,
+                       shrinkWrap: true, //
+                       physics: NeverScrollableScrollPhysics(),
+                       itemBuilder: (BuildContext context, index) {
 
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        const CustomText(
-                          text: "20 June. 2024",
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                        ),
+                         final notificationModel = homeController.notificationInvitaionEventList?[index];
 
-                        const SizedBox(
-                          height: 8,
-                        ),
+                         return  GestureDetector(
+                           onTap: (){
+                             Get.toNamed(AppRoutes.joinDetailsScreen);
+                           },
+                           child: Padding(
+                             padding: const EdgeInsets.only(bottom: 12),
+                             child: Row(
+                               mainAxisAlignment: MainAxisAlignment.start,
+                               children: [
 
-                        Row(
-                          children: [
-                            CustomButton(
-                              onTap: () {
-                                Get.toNamed(AppRoutes.joinDetailsScreen);
-                              },
-                              title: "Explore",
-                              width: 70.w,
-                              height: 32.h,
-                              textColor: AppColors.black,
-                              fillColor: AppColors.primary,
-                              isBorder: true,
-                              fontSize: 14,
-                            ),
+                                 SvgPicture.asset(
+                                   AppIcons.userIcons,
+                                   width: isTablet?60.w:45.w,
+                                   height: isTablet?60.h:45.h,
+                                 ),
 
-                            const SizedBox(
-                              width: 12,
-                            ),
-                            CustomButton(
-                              onTap: () {
+                                 SizedBox(
+                                     width: 8.w
+                                 ),
+                                 Column(
+                                   mainAxisAlignment: MainAxisAlignment.start,
+                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                   children: [
 
-                                showDialog(
-                                  context: context,
-                                  builder: (ctx) => AlertDialog(
-                                    backgroundColor: Colors.white,
-                                    insetPadding: EdgeInsets.all(8),
-                                    contentPadding: EdgeInsets.all(8),
-                                    title: SizedBox(),
-                                    content: SizedBox(
-                                      width: MediaQuery.sizeOf(context).width,
-                                      child: AlertDialogEvent(title: "Are you sure you want to \n Delete this Event?",discription: "",),
-                                    ),
-                                  ),
-                                );
-                              },
-                              title: "Delete",
-                              width: 70.w,
-                              height: 32.h,
-                              textColor: AppColors.black,
-                              fillColor: AppColors.white_50,
-                              isBorder: true,
-                              fontSize: 14,
-                            ),
-                          ],
-                        )
-                      ],
-                    )
-                  ],
-                ),
+                                     CustomText(
+                                       text: "${notificationModel?.contentId?.creator?.name} invite you for a event.",
+                                       fontSize: 14,
+                                       fontWeight: FontWeight.w600,
+                                     ),
+
+                                     const SizedBox(
+                                       height: 8,
+                                     ),
+                                     CustomText(
+                                       text: "${DateConverter.timeFormetString2(notificationModel?.contentId?.date.toString())}",
+                                       fontSize: 12,
+                                       fontWeight: FontWeight.w600,
+                                     ),
+
+                                     const SizedBox(
+                                       height: 8,
+                                     ),
+
+                                     Row(
+                                       children: [
+                                         homeController.notificationInvitationEventAcceptLodding.value?Center(child: CircularProgressIndicator(color: Colors.orange,)):
+                                         CustomButton(
+                                           onTap: () {
+
+                                             homeController.acceptSpecificEvent(notificationModel?.id.toString()??"");
+                                           },
+                                           title: "Join",
+                                           width: 70.w,
+                                           height: 32.h,
+                                           textColor: AppColors.black,
+                                           fillColor: AppColors.primary,
+                                           isBorder: true,
+                                           fontSize: 14,
+                                         ),
+
+                                         const SizedBox(
+                                           width: 12,
+                                         ),
+                                         CustomButton(
+                                           onTap: () {
+
+                                             showDialog(
+                                               context: context,
+                                               builder: (ctx) => AlertDialog(
+                                                 backgroundColor: Colors.white,
+                                                 insetPadding: EdgeInsets.all(8),
+                                                 contentPadding: EdgeInsets.all(8),
+                                                 title: SizedBox(),
+                                                 content: SizedBox(
+                                                   width: MediaQuery.sizeOf(context).width,
+                                                   ///child: AlertDialogEvent(title: "Are you sure you want to \n Delete this Event?",discription: "",),
+                                                   child: SingleChildScrollView(
+                                                     child: Padding(
+                                                       padding: const EdgeInsets.all(8.0),
+                                                       child: Column(
+                                                         mainAxisSize: MainAxisSize.min,
+                                                         children: [
 
 
-                SizedBox(
-                  height: 12.h,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
+                                                           CustomText(
+                                                             text:"Are you sure you want to \n Delete this Event?",
+                                                             fontSize: 22,
+                                                             fontWeight: FontWeight.w600,
+                                                             color: AppColors.black_80,
+                                                           ),
 
-                    SvgPicture.asset(
-                      AppIcons.userIcons,
-                      width: isTablet?60.w:45.w,
-                      height: isTablet?60.h:45.h,
+                                                           SizedBox(
+                                                             height: 8.h,
+                                                           ),
+
+                                                           homeController.eventInvitationDeleteLoading.value?Center(child: CircularProgressIndicator(color: Colors.orange,)):
+                                                           CustomButton(onTap: (){
+
+                                                             homeController.organizationDelete(notificationModel?.id.toString()??"");
+
+                                                             if(homeController.eventInvitationDeleteLoading.value){
+                                                               Navigator.of(context).pop();
+                                                             }
+
+                                                           },title:"Yes",height:isTablet?70.h: 45.h,fontSize: 12.sp,),
+
+                                                           SizedBox(
+                                                             height: 12.h,
+                                                           ),
+                                                           CustomButton(onTap: (){
+                                                             Navigator.of(context).pop();
+                                                           },title:"NO",height:isTablet?70.h: 45.h,
+                                                             fontSize: 12.sp,fillColor: AppColors.white,
+                                                             textColor: AppColors.primary,
+                                                             isBorder: true,borderWidth: 1,)
+                                                         ],
+                                                       ),
+                                                     ),
+                                                   ),
+                                                 ),
+                                               ),
+                                             );
+                                           },
+                                           title: "Delete",
+                                           width: 70.w,
+                                           height: 32.h,
+                                           textColor: AppColors.black,
+                                           fillColor: AppColors.white_50,
+                                           isBorder: true,
+                                           fontSize: 14,
+                                         ),
+                                       ],
+                                     )
+                                   ],
+                                 )
+                               ],
+                             ),
+                           ),
+                         );
+                       }), onRefresh:  homeController.notificationInvitationEventShow),
+
+
+                    ///mission invitation details
+                    SizedBox(
+                      height: 24.h,
+                    ),
+                    CustomText(
+                      text: "Mission invitation",
+                      fontSize:isTablet?12.sp: 18.sp,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.primary,
                     ),
 
                     SizedBox(
-                        width: 8.w
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-
-                        const CustomText(
-                          text: "Jamal Hossain invite you for a event.",
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
-
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        const CustomText(
-                          text: "25 June. 2025",
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                        ),
-
-                        const SizedBox(
-                          height: 8,
-                        ),
-
-                        Row(
-                          children: [
-                            CustomButton(
-                              onTap: () {},
-                              title: "Explore",
-                              width: 70.w,
-                              height: 32.h,
-                              textColor: AppColors.black,
-                              fillColor: AppColors.primary,
-                              isBorder: true,
-                              fontSize: 14,
-                            ),
-
-                            const SizedBox(
-                              width: 12,
-                            ),
-                            CustomButton(
-                              onTap: () {
-
-                                showDialog(
-                                  context: context,
-                                  builder: (ctx) => AlertDialog(
-                                    backgroundColor: Colors.white,
-                                    insetPadding: EdgeInsets.all(8),
-                                    contentPadding: EdgeInsets.all(8),
-                                    title: SizedBox(),
-                                    content: SizedBox(
-                                      width: MediaQuery.sizeOf(context).width,
-                                      child: AlertDialogEvent(title: "Are you sure you want to \n Delete this Event?",discription: "",),
-                                    ),
-                                  ),
-                                );
-                              },
-                              title: "Delete",
-                              width: 70.w,
-                              height: 32.h,
-                              textColor: AppColors.black,
-                              fillColor: AppColors.white_50,
-                              isBorder: true,
-                              fontSize: 14,
-                            ),
-                          ],
-                        )
-                      ],
-                    )
-                  ],
-                ),
-
-                ///mission invitation details
-                SizedBox(
-                  height: 24.h,
-                ),
-                CustomText(
-                  text: "Mission invitation",
-                  fontSize:isTablet?12.sp: 18.sp,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.primary,
-                ),
-
-                SizedBox(
-                  height: 16.h,
-                ),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-
-                    SvgPicture.asset(
-                      AppIcons.userIcons,
-                      width: isTablet?60.w:45.w,
-                      height: isTablet?60.h:45.h,
+                      height: 16.h,
                     ),
 
+                    homeController.notificationInvitaionMissionList.isEmpty?
                     SizedBox(
-                        width: 8.w
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-
-                        const CustomText(
-                          text: "Mehedi Hasan invite you for a mission.",
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
+                      height: MediaQuery.of(context).size.height/8,
+                      child: Center(
+                        child: CustomText(
+                          text: "No mission invitation  yet!!",
+                          fontSize:isTablet?12.sp: 24.sp,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.lightRed,
                         ),
+                      ),
+                    ):
+                    homeController.notificationInvitationMissionLodding.value?Center(child: Center(child: CircularProgressIndicator(color: Colors.orange,))):
+                    ListView.builder(
+                        itemCount: homeController.notificationInvitaionMissionList.value.length,
+                        shrinkWrap: true, //
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (BuildContext context, index) {
 
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        const CustomText(
-                          text: "20 June. 2025",
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                        ),
+                          final missionModel = homeController.notificationInvitaionMissionList?[index];
 
-                        const SizedBox(
-                          height: 8,
-                        ),
+                          return  Padding(
+                            padding: const EdgeInsets.only(bottom: 12),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
 
-                        Row(
-                          children: [
-                            CustomButton(
-                              onTap: () {
+                                SvgPicture.asset(
+                                  AppIcons.userIcons,
+                                  width: isTablet?60.w:45.w,
+                                  height: isTablet?60.h:45.h,
+                                ),
 
-                             //   Get.toNamed(AppRoutes.organizerMissionDetailsScreen);
-                              },
-                              title: "Join",
-                              width: 70.w,
-                              height: 32.h,
-                              textColor: AppColors.black,
-                              fillColor: AppColors.primary,
-                              isBorder: true,
-                              fontSize: 14,
-                            ),
+                                SizedBox(
+                                    width: 8.w
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
 
-                            const SizedBox(
-                              width: 12,
-                            ),
-                            CustomButton(
-                              onTap: () {
-
-                                showDialog(
-                                  context: context,
-                                  builder: (ctx) => AlertDialog(
-                                    backgroundColor: Colors.white,
-                                    insetPadding: EdgeInsets.all(8),
-                                    contentPadding: EdgeInsets.all(8),
-                                    title: SizedBox(),
-                                    content: SizedBox(
-                                      width: MediaQuery.sizeOf(context).width,
-                                      child: AlertDialogEvent(title: "Are you sure you want to \n Delete this Mission?",discription: "",),
+                                    CustomText(
+                                      text: "${missionModel?.contentId?.creator?.name} invite you for a mission.",
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
                                     ),
-                                  ),
-                                );
-                              },
-                              title: "Delete",
-                              width: 70.w,
-                              height: 32.h,
-                              textColor: AppColors.black,
-                              fillColor: AppColors.white_50,
-                              isBorder: true,
-                              fontSize: 14,
+
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                      CustomText(
+                                      text: "${DateConverter.timeFormetString2(missionModel?.createdAt.toString())}",
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+
+                                    Row(
+                                      children: [
+                                        CustomButton(
+                                          onTap: () {
+                                            Get.toNamed(AppRoutes.joinDetailsScreen);
+                                          },
+                                          title: "Join",
+                                          width: 70.w,
+                                          height: 32.h,
+                                          textColor: AppColors.black,
+                                          fillColor: AppColors.primary,
+                                          isBorder: true,
+                                          fontSize: 14,
+                                        ),
+
+                                        const SizedBox(
+                                          width: 12,
+                                        ),
+                                        CustomButton(
+                                          onTap: () {
+
+                                            showDialog(
+                                              context: context,
+                                              builder: (ctx) => AlertDialog(
+                                                backgroundColor: Colors.white,
+                                                insetPadding: EdgeInsets.all(8),
+                                                contentPadding: EdgeInsets.all(8),
+                                                title: SizedBox(),
+                                                content: SizedBox(
+                                                  width: MediaQuery.sizeOf(context).width,
+                                                  child: AlertDialogEvent(title: "Are you sure you want to \n Delete this Event?",discription: "",),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          title: "Delete",
+                                          width: 70.w,
+                                          height: 32.h,
+                                          textColor: AppColors.black,
+                                          fillColor: AppColors.white_50,
+                                          isBorder: true,
+                                          fontSize: 14,
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                )
+                              ],
                             ),
-                          ],
-                        )
-                      ],
-                    )
+                          );
+                        }),
                   ],
-                ),
-              ],
+                );
+              }
             ),
           ),
         ),

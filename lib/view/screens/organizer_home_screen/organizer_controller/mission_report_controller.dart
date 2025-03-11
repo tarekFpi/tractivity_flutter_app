@@ -235,11 +235,12 @@ class MissionToReportController extends GetxController with StateMixin<List<Spec
 
   ///===== Retrive all events by missionId ========================
   RxList<SpecificIdEventsResponeModel> missionEventShowList = <SpecificIdEventsResponeModel>[].obs;
-  
+  RxBool missionEventShowLoading = false.obs;
+
   Future<void> retriveAllEventByMissionShow(String missionId) async{
 
     change(null, status: RxStatus.loading());
-
+    missionEventShowLoading.value=true;
   try{
     var response = await ApiClient.getData(ApiUrl.retriveAllEventByMissionId(missionId: missionId));
 
@@ -253,13 +254,14 @@ class MissionToReportController extends GetxController with StateMixin<List<Spec
 
         change(null, status: RxStatus.empty());
       }
-
+      missionEventShowLoading.value=false;
       refresh();
 
 
       debugPrint("missionEventShowList:${missionEventShowList.value}");
 
     } else {
+      missionEventShowLoading.value=false;
 
       if (response.statusText == ApiClient.somethingWentWrong) {
         Toast.errorToast(AppStrings.checknetworkconnection);

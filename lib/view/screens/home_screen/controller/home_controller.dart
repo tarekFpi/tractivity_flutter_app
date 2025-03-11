@@ -11,6 +11,8 @@ import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
 import 'package:tractivity_app/utils/toast.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/organization_model/OrganizationResponeModel.dart';
+import 'package:tractivity_app/view/screens/home_screen/notification_evnet_inviteModel/RetriveNotificationEventInviteResponeModel.dart';
+import 'package:tractivity_app/view/screens/home_screen/notification_mission_inviteModel/notification_missionInviteModel.dart';
 
 
 class HomeController extends GetxController with StateMixin<List<OrganizationResponeModel>>  {
@@ -81,7 +83,6 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
       change(null, status: RxStatus.error(e.toString()));
     }
   }
-
 
 
   ///===== Join organization as volunteer ==========================
@@ -162,6 +163,187 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
 
     }
   }
+
+
+
+  ///Retrive all invitation event notification by volunteer
+
+  RxBool notificationInvitationEventLodding = false.obs;
+
+  RxList<RetriveNotificationEventInviteResponeModel> notificationInvitaionEventList = <RetriveNotificationEventInviteResponeModel>[].obs;
+
+  Future<void> notificationInvitationEventShow() async{
+
+    Toast.successToast("notificationInvitationEventShow");
+
+    notificationInvitationEventLodding.value=true;
+
+    var userId = await SharePrefsHelper.getString(AppConstants.userId);
+
+    var response = await ApiClient.getData(ApiUrl.inviteVolunteerEvent(userId: userId));
+
+    try{
+      if (response.statusCode == 200) {
+
+        notificationInvitaionEventList.value = List.from(response.body["data"].map((m)=> RetriveNotificationEventInviteResponeModel.fromJson(m)));
+
+        debugPrint("notificationInvitaionList:${organizationShowList.value}");
+
+        notificationInvitationEventLodding.value=false;
+        refresh();
+
+      } else {
+
+        notificationInvitationEventLodding.value=false;
+
+        if (response.statusText == ApiClient.somethingWentWrong) {
+          Toast.errorToast(AppStrings.checknetworkconnection);
+          refresh();
+          return;
+        } else {
+
+          ApiChecker.checkApi(response);
+
+          refresh();
+          return;
+        }
+      }
+    }catch(e){
+      Toast.errorToast("${e.toString()}");
+
+      debugPrint(e.toString());
+
+    }
+  }
+
+
+
+
+  ///Retrive all invitation mission notification by volunteer
+   RxBool notificationInvitationMissionLodding = false.obs;
+  RxList<RetriveNotificationMissionInviteResponeModel> notificationInvitaionMissionList = <RetriveNotificationMissionInviteResponeModel>[].obs;
+
+  Future<void> notificationInvitationMissionShow() async{
+
+    var userId = await SharePrefsHelper.getString(AppConstants.userId);
+
+    var response = await ApiClient.getData(ApiUrl.inviteVolunteerMission(userId: userId));
+
+    try{
+      if (response.statusCode == 200) {
+
+        notificationInvitaionMissionList.value = List.from(response.body["data"].map((m)=> RetriveNotificationMissionInviteResponeModel.fromJson(m)));
+
+        debugPrint("notificationInvitationMissionShow:${notificationInvitaionMissionList.value}");
+
+        refresh();
+
+      } else {
+
+        if (response.statusText == ApiClient.somethingWentWrong) {
+          Toast.errorToast(AppStrings.checknetworkconnection);
+          refresh();
+          return;
+        } else {
+
+          ApiChecker.checkApi(response);
+
+          refresh();
+          return;
+        }
+      }
+    }catch(e){
+      Toast.errorToast("${e.toString()}");
+
+      debugPrint(e.toString());
+
+    }
+  }
+
+
+
+///Accept event invitation volunteer ============
+  RxBool notificationInvitationEventAcceptLodding = false.obs;
+
+  Future<void> acceptSpecificEvent(String invitationId) async{
+
+    notificationInvitationEventAcceptLodding.value = true;
+
+    var userId = await SharePrefsHelper.getString(AppConstants.userId);
+
+    var body = {
+      "invitationId": invitationId,
+      "volunteerId": userId,
+    };
+
+    var response = await ApiClient.patchData(ApiUrl.acceptEventVolunteer,jsonEncode(body));
+
+    if (response.statusCode == 200) {
+
+      Toast.successToast(response.body['message']);
+
+      notificationInvitationEventAcceptLodding.value =false;
+       notificationInvitationEventShow();
+
+      refresh();
+    } else {
+
+      notificationInvitationEventAcceptLodding.value =false;
+
+      if (response.statusText == ApiClient.somethingWentWrong) {
+
+        Toast.errorToast(AppStrings.checknetworkconnection);
+        refresh();
+        return;
+      } else {
+
+        ApiChecker.checkApi(response);
+
+        refresh();
+        return;
+      }
+    }
+  }
+
+
+
+  ///===================== Reject event invitation by invitaionId =====================
+
+  RxBool eventInvitationDeleteLoading = false.obs;
+
+  Future<void> organizationDelete(String eventId) async{
+
+    eventInvitationDeleteLoading.value = true;
+
+    var response = await ApiClient.deleteData(ApiUrl.deleteEventInviation(eventId: eventId));
+
+    if (response.statusCode == 200) {
+
+      Toast.successToast(response.body['message']);
+
+      eventInvitationDeleteLoading.value =false;
+
+      notificationInvitationEventShow();
+
+    } else {
+
+      eventInvitationDeleteLoading.value =false;
+
+      if (response.statusText == ApiClient.somethingWentWrong) {
+
+        Toast.errorToast(AppStrings.checknetworkconnection);
+        refresh();
+        return;
+      } else {
+
+        ApiChecker.checkApi(response);
+
+        refresh();
+        return;
+      }
+    }
+  }
+
 
   @override
   void onInit() {

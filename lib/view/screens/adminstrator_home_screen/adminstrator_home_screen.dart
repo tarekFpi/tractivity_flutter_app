@@ -828,7 +828,6 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                       ),
                                                     );
 
-
                                                   },
                                                   title: "Delete",
                                                   width: 70.w,
@@ -963,7 +962,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                                   height: 8.h,
                                                                 ),
 
-                                                                administratorController.missionDeleteLoading.value?CustomLoader():
+                                                                administratorController.missionDeleteLoading.value?Center(child: CircularProgressIndicator(color: Colors.orange,)):
                                                                 CustomButton(onTap: (){
 
                                                                   administratorController.missionDelete(modelmission.id.toString());

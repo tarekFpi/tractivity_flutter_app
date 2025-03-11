@@ -93,7 +93,7 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                     ),
                   ),
                 ):
-                administratorController.missionDetailsShowLoading.value?CustomLoader():
+                administratorController.missionDetailsShowLoading.value?Center(child: CircularProgressIndicator(color: Colors.orange,)):
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -488,7 +488,7 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                         ),
                       ),
                     ):
-                    administratorController.missionEventShowLoading.value?CustomLoader():
+                    administratorController.missionEventShowLoading.value?Center(child: CircularProgressIndicator(color: Colors.orange,)):
                     ListView.builder(
                         itemCount: administratorController.missionEventShowList.length,
                         shrinkWrap: true,
@@ -502,13 +502,16 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                             child: Row(
                               children: [
 
+                                model.images?.isNotEmpty??true?
                                 CustomNetworkImage(
                                   /// imageUrl: AppConstants.eventImage,
                                   imageUrl:"${ApiUrl.imageUrl}${model.images?[0]}",
                                   height: isTablet ? 200.h : 170.h,
                                   width: isTablet ? 180.w : 180.w,
                                   borderRadius: BorderRadius.circular(10),
-                                ),
+                                ):Image.asset("assets/images/event_image.png",
+                                  height: isTablet ? 200.h : 170.h,
+                                  width: isTablet ? 180.w : 180.w,fit: BoxFit.fill,),
 
                                 const SizedBox(
                                   width: 10,

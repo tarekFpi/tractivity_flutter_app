@@ -221,7 +221,7 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
                                           Row(
                                             children: [
 
-                                              organizerController.acceptMissionsInvitationLoading.value?CustomLoader():
+                                              organizerController.acceptMissionsInvitationLoading.value?Center(child: CircularProgressIndicator(color: Colors.orange,)):
                                               CustomButton(
                                                 onTap: () {
 
@@ -269,7 +269,7 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
                                                                 height: 8.h,
                                                               ),
 
-                                                              organizerController.rejectMissionsInvitationLoading.value?CustomLoader():
+                                                              organizerController.rejectMissionsInvitationLoading.value?Center(child: CircularProgressIndicator(color: Colors.orange,)):
                                                               CustomButton(onTap: (){
 
                                                                 organizerController.rejectMissionsInvitation(model.id.toString());

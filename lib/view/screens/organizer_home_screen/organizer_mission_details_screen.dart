@@ -89,7 +89,7 @@ class _OrganizerMissionDetailsScreenState extends State<OrganizerMissionDetailsS
                       ),
                     ),
                   ):
-                  administratorController.missionDetailsShowLoading.value?CustomLoader():
+                  administratorController.missionDetailsShowLoading.value?Center(child: CircularProgressIndicator(color: Colors.orange,)):
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -482,7 +482,7 @@ class _OrganizerMissionDetailsScreenState extends State<OrganizerMissionDetailsS
                           ),
                         ),
                       ):
-                      administratorController.missionEventShowLoading.value?const CustomLoader():
+                      administratorController.missionEventShowLoading.value?const Center(child: CircularProgressIndicator(color: Colors.orange,)):
                       ListView.builder(
                           itemCount: administratorController.missionEventShowList.length,
                           shrinkWrap: true,

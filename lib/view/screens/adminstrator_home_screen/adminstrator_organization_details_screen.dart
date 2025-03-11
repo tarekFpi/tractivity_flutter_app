@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
+import 'package:tractivity_app/helper/time_converter/time_converter.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/toast.dart';
@@ -118,16 +119,14 @@ class _AdminstratorOrganizationDetailsScreenState extends State<AdminstratorOrga
 
                    CustomButton(
                      onTap: () {
-                      ///Get.toNamed(AppRoutes.adminstratorOrganizationReportScreen);
-                       Get.toNamed(AppRoutes.adminstratorOrganizationReportScreen,
-                          arguments: [
-                            {
-                              "organizationId":organizationId,
-                            }
-                          ]
-                      );
+                     //  Get.toNamed(AppRoutes.adminstratorOrganizationToReportScreen);
 
-
+                     Get.toNamed(AppRoutes.adminstratorOrganizationToReportScreen,
+                        arguments: [
+                          {
+                            "organizationId":organizationResponeModel.id,
+                          }
+                        ]);
                      },
                      title: "Report",
                      height:isTablet?40.h: 35.h,
@@ -156,7 +155,7 @@ class _AdminstratorOrganizationDetailsScreenState extends State<AdminstratorOrga
                         ),
                       ),
                     ):
-                    administratorController.organizationMissionDetailsShowLoading.value?CustomLoader():
+                    administratorController.organizationMissionDetailsShowLoading.value?Center(child: CircularProgressIndicator(color: Colors.orange,)):
                     ListView.builder(
                         itemCount: administratorController.organizationMissionDetailsShow.length,
                         shrinkWrap: true,
@@ -202,7 +201,7 @@ class _AdminstratorOrganizationDetailsScreenState extends State<AdminstratorOrga
                                           ),
 
                                             CustomText(
-                                            text: "${modelmission.createdAt}",
+                                            text: "${DateConverter.timeFormetString2(modelmission.createdAt.toString())}",
                                             fontSize: 12,
                                             color: AppColors.black_80,
                                             fontWeight: FontWeight.w400,

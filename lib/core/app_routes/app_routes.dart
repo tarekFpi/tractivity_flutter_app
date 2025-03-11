@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstratior_eventlist_screen.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrator_event_details_screen.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrator_home_screen.dart';
-import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrator_mission_details_screen.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrator_organization_details_screen.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrator_organization_report_screen.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/event_complete_screen.dart';
@@ -132,7 +131,7 @@ class AppRoutes {
   static const String organizerEventCreateScreen = "/OrganizerEventCreateScreen";
   static const String adminstratorOrganizationDetailsScreen = "/AdminstratorOrganizationDetailsScreen";
   static const String joinOrganizationScreen = "/joinOrganizationScreen";
-  static const String adminstratorOrganizationReportScreen = "/AdminstratorOrganizationReportScreen";
+  static const String adminstratorOrganizationToReportScreen = "/AdminstratorOrganizationToReportScreen";
 
   static List<GetPage> routes = [
 
@@ -208,7 +207,7 @@ class AppRoutes {
     GetPage(name: organizerMissionDetailsScreen, page: () => OrganizerMissionDetailsScreen()),
     GetPage(name: adminstratorOrganizationDetailsScreen, page: () => AdminstratorOrganizationDetailsScreen()),
     GetPage(name: joinOrganizationScreen, page: () => JoinOrganizationScreen()),
-    GetPage(name: adminstratorOrganizationReportScreen, page: () => AdminstratorOrganizationReportScreen()),
+    GetPage(name: adminstratorOrganizationToReportScreen, page: () => AdminstratorOrganizationToReportScreen()),
   ];
 
 }

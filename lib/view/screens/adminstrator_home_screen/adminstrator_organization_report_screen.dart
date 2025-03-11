@@ -20,19 +20,17 @@ import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:tractivity_app/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/controller/administratior_controller.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/controller/organization_report_controller.dart';
-import 'package:tractivity_app/view/screens/adminstrator_home_screen/organization_model/OrganizationResponeModel.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/specific_organization_mission/retriveAllMissionByOrganizationResponse.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_controller/organizer_controller.dart';
 
-class AdminstratorOrganizationReportScreen extends StatefulWidget {
-  const AdminstratorOrganizationReportScreen({super.key});
+class AdminstratorOrganizationToReportScreen extends StatefulWidget {
+  const AdminstratorOrganizationToReportScreen({super.key});
 
   @override
-  State<AdminstratorOrganizationReportScreen> createState() => _AdminstratorOrganizationReportScreenState();
+  State<AdminstratorOrganizationToReportScreen> createState() => _AdminstratorOrganizationToReportScreenState();
 }
 
-class _AdminstratorOrganizationReportScreenState extends State<AdminstratorOrganizationReportScreen> {
-
+class _AdminstratorOrganizationToReportScreenState extends State<AdminstratorOrganizationToReportScreen> {
 
 
   final  organizerController = Get.find<OrganizerController>();
@@ -40,8 +38,6 @@ class _AdminstratorOrganizationReportScreenState extends State<AdminstratorOrgan
   final administratorController = Get.put(AdministratiorController());
 
   String organizationId="";
-
-  //late final OrganizationResponeModel organizationResponeModel;
 
   final missionReportController = Get.put(OrganizationReportController());
 
@@ -58,10 +54,11 @@ class _AdminstratorOrganizationReportScreenState extends State<AdminstratorOrgan
 
       organizationId = Get.arguments[0]["organizationId"];
 
-      missionReportController.retriveAllMissionByOrganization(organizationId);
+     missionReportController.retriveAllMissionByOrganization(organizationId);
 
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context,constraints){
@@ -72,8 +69,16 @@ class _AdminstratorOrganizationReportScreenState extends State<AdminstratorOrgan
 
         floatingActionButton: FloatingActionButton.extended(onPressed: ()async{
 
-          await requestPermissions();
-          await generateAndDownloadPDF();
+          if(missionReportController.obs.value.state?.isNotEmpty??true){
+
+            await requestPermissions();
+            await generateAndDownloadPDF();
+
+          }else{
+
+            Toast.errorToast("No Mission yet!!");
+          }
+
         },
           backgroundColor: Colors.amber,
           label: Row(
@@ -107,14 +112,28 @@ class _AdminstratorOrganizationReportScreenState extends State<AdminstratorOrgan
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
 
-                      CustomText(
-                        textAlign: TextAlign.start,
-                        text: "Organizations",
-                        fontSize:isTablet?6.sp: 16.sp,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.primary,
-                        bottom: 5,
-                      ),
+                     Row(
+                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                       children: [
+                         CustomText(
+                           textAlign: TextAlign.start,
+                           text: "Organizations",
+                           fontSize:isTablet?6.sp: 16.sp,
+                           fontWeight: FontWeight.w500,
+                           color: AppColors.primary,
+                           bottom: 5,
+                         ),
+                         FloatingActionButton.small(onPressed: (){
+
+
+                         missionReportController.retriveAllMissionByOrganization(organizationId);
+
+                         }, child:  missionReportController.missionDetailsShowLoading.value?CircularProgressIndicator(color: Colors.white,strokeWidth: 1.0,
+                           valueColor: AlwaysStoppedAnimation<Color>(Colors.white),):Icon(Icons.refresh, color: Colors.white,),
+                           backgroundColor: AppColors.primary,
+                         )
+                       ],
+                     ),
 
                       ListView.builder(
                           itemCount: administratorController.missionDetailsShowList.value.connectedOrganizations?.length,
@@ -822,79 +841,95 @@ class _AdminstratorOrganizationReportScreenState extends State<AdminstratorOrgan
                       ),
 
                       missionReportController.obx((state){
-                        return   ListView.builder(
-                            itemCount: state?.length,
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemBuilder: (BuildContext context, int index) {
+                        
+                          if(state?.isEmpty??true){
+                            return SizedBox(
+                              height: MediaQuery.of(context).size.height/2,
+                              child: Center(
+                                child: CustomText(
+                                  text: "No mission yet!!",
+                                  fontSize:isTablet?12.sp: 24.sp,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.lightRed,
+                                ),
+                              ),
+                            );
+                          }else{
+                            return ListView.builder(
+                                itemCount: state?.length,
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemBuilder: (BuildContext context, int index) {
 
-                              final model = state?[index];
+                                  final model = state?[index];
 
-                              return Card(
-                                color: Colors.white,
-                                elevation: 0.2,
-                                child: ExpansionTile(
-                                  shape: Border(),
-                                  title: Text("${model?.name}",style: TextStyle(fontSize: isTablet?9.sp:14.sp),),
-                                  children: [
+                                  return Card(
+                                    color: Colors.white,
+                                    elevation: 0.2,
+                                    child: ExpansionTile(
+                                      shape: Border(),
+                                      title: Text("${model?.name}",style: TextStyle(fontSize: isTablet?9.sp:14.sp),),
+                                      children: [
 
-                                    Container(
-                                      alignment: Alignment.centerLeft,
-                                      decoration: BoxDecoration(
-                                        color: AppColors.grey_3.withOpacity(0.3),
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
+                                        Container(
+                                          alignment: Alignment.centerLeft,
+                                          decoration: BoxDecoration(
+                                            color: AppColors.grey_3.withOpacity(0.3),
+                                            borderRadius: BorderRadius.circular(15),
+                                          ),
 
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-
-                                            CustomText(
-                                              textAlign: TextAlign.start,
-                                              text: "Hours: ${model?.report?.hours}",
-                                              maxLines: 3,
-                                              fontSize:isTablet?6.sp: 14,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-
-                                            SizedBox(
-                                              height: 4.h,
-                                            ),
-
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
 
                                                 CustomText(
                                                   textAlign: TextAlign.start,
-                                                  text: "Mileage: ${model?.report?.mileage}",
+                                                  text: "Hours: ${model?.report?.hours}",
                                                   maxLines: 3,
                                                   fontSize:isTablet?6.sp: 14,
                                                   fontWeight: FontWeight.w500,
-                                                  bottom: 5,
                                                 ),
 
-                                                FloatingActionButton.small(onPressed: (){
+                                                SizedBox(
+                                                  height: 4.h,
+                                                ),
 
-                                                 generateSpecificDownloadPDF(model);
-                                                },
-                                                  backgroundColor: Colors.amber,
-                                                  child: Icon(Icons.arrow_circle_down_outlined,color: Colors.white,),)
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+
+                                                    CustomText(
+                                                      textAlign: TextAlign.start,
+                                                      text: "Mileage: ${model?.report?.mileage}",
+                                                      maxLines: 3,
+                                                      fontSize:isTablet?6.sp: 14,
+                                                      fontWeight: FontWeight.w500,
+                                                      bottom: 5,
+                                                    ),
+
+                                                    FloatingActionButton.small(onPressed: (){
+
+                                                      generateSpecificDownloadPDF(model);
+                                                    },
+                                                      backgroundColor: Colors.amber,
+                                                      child: Icon(Icons.arrow_circle_down_outlined,color: Colors.white,),)
+                                                  ],
+                                                ),
+
                                               ],
                                             ),
+                                          ),
+                                        )
 
-                                          ],
-                                        ),
-                                      ),
-                                    )
+                                      ],
+                                    ),
+                                  );
+                                });
+                          }
 
-                                  ],
-                                ),
-                              );
-                            });
                       })
 
                     ],
@@ -1034,7 +1069,7 @@ class _AdminstratorOrganizationReportScreenState extends State<AdminstratorOrgan
               pw.SizedBox(height: 8.h),
               ///Event List Section Title
               pw.Text(
-                "Events",
+                "Missions",
                 style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold, color: PdfColors.blue),
               ),
 
@@ -1199,7 +1234,7 @@ class _AdminstratorOrganizationReportScreenState extends State<AdminstratorOrgan
                   padding: const pw.EdgeInsets.symmetric(horizontal: 8),
                   child: pw.Text(
                     textAlign: pw.TextAlign.start,
-                    "Report for ${missionReportController.formateDate.value},,${missionReportController.formateToDate.value}",
+                    "Report for ${missionReportController.formateDate.value},${missionReportController.formateToDate.value}",
                     style: pw.TextStyle(fontSize: 12, color: PdfColors.black),
                   ),
                 ),
@@ -1208,7 +1243,7 @@ class _AdminstratorOrganizationReportScreenState extends State<AdminstratorOrgan
               pw.SizedBox(height: 8.h),
               ///Event List Section Title
               pw.Text(
-                "Events",
+                "Missions",
                 style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold, color: PdfColors.blue),
               ),
 

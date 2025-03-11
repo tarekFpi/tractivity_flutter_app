@@ -32,7 +32,6 @@ class MissionEventReportScreen extends StatefulWidget {
 
 class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
 
-  final _searchController =TextEditingController();
 
   final  organizerController = Get.find<OrganizerController>();
 
@@ -117,13 +116,27 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
-                    CustomText(
-                      textAlign: TextAlign.start,
-                      text: "Organizations",
-                      fontSize:isTablet?6.sp: 16.sp,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.primary,
-                      bottom: 5,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CustomText(
+                          textAlign: TextAlign.start,
+                          text: "Organizations",
+                          fontSize:isTablet?6.sp: 16.sp,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.primary,
+                          bottom: 5,
+                        ),
+                        FloatingActionButton.small(onPressed: (){
+
+
+                          missionReportController.retriveAllEventByMissionShow(missionId);
+
+                        }, child:  missionReportController.missionEventShowLoading.value?CircularProgressIndicator(color: Colors.white,strokeWidth: 1.0,
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),):Icon(Icons.refresh, color: Colors.white,),
+                          backgroundColor: AppColors.primary,
+                        )
+                      ],
                     ),
 
                     ListView.builder(
@@ -853,79 +866,95 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
                     ),
 
                    missionReportController.obx((state){
-                     return   ListView.builder(
-                         itemCount: state?.length,
-                         shrinkWrap: true,
-                         physics: NeverScrollableScrollPhysics(),
-                         itemBuilder: (BuildContext context, int index) {
 
-                           final model = state?[index];
+                     if(state?.isEmpty??true){
+                       return SizedBox(
+                         height: MediaQuery.of(context).size.height/2,
+                         child: Center(
+                           child: CustomText(
+                             text: "No event yet!!",
+                             fontSize:isTablet?12.sp: 24.sp,
+                             fontWeight: FontWeight.w700,
+                             color: AppColors.lightRed,
+                           ),
+                         ),
+                       );
+                     }else{
+                       return ListView.builder(
+                           itemCount: state?.length,
+                           shrinkWrap: true,
+                           physics: NeverScrollableScrollPhysics(),
+                           itemBuilder: (BuildContext context, int index) {
 
-                           return Card(
-                             color: Colors.white,
-                             elevation: 0.2,
-                             child: ExpansionTile(
-                               shape: Border(),
-                               title: Text("${model?.name}",style: TextStyle(fontSize: isTablet?9.sp:14.sp),),
-                               children: [
+                             final model = state?[index];
 
-                                 Container(
-                                   alignment: Alignment.centerLeft,
-                                   decoration: BoxDecoration(
-                                     color: AppColors.grey_3.withOpacity(0.3),
-                                     borderRadius: BorderRadius.circular(15),
-                                   ),
+                             return Card(
+                               color: Colors.white,
+                               elevation: 0.2,
+                               child: ExpansionTile(
+                                 shape: Border(),
+                                 title: Text("${model?.name}",style: TextStyle(fontSize: isTablet?9.sp:14.sp),),
+                                 children: [
 
-                                   child: Padding(
-                                     padding: const EdgeInsets.all(8.0),
-                                     child: Column(
-                                       mainAxisAlignment: MainAxisAlignment.start,
-                                       crossAxisAlignment: CrossAxisAlignment.start,
-                                       children: [
-
-                                         CustomText(
-                                           textAlign: TextAlign.start,
-                                           text: "Hours: ${model?.report?.hours}",
-                                           maxLines: 3,
-                                           fontSize:isTablet?6.sp: 14,
-                                           fontWeight: FontWeight.w500,
-                                         ),
-
-                                         SizedBox(
-                                           height: 4.h,
-                                         ),
-
-                                         Row(
-                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                           children: [
-
-                                             CustomText(
-                                               textAlign: TextAlign.start,
-                                               text: "Mileage: ${model?.report?.mileage}",
-                                               maxLines: 3,
-                                               fontSize:isTablet?6.sp: 14,
-                                               fontWeight: FontWeight.w500,
-                                               bottom: 5,
-                                             ),
-
-                                             FloatingActionButton.small(onPressed: (){
-
-                                               generateSpecificDownloadPDF(model);
-                                             },
-                                               backgroundColor: Colors.amber,
-                                               child: Icon(Icons.arrow_circle_down_outlined,color: Colors.white,),)
-                                           ],
-                                         ),
-
-                                       ],
+                                   Container(
+                                     alignment: Alignment.centerLeft,
+                                     decoration: BoxDecoration(
+                                       color: AppColors.grey_3.withOpacity(0.3),
+                                       borderRadius: BorderRadius.circular(15),
                                      ),
-                                   ),
-                                 )
 
-                               ],
-                             ),
-                           );
-                         });
+                                     child: Padding(
+                                       padding: const EdgeInsets.all(8.0),
+                                       child: Column(
+                                         mainAxisAlignment: MainAxisAlignment.start,
+                                         crossAxisAlignment: CrossAxisAlignment.start,
+                                         children: [
+
+                                           CustomText(
+                                             textAlign: TextAlign.start,
+                                             text: "Hours: ${model?.report?.hours}",
+                                             maxLines: 3,
+                                             fontSize:isTablet?6.sp: 14,
+                                             fontWeight: FontWeight.w500,
+                                           ),
+
+                                           SizedBox(
+                                             height: 4.h,
+                                           ),
+
+                                           Row(
+                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                             children: [
+
+                                               CustomText(
+                                                 textAlign: TextAlign.start,
+                                                 text: "Mileage: ${model?.report?.mileage}",
+                                                 maxLines: 3,
+                                                 fontSize:isTablet?6.sp: 14,
+                                                 fontWeight: FontWeight.w500,
+                                                 bottom: 5,
+                                               ),
+
+                                               FloatingActionButton.small(onPressed: (){
+
+                                                 generateSpecificDownloadPDF(model);
+                                               },
+                                                 backgroundColor: Colors.amber,
+                                                 child: Icon(Icons.arrow_circle_down_outlined,color: Colors.white,),)
+                                             ],
+                                           ),
+
+                                         ],
+                                       ),
+                                     ),
+                                   )
+
+                                 ],
+                               ),
+                             );
+                           });
+                        }
+
                       })
 
                   ],
