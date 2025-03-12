@@ -71,7 +71,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     ),
 
 
-                    /// event notification list
+                   /// event notification list
+                   homeController.notificationInvitationEventLodding.value?Center(child: CircularProgressIndicator(color: Colors.orange,)):
                     homeController.notificationInvitaionEventList.isEmpty?
                     SizedBox(
                       height: MediaQuery.of(context).size.height/8,
@@ -84,18 +85,22 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         ),
                       ),
                     ):
-                    homeController.notificationInvitationEventLodding.value?Center(child: Center(child: CircularProgressIndicator(color: Colors.orange,))):
                     RefreshIndicator(child:ListView.builder(
                        itemCount: homeController.notificationInvitaionEventList.value.length,
                        shrinkWrap: true, //
-                       physics: NeverScrollableScrollPhysics(),
-                       itemBuilder: (BuildContext context, index) {
+                        physics: AlwaysScrollableScrollPhysics(),
+                        itemBuilder: (BuildContext context, index) {
 
                          final notificationModel = homeController.notificationInvitaionEventList?[index];
 
                          return  GestureDetector(
                            onTap: (){
-                             Get.toNamed(AppRoutes.joinDetailsScreen);
+                             Get.toNamed(AppRoutes.joinDetailsScreen,arguments: [
+                               {
+                                 "eventId":notificationModel?.contentId?.id,
+                                 "inviationId":notificationModel?.id
+                               }
+                             ]);
                            },
                            child: Padding(
                              padding: const EdgeInsets.only(bottom: 12),
@@ -141,8 +146,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                          homeController.notificationInvitationEventAcceptLodding.value?Center(child: CircularProgressIndicator(color: Colors.orange,)):
                                          CustomButton(
                                            onTap: () {
-
-                                             homeController.acceptSpecificEvent(notificationModel?.id.toString()??"");
+                                             /// last parameter id event
+                                             homeController.acceptSpecificEvent(notificationModel?.id.toString()??"",false,notificationModel?.contentId?.id.toString()??"");
                                            },
                                            title: "Join",
                                            width: 70.w,
@@ -232,10 +237,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
                              ),
                            ),
                          );
-                       }), onRefresh:  homeController.notificationInvitationEventShow),
+                       }), onRefresh: ()async {
+                      await  homeController.notificationInvitationEventShow();
+                      await   homeController.notificationInvitationMissionShow();
+                    }),
 
 
-                    ///mission invitation details
+                  ///mission invitation details
                     SizedBox(
                       height: 24.h,
                     ),
@@ -250,6 +258,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       height: 16.h,
                     ),
 
+                    homeController.notificationInvitationMissionLodding.value?
+                    Center(child: CircularProgressIndicator(color: Colors.orange,)):
                     homeController.notificationInvitaionMissionList.isEmpty?
                     SizedBox(
                       height: MediaQuery.of(context).size.height/8,
@@ -262,7 +272,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         ),
                       ),
                     ):
-                    homeController.notificationInvitationMissionLodding.value?Center(child: Center(child: CircularProgressIndicator(color: Colors.orange,))):
                     ListView.builder(
                         itemCount: homeController.notificationInvitaionMissionList.value.length,
                         shrinkWrap: true, //

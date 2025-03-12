@@ -100,6 +100,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                       ///============  organization show  Event ==============================
                       if(administratorController.adminstratior_currentIndex.value==0)
 
+                        administratorController.organizationShowLoading.value?Center(child: CircularProgressIndicator(color: Colors.orange,)):
                         administratorController.organizationShowList.isEmpty?
                         SizedBox(
                           height: MediaQuery.of(context).size.height/2,
@@ -112,7 +113,6 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                             ),
                           ),
                         ):
-                        administratorController.organizationShowLoading.value?CustomLoader():
                         Column(
                             children: List.generate(administratorController.organizationShowList.length, (index) {
 
@@ -851,6 +851,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                       ///============  Mission show  Event ==============================
                       if(administratorController.adminstratior_currentIndex.value==1)
 
+                        administratorController.missionShowLoading.value?Center(child: CircularProgressIndicator(color: Colors.orange,)):
                         administratorController.missionShowList.isEmpty?
                         SizedBox(
                           height: MediaQuery.of(context).size.height/2,
@@ -862,7 +863,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                               color: AppColors.lightRed,
                             ),
                           ),
-                        ):administratorController.missionShowLoading.value?CustomLoader():
+                        ):
                         Column(
                             children: List.generate(administratorController.missionShowList.length, (index) {
 
@@ -1617,7 +1618,8 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
 
                                   Obx(()=> Padding(
                                     padding: const EdgeInsets.only(left: 12,right: 12),
-                                    child:administratorController.createOrganLoading.value?CustomLoader(): CustomButton(
+                                    child:administratorController.createOrganLoading.value?Center(child: CircularProgressIndicator(color: Colors.orange,))
+                                        : CustomButton(
                                       onTap: () {
 
                                         if(administratorController.organizationDescriptionController.value.text==""){
@@ -2223,7 +2225,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
 
                                       Padding(
                                         padding: const EdgeInsets.only(left: 12,right: 12,bottom: 12),
-                                        child:administratorController.createMissionLoading.value?CustomLoader(): CustomButton(
+                                        child:administratorController.createMissionLoading.value?Center(child: CircularProgressIndicator(color: Colors.orange,)): CustomButton(
                                           onTap: () {
 
                                             if(administratorController.organizationIdList.isEmpty){

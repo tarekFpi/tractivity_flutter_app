@@ -119,7 +119,8 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
                     ///============ Invited Mission ==================
                     if(organizerController.currentIndex.value ==0)
 
-                   /* organizerController.retriveInvitedMissionsList.isEmpty?
+                  organizerController.retriveInvitedMissionsLoading.value?Center(child: CircularProgressIndicator(color: Colors.amber,)):
+                    organizerController.retriveInvitedMissionsList.isEmpty?
                     SizedBox(
                       height: MediaQuery.of(context).size.height/2,
                       child: Center(
@@ -130,20 +131,8 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
                           color: AppColors.lightRed,
                         ),
                       ),
-                    ):organizerController.retriveInvitedMissionsLoading.value?CircularProgressIndicator(color: Colors.amber,):*/
-
-                    RefreshIndicator(child:organizerController.retriveInvitedMissionsList.isEmpty?
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height/2,
-                      child: Center(
-                        child: CustomText(
-                          text: "No invited Mission yet!!",
-                          fontSize:isTablet?12.sp: 24.sp,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.lightRed,
-                        ),
-                      ),
-                    ):organizerController.retriveInvitedMissionsLoading.value?CircularProgressIndicator(color: Colors.amber,): ListView.builder(
+                    ):
+                     ListView.builder(
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         itemCount: organizerController.retriveInvitedMissionsList.length,
@@ -316,9 +305,7 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
                               ),
                             ),
                           );
-                        }),
-                       onRefresh:organizerController.retriveInvitedMissionsShow,
-                    ) ,
+                        }) ,
 
                     ///============ mission List ========
                     if(organizerController.currentIndex.value ==1)
@@ -390,6 +377,7 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
                           ///================ mission active list ==========================
                           if(organizerController.missionActiveInactiveStatus.value==false)
 
+                            organizerController.retrieveMissionsActiveLoading.value?Center(child: CircularProgressIndicator(color: Colors.amber,)):
                             organizerController.retriveActivieMissionsList.isEmpty?
                             SizedBox(
                               height: MediaQuery.of(context).size.height/2,
@@ -401,7 +389,7 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
                                   color: AppColors.lightRed,
                                 ),
                               ),
-                            ):organizerController.retrieveMissionsActiveLoading.value?CustomLoader():
+                            ):
                             ListView.builder(
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
@@ -776,6 +764,8 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
                           /// mission Inactive list
                           if(organizerController.missionActiveInactiveStatus.value==true)
                             ///organizerController.retrieveMissionsInActive();
+
+                            organizerController.retriveInvitedMissionsLoading.value?Center(child: CircularProgressIndicator(color: Colors.amber,)):
                             organizerController.retriveInactivieMissionsList.isEmpty?
                             SizedBox(
                               height: MediaQuery.of(context).size.height/2,
@@ -787,7 +777,7 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
                                   color: AppColors.lightRed,
                                 ),
                               ),
-                            ):organizerController.retriveInvitedMissionsLoading.value?CustomLoader():
+                            ):
                             ListView.builder(
                                     shrinkWrap: true,
                                     physics: NeverScrollableScrollPhysics(),

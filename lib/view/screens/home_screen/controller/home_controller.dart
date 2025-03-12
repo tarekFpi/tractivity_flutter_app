@@ -1,8 +1,8 @@
 
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/helper/shared_prefe/shared_prefe.dart';
 import 'package:tractivity_app/service/api_check.dart';
 import 'package:tractivity_app/service/api_client.dart';
@@ -13,6 +13,7 @@ import 'package:tractivity_app/utils/toast.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/organization_model/OrganizationResponeModel.dart';
 import 'package:tractivity_app/view/screens/home_screen/notification_evnet_inviteModel/RetriveNotificationEventInviteResponeModel.dart';
 import 'package:tractivity_app/view/screens/home_screen/notification_mission_inviteModel/notification_missionInviteModel.dart';
+import 'package:tractivity_app/view/screens/home_screen/retrive_my_eventModel/RetriveMyEventResponeModel.dart';
 
 
 class HomeController extends GetxController with StateMixin<List<OrganizationResponeModel>>  {
@@ -86,7 +87,6 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
 
 
   ///===== Join organization as volunteer ==========================
-
   RxBool joinOrganLoading = false.obs;
   Future<void> joinOrganizationVolunteer() async {
 
@@ -165,16 +165,12 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
   }
 
 
-
   ///Retrive all invitation event notification by volunteer
-
   RxBool notificationInvitationEventLodding = false.obs;
 
   RxList<RetriveNotificationEventInviteResponeModel> notificationInvitaionEventList = <RetriveNotificationEventInviteResponeModel>[].obs;
 
   Future<void> notificationInvitationEventShow() async{
-
-    Toast.successToast("notificationInvitationEventShow");
 
     notificationInvitationEventLodding.value=true;
 
@@ -215,8 +211,6 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
 
     }
   }
-
-
 
 
   ///Retrive all invitation mission notification by volunteer
@@ -265,7 +259,7 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
 ///Accept event invitation volunteer ============
   RxBool notificationInvitationEventAcceptLodding = false.obs;
 
-  Future<void> acceptSpecificEvent(String invitationId) async{
+  Future<void> acceptSpecificEvent(String invitationId,bool statue,String eventId) async{
 
     notificationInvitationEventAcceptLodding.value = true;
 
@@ -283,7 +277,18 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
       Toast.successToast(response.body['message']);
 
       notificationInvitationEventAcceptLodding.value =false;
-       notificationInvitationEventShow();
+      notificationInvitationEventShow();
+
+        if(statue==true){
+
+          Get.offNamed(AppRoutes.joinEventDetailsScreen,arguments: [
+            {
+              "eventId":eventId,
+              "inviationId":invitationId
+            }
+          ]);
+
+        }
 
       refresh();
     } else {
@@ -306,9 +311,7 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
   }
 
 
-
   ///===================== Reject event invitation by invitaionId =====================
-
   RxBool eventInvitationDeleteLoading = false.obs;
 
   Future<void> organizationDelete(String eventId) async{
@@ -345,6 +348,103 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
   }
 
 
+  ///Start work
+  RxBool startWorkEventLodding = false.obs;
+
+  Future<void> startWorkEvent(String volunteerId,String eventId) async{
+
+    startWorkEventLodding.value = true;
+
+    var userId = await SharePrefsHelper.getString(AppConstants.userId);
+
+    var body = {
+      "eventId": eventId,
+      "volunteerId": userId,
+    };
+
+    var response = await ApiClient.patchData(ApiUrl.startWorkEventVolunteer,jsonEncode(body));
+
+    if (response.statusCode == 200) {
+
+      Toast.successToast(response.body['message']);
+
+      startWorkEventLodding.value =false;
+      refresh();
+
+    } else {
+
+      startWorkEventLodding.value =false;
+
+      if (response.statusText == ApiClient.somethingWentWrong) {
+
+        Toast.errorToast(AppStrings.checknetworkconnection);
+        refresh();
+        return;
+      } else {
+
+        ApiChecker.checkApi(response);
+
+        refresh();
+        return;
+      }
+    }
+  }
+
+///
+  RxList<RetriveMyEventResponeModel> myEventShowList = <RetriveMyEventResponeModel>[].obs;
+
+  RxBool startWorkEventStatues = false.obs;
+
+  Future<void> myEventShow() async{
+
+    var userId = await SharePrefsHelper.getString(AppConstants.userId);
+
+    var response = await ApiClient.getData(ApiUrl.retriveMyEventVolunteer(userId: userId));
+
+    try{
+      if (response.statusCode == 200) {
+
+        myEventShowList.value = List.from(response.body["data"].map((m)=> RetriveMyEventResponeModel.fromJson(m)));
+
+        debugPrint("myEventShowList:${jsonEncode(myEventShowList)}");
+
+        for (int i = 0; i < myEventShowList.length; i++){
+
+          for (int a = 0; i < myEventShowList[i].joinedVolunteer!.length; a++){
+
+              if(myEventShowList[i].joinedVolunteer?[a].startInfo?.isStart==true && myEventShowList[i].joinedVolunteer?[a].volunteer==userId){
+
+                startWorkEventStatues.value=true;
+              }
+          }
+        }
+
+
+      } else {
+
+        change(null, status: RxStatus.empty());
+        if (response.statusText == ApiClient.somethingWentWrong) {
+          Toast.errorToast(AppStrings.checknetworkconnection);
+          refresh();
+          return;
+        } else {
+
+          ApiChecker.checkApi(response);
+
+          refresh();
+          return;
+        }
+      }
+    }catch(e){
+      Toast.errorToast("${e.toString()}");
+
+      debugPrint(e.toString());
+
+      change(null, status: RxStatus.error(e.toString()));
+    }
+  }
+  
+  
   @override
   void onInit() {
     // TODO: implement onInit

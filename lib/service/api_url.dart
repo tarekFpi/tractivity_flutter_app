@@ -161,4 +161,12 @@ class ApiUrl {
   ///=================== delete event invitation   ==============
   static String deleteEventInviation ({required String eventId}) =>"/volunteer/event/invitation/reject/$eventId";
 
+
+  ///Accept event Start work
+  static String startWorkEventVolunteer="/volunteer/event/start-work";
+
+  ///Retrive events by specific volunteer
+
+  static String retriveMyEventVolunteer({required String userId})=>"/volunteer/event/$userId/search?status=running";
+
 }
