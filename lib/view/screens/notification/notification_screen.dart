@@ -239,7 +239,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                          );
                        }), onRefresh: ()async {
                       await  homeController.notificationInvitationEventShow();
-                      await   homeController.notificationInvitationMissionShow();
+                       await   homeController.notificationInvitationMissionShow();
                     }),
 
 

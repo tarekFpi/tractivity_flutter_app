@@ -73,6 +73,9 @@ class _JoinDetailsScreenState extends State<JoinDetailsScreen> {
 
                       var connectedOrgsLeader = administratorController.retriveSpecificByEventShowList.value.missionId?.connectedOrganizers;
 
+                      var hours = administratorController.missionDetailsShowList.value.report?.hours;
+
+                      var mileage = administratorController.missionDetailsShowList.value.report?.mileage;
 
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -277,7 +280,6 @@ class _JoinDetailsScreenState extends State<JoinDetailsScreen> {
                                 color: AppColors.black_80,
                                 bottom: 6,
                               ),
-
                             ],
                           ),
 
@@ -516,25 +518,27 @@ class _JoinDetailsScreenState extends State<JoinDetailsScreen> {
                           ),
                           Row(
                             children: [
-
-                              CustomText(
-                                text: "working Time:${administratorController.retriveSpecificByEventShowList.value.report?.hours}",
-                                fontSize:isTablet?8.sp: 14.sp,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.primary,
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 4,vertical: 8),
+                                decoration: BoxDecoration(
+                                  color: AppColors.neutral02,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),child: CustomText(text: "Hours: ${hours.round()} H",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
                               ),
 
                               SizedBox(
-                                width: 8.w,
+                                width: 8.h,
                               ),
-                              CustomText(
-                                text: "Millage:${administratorController.retriveSpecificByEventShowList.value.report?.mileage}",
-                                fontSize:isTablet?8.sp: 14.sp,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.primary,
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 8,vertical: 8),
+                                decoration: BoxDecoration(
+                                  color: AppColors.neutral02,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),child: CustomText(text: "Millage: ${mileage.round()} km",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
                               ),
                             ],
                           ),
+
 
                           const Divider(
                             color: Colors.black,

@@ -65,7 +65,7 @@ class ContentId {
   List<String>? connectedOrganizations;
   List<String>? requestedOrganizers;
   List<String>? connectedOrganizers;
-  List<String>? requestedVolunteers;
+  List<dynamic>? requestedVolunteers;
   List<dynamic>? connectedVolunteers;
   String? mode;
   String? status;
@@ -100,7 +100,7 @@ class ContentId {
     connectedOrganizations: json["connectedOrganizations"] == null ? [] : List<String>.from(json["connectedOrganizations"]!.map((x) => x)),
     requestedOrganizers: json["requestedOrganizers"] == null ? [] : List<String>.from(json["requestedOrganizers"]!.map((x) => x)),
     connectedOrganizers: json["connectedOrganizers"] == null ? [] : List<String>.from(json["connectedOrganizers"]!.map((x) => x)),
-    requestedVolunteers: json["requestedVolunteers"] == null ? [] : List<String>.from(json["requestedVolunteers"]!.map((x) => x)),
+    requestedVolunteers: json["requestedVolunteers"] == null ? [] : List<dynamic>.from(json["requestedVolunteers"]!.map((x) => x)),
     connectedVolunteers: json["connectedVolunteers"] == null ? [] : List<dynamic>.from(json["connectedVolunteers"]!.map((x) => x)),
     mode: json["mode"],
     status: json["status"],
@@ -157,8 +157,8 @@ class Creator {
 }
 
 class Report {
-  int? hours;
-  int? mileage;
+  dynamic? hours;
+  dynamic? mileage;
 
   Report({
     this.hours,

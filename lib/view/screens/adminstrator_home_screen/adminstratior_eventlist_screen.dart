@@ -77,6 +77,9 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
         body: Obx(
            () {
 
+             var hours = administratorController.missionDetailsShowList.value.report?.hours;
+
+             var mileage = administratorController.missionDetailsShowList.value.report?.mileage;
 
             return SingleChildScrollView(
               child: Padding(
@@ -417,7 +420,7 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                           decoration: BoxDecoration(
                             color: AppColors.neutral02,
                             borderRadius: BorderRadius.circular(10),
-                          ),child: CustomText(text: "Hours: ${administratorController.missionDetailsShowList.value.report?.hours}",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
+                          ),child: CustomText(text: "Hours: ${hours.round()} H",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
                         ),
 
                         SizedBox(
@@ -428,7 +431,7 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                           decoration: BoxDecoration(
                             color: AppColors.neutral02,
                             borderRadius: BorderRadius.circular(10),
-                          ),child: CustomText(text: "Millage: ${administratorController.missionDetailsShowList.value.report?.mileage}",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
+                          ),child: CustomText(text: "Millage: ${mileage.round()} km",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
                         ),
                       ],
                     ),

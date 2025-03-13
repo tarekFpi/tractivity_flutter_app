@@ -390,7 +390,65 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
     }
   }
 
-///
+///End work event
+  RxBool endWorkEventLodding = false.obs;
+
+   RxDouble totalWorkedHour=0.0.obs;
+
+  RxDouble mileage=0.0.obs;
+
+  Rx<TextEditingController> totalWorkedHourController = TextEditingController().obs;
+
+  Rx<TextEditingController> mileageController = TextEditingController().obs;
+
+  Future<void> endWorkEvent(String volunteerId,String eventId) async{
+
+    startWorkEventLodding.value = true;
+
+    var userId = await SharePrefsHelper.getString(AppConstants.userId);
+
+    var body = {
+      "eventId": eventId,
+      "volunteerId": userId,
+    };
+
+    var response = await ApiClient.patchData(ApiUrl.endWorkEventVolunteer,jsonEncode(body));
+
+    if (response.statusCode == 200) {
+
+      Toast.successToast(response.body['message']);
+
+      totalWorkedHour.value =response.body["data"][0]["totalWorkedHour"];
+
+      mileage.value = response.body["data"][0]["mileage"];
+
+      totalWorkedHourController.value.text =totalWorkedHour.value.toString();
+
+      mileageController.value.text =mileage.value.toString();
+
+      startWorkEventLodding.value =false;
+      refresh();
+
+    } else {
+
+      startWorkEventLodding.value =false;
+
+      if (response.statusText == ApiClient.somethingWentWrong) {
+
+        Toast.errorToast(AppStrings.checknetworkconnection);
+        refresh();
+        return;
+      } else {
+
+        ApiChecker.checkApi(response);
+
+        refresh();
+        return;
+      }
+    }
+  }
+
+
   RxList<RetriveMyEventResponeModel> myEventShowList = <RetriveMyEventResponeModel>[].obs;
 
   RxBool startWorkEventStatues = false.obs;

@@ -67,7 +67,7 @@ class _AdminstratorOrganizationToReportScreenState extends State<AdminstratorOrg
 
       return Scaffold(
 
-        floatingActionButton: FloatingActionButton.extended(onPressed: ()async{
+      floatingActionButton: FloatingActionButton.extended(onPressed: ()async{
 
           if(missionReportController.obs.value.state?.isNotEmpty??true){
 
@@ -105,7 +105,12 @@ class _AdminstratorOrganizationToReportScreenState extends State<AdminstratorOrg
         body: SingleChildScrollView(
           child: Obx(
                   () {
-                return Padding(
+
+                    var hours = administratorController.missionDetailsShowList.value.report?.hours;
+
+                    var mileage = administratorController.missionDetailsShowList.value.report?.mileage;
+
+                    return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 16),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -188,7 +193,7 @@ class _AdminstratorOrganizationToReportScreenState extends State<AdminstratorOrg
                             decoration: BoxDecoration(
                               color: AppColors.neutral02,
                               borderRadius: BorderRadius.circular(10),
-                            ),child: CustomText(text: "Hours: ${administratorController.missionDetailsShowList.value.report?.hours}",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
+                            ),child: CustomText(text: "Hours: ${hours.round()} H",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
                           ),
 
                           SizedBox(
@@ -199,7 +204,7 @@ class _AdminstratorOrganizationToReportScreenState extends State<AdminstratorOrg
                             decoration: BoxDecoration(
                               color: AppColors.neutral02,
                               borderRadius: BorderRadius.circular(10),
-                            ),child: CustomText(text: "Millage: ${administratorController.missionDetailsShowList.value.report?.mileage}",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
+                            ),child: CustomText(text: "Millage: ${mileage.round()} km",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
                           ),
                         ],
                       ),

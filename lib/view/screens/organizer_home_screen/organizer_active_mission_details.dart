@@ -53,6 +53,10 @@ class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDe
 
       final isTablet = constraints.maxWidth > 600;
 
+      var hours = administratorController.missionDetailsShowList.value.report?.hours;
+
+      var mileage = administratorController.missionDetailsShowList.value.report?.mileage;
+
       return Scaffold(
          appBar: const CustomRoyelAppbar(
           leftIcon: true,
@@ -614,9 +618,6 @@ class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDe
                         ],
                       ),
 
-                      SizedBox(
-                      height: 12.h,
-                    ),
 
                     SizedBox(
                       height: 12.h,
@@ -628,7 +629,7 @@ class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDe
                           decoration: BoxDecoration(
                             color: AppColors.neutral02,
                             borderRadius: BorderRadius.circular(10),
-                          ),child: CustomText(text: "Hours: ${administratorController.missionDetailsShowList.value.report?.hours}",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
+                          ),child: CustomText(text: "Hours: ${hours.round()} H",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
                         ),
 
                         SizedBox(
@@ -639,7 +640,7 @@ class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDe
                           decoration: BoxDecoration(
                             color: AppColors.neutral02,
                             borderRadius: BorderRadius.circular(10),
-                          ),child: CustomText(text: "Millage: ${administratorController.missionDetailsShowList.value.report?.mileage}",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
+                          ),child: CustomText(text: "Millage: ${mileage.round()} km",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
                         ),
                       ],
                     ),

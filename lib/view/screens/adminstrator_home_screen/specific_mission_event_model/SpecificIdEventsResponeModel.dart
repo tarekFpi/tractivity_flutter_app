@@ -177,8 +177,8 @@ class InvitedVolunteer {
   Volunteer? volunteer;
   String? workTitle;
   String? workStatus;
-  int? totalWorkedHour;
-  int? mileage;
+  dynamic ? totalWorkedHour;
+  dynamic? mileage;
   String? id;
 
   InvitedVolunteer({
@@ -305,8 +305,8 @@ class ConnectedOrganization {
 }
 
 class Report {
-  int? hours;
-  int? mileage;
+  dynamic ? hours;
+  dynamic ? mileage;
 
   Report({
     this.hours,

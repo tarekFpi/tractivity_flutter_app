@@ -145,7 +145,7 @@ class ApiUrl {
 
 
 
-  //================== Volunteer api endpoint =============================
+  ///================== Volunteer api endpoint =============================
 
 
   ///Retrive all invitation event notification by volunteer
@@ -157,16 +157,16 @@ class ApiUrl {
   ///Accept event invitation
   static String acceptEventVolunteer="/volunteer/join-invitation";
 
-
   ///=================== delete event invitation   ==============
   static String deleteEventInviation ({required String eventId}) =>"/volunteer/event/invitation/reject/$eventId";
-
 
   ///Accept event Start work
   static String startWorkEventVolunteer="/volunteer/event/start-work";
 
-  ///Retrive events by specific volunteer
+  ///Accept event End work
+  static String endWorkEventVolunteer="/volunteer/event/end-work";
 
+  ///Retrive events by specific volunteer
   static String retriveMyEventVolunteer({required String userId})=>"/volunteer/event/$userId/search?status=running";
 
 }

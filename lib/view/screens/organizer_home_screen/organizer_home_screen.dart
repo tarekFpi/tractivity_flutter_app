@@ -119,7 +119,8 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
                     ///============ Invited Mission ==================
                     if(organizerController.currentIndex.value ==0)
 
-                  organizerController.retriveInvitedMissionsLoading.value?Center(child: CircularProgressIndicator(color: Colors.amber,)):
+                  organizerController.retriveInvitedMissionsLoading.value?
+                  Center(child: CircularProgressIndicator(color: Colors.amber,)):
                     organizerController.retriveInvitedMissionsList.isEmpty?
                     SizedBox(
                       height: MediaQuery.of(context).size.height/2,
