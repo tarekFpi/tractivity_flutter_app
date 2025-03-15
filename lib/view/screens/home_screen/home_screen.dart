@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
+import 'package:tractivity_app/service/api_url.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_icons/app_icons.dart';
@@ -29,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final HomeController homeController = Get.find<HomeController>();
+  final   homeController = Get.find<HomeController>();
 
   final storage =   GetStorage();
 
@@ -39,6 +40,8 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     storage.write("status", "volunteer");
+
+    homeController.retriveMyEventShow();
   }
 
 
@@ -190,21 +193,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                     borderWidth: .6,
                                   ),
 
-                                  /*    SizedBox(width: 10),
-                                  CustomButton(
-                                    onTap: () {
-                                      Get.toNamed(AppRoutes.donationScreen);
-                                    },
-                                    title: "Donate",
-                                    width: isTablet ? 170 : 90,
-                                    height: isTablet ? 60 : 32,
-                                    fontSize: isTablet ? 16 : 14,
-                                    textColor: AppColors.black,
-                                    fillColor: AppColors.white,
-                                    isBorder: true,
-                                    borderWidth: .6,
-                                  ),*/
-
                                 ],
                               ),
                             ],
@@ -238,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   /// Recent Events List
                   if(homeController.home_currentIndex.value ==0)
-                    Column(
+                      Column(
                       children: [
 
                         SizedBox(
@@ -253,22 +241,44 @@ class _HomeScreenState extends State<HomeScreen> {
                         SizedBox(
                           height: 12.h,
                         ),
-                        Column(
-                            children: List.generate(6, (index) {
+                        homeController.myEventShowLoading.value?Center(child: CircularProgressIndicator(color: Colors.orange,)):
+                        homeController.myEventShowList.isEmpty?
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height/2,
+                          child: Center(
+                            child: CustomText(
+                              text: "No Events yet!!",
+                              fontSize:isTablet?12.sp: 24.sp,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.lightRed,
+                            ),
+                          ),
+                        ):
+                        ListView.builder(
+                            itemCount: homeController.myEventShowList.length,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (BuildContext context, int index) {
 
-                              return Padding(
+                              final model = homeController.myEventShowList[index];
+
+                              return  Padding(
                                 padding: const EdgeInsets.only(bottom: 20.0),
                                 child: Row(
                                   children: [
 
+                                    model.images?.isNotEmpty??true?
                                     CustomNetworkImage(
-                                      imageUrl: AppConstants.eventImage,
+                                      /// imageUrl: AppConstants.eventImage,
+                                      imageUrl:"${ApiUrl.imageUrl}${model.images?[0]}",
                                       height: isTablet ? 200.h : 170.h,
-                                      width: isTablet ? 180.w : 170.w,
+                                      width: isTablet ? 180.w : 180.w,
                                       borderRadius: BorderRadius.circular(10),
-                                    ),
+                                    ):Image.asset("assets/images/event_image.png",
+                                      height: isTablet ? 200.h : 170.h,
+                                      width: isTablet ? 180.w : 180.w,fit: BoxFit.fill,),
 
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 10,
                                     ),
 
@@ -280,75 +290,100 @@ class _HomeScreenState extends State<HomeScreen> {
                                           width: 150.w,
                                           child: CustomText(
                                             textAlign: TextAlign.start,
-                                            text: "Cox’s Bazar Beach Helping Peolple",
+                                            text: "${model.name}",
                                             maxLines: 3,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
+                                            fontSize:isTablet?8.sp: 14.sp,
+                                            fontWeight: FontWeight.w600,
                                             bottom: 5,
                                           ),
                                         ),
+
                                         /// Location
                                         Row(
                                           children: [
-                                            Icon(
+                                            const Icon(
                                               Icons.location_on,
                                               color: AppColors.black,
                                               size: 20,
                                             ),
-                                            CustomText(
-                                              text: "Cox’s Bazar, Bangladesh",
-                                              fontSize: 12,
-                                              color: AppColors.black_80,
-                                              fontWeight: FontWeight.w400,
+                                            SizedBox(
+                                              width: 150.w,
+                                              child: CustomText(
+                                                text: "${model.address?.state},${model.address?.city},${model.address?.zip}",
+                                                ///  text: "${administratorController.getAddressFromLatLng(model.cords?.lat??0.0,model.cords?.lng??0.0)}",
+                                                fontSize: 12,
+                                                color: AppColors.black_80,
+                                                fontWeight: FontWeight.w400,
+                                                maxLines: 3,
+                                                textAlign: TextAlign.start,
+                                                overflow: TextOverflow.clip,
+                                              ),
                                             ),
                                           ],
                                         ),
-                                        SizedBox(
-                                          height: 5.h,
+                                        const SizedBox(
+                                          height: 5,
                                         ),
+
                                         /// Leader
                                         Row(
                                           children: [
                                             CustomNetworkImage(
                                               imageUrl: AppConstants.profileImage,
-                                              height: isTablet?45: 30,
-                                              width: isTablet?45: 30,
+                                              height: 30,
+                                              width: 30,
                                               boxShape: BoxShape.circle,
                                             ),
                                             CustomText(
-                                              text: "Mehedi",
-                                              fontSize: 14,
+                                              text: "${model.creator?.name}",
+                                              fontSize:isTablet?6.sp: 12.sp,
                                               color: AppColors.black,
                                               fontWeight: FontWeight.w600,
-                                              right: 10.w,
-                                              left: 10.w,
+                                              overflow: TextOverflow.ellipsis, // Show "..." for overflowing text
+                                              maxLines: 2,
+                                              textAlign: TextAlign.start,
+                                              left: 4,
                                             ),
+
                                             CustomText(
                                               text: "Leader",
-                                              fontSize: 14,
+                                              fontSize:isTablet?6.sp: 12.sp,
                                               color: AppColors.blue,
                                               fontWeight: FontWeight.w600,
-                                            ),
+                                              left: 4,                                        ),
                                           ],
                                         ),
-                                        SizedBox(
-                                          height: 10.h,
+                                        const SizedBox(
+                                          height: 10,
                                         ),
+
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-                                            InkWell(
+
+                                            GestureDetector(
                                               onTap: () {
 
-                                                Get.toNamed(AppRoutes.recentEventExploreDetails);
+                                               /*Get.toNamed(AppRoutes.exoloreCompleteDetailsScreen,arguments: [
+                                                  {
+                                                    "eventId":model.id
+                                                  }
+                                                ]);*/
+
+                                             Get.toNamed(AppRoutes.recentEventExploreDetails,arguments: [
+                                               {
+                                                 "eventId":model.id
+                                               }
+                                             ]);
+
                                               },
                                               child: Container(
-                                                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                                padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                                                 decoration: BoxDecoration(
                                                   color: AppColors.primary,
                                                   borderRadius: BorderRadius.circular(10),
                                                 ),
-                                                child: CustomText(
+                                                child: const CustomText(
                                                   text:  "Explore",
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w500,
@@ -357,6 +392,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                             ),
 
+
+
                                           ],
                                         ),
                                       ],
@@ -364,7 +401,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ],
                                 ),
                               );
-                            })),
+                            }),
                       ],
                     ),
 
@@ -475,7 +512,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
 
-                  SizedBox(height: isTablet ? 30 : 20),
+                   SizedBox(height: isTablet ? 30 : 20),
                 ],
               ),
             );

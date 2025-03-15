@@ -39,6 +39,7 @@ import 'package:tractivity_app/view/screens/home_screen/recent_event_explore_det
 import 'package:tractivity_app/view/screens/home_screen/user_event_profile/user_event_profile.dart';
 import 'package:tractivity_app/view/screens/home_screen/user_event_profile/volunteer_report_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/volunteer_chart_screen.dart';
+import 'package:tractivity_app/view/screens/home_screen/volunteer_to_mission_jon_screen.dart';
 import 'package:tractivity_app/view/screens/notification/notification_screen.dart';
 import 'package:tractivity_app/view/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/Invite_member_screen.dart';
@@ -115,6 +116,7 @@ class AppRoutes {
   static const String organizeDetailsScreen = "/OrganizeDetailsScreen";
   static const String organizeMapScreen = "/OrganizeMapScreen";
   static const String joinDetailsScreen = "/JoinDetailsScreen";
+  static const String volunteerToMissionJonScreen = "/VolunteerToMissionJonScreen";
   static const String joinEventDetailsScreen = "/JoinEventDetailsScreen";
   static const String addMemberScreen = "/AddMemberScreen";
   static const String editPersonProfileScreen = "/EditPersonProfileScreen";
@@ -208,6 +210,7 @@ class AppRoutes {
     GetPage(name: adminstratorOrganizationDetailsScreen, page: () => AdminstratorOrganizationDetailsScreen()),
     GetPage(name: joinOrganizationScreen, page: () => JoinOrganizationScreen()),
     GetPage(name: adminstratorOrganizationToReportScreen, page: () => AdminstratorOrganizationToReportScreen()),
+    GetPage(name: volunteerToMissionJonScreen, page: () => VolunteerToMissionJonScreen()),
   ];
 
 }

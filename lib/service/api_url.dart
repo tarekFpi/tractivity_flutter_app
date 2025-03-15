@@ -157,8 +157,18 @@ class ApiUrl {
   ///Accept event invitation
   static String acceptEventVolunteer="/volunteer/join-invitation";
 
+
+  ///Accept mission invitation by invitation Id
+  static String acceptMissionVolunteer({required String missionId}) =>"/volunteer/mission/invitation/accept/$missionId";
+
+
+
   ///=================== delete event invitation   ==============
-  static String deleteEventInviation ({required String eventId}) =>"/volunteer/event/invitation/reject/$eventId";
+  static String deleteEventInviation ({required String eventId}) =>"/volunteer/mission/invitation/accept/67c72ba6f5955bf766441917";
+
+
+  ///=================== delete mission invitation   ==============
+  static String deleteMissionInviation ({required String invitationId}) =>"/organizer/reject-invitation/$invitationId";
 
   ///Accept event Start work
   static String startWorkEventVolunteer="/volunteer/event/start-work";
@@ -168,5 +178,18 @@ class ApiUrl {
 
   ///Retrive events by specific volunteer
   static String retriveMyEventVolunteer({required String userId})=>"/volunteer/event/$userId/search?status=running";
+
+  /// volunteer completed event
+  static String retriveCompletedEventVolunteer({required String userId})=>"/volunteer/event/$userId/search?status=complete";
+
+  ///=================== search  volunteer completed event date  ==============
+  static String searchVolunteerEventSearch ({required String userId,required String query}) =>"/volunteer/event/$userId/search?status=complete&date=$query";
+
+  ///=================== search  volunteer completed event name  ==============
+  static String searchVolunteerEventNameSearch ({required String userId,required String query}) =>"/volunteer/event/$userId/search?query=$query&status=complete";
+
+
+  ///=================== volunteer  My event list  ==============
+  static String volunteerMyEventName ({required String userId}) =>"/volunteer/event/$userId/search?status=running";
 
 }

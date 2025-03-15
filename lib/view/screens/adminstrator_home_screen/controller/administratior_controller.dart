@@ -578,7 +578,7 @@ class AdministratiorController extends GetxController {
     if (query.isEmpty) {
 
       organizationShow();
-     refresh();
+      refresh();
 
     }else{
 
@@ -615,7 +615,6 @@ class AdministratiorController extends GetxController {
         }
       }
     }
-
   }
 
 

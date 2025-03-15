@@ -49,15 +49,6 @@ class _JoinEventDetailsScreenState extends State<JoinEventDetailsScreen> {
     // TODO: implement initState
     super.initState();
 
-/*
-    if(Get.arguments[0]["eventId"]!=null && Get.arguments[0]["inviationId"]!=null){
-      eventId = Get.arguments[0]["eventId"];
-
-      inviationId = Get.arguments[0]["inviationId"];
-      administratorController.retriveSpecificByEventShow(eventId);
-    }
-    var userId = await SharePrefsHelper.getString(AppConstants.userId);
-*/
 
     _initializeData();
   }
@@ -75,11 +66,7 @@ class _JoinEventDetailsScreenState extends State<JoinEventDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
-
-
-       return LayoutBuilder(builder: (context,constraints){
+   return LayoutBuilder(builder: (context,constraints){
 
          final isTablet = constraints.maxWidth > 600;
 

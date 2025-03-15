@@ -1,7 +1,9 @@
 
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/helper/shared_prefe/shared_prefe.dart';
 import 'package:tractivity_app/service/api_check.dart';
@@ -11,6 +13,8 @@ import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
 import 'package:tractivity_app/utils/toast.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/organization_model/OrganizationResponeModel.dart';
+import 'package:tractivity_app/view/screens/adminstrator_home_screen/specific_mission_event_model/SpecificIdEventsResponeModel.dart';
+import 'package:tractivity_app/view/screens/home_screen/completed_event_model/CompletedEventResponeModel.dart';
 import 'package:tractivity_app/view/screens/home_screen/notification_evnet_inviteModel/RetriveNotificationEventInviteResponeModel.dart';
 import 'package:tractivity_app/view/screens/home_screen/notification_mission_inviteModel/notification_missionInviteModel.dart';
 import 'package:tractivity_app/view/screens/home_screen/retrive_my_eventModel/RetriveMyEventResponeModel.dart';
@@ -311,10 +315,63 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
   }
 
 
+  ///Accept mission invitation by invitation Id ============
+  RxBool notificationInvitationMissionAcceptLodding = false.obs;
+
+  Future<void> acceptSpecificMission(String invitationId,bool statue,String missionId) async{
+
+    notificationInvitationMissionAcceptLodding.value = true;
+
+    var body = {
+      "invitationId": invitationId,
+      "missionId":missionId,
+    };
+
+    var response = await ApiClient.patchData(ApiUrl.acceptMissionVolunteer(missionId: invitationId),jsonEncode(body));
+
+    if (response.statusCode == 200) {
+
+      Toast.successToast(response.body['message']);
+
+      notificationInvitationMissionAcceptLodding.value =false;
+      notificationInvitationMissionShow();
+
+      if(statue==true){
+
+        Get.offNamed(AppRoutes.volunteerToMissionJonScreen,arguments: [
+          {
+            "missionId":missionId,
+            "inviationId":invitationId
+          }
+        ]);
+
+      }
+
+      refresh();
+    } else {
+
+      notificationInvitationMissionAcceptLodding.value =false;
+
+      if (response.statusText == ApiClient.somethingWentWrong) {
+
+        Toast.errorToast(AppStrings.checknetworkconnection);
+        refresh();
+        return;
+      } else {
+
+        ApiChecker.checkApi(response);
+
+        refresh();
+        return;
+      }
+    }
+  }
+
+
   ///===================== Reject event invitation by invitaionId =====================
   RxBool eventInvitationDeleteLoading = false.obs;
 
-  Future<void> organizationDelete(String eventId) async{
+  Future<void> eventDelete(String eventId) async{
 
     eventInvitationDeleteLoading.value = true;
 
@@ -346,6 +403,46 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
       }
     }
   }
+
+
+  ///===================== Reject mission invitation by invitaionId =====================
+  RxBool missionInvitationDeleteLoading = false.obs;
+  Future<void> missionDelete(String invitationId) async{
+    missionInvitationDeleteLoading.value = true;
+
+    var body = {
+      "eventId": "",
+    };
+
+    var response = await ApiClient.patchData(ApiUrl.deleteMissionInviation(invitationId: invitationId),jsonEncode(body));
+
+    if (response.statusCode == 200) {
+
+      Toast.successToast(response.body['message']);
+
+      missionInvitationDeleteLoading.value =false;
+
+      notificationInvitationMissionShow();
+
+    } else {
+
+      missionInvitationDeleteLoading.value =false;
+
+      if (response.statusText == ApiClient.somethingWentWrong) {
+
+        Toast.errorToast(AppStrings.checknetworkconnection);
+        refresh();
+        return;
+      } else {
+
+        ApiChecker.checkApi(response);
+
+        refresh();
+        return;
+      }
+    }
+  }
+
 
 
   ///Start work
@@ -449,38 +546,104 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
   }
 
 
-  RxList<RetriveMyEventResponeModel> myEventShowList = <RetriveMyEventResponeModel>[].obs;
 
-  RxBool startWorkEventStatues = false.obs;
+  ///======Retrive events by specific volunteer =========
 
-  Future<void> myEventShow() async{
+  RxList<CompletedEventResponeModel> completedEventShowList = <CompletedEventResponeModel>[].obs;
+  RxBool completedEventShowLoading = false.obs;
+
+  Future<void> retriveCompletedEventShow() async{
 
     var userId = await SharePrefsHelper.getString(AppConstants.userId);
 
-    var response = await ApiClient.getData(ApiUrl.retriveMyEventVolunteer(userId: userId));
+    completedEventShowLoading.value = true;
 
-    try{
+    var response = await ApiClient.getData(ApiUrl.retriveCompletedEventVolunteer(userId: userId));
+
+    if (response.statusCode == 200) {
+
+      completedEventShowList.value = List.from(response.body["data"].map((m)=> CompletedEventResponeModel.fromJson(m)));
+
+      completedEventShowLoading.value =false;
+      refresh();
+
+    } else {
+
+      completedEventShowLoading.value =false;
+
+      if (response.statusText == ApiClient.somethingWentWrong) {
+        Toast.errorToast(AppStrings.checknetworkconnection);
+        refresh();
+        return;
+      } else {
+
+        ApiChecker.checkApi(response);
+
+        refresh();
+        return;
+      }
+    }
+  }
+
+
+  /// select date
+  RxString formattedStartDate="".obs;
+  Rx<TextEditingController> eventSelectedSearchDateController = TextEditingController().obs;
+
+  void eventSartSearchDate() async {
+
+    DateTime? pickedDate = await showDatePicker(
+      context: Get.context!,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+
+    if (pickedDate != null) {
+      formattedStartDate.value = DateFormat('yyyy-MM-dd').format(pickedDate);
+      searchVolunteerDateEventList(formattedStartDate.toString());
+
+    } else {
+      formattedStartDate.value = "Date not selected";
+    }
+  }
+
+
+/// Retrive events Date by specific volunteer search ====
+
+  RxBool searchVolunteerLoading = false.obs;
+
+  Future<void> searchVolunteerDateEventList(String query) async{
+
+    if (query.isEmpty) {
+
+      retriveCompletedEventShow();
+      refresh();
+
+    }else{
+
+      debugPrint("completedEventShowList:${query}");
+
+      var userId = await SharePrefsHelper.getString(AppConstants.userId);
+
+      searchVolunteerLoading.value = true;
+
+      var response = await ApiClient.getData(ApiUrl.searchVolunteerEventSearch(query: query,userId: userId));
+
+      completedEventShowList.refresh();
+
       if (response.statusCode == 200) {
 
-        myEventShowList.value = List.from(response.body["data"].map((m)=> RetriveMyEventResponeModel.fromJson(m)));
+        completedEventShowList.value = List.from(response.body["data"].map((m)=> CompletedEventResponeModel.fromJson(m)));
 
-        debugPrint("myEventShowList:${jsonEncode(myEventShowList)}");
+        searchVolunteerLoading.value =false;
 
-        for (int i = 0; i < myEventShowList.length; i++){
-
-          for (int a = 0; i < myEventShowList[i].joinedVolunteer!.length; a++){
-
-              if(myEventShowList[i].joinedVolunteer?[a].startInfo?.isStart==true && myEventShowList[i].joinedVolunteer?[a].volunteer==userId){
-
-                startWorkEventStatues.value=true;
-              }
-          }
-        }
-
+        refresh();
 
       } else {
 
-        change(null, status: RxStatus.empty());
+        searchVolunteerLoading.value =false;
+
         if (response.statusText == ApiClient.somethingWentWrong) {
           Toast.errorToast(AppStrings.checknetworkconnection);
           refresh();
@@ -493,16 +656,97 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
           return;
         }
       }
-    }catch(e){
-      Toast.errorToast("${e.toString()}");
-
-      debugPrint(e.toString());
-
-      change(null, status: RxStatus.error(e.toString()));
     }
   }
-  
-  
+
+
+  RxBool searchVolunteerNameLoading = false.obs;
+  /// Retrive events Name by specific volunteer search ====
+  Future<void> searchVolunteerNameEventList(String query) async{
+
+    if (query.isEmpty) {
+
+      retriveCompletedEventShow();
+      refresh();
+
+    }else{
+
+      debugPrint("completedEventNameShowList:${query}");
+
+      var userId = await SharePrefsHelper.getString(AppConstants.userId);
+
+      searchVolunteerNameLoading.value = true;
+
+      var response = await ApiClient.getData(ApiUrl.searchVolunteerEventNameSearch(query: query,userId: userId));
+
+      completedEventShowList.refresh();
+
+      if (response.statusCode == 200) {
+
+        completedEventShowList.value = List.from(response.body["data"].map((m)=> CompletedEventResponeModel.fromJson(m)));
+
+        searchVolunteerNameLoading.value =false;
+
+        refresh();
+
+      } else {
+
+        searchVolunteerNameLoading.value =false;
+
+        if (response.statusText == ApiClient.somethingWentWrong) {
+          Toast.errorToast(AppStrings.checknetworkconnection);
+          refresh();
+          return;
+        } else {
+
+          ApiChecker.checkApi(response);
+
+          refresh();
+          return;
+        }
+      }
+    }
+  }
+
+  ///======Retrive My events by specific volunteer =========
+
+  RxList<CompletedEventResponeModel> myEventShowList = <CompletedEventResponeModel>[].obs;
+  RxBool myEventShowLoading = false.obs;
+
+  Future<void> retriveMyEventShow() async{
+
+    var userId = await SharePrefsHelper.getString(AppConstants.userId);
+
+    myEventShowLoading.value = true;
+
+    var response = await ApiClient.getData(ApiUrl.volunteerMyEventName(userId: userId));
+
+    if (response.statusCode == 200) {
+
+      myEventShowList.value = List.from(response.body["data"].map((m)=> CompletedEventResponeModel.fromJson(m)));
+
+      myEventShowLoading.value =false;
+      refresh();
+
+    } else {
+
+      myEventShowLoading.value =false;
+
+      if (response.statusText == ApiClient.somethingWentWrong) {
+        Toast.errorToast(AppStrings.checknetworkconnection);
+        refresh();
+        return;
+      } else {
+
+        ApiChecker.checkApi(response);
+
+        refresh();
+        return;
+      }
+    }
+  }
+
+
   @override
   void onInit() {
     // TODO: implement onInit

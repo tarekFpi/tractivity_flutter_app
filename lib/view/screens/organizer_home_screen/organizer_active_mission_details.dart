@@ -53,20 +53,20 @@ class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDe
 
       final isTablet = constraints.maxWidth > 600;
 
-      var hours = administratorController.missionDetailsShowList.value.report?.hours;
-
-      var mileage = administratorController.missionDetailsShowList.value.report?.mileage;
-
       return Scaffold(
          appBar: const CustomRoyelAppbar(
           leftIcon: true,
           titleName: "Mission Details",
         ),
-
         body: SingleChildScrollView(
           child: Obx(
              () {
-              return Padding(
+
+               var hours = administratorController.missionDetailsShowList.value.report?.hours;
+
+               var mileage = administratorController.missionDetailsShowList.value.report?.mileage;
+
+               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 16),
                 child:administratorController.missionDetailsShowList.toString().isEmpty?
                 SizedBox(
@@ -625,25 +625,33 @@ class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDe
                     Row(
                       children: [
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 4,vertical: 8),
+                          padding: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
                           decoration: BoxDecoration(
                             color: AppColors.neutral02,
                             borderRadius: BorderRadius.circular(10),
-                          ),child: CustomText(text: "Hours: ${hours.round()} H",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
+                          ),
+                          child: CustomText(
+                            text: "Hours: ${hours != null ? hours.round() : 0} H",
+                            fontSize: isTablet ? 6 : 12.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
-
-                        SizedBox(
-                          width: 8.h,
-                        ),
+                        SizedBox(width: 8.h),
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 8,vertical: 8),
+                          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                           decoration: BoxDecoration(
                             color: AppColors.neutral02,
                             borderRadius: BorderRadius.circular(10),
-                          ),child: CustomText(text: "Millage: ${mileage.round()} km",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
+                          ),
+                          child: CustomText(
+                            text: "Mileage: ${mileage != null ? mileage.round() : 0} km",
+                            fontSize: isTablet ? 6 : 12.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ],
                     ),
+
 
 
                     SizedBox(
