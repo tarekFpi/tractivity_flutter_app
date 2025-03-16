@@ -43,7 +43,7 @@ class MissionToVolunteerController extends GetxController with StateMixin<List<R
        }
 
        refresh();
-       debugPrint("retrieveVolunteersMissionsInviteLoading:${retriveVolunteersMissionsList.toJson()}");
+       debugPrint("retrieveVolunteersMissionsInviteLoading:${retriveVolunteersMissionsList.value}");
 
      } else {
 
@@ -117,7 +117,7 @@ class MissionToVolunteerController extends GetxController with StateMixin<List<R
       "volunteers": volunteersIdList
     };
 
-    var response = await ApiClient.postData(ApiUrl.inviteVolunteerToMissionByMission(missionId: missionId), jsonEncode(body));
+    var response = await ApiClient.postData(ApiUrl.inviteVolunteerToMissionByMission(missionId: missionId), body);
 
     if (response.statusCode == 200) {
 
@@ -125,10 +125,12 @@ class MissionToVolunteerController extends GetxController with StateMixin<List<R
 
       Toast.successToast(response.body['message']!);
 
+      retrieveVolunteersToMissionsInvite(missionId);
+
       volunteersIdList.clear();
 
       selectedVolunteers.value=false;
-
+      Get.back();
     } else {
 
       voluteersLoading.value = false;

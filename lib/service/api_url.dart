@@ -164,7 +164,7 @@ class ApiUrl {
 
 
   ///=================== delete event invitation   ==============
-  static String deleteEventInviation ({required String eventId}) =>"/volunteer/mission/invitation/accept/67c72ba6f5955bf766441917";
+  static String deleteEventInviation ({required String invitationId}) =>"/volunteer/event/invitation/reject/$invitationId";
 
 
   ///=================== delete mission invitation   ==============
@@ -188,8 +188,9 @@ class ApiUrl {
   ///=================== search  volunteer completed event name  ==============
   static String searchVolunteerEventNameSearch ({required String userId,required String query}) =>"/volunteer/event/$userId/search?query=$query&status=complete";
 
-
   ///=================== volunteer  My event list  ==============
   static String volunteerMyEventName ({required String userId}) =>"/volunteer/event/$userId/search?status=running";
+
+
 
 }

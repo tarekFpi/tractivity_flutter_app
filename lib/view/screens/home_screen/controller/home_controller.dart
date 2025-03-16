@@ -1,9 +1,13 @@
 
 import 'dart:convert';
+import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/helper/shared_prefe/shared_prefe.dart';
 import 'package:tractivity_app/service/api_check.dart';
@@ -33,6 +37,7 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
 
   RxBool isExpanded = false.obs;
 
+  RxBool isUserRequested =false.obs;
 
   ///===== get all organizations except me as a volunteer ========================
   RxList<String> organizationIdList= <String>[].obs;
@@ -371,11 +376,11 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
   ///===================== Reject event invitation by invitaionId =====================
   RxBool eventInvitationDeleteLoading = false.obs;
 
-  Future<void> eventDelete(String eventId) async{
+  Future<void> eventDelete(String invitationId) async{
 
     eventInvitationDeleteLoading.value = true;
 
-    var response = await ApiClient.deleteData(ApiUrl.deleteEventInviation(eventId: eventId));
+    var response = await ApiClient.deleteData(ApiUrl.deleteEventInviation(invitationId: invitationId));
 
     if (response.statusCode == 200) {
 
@@ -448,7 +453,7 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
   ///Start work
   RxBool startWorkEventLodding = false.obs;
 
-  Future<void> startWorkEvent(String volunteerId,String eventId) async{
+  Future<void> startWorkEvent(String eventId) async{
 
     startWorkEventLodding.value = true;
 
@@ -467,7 +472,7 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
 
       startWorkEventLodding.value =false;
       refresh();
-
+      retriveSpecificByEventShow(eventId);
     } else {
 
       startWorkEventLodding.value =false;
@@ -487,6 +492,46 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
     }
   }
 
+  ///===================== retrive Specific event by Id event show =====================
+  Rx<SpecificIdEventsResponeModel> retriveSpecificByEventShowList = SpecificIdEventsResponeModel().obs;
+
+  RxBool retriveSpecificByEventShowLoading = false.obs;
+
+  Future<void> retriveSpecificByEventShow(String eventId) async{
+
+    retriveSpecificByEventShowLoading.value = true;
+
+    var response = await ApiClient.getData(ApiUrl.retriveBySpecificEventList(eventId: eventId));
+
+    if (response.statusCode == 200) {
+
+      retriveSpecificByEventShowList.value = SpecificIdEventsResponeModel.fromJson(response.body["data"]);
+
+      debugPrint("retriveSpecificByEventShowList:${organizationShowList.value}");
+
+
+      retriveSpecificByEventShowLoading.value =false;
+      refresh();
+
+    } else {
+
+      retriveSpecificByEventShowLoading.value =false;
+
+      if (response.statusText == ApiClient.somethingWentWrong) {
+        Toast.errorToast(AppStrings.checknetworkconnection);
+        refresh();
+        return;
+      } else {
+
+        ApiChecker.checkApi(response);
+
+        refresh();
+        return;
+      }
+    }
+  }
+
+
 ///End work event
   RxBool endWorkEventLodding = false.obs;
 
@@ -498,7 +543,7 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
 
   Rx<TextEditingController> mileageController = TextEditingController().obs;
 
-  Future<void> endWorkEvent(String volunteerId,String eventId) async{
+  Future<void> endWorkEvent(String eventId) async{
 
     startWorkEventLodding.value = true;
 
@@ -515,16 +560,17 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
 
       Toast.successToast(response.body['message']);
 
-      totalWorkedHour.value =response.body["data"][0]["totalWorkedHour"];
+      totalWorkedHour.value =response.body["data"]["totalWorkedHour"];
 
-      mileage.value = response.body["data"][0]["mileage"];
+      mileage.value = response.body["data"]["mileage"];
 
-      totalWorkedHourController.value.text =totalWorkedHour.value.toString();
+      totalWorkedHourController.value.text =totalWorkedHour.value.round().toString();
 
-      mileageController.value.text =mileage.value.toString();
+      mileageController.value.text =mileage.value.round().toString();
 
       startWorkEventLodding.value =false;
       refresh();
+      retriveSpecificByEventShow(eventId);
 
     } else {
 
@@ -544,7 +590,6 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
       }
     }
   }
-
 
 
   ///======Retrive events by specific volunteer =========
@@ -609,7 +654,7 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
   }
 
 
-/// Retrive events Date by specific volunteer search ====
+/// Retrive complete events Date by specific volunteer search ====
 
   RxBool searchVolunteerLoading = false.obs;
 
@@ -659,9 +704,8 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
     }
   }
 
-
-  RxBool searchVolunteerNameLoading = false.obs;
   /// Retrive events Name by specific volunteer search ====
+  RxBool searchVolunteerNameLoading = false.obs;
   Future<void> searchVolunteerNameEventList(String query) async{
 
     if (query.isEmpty) {
@@ -709,8 +753,8 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
   }
 
   ///======Retrive My events by specific volunteer =========
-
-  RxList<CompletedEventResponeModel> myEventShowList = <CompletedEventResponeModel>[].obs;
+  RxInt sliderCurrentIndex = 0.obs;
+  /*RxList<CompletedEventResponeModel> myEventShowList = <CompletedEventResponeModel>[].obs;
   RxBool myEventShowLoading = false.obs;
 
   Future<void> retriveMyEventShow() async{
@@ -723,7 +767,18 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
 
     if (response.statusCode == 200) {
 
-      myEventShowList.value = List.from(response.body["data"].map((m)=> CompletedEventResponeModel.fromJson(m)));
+      if (response.body['data'] == null || (response.body['data']).isEmpty) {
+
+        var response = await ApiClient.getData(ApiUrl.volunteerMyEventNameIntialized(userId: userId));
+        myEventShowList.value = List.from(response.body["data"].map((m)=> CompletedEventResponeModel.fromJson(m)));
+        refresh();
+
+      }else{
+
+        refresh();
+        myEventShowList.value = List.from(response.body["data"].map((m)=> CompletedEventResponeModel.fromJson(m)));
+      }
+
 
       myEventShowLoading.value =false;
       refresh();
@@ -744,7 +799,113 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
         return;
       }
     }
+  }*/
+
+/*
+  /// Retrive My events  specific volunteer search ====
+  Rx<TextEditingController> myeventController = TextEditingController().obs;
+  RxBool searchMyEventLoading = false.obs;
+
+  Future<void> searchMyEventList(String query) async{
+
+    if (query.isEmpty) {
+
+      retriveCompletedEventShow();
+      refresh();
+
+    }else{
+
+      debugPrint("myEventNameShowList:${query}");
+
+      var userId = await SharePrefsHelper.getString(AppConstants.userId);
+
+      searchVolunteerNameLoading.value = true;
+
+      var response = await ApiClient.getData(ApiUrl.searchVolunteerEventNameSearch(query: query,userId: userId));
+
+      myEventShowList.refresh();
+
+      if (response.statusCode == 200) {
+
+        myEventShowList.value = List.from(response.body["data"].map((m)=> CompletedEventResponeModel.fromJson(m)));
+
+        searchVolunteerNameLoading.value =false;
+
+        refresh();
+
+      } else {
+
+        searchVolunteerNameLoading.value =false;
+
+        if (response.statusText == ApiClient.somethingWentWrong) {
+          Toast.errorToast(AppStrings.checknetworkconnection);
+          refresh();
+          return;
+        } else {
+
+          ApiChecker.checkApi(response);
+
+          refresh();
+          return;
+        }
+      }
+    }
   }
+
+*/
+
+
+  ///===================== retrive Specific event by Id event download  =====================
+  void startDownload(String url ,String fileName) async {
+
+    String filePath = await downloadPDF(url, fileName);
+
+    if (filePath.isNotEmpty) {
+      await showDownloadNotification(filePath);
+    }
+  }
+
+  Future<void> showDownloadNotification(String filePath) async {
+
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+    AndroidNotificationDetails(
+      'pdf_download_channel',
+      'PDF Downloads',
+      channelDescription: 'Notifications for PDF downloads',
+      importance: Importance.high,
+      priority: Priority.high,
+    );
+
+    const NotificationDetails platformChannelSpecifics =
+    NotificationDetails(android: androidPlatformChannelSpecifics);
+
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      'Download Complete',
+      'Tap to open PDF',
+      platformChannelSpecifics,
+      payload: filePath,
+    );
+  }
+
+
+  Future<String> downloadPDF(String url, String fileName) async {
+    try {
+      Directory tempDir = await getApplicationDocumentsDirectory();
+      String filePath = '${tempDir.path}/$fileName';
+
+      await Dio().download(url, filePath);
+
+      return filePath;
+    } catch (e) {
+      print('Download error: $e');
+      return '';
+    }
+  }
+
 
 
   @override

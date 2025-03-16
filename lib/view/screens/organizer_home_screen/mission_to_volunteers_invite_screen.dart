@@ -47,6 +47,8 @@ class _MissionToVolunteersInviteScreenState extends State<MissionToVolunteersInv
 
   String query = "";
 
+  var missionId="";
+
   @override
   void initState() {
     // TODO: implement initState
@@ -58,6 +60,8 @@ class _MissionToVolunteersInviteScreenState extends State<MissionToVolunteersInv
     }
 
     missionToVoluntController.retrieveVolunteersToMissionsInvite(administratorController.missionDetailsShowList.value.id.toString());
+
+
   }
 
   @override
@@ -74,6 +78,10 @@ class _MissionToVolunteersInviteScreenState extends State<MissionToVolunteersInv
           body:SingleChildScrollView(
             child: Obx(
               () {
+
+               missionId= administratorController.missionDetailsShowList.value.id.toString();
+
+
                 return Padding(
                   padding: EdgeInsets.all(12.0),
                   child:Column(

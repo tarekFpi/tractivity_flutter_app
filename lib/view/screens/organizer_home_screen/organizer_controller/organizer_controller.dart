@@ -659,16 +659,7 @@ class OrganizerController extends GetxController{
 
       debugPrint("response:${body}");
 
-      volunteersRoleList.clear();
-      eventNameController.value.clear();
-      eventDescriptionController.value.clear();
-      stateController.value.clear();
-      cityController.value.clear();
-      zipController.value.clear();
-      latitudeController.value.clear();
-      longitudeController.value.clear();
-      eventAccessmode.value="";
-      volunteersIdList.clear();
+      clearData();
 
     } else {
 
@@ -686,6 +677,22 @@ class OrganizerController extends GetxController{
     }
   }
 
+
+  void clearData(){
+    volunteersRoleList.clear();
+    eventNameController.value.clear();
+    eventDescriptionController.value.clear();
+    stateController.value.clear();
+    cityController.value.clear();
+    zipController.value.clear();
+    latitudeController.value.clear();
+    longitudeController.value.clear();
+    eventAccessmode.value="";
+    volunteersIdList.clear();
+    volunteersSelectedList.clear();
+    selectedImages.clear();
+    pickedFiles.clear();
+  }
 
  void setSelectedVolunteersToggle(){
 
@@ -918,6 +925,8 @@ class OrganizerController extends GetxController{
     // TODO: implement onInit
     super.onInit();
 
+
+
      retriveInvitedMissionsShow();
 
     retrieveMissionsActive();
@@ -928,4 +937,8 @@ class OrganizerController extends GetxController{
 
     volunteersRoleList.clear();
   }
+
+
+
+
 }

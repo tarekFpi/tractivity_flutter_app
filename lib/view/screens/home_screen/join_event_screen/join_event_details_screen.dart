@@ -106,13 +106,15 @@ class _JoinEventDetailsScreenState extends State<JoinEventDetailsScreen> {
                            itemCount: administratorController.retriveSpecificByEventShowList.value.images?.length??0,
                            itemBuilder: (context, index, realIndex) {
 
-                             return  CustomNetworkImage(
+                             return administratorController.retriveSpecificByEventShowList.value.images?.isNotEmpty??true? CustomNetworkImage(
                                //imageUrl: AppConstants.profileImage,
                                imageUrl:"${ApiUrl.imageUrl}${administratorController.retriveSpecificByEventShowList.value.images?[index]}",
                                height:isTablet?200.h: 180.h,
                                width: MediaQuery.of(context).size.width,
                                borderRadius: BorderRadius.circular(10),
-                             );
+                             ):Image.asset("assets/images/event_image.png",
+                               height:isTablet?200.h: 180.h,
+                               width: MediaQuery.of(context).size.width,fit: BoxFit.fill,);
                            },
                          ),
 
@@ -590,143 +592,142 @@ class _JoinEventDetailsScreenState extends State<JoinEventDetailsScreen> {
 
 
                          for (int i = 0; i < (joinedVolunteerList?.length ?? 0) ; i++)
-                        if((administratorController.retriveSpecificByEventShowList.value.joinedVolunteer?[i].startInfo?.isStart==false) && (administratorController.retriveSpecificByEventShowList.value.joinedVolunteer?[i].volunteer?.id==userId) && (administratorController.retriveSpecificByEventShowList.value.joinedVolunteer?[i].workStatus!="complete"))
-                         Column(
-                           children: [
+                           if((administratorController.retriveSpecificByEventShowList.value.joinedVolunteer?[i].volunteer?.id==userId) && (administratorController.retriveSpecificByEventShowList.value.joinedVolunteer?[i].workStatus!="complete"))
+                             Column(
+                               children: [
 
-                             if((administratorController.retriveSpecificByEventShowList.value.joinedVolunteer?[i].startInfo?.isStart==false) && (administratorController.retriveSpecificByEventShowList.value.joinedVolunteer?[i].volunteer?.id==userId))
-                               homeController.startWorkEventLodding.value?Center(child: CircularProgressIndicator(color: Colors.orange,)):
-                               CustomButton(
-                                 onTap: () {
-                                   homeController.startWorkEvent(inviationId,eventId);
-                                   administratorController.retriveSpecificByEventShow(eventId);
-                                 },
-                                 title: "Start Work",
-                                 // width: 80.w,
-                                 height: 45.h,
-                                 textColor: AppColors.black,
-                                 fillColor: AppColors.primary,
-                                 fontSize: 12,
-                               ) ,
-
-                             for (int i = 0; i < (joinedVolunteerList?.length ??0); i++)
-                               if((administratorController.retriveSpecificByEventShowList.value.joinedVolunteer?[i].startInfo?.isStart==true) && (administratorController.retriveSpecificByEventShowList.value.joinedVolunteer?[i].volunteer?.id==userId))
-                                 Padding(
-                                   padding:  EdgeInsets.only(bottom: 32,top: 24),
-                                   child:homeController.endWorkEventLodding.value?Center(child: CircularProgressIndicator(color: Colors.orange,)):
+                                 if((administratorController.retriveSpecificByEventShowList.value.joinedVolunteer?[i].startInfo?.isStart!=true) && (administratorController.retriveSpecificByEventShowList.value.joinedVolunteer?[i].volunteer?.id==userId))
+                                   homeController.startWorkEventLodding.value?Center(child: CircularProgressIndicator(color: Colors.orange,)):
                                    CustomButton(
                                      onTap: () {
-
-                                       homeController.endWorkEvent(inviationId,eventId);
+                                       homeController.startWorkEvent(eventId);
                                        administratorController.retriveSpecificByEventShow(eventId);
-                                       showDialog(
-                                         context: context,
-                                         builder: (ctx) => AlertDialog(
-                                           backgroundColor: Colors.white,
-                                           insetPadding: EdgeInsets.all(8),
-                                           contentPadding: EdgeInsets.all(8),
-                                           //   clipBehavior: Clip.antiAliasWithSaveLayer,
-                                           title:Row(
-                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                             children: [
-
-                                               Align(
-                                                 alignment: Alignment.centerLeft,
-                                                 child: CustomText(
-                                                   text: "",
-                                                   fontSize: 24,
-                                                   color: AppColors.black,
-                                                   fontWeight: FontWeight.w500,
-                                                   bottom: 8,
-                                                 ),
-                                               ),
-
-                                               Align(
-                                                 alignment: Alignment.centerRight,
-                                                 child: InkWell(
-                                                     onTap: () {
-                                                       Navigator.of(context).pop();
-                                                     },
-                                                     child: const Icon(
-                                                       Icons.close,
-                                                       size: 32,
-                                                       color: Colors.black,
-                                                     )),
-                                               )
-                                             ],
-                                           ),
-                                           content: SingleChildScrollView(
-                                             child: Padding(
-                                               padding: const EdgeInsets.all(8.0),
-                                               child: SizedBox(
-                                                 width: MediaQuery.sizeOf(context).width,
-                                                 child: Column(
-                                                   mainAxisAlignment: MainAxisAlignment.start,
-                                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                                   children: [
-
-                                                     CustomText(
-                                                       text: "🎉 Congratulations on successfully completing your volunteer work and submitting it! 🌟 Your dedication and effort are truly inspiring. 🙌 Keep up the great work!",
-                                                       fontSize:isTablet?6.sp: 14.sp,
-                                                       color: AppColors.black,
-                                                       fontWeight: FontWeight.w400,
-                                                       maxLines: 4,
-                                                       bottom: 8,
-                                                       textAlign: TextAlign.start,
-                                                     ),
-
-                                                     CustomFormCard(
-                                                       title: "working Time",
-                                                       hintText: "4:30 Hours",
-                                                       hasBackgroundColor: true,
-                                                       fontSize: isTablet?16:16,
-                                                       readOnly: true,
-                                                       controller: homeController.totalWorkedHourController.value,
-                                                     ),
-
-
-                                                     CustomFormCard(
-                                                       title: "working Time",
-                                                       hintText: "4:30 Hours",
-                                                       hasBackgroundColor: true,
-                                                       fontSize: isTablet?16:16,
-                                                       readOnly: true,
-                                                       controller: homeController.mileageController.value,
-                                                     ),
-
-                                                     Padding(
-                                                       padding: const EdgeInsets.only(left: 12,right: 12),
-                                                       child: CustomButton(
-                                                         height:45.h,
-                                                         width: 90.w,
-                                                         onTap: () {
-
-                                                           Navigator.of(context).pop();
-                                                         },
-                                                         title: "Done",
-
-                                                         textColor: AppColors.black,
-                                                         fillColor: AppColors.primary,
-                                                         fontSize: 12,
-                                                       ),
-                                                     )
-                                                   ],
-                                                 ),
-                                               ),
-                                             ),
-                                           ),
-                                         ),
-                                       );
                                      },
-                                     title: "Work Done",
+                                     title: "Start Work",
                                      height: 45.h,
                                      textColor: AppColors.black,
                                      fillColor: AppColors.primary,
                                      fontSize: 12,
                                    ),
-                                 )
-                           ],
-                         )
+
+                                 for (int i = 0; i < (joinedVolunteerList?.length ??0); i++)
+                                   if((administratorController.retriveSpecificByEventShowList.value.joinedVolunteer?[i].startInfo?.isStart==true) && (administratorController.retriveSpecificByEventShowList.value.joinedVolunteer?[i].volunteer?.id==userId) && (administratorController.retriveSpecificByEventShowList.value.joinedVolunteer?[i].workStatus=="running"))
+                                     Padding(
+                                       padding:EdgeInsets.only(bottom: 32,top: 24),
+                                       child:homeController.endWorkEventLodding.value?Center(child: CircularProgressIndicator(color: Colors.orange,)):
+                                       CustomButton(
+                                         onTap: () {
+
+                                           homeController.endWorkEvent(eventId);
+                                           administratorController.retriveSpecificByEventShow(eventId);
+                                           showDialog(
+                                             context: context,
+                                             builder: (ctx) => AlertDialog(
+                                               backgroundColor: Colors.white,
+                                               insetPadding: EdgeInsets.all(8),
+                                               contentPadding: EdgeInsets.all(8),
+                                               //   clipBehavior: Clip.antiAliasWithSaveLayer,
+                                               title:Row(
+                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                 children: [
+
+                                                   Align(
+                                                     alignment: Alignment.centerLeft,
+                                                     child: CustomText(
+                                                       text: "",
+                                                       fontSize: 24,
+                                                       color: AppColors.black,
+                                                       fontWeight: FontWeight.w500,
+                                                       bottom: 8,
+                                                     ),
+                                                   ),
+
+                                                   Align(
+                                                     alignment: Alignment.centerRight,
+                                                     child: InkWell(
+                                                         onTap: () {
+                                                           Navigator.of(context).pop();
+                                                         },
+                                                         child: const Icon(
+                                                           Icons.close,
+                                                           size: 32,
+                                                           color: Colors.black,
+                                                         )),
+                                                   )
+                                                 ],
+                                               ),
+                                               content: SingleChildScrollView(
+                                                 child: Padding(
+                                                   padding: const EdgeInsets.all(8.0),
+                                                   child: SizedBox(
+                                                     width: MediaQuery.sizeOf(context).width,
+                                                     child: Column(
+                                                       mainAxisAlignment: MainAxisAlignment.start,
+                                                       crossAxisAlignment: CrossAxisAlignment.start,
+                                                       children: [
+
+                                                         CustomText(
+                                                           text: "🎉 Congratulations on successfully completing your volunteer work and submitting it! 🌟 Your dedication and effort are truly inspiring. 🙌 Keep up the great work!",
+                                                           fontSize:isTablet?6.sp: 14.sp,
+                                                           color: AppColors.black,
+                                                           fontWeight: FontWeight.w400,
+                                                           maxLines: 4,
+                                                           bottom: 8,
+                                                           textAlign: TextAlign.start,
+                                                         ),
+
+                                                         CustomFormCard(
+                                                           title: "working Time",
+                                                           hintText: "4:30 Hours",
+                                                           hasBackgroundColor: true,
+                                                           fontSize: isTablet?16:16,
+                                                           readOnly: true,
+                                                           controller: homeController.totalWorkedHourController.value,
+                                                         ),
+
+
+                                                         CustomFormCard(
+                                                           title: "working Time",
+                                                           hintText: "4:30 Hours",
+                                                           hasBackgroundColor: true,
+                                                           fontSize: isTablet?16:16,
+                                                           readOnly: true,
+                                                           controller: homeController.mileageController.value,
+                                                         ),
+
+                                                         Padding(
+                                                           padding: const EdgeInsets.only(left: 12,right: 12),
+                                                           child: CustomButton(
+                                                             height:45.h,
+                                                             width: 90.w,
+                                                             onTap: () {
+
+                                                               Navigator.of(context).pop();
+                                                             },
+                                                             title: "Done",
+
+                                                             textColor: AppColors.black,
+                                                             fillColor: AppColors.primary,
+                                                             fontSize: 12,
+                                                           ),
+                                                         )
+                                                       ],
+                                                     ),
+                                                   ),
+                                                 ),
+                                               ),
+                                             ),
+                                           );
+                                         },
+                                         title: "Work Done",
+                                         height: 45.h,
+                                         textColor: AppColors.black,
+                                         fillColor: AppColors.primary,
+                                         fontSize: 12,
+                                       ),
+                                     )
+                               ],
+                             )
                        ],
                      );
                    }

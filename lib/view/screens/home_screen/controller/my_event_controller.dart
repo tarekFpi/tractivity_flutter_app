@@ -9,14 +9,15 @@ import 'package:tractivity_app/service/api_url.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
 import 'package:tractivity_app/utils/toast.dart';
-import 'package:tractivity_app/view/screens/home_screen/retrive_my_eventModel/RetriveMyEventResponeModel.dart';
+import 'package:tractivity_app/view/screens/home_screen/completed_event_model/CompletedEventResponeModel.dart';
 
 
-class MyEventController extends GetxController with StateMixin<List<RetriveMyEventResponeModel>>  {
+class MyEventController extends GetxController with StateMixin<List<CompletedEventResponeModel>>  {
 
+  Rx<TextEditingController> myeventController = TextEditingController().obs;
   RxBool selectedOranization = false.obs;
 
-  RxList<RetriveMyEventResponeModel> myEventShowList = <RetriveMyEventResponeModel>[].obs;
+  RxList<CompletedEventResponeModel> myEventShowList = <CompletedEventResponeModel>[].obs;
 
   Future<void> myEventShow() async{
 
@@ -24,23 +25,24 @@ class MyEventController extends GetxController with StateMixin<List<RetriveMyEve
 
     var userId = await SharePrefsHelper.getString(AppConstants.userId);
 
-    var response = await ApiClient.getData(ApiUrl.retriveMyEventVolunteer(userId: userId));
+    var response = await ApiClient.getData(ApiUrl.volunteerMyEventName(userId: userId));
 
     try{
       if (response.statusCode == 200) {
 
-        myEventShowList.value = List.from(response.body["data"].map((m)=> RetriveMyEventResponeModel.fromJson(m)));
-
-        debugPrint("myEventShowList:${myEventShowList.value}");
-
+        myEventShowList.value = List.from(response.body["data"].map((m)=> CompletedEventResponeModel.fromJson(m)));
         change(myEventShowList.value, status: RxStatus.success());
-
         refresh();
 
         if(myEventShowList.isEmpty){
 
           change(null, status: RxStatus.empty());
         }
+
+
+        debugPrint("myEventShowList:${myEventShowList.value}");
+
+        refresh();
 
       } else {
 
@@ -65,4 +67,39 @@ class MyEventController extends GetxController with StateMixin<List<RetriveMyEve
       change(null, status: RxStatus.error(e.toString()));
     }
   }
+
+
+  ///===================== search myEvent volunteers =====================
+  Future<void> searchMyEventVolunteersList(String query) async{
+
+    change(null, status: RxStatus.loading());
+
+    if (query == null || query.isEmpty) {
+
+      change(myEventShowList.value, status: RxStatus.success());
+
+    }else{
+
+      try{
+
+        final filteredList = myEventShowList.value
+            .where((element) =>element.name!.toLowerCase().contains(query.toLowerCase().trim())
+        ).toList();
+
+        if(filteredList.isEmpty){
+
+          change([], status: RxStatus.empty());
+
+        }else {
+          change(filteredList, status: RxStatus.success());
+        }
+
+      }catch(e){
+
+        debugPrint(e.toString());
+      }
+
+    }
+  }
+
 }

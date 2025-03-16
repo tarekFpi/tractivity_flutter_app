@@ -91,16 +91,29 @@ class _AdminstratorEventDetailsScreenState extends State<AdminstratorEventDetail
                         itemCount: administratorController.retriveSpecificByEventShowList.value.images?.length??0,
                         itemBuilder: (context, index, realIndex) {
 
-                          return  CustomNetworkImage(
+                          return administratorController.retriveSpecificByEventShowList.value.images?.isNotEmpty??true? CustomNetworkImage(
                             //imageUrl: AppConstants.profileImage,
                              imageUrl:"${ApiUrl.imageUrl}${administratorController.retriveSpecificByEventShowList.value.images?[index]}",
                             height:isTablet?200.h: 180.h,
                             width: MediaQuery.of(context).size.width,
                             borderRadius: BorderRadius.circular(10),
-                          );
+                          ):Image.asset("assets/images/event_image.png",
+                            height:isTablet?200.h: 180.h,
+                            width: MediaQuery.of(context).size.width,fit: BoxFit.fill,);
                         },
                       ),
 
+                    /*  model.images?.isNotEmpty??true?
+                      CustomNetworkImage(
+                        /// imageUrl: AppConstants.eventImage,
+                        imageUrl:"${ApiUrl.imageUrl}${model.images?[0]}",
+                        height: isTablet ? 200.h : 170.h,
+                        width: isTablet ? 180.w : 180.w,
+                        borderRadius: BorderRadius.circular(10),
+                      ):Image.asset("assets/images/event_image.png",
+                        height: isTablet ? 200.h : 170.h,
+                        width: isTablet ? 180.w : 180.w,fit: BoxFit.fill,),
+                      */
                       SizedBox(
                         height: 16.h,
                       ),
