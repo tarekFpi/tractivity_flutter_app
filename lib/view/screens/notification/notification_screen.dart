@@ -26,7 +26,7 @@ class NotificationScreen extends StatefulWidget {
 
 class _NotificationScreenState extends State<NotificationScreen> {
 
-  final   homeController = Get.find<HomeController>();
+  final  homeController = Get.find<HomeController>();
 
   @override
   void initState() {

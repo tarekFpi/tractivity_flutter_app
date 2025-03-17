@@ -61,7 +61,6 @@ class _MissionToVolunteersInviteScreenState extends State<MissionToVolunteersInv
 
     missionToVoluntController.retrieveVolunteersToMissionsInvite(administratorController.missionDetailsShowList.value.id.toString());
 
-
   }
 
   @override
@@ -75,249 +74,254 @@ class _MissionToVolunteersInviteScreenState extends State<MissionToVolunteersInv
             titleName: "Invite Volunteers",
             leftIcon: true,
           ),
-          body:SingleChildScrollView(
-            child: Obx(
-              () {
+          body:ListView(
+            children: [
+              Obx(() {
 
-               missionId= administratorController.missionDetailsShowList.value.id.toString();
+                    missionId= administratorController.missionDetailsShowList.value.id.toString();
 
+                    return Padding(
+                      padding: EdgeInsets.all(12.0),
+                      child:Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
 
-                return Padding(
-                  padding: EdgeInsets.all(12.0),
-                  child:Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                          CustomText(
+                            textAlign: TextAlign.start,
+                            text: "Organizations",
+                            fontSize:isTablet?6.sp: 16.sp,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.primary,
+                            bottom: 5,
+                          ),
 
-                      CustomText(
-                        textAlign: TextAlign.start,
-                        text: "Organizations",
-                        fontSize:isTablet?6.sp: 16.sp,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.primary,
-                        bottom: 5,
-                      ),
-
-                      ListView.builder(
-                          itemCount: administratorController.missionDetailsShowList.value.connectedOrganizations?.length,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemBuilder: (BuildContext context, int index) {
-
-                            final connectedOrganizations =administratorController.missionDetailsShowList.value.connectedOrganizations?[index];
-
-                            return  Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CustomText(
-                                  text: "${connectedOrganizations?.name}",
-                                  fontSize:isTablet?6.sp: 16.sp,
-                                  color: AppColors.black_80,
-                                  fontWeight: FontWeight.w600,
-                                  bottom: 6.h,
-                                  textAlign: TextAlign.start,
-                                ),
-
-                                CustomText(
-                                  text: "${connectedOrganizations?.description}",
-                                  fontSize: 12,
-                                  color: AppColors.black_02,
-                                  fontWeight: FontWeight.w400,
-                                  textAlign: TextAlign.start,
-                                  overflow: TextOverflow.clip,
-                                  maxLines: 3,
-                                  bottom: 4.h,// Add ellipsis at the end if the text overflows.
-                                ),
-                              ],
-                            );
-                          }),
-
-                      SizedBox(
-                        height: 12.h,
-                      ),
-                      const Divider(
-                        color: Colors.black54,
-                        // height: 16.h,
-                      ),
-                      CustomText(
-                        textAlign: TextAlign.start,
-                        text: "Mission",
-                        fontSize:isTablet?6.sp: 16.sp,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.primary,
-                        bottom: 5,
-                      ),
-                      CustomText(
-                        text: "${administratorController.missionDetailsShowList.value.name}",
-                        fontSize:isTablet?6.sp: 16.sp,
-                        color: AppColors.black_80,
-                        fontWeight: FontWeight.w600,
-                        bottom: 6.h,
-                      ),
-
-                      SizedBox(
-                        height: 8.h,
-                      ),
-                      ///============ search ======================================
-
-                      CustomTextField(
-                        textEditingController:queryEditingController,
-                        fillColor: AppColors.neutral02,
-                        //  hintText: AppStrings.search,
-                        hintText: "Search for name...",
-                        onChanged: (value){
-                          setState(() {
-                            query = value;
-                          });
-                          missionToVoluntController.searchVolunteersList(query);
-                        },
-
-                        suffixIcon: query.isBlank == true || query.isEmpty
-                            ? Icon(
-                          FluentIcons.search_24_regular,
-                          size: 24,
-                        )
-                            : IconButton(
-                            icon: Icon(Icons.close,size: 24,),
-                            onPressed: () {
-                              setState(() {
-                                query = "";
-                              });
-                              queryEditingController.clear();
-                              FocusScope.of(context).unfocus();
-
-                              missionToVoluntController.searchVolunteersList("");
-
-                            }),
-
-                      ),
-
-
-                      const SizedBox(
-                        height: 12,
-                      ),
-                        SizedBox(
-                        height: 12.h,
-                      ),
-
-                      missionToVoluntController.obx((state){
-
-                        if (state == null || state.isEmpty) {
-
-                          return SizedBox(
-                            height: MediaQuery.of(context).size.height/2,
-                            child: Center(
-                              child: CustomText(
-                                text: "No volunteers yet!!",
-                                fontSize:isTablet?12.sp: 24.sp,
-                                fontWeight: FontWeight.w700,
-                                color: AppColors.lightRed,
-                              ),
-                            ),
-                          );
-
-                        }else{
-                          return ListView.builder(
-                              itemCount:state?.length,
+                          ListView.builder(
+                              itemCount: administratorController.missionDetailsShowList.value.connectedOrganizations?.length,
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
                               itemBuilder: (BuildContext context, int index) {
 
-                                final model =state?[index];
+                                final connectedOrganizations =administratorController.missionDetailsShowList.value.connectedOrganizations?[index];
 
-                                return Card(
-                                  elevation: 0.5,
-                                  color: Colors.white,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(bottom: 10.h,left: 8,right: 8),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        GestureDetector(
-                                          onTap: (){},
-                                          child: Row(
-                                            children: [
-
-                                              model?.image==""? CustomNetworkImage(
-                                                imageUrl: AppConstants.profileImage,
-                                                height:isTablet?64.h: 60.h,
-                                                width:isTablet?64.w: 60.w,
-                                                boxShape: BoxShape.circle,
-                                              ):CustomNetworkImage(
-                                                imageUrl: "${ApiUrl.imageUrl}${model?.image}",
-                                                height:isTablet?64.h: 60.h,
-                                                width:isTablet?64.w: 60.w,
-                                                boxShape: BoxShape.circle,
-                                              ),
-
-                                              SizedBox(
-                                                width: 10.w,
-                                              ),
-                                              Column(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  CustomText(
-                                                    text: "${model?.fullName}",
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: AppColors.black,
-                                                  ),
-                                                  CustomText(
-                                                    text: "${model?.profession}",
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: AppColors.black_80,
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Obx(()=> Checkbox(
-                                          checkColor: AppColors.white,
-                                          activeColor: AppColors.primary,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(3.0),
-                                          ),
-                                          side: const BorderSide(
-                                            // ======> CHANGE THE BORDER COLOR HERE <======
-                                            color: AppColors.primary,
-                                            // Give your checkbox border a custom width
-                                            width: 1.4,
-                                          ),
-                                          ///value: administratorController.selectedOranization.value,
-                                          value: missionToVoluntController.volunteersIdList.contains(model?.id),
-                                          onChanged: (bool? value) {
-
-                                            missionToVoluntController.selectedVolunteers.value = value!;
-
-                                            if(missionToVoluntController.selectedVolunteers.value){
-
-                                              missionToVoluntController.volunteersIdList.add(model!.id.toString());
-
-                                            }else{
-                                              missionToVoluntController.volunteersIdList.remove(model?.id.toString());
-                                            }
-
-                                          },
-                                        ),
-                                        ),
-                                      ],
+                                return  Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CustomText(
+                                      text: "${connectedOrganizations?.name}",
+                                      fontSize:isTablet?6.sp: 16.sp,
+                                      color: AppColors.black_80,
+                                      fontWeight: FontWeight.w600,
+                                      bottom: 6.h,
+                                      textAlign: TextAlign.start,
                                     ),
-                                  ),
+
+                                    CustomText(
+                                      text: "${connectedOrganizations?.description}",
+                                      fontSize: 12,
+                                      color: AppColors.black_02,
+                                      fontWeight: FontWeight.w400,
+                                      textAlign: TextAlign.start,
+                                      overflow: TextOverflow.clip,
+                                      maxLines: 3,
+                                      bottom: 4.h,// Add ellipsis at the end if the text overflows.
+                                    ),
+                                  ],
                                 );
+                              }),
+
+                          SizedBox(
+                            height: 12.h,
+                          ),
+                          const Divider(
+                            color: Colors.black54,
+                            // height: 16.h,
+                          ),
+                          CustomText(
+                            textAlign: TextAlign.start,
+                            text: "Mission",
+                            fontSize:isTablet?6.sp: 16.sp,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.primary,
+                            bottom: 5,
+                          ),
+                          CustomText(
+                            text: "${administratorController.missionDetailsShowList.value.name}",
+                            fontSize:isTablet?6.sp: 16.sp,
+                            color: AppColors.black_80,
+                            fontWeight: FontWeight.w600,
+                            bottom: 6.h,
+                          ),
+
+                          SizedBox(
+                            height: 8.h,
+                          ),
+                          ///============ search ======================================
+
+                          CustomTextField(
+                            textEditingController:queryEditingController,
+                            fillColor: AppColors.neutral02,
+                            //  hintText: AppStrings.search,
+                            hintText: "Search for name...",
+                            onChanged: (value){
+                              setState(() {
+                                query = value;
                               });
-                        }
+                              missionToVoluntController.searchVolunteersList(query);
+                            },
 
-                      }),
+                            suffixIcon: query.isBlank == true || query.isEmpty
+                                ? Icon(
+                              FluentIcons.search_24_regular,
+                              size: 24,
+                            )
+                                : IconButton(
+                                icon: Icon(Icons.close,size: 24,),
+                                onPressed: () {
+                                  setState(() {
+                                    query = "";
+                                  });
+                                  queryEditingController.clear();
+                                  FocusScope.of(context).unfocus();
 
-                    ],
-                  ),
-                );
-              }
-            ),
+                                  missionToVoluntController.searchVolunteersList("");
+
+                                }),
+
+                          ),
+
+
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          SizedBox(
+                            height: 12.h,
+                          ),
+
+
+                          missionToVoluntController.obx((state){
+
+                            if (state!=null && state.isEmpty) {
+
+                              return SizedBox(
+                                // height: MediaQuery.of(context).size.height/3,
+                                child: Center(
+                                  child: CustomText(
+                                    text: "No volunteers yet!!",
+                                    fontSize:isTablet?12.sp: 24.sp,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.red,
+                                  ),
+                                ),
+                              );
+
+                            }else{
+                             Toast.successToast("eslw");
+
+                              return ListView.builder(
+                                itemCount:state?.length,
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemBuilder: (BuildContext context, int index) {
+
+                                  final model =state?[index];
+
+                                  return Card(
+                                    elevation: 0.5,
+                                    color: Colors.white,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(bottom: 10.h,left: 8,right: 8),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: (){},
+                                            child: Row(
+                                              children: [
+
+                                                model?.image==""? CustomNetworkImage(
+                                                  imageUrl: AppConstants.profileImage,
+                                                  height:isTablet?64.h: 60.h,
+                                                  width:isTablet?64.w: 60.w,
+                                                  boxShape: BoxShape.circle,
+                                                ):CustomNetworkImage(
+                                                  imageUrl: "${ApiUrl.imageUrl}${model?.image}",
+                                                  height:isTablet?64.h: 60.h,
+                                                  width:isTablet?64.w: 60.w,
+                                                  boxShape: BoxShape.circle,
+                                                ),
+
+                                                SizedBox(
+                                                  width: 10.w,
+                                                ),
+                                                Column(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    CustomText(
+                                                      text: "${model?.fullName}",
+                                                      fontSize: 16,
+                                                      fontWeight: FontWeight.w600,
+                                                      color: AppColors.black,
+                                                    ),
+                                                    CustomText(
+                                                      text: "${model?.profession}",
+                                                      fontSize: 12,
+                                                      fontWeight: FontWeight.w400,
+                                                      color: AppColors.black_80,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Obx(()=> Checkbox(
+                                            checkColor: AppColors.white,
+                                            activeColor: AppColors.primary,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(3.0),
+                                            ),
+                                            side: const BorderSide(
+                                              // ======> CHANGE THE BORDER COLOR HERE <======
+                                              color: AppColors.primary,
+                                              // Give your checkbox border a custom width
+                                              width: 1.4,
+                                            ),
+                                            ///value: administratorController.selectedOranization.value,
+                                            value: missionToVoluntController.volunteersIdList.contains(model?.id),
+                                            onChanged: (bool? value) {
+
+                                              missionToVoluntController.selectedVolunteers.value = value!;
+
+                                              if(missionToVoluntController.selectedVolunteers.value){
+
+                                                missionToVoluntController.volunteersIdList.add(model!.id.toString());
+
+                                              }else{
+                                                missionToVoluntController.volunteersIdList.remove(model?.id.toString());
+                                              }
+
+                                            },
+                                          ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },);
+                            }
+
+
+
+                          }),
+
+                        ],
+                      ),
+                    );
+                  }
+              )
+            ],
           ),
 
           bottomNavigationBar: Column(

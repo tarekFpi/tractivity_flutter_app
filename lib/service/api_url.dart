@@ -192,5 +192,7 @@ class ApiUrl {
   static String volunteerMyEventName ({required String userId}) =>"/volunteer/event/$userId/search?status=running";
 
 
+  ///=================== volunteer  My Organization list  ==============
+  static String volunteerMyOrganization ({required String userId}) =>"/volunteer/retrieve/organizations/volunteer/$userId";
 
 }

@@ -252,27 +252,40 @@ class _JoinOrganizationScreenState extends State<JoinOrganizationScreen> {
          bottomNavigationBar:  Column(
            mainAxisSize: MainAxisSize.min,
            children: [
-             Padding(
-               padding: const EdgeInsets.only(left: 12,right: 12,bottom: 12),
-               child:homeController.joinOrganLoading.value?CustomLoader():CustomButton(
-                 onTap: () {
 
-                   if(homeController.organizationIdList.isEmpty){
+             homeController.obx((state){
 
-                     Toast.errorToast("Select oranization name is Empty!!");
-                   }else{
+               if(state?.isEmpty??true){
 
-                     homeController.joinOrganizationVolunteer();
-                   }
+                 return SizedBox();
+               }else{
 
-                 },
-                 title: "Join",
-                 height: 60.h,
-                 textColor: AppColors.black,
-                 fillColor: AppColors.primary,
-                 fontSize:isTablet?8.sp: 14.sp,
-               ),
-             )
+                 return  Padding(
+                   padding: const EdgeInsets.only(left: 12,right: 12,bottom: 12),
+                   child:homeController.joinOrganLoading.value?CustomLoader():CustomButton(
+                     onTap: () {
+
+                       if(homeController.organizationIdList.isEmpty){
+
+                         Toast.errorToast("Select oranization name is Empty!!");
+                       }else{
+
+                         homeController.joinOrganizationVolunteer();
+                       }
+
+                     },
+                     title: "Join",
+                     height: 60.h,
+                     textColor: AppColors.black,
+                     fillColor: AppColors.primary,
+                     fontSize:isTablet?8.sp: 14.sp,
+                   ),
+                 );
+               }
+
+             })
+
+
            ],
          ),
       );

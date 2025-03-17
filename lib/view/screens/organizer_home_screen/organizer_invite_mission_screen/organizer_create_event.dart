@@ -1064,8 +1064,7 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
 
                           organizerController.createEvent(administratorController.missionDetailsShowList.value.id.toString());
 
-                          if(organizerController.createEventLoading.value)
-                          Navigator.pop(context);
+
                         }
 
 

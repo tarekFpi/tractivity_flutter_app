@@ -659,6 +659,7 @@ class OrganizerController extends GetxController{
 
       debugPrint("response:${body}");
 
+      Get.back();
       clearData();
 
     } else {

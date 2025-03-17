@@ -39,6 +39,10 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
 
   RxBool isUserRequested =false.obs;
 
+  RxBool isEventDone =false.obs;
+  RxBool isEventStartRequested =false.obs;
+  RxBool isEventRunningRequested =false.obs;
+
   ///===== get all organizations except me as a volunteer ========================
   RxList<String> organizationIdList= <String>[].obs;
 
@@ -475,6 +479,8 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
       retriveSpecificByEventShow(eventId);
     } else {
 
+      debugPrint("jsonEncode:${jsonEncode(body)}");
+
       startWorkEventLodding.value =false;
 
       if (response.statusText == ApiClient.somethingWentWrong) {
@@ -572,6 +578,7 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
       refresh();
       retriveSpecificByEventShow(eventId);
 
+      Get.back();
     } else {
 
       startWorkEventLodding.value =false;

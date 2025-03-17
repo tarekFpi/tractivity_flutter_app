@@ -193,7 +193,6 @@ class AppRoutes {
     GetPage(name: joinDetailsScreen, page: () => JoinDetailsScreen()),
     GetPage(name: joinEventDetailsScreen, page: () => JoinEventDetailsScreen()),
     GetPage(name: adminstratorEventDetailsScreen, page: () => AdminstratorEventDetailsScreen()),
-    GetPage(name: organizeDetailsScreen, page: () => OrganizeDetailsScreen()),
     GetPage(name: organizationEventListScreen, page: () => OrganizationEventListScreen()),
     GetPage(name: adminstratiorEventListScreen, page: () => AdminstratiorEventListScreen()),
     GetPage(name: volunteerChartScreen, page: () => VolunteerChartScreen()),

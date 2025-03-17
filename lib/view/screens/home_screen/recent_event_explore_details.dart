@@ -552,7 +552,7 @@ class _RecentEventExploreDetailsState extends State<RecentEventExploreDetails> {
                         ),
 
                         CustomText(
-                          text: "Role ${joinedVolunteerList?.length}",
+                          text: "Role ",
                           fontSize:isTablet?6.sp: 16.sp,
                           fontWeight: FontWeight.w600,
                           color: AppColors.primary,

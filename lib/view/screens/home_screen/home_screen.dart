@@ -11,6 +11,7 @@ import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_icons/app_icons.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
+import 'package:tractivity_app/utils/toast.dart';
 import 'package:tractivity_app/view/components/custom_button/custom_button.dart';
 import 'package:tractivity_app/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tractivity_app/view/components/custom_tab_selected/custom_tab_single_text.dart';
@@ -19,6 +20,7 @@ import 'package:tractivity_app/view/components/custom_text_field/custom_text_fie
 import 'package:tractivity_app/view/components/nav_bar/nav_bar.dart';
 import 'package:tractivity_app/view/screens/home_screen/controller/home_controller.dart';
 import 'package:tractivity_app/view/screens/home_screen/controller/my_event_controller.dart';
+import 'package:tractivity_app/view/screens/home_screen/controller/my_organization_controller.dart';
 import 'package:tractivity_app/view/screens/home_screen/homepage_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -32,13 +34,20 @@ class _HomeScreenState extends State<HomeScreen> {
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final   homeController = Get.find<HomeController>();
+  final  homeController = Get.find<HomeController>();
 
   final   myEventController = Get.put(MyEventController());
 
-  final storage =   GetStorage();
+  final   myOrganizationController = Get.put(MyOrganizationController());
+
+  final storage = GetStorage();
+
   String query = "";
+
+
   final queryEditingController = TextEditingController();
+
+  final queryOrganizationEditingController = TextEditingController();
 
 @override
   void initState() {
@@ -47,9 +56,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
     storage.write("status", "volunteer");
 
-   // homeController.retriveMyEventShow();
+   ///homeController.retriveMyEventShow();
 
-    myEventController.myEventShow();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      myEventController.myEventShow();
+
+      myOrganizationController.myOrganizationShow();
+    });
   }
 
 
@@ -242,7 +256,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: 8.h,
                           ),
 
-                          ///============ search ======================================
+                          ///============ search my event ======================================
                           CustomTextField(
                             textEditingController:queryEditingController,
                             fillColor: AppColors.neutral02,
@@ -328,16 +342,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                              crossAxisAlignment: CrossAxisAlignment.start,
                                              children: [
 
-                                               SizedBox(
-                                                 width: 150.w,
-                                                 child: CustomText(
-                                                   textAlign: TextAlign.start,
-                                                   text: "${model.name}",
-                                                   maxLines: 3,
-                                                   fontSize:isTablet?8.sp: 14.sp,
-                                                   fontWeight: FontWeight.w600,
-                                                   bottom: 5,
-                                                 ),
+                                               CustomText(
+                                                 textAlign: TextAlign.start,
+                                                 text: "${model.name}",
+                                                 maxLines: 3,
+                                                 fontSize:isTablet?8.sp: 14.sp,
+                                                 fontWeight: FontWeight.w600,
+                                                 bottom: 5,
+                                                 overflow: TextOverflow.ellipsis,
                                                ),
 
                                                /// Location
@@ -448,107 +460,168 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     if (homeController.home_currentIndex.value == 1)
                       Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
 
                           SizedBox(
                             height: 8.h,
                           ),
-                          /// Search Bar
+
+                          ///============ search my Organization ======================================
                           CustomTextField(
-                            hintText: "Search for organization",
+                            textEditingController:queryOrganizationEditingController,
                             fillColor: AppColors.neutral02,
-                            suffixIcon: Icon(Icons.search, color: AppColors.black_60),
+                            //  hintText: AppStrings.search,
+                            hintText: "Search for Organization name...",
+                            onChanged: (value){
+
+                              myOrganizationController.queryOrganization.value = value;
+
+                              myOrganizationController.searchMyOrganizationVolunteersList(myOrganizationController.queryOrganization.value);
+                            },
+
+                             suffixIcon: myOrganizationController.queryOrganization.value .isBlank == true || myOrganizationController.queryOrganization.value .isEmpty
+                                ? Icon(
+                              FluentIcons.search_24_regular,
+                              size: 24,
+                            )
+                                : IconButton(
+                                icon: Icon(Icons.close,size: 24,),
+                                onPressed: () {
+                                  myOrganizationController.queryOrganization.value  = "";
+                                  queryOrganizationEditingController.clear();
+                                  FocusScope.of(context).unfocus();
+
+                                  myOrganizationController.searchMyOrganizationVolunteersList("");
+
+                                }),
+
                           ),
+
                           SizedBox(
                             height: 12.h,
                           ),
+                          myOrganizationController.obx((state){
 
-                          Column(
-                              children: List.generate(3, (index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(bottom: 10.0),
-                                  child: Container(
-                                    padding:
-                                    EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.neutral02,
-                                      borderRadius: BorderRadius.circular(13),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              CustomText(
-                                                text: "Empower Tomorrow",
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500,
-                                                bottom: 8.h,
-                                              ),
-                                              CustomText(
-                                                text:
-                                                "Fostering opportunities for underprivileged communities through education and skill development programs.",
-                                                fontSize: 10,
-                                                fontWeight: FontWeight.w400,
-                                                maxLines: 5,
-                                                textAlign: TextAlign.start,
-                                                bottom: 10.h,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  CustomNetworkImage(
-                                                    imageUrl: AppConstants.profileImage,
-                                                    height: 40.h,
-                                                    width: 40.w,
-                                                    boxShape: BoxShape.circle,
-                                                  ),
-                                                  CustomText(
-                                                    text: "Mehedi",
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w500,
-                                                    left: 8.h,
-                                                    right: 8.h,
-                                                  ),
-                                                  CustomText(
-                                                    text: "(Adminstrator)",
-                                                    fontSize: 14,
-                                                    color: AppColors.blue,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        Column(
-                                          children: [
-                                            CustomText(
-                                              text: "17-12-2024",
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w400,
-                                              bottom: 8.h,
-                                            ),
-                                            CustomButton(
-                                              onTap: () {
-                                                ///OrganizerApprovedScreen
+                            if(state?.isEmpty??true){
 
-                                                Get.toNamed(AppRoutes.organizeDetailsScreen);
-                                              },
-                                              title: "Details",
-                                              height:isTablet?40.h: 30.h,
-                                              width:isTablet?70.w: 70.w,
-                                              fontSize: 12,
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    ),
+                              return SizedBox(
+                                height: MediaQuery.of(context).size.height/2,
+                                child: Center(
+                                  child: CustomText(
+                                    text: "No my organization yet!!",
+                                    fontSize:isTablet?12.sp: 24.sp,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.lightRed,
                                   ),
-                                );
-                              })),
+                                ),
+                              );
+                            }else{
+
+                              return ListView.builder(
+                                  itemCount:myOrganizationController.myOrganizationList.length,
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemBuilder: (BuildContext context,index){
+
+                                    final model = myOrganizationController.myOrganizationList[index];
+
+                                    return Padding(
+                                      padding: const EdgeInsets.only(bottom: 10.0),
+                                      child: Container(
+                                        padding:
+                                        EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                                        decoration: BoxDecoration(
+                                          color: AppColors.neutral02,
+                                          borderRadius: BorderRadius.circular(13),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Expanded(
+                                              child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  CustomText(
+                                                    text: "${model.name}",
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w500,
+                                                    bottom: 8.h,
+                                                  ),
+                                                  CustomText(
+                                                    text:
+                                                    "${model.description}",
+                                                    fontSize: 10,
+                                                    fontWeight: FontWeight.w400,
+                                                    maxLines: 5,
+                                                    textAlign: TextAlign.start,
+                                                    bottom: 10.h,
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      CustomNetworkImage(
+                                                        imageUrl: AppConstants.profileImage,
+                                                        height: 40.h,
+                                                        width: 40.w,
+                                                        boxShape: BoxShape.circle,
+                                                      ),
+                                                      CustomText(
+                                                        text: "${model.creator?.name}",
+                                                        fontSize: 14,
+                                                        fontWeight: FontWeight.w500,
+                                                        left: 8.h,
+                                                        right: 8.h,
+                                                      ),
+                                                      CustomText(
+                                                        text: "(Adminstrator)",
+                                                        fontSize: 14,
+                                                        color: AppColors.blue,
+                                                        fontWeight: FontWeight.w500,
+                                                      ),
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            Column(
+                                              children: [
+
+                                                /*   CustomText(
+                                         text: "17-12-2024",
+                                         fontSize: 10,
+                                         fontWeight: FontWeight.w400,
+                                         bottom: 8.h,
+                                       ),*/
+
+                                                CustomButton(
+                                                  onTap: () {
+                                                    ///OrganizerApprovedScreen
+                                                    Get.toNamed(AppRoutes.organizeDetailsScreen,
+                                                        arguments: [
+                                                          {
+                                                            "organizationId":model.id,
+                                                            "organizationShowList":model,
+                                                          }
+                                                        ]);
+                                                  },
+                                                  title: "Details",
+                                                  height:isTablet?40.h: 30.h,
+                                                  width:isTablet?70.w: 70.w,
+                                                  fontSize: 12,
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  });
+                            }
+
+                          })
+
+
                         ],
                       ),
 
@@ -558,6 +631,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ), onRefresh: ()async {
               await  myEventController.myEventShow();
+              await  myOrganizationController.myOrganizationShow();
 
             });
           },

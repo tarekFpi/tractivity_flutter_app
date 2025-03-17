@@ -9,44 +9,52 @@ import 'package:tractivity_app/service/api_url.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
 import 'package:tractivity_app/utils/toast.dart';
+import 'package:tractivity_app/view/screens/adminstrator_home_screen/organization_model/OrganizationResponeModel.dart';
 import 'package:tractivity_app/view/screens/home_screen/completed_event_model/CompletedEventResponeModel.dart';
+import 'package:tractivity_app/view/screens/home_screen/my_organization_model/MyOrganizationResponeModel.dart';
 
 
-class MyEventController extends GetxController with StateMixin<List<CompletedEventResponeModel>>  {
 
-  Rx<TextEditingController> myeventController = TextEditingController().obs;
-  RxBool selectedOranization = false.obs;
 
-  RxList<CompletedEventResponeModel> myEventShowList = <CompletedEventResponeModel>[].obs;
+class MyOrganizationController extends GetxController with StateMixin<List<OrganizationResponeModel>>  {
+  ///MyOrganizationResponeModel
 
-  Future<void> myEventShow() async{
+ /// Rx<TextEditingController> myeventController = TextEditingController().obs;
+
+  RxString queryOrganization = "".obs;
+
+  RxList<OrganizationResponeModel> myOrganizationList = <OrganizationResponeModel>[].obs;
+
+  Future<void> myOrganizationShow() async{
 
     change(null, status: RxStatus.loading());
 
     var userId = await SharePrefsHelper.getString(AppConstants.userId);
 
-    var response = await ApiClient.getData(ApiUrl.volunteerMyEventName(userId: userId));
+    var response = await ApiClient.getData(ApiUrl.volunteerMyOrganization(userId: userId));
 
     try{
       if (response.statusCode == 200) {
 
-        myEventShowList.value = List.from(response.body["data"].map((m)=> CompletedEventResponeModel.fromJson(m)));
-        change(myEventShowList.value, status: RxStatus.success());
+        myOrganizationList.value = List.from(response.body["data"].map((m)=> OrganizationResponeModel.fromJson(m)));
+
+        change(myOrganizationList.value, status: RxStatus.success());
         refresh();
 
-        if(myEventShowList.isEmpty){
+        if(myOrganizationList.isEmpty){
 
           change(null, status: RxStatus.empty());
+          refresh();
         }
 
 
-        debugPrint("myEventShowList:${myEventShowList.value}");
+        debugPrint("myEventShowList:${myOrganizationList.value}");
 
         refresh();
 
       } else {
 
-          change(null, status: RxStatus.empty());
+        change(null, status: RxStatus.empty());
 
         if (response.statusText == ApiClient.somethingWentWrong) {
           Toast.errorToast(AppStrings.checknetworkconnection);
@@ -70,26 +78,28 @@ class MyEventController extends GetxController with StateMixin<List<CompletedEve
   }
 
 
-  ///===================== search myEvent volunteers =====================
-  Future<void> searchMyEventVolunteersList(String query) async{
+  ///===================== search searchMyOrganizationVolunteersList volunteers =====================
+  Future<void> searchMyOrganizationVolunteersList(String query) async{
 
     change(null, status: RxStatus.loading());
 
     if (query == null || query.isEmpty) {
 
-      change(myEventShowList.value, status: RxStatus.success());
+      change(myOrganizationList.value, status: RxStatus.success());
 
     }else{
 
+
       try{
 
-        final filteredList = myEventShowList.value
+        final filteredList = myOrganizationList.value
             .where((element) =>element.name!.toLowerCase().contains(query.toLowerCase().trim())
         ).toList();
 
         if(filteredList.isEmpty){
 
           change([], status: RxStatus.empty());
+
 
         }else {
           change(filteredList, status: RxStatus.success());
