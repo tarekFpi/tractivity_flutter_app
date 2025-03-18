@@ -13,6 +13,7 @@ import 'package:tractivity_app/view/components/custom_royel_appbar/custom_royel_
 import 'package:tractivity_app/view/components/custom_tab_selected/custom_tab_selected.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/events_controller/events_controller.dart';
+import 'package:tractivity_app/view/screens/profile_screen/user_profile_screen.dart';
 
 class UserEventProfile extends StatefulWidget {
   const UserEventProfile({super.key});
@@ -23,9 +24,9 @@ class UserEventProfile extends StatefulWidget {
 
 class _UserEventProfileState extends State<UserEventProfile> {
 
-  final EventsController eventsController = Get.find<EventsController>();
+  final eventsController = Get.find<EventsController>();
 
-
+  final eventController = Get.put(EventsController());
 
   @override
   Widget build(BuildContext context) {
@@ -39,184 +40,125 @@ class _UserEventProfileState extends State<UserEventProfile> {
           titleName: "Profile",
         ),
         body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: [
-
-                ///================= Profile Image , Name and Location
-                Row(
+          child: Obx(
+            () {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
                   children: [
-                    CustomNetworkImage(
-                      imageUrl: AppConstants.profileImage,
-                      height: isTablet ? 120.h : 100.h,
-                      width: isTablet ? 120.w : 100.w,
-                      boxShape: BoxShape.circle,
-                      border: Border.all(color: AppColors.primary, width: 3),
-                    ),
+
+                    ///================= Profile Image , Name and Location
+                    UserProfileScreen(),
+
                     SizedBox(
-                      width: 10,
+                      height: 20.h,
                     ),
+
+
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomText(
-                          text: "Mehedi Hasan Tarek",
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        ),
+
+                        ///========== volunteer =========
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Icon(
-                              Icons.location_on,
-                              color: AppColors.primary,
-                              size: 20,
-                            ),
+
                             CustomText(
-                              text: "Bushwhack Brooklyn, NY, USA",
-                              fontSize: 12,
+                              text:"Details",
+                              fontSize: isTablet?9.sp: 18.sp,
+                              fontWeight: FontWeight.w600,
                               color: AppColors.primary,
-                              fontWeight: FontWeight.w400,
+                            ),
+
+                            CustomButton(
+                              onTap: () {
+                             Get.toNamed(AppRoutes.volunteerEventReportScreen);
+                              },
+                              title: "Report",
+                              height:isTablet?40.h: 35.h,
+                              width: 80.w,
+                              textColor: AppColors.white,
+                              fillColor: AppColors.primary,
+                              fontSize: 12,
                             ),
                           ],
                         ),
 
+                        ///========== full name =========
+                        CustomText(
+                          top: 10,
+                          text: AppStrings.fullName,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          bottom: 10,
+                        ),
+                        CustomText(
+                          text: "${eventController.userProfileShowList.value.fullName}",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        ///========== profession =========
+                        CustomText(
+                          top: 10,
+                          text: AppStrings.profession,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          bottom: 10,
+                        ),
+                        CustomText(
+                          text: "${eventController.userProfileShowList.value.profession}",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        ///========== phoneNumber =========
+                        CustomText(
+                          top: 10,
+                          text: AppStrings.phoneNumber,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          bottom: 10,
+                        ),
+                        CustomText(
+                          text: "${eventController.userProfileShowList.value.phone}",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        ///========== email =================
+                        CustomText(
+                          top: 10,
+                          text: AppStrings.email,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          bottom: 10,
+                        ),
+                        CustomText(
+                          text: "${eventController.userProfileShowList.value.email}",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                        ),
+
+                        ///========== address ===============
+                        CustomText(
+                          top: 10,
+                          text: AppStrings.address,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          bottom: 10,
+                        ),
+                        CustomText(
+                          text: "${eventController.userProfileShowList.value.address}",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          maxLines: eventController.userProfileShowList.value.address?.length,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ],
                     )
                   ],
                 ),
-
-                SizedBox(
-                  height: 8.h,
-                ),
-                Row(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 4,vertical: 8),
-                      decoration: BoxDecoration(
-                        color: AppColors.neutral02,
-                        borderRadius: BorderRadius.circular(10),
-                      ),child: CustomText(text: "Hours: 4:30 Hours",fontSize:isTablet?8: 12.sp,fontWeight: FontWeight.w400,),
-                    ),
-
-                    SizedBox(
-                      width: 8.h,
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8,vertical: 8),
-                      decoration: BoxDecoration(
-                        color: AppColors.neutral02,
-                        borderRadius: BorderRadius.circular(10),
-                      ),child: CustomText(text: "Millage: 8Km",fontSize:isTablet?8: 12.sp,fontWeight: FontWeight.w400,),
-                    ),
-                  ],
-                ),
-
-                SizedBox(
-                  height: 20.h,
-                ),
-
-
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-
-                    ///========== volunteer =========
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-
-                        CustomText(
-                          text:"Details",
-                          fontSize: isTablet?9.sp: 18.sp,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.primary,
-                        ),
-
-                        CustomButton(
-                          onTap: () {
-                         Get.toNamed(AppRoutes.volunteerEventReportScreen);
-                          },
-                          title: "Report",
-                          height:isTablet?40.h: 35.h,
-                          width: 80.w,
-                          textColor: AppColors.white,
-                          fillColor: AppColors.primary,
-                          fontSize: 12,
-                        ),
-                      ],
-                    ),
-
-                    ///========== full name =========
-                    CustomText(
-                      top: 10,
-                      text: AppStrings.fullName,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      bottom: 10,
-                    ),
-                    CustomText(
-                      text: "Mededi Hasan",
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                    ),
-                    ///========== profession =========
-                    CustomText(
-                      top: 10,
-                      text: AppStrings.profession,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      bottom: 10,
-                    ),
-                    CustomText(
-                      text: "Software Engineer",
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                    ),
-                    ///========== phoneNumber =========
-                    CustomText(
-                      top: 10,
-                      text: AppStrings.phoneNumber,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      bottom: 10,
-                    ),
-                    CustomText(
-                      text: "88+ 880 1234567",
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                    ),
-                    ///========== email =================
-                    CustomText(
-                      top: 10,
-                      text: AppStrings.email,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      bottom: 10,
-                    ),
-                    CustomText(
-                      text: "mehedi@gmail.com",
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                    ),
-
-                    ///========== address ===============
-                    CustomText(
-                      top: 10,
-                      text: AppStrings.address,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      bottom: 10,
-                    ),
-                    CustomText(
-                      text: "Diamond, Dhaka, Bangladesh",
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ],
-                )
-              ],
-            ),
+              );
+            }
           ),
         ),
       );

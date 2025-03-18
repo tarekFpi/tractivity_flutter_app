@@ -16,7 +16,9 @@ import 'package:tractivity_app/view/components/custom_text_field/custom_text_fie
 import 'package:tractivity_app/view/components/nav_bar/nav_bar.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/alert_dialog_event.dart';
 import 'package:tractivity_app/view/screens/home_screen/join_event_screen/controller/join_event_controller.dart';
+import 'package:tractivity_app/view/screens/home_screen/join_event_screen/controller/running_complete_controller.dart';
 import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/events_controller/events_controller.dart';
+import 'package:tractivity_app/view/screens/profile_screen/user_profile_screen.dart';
 
 class JoinEventScreen extends StatefulWidget {
   const JoinEventScreen({super.key});
@@ -31,12 +33,16 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
 
   final joinEventController =Get.put(JoinEventController());
 
+  final runningController =Get.put(RunningCompleteController());
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
     joinEventController.notificationInvitationEventShow();
+
+    runningController.runningCompleteEventShow();
   }
 
 
@@ -67,51 +73,8 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
                     Column(
                       children: [
                         ///================= Profile Image , Name and Location
-                        GestureDetector(
-                          onTap: (){
-                            Get.toNamed(AppRoutes.userEventProfile);
-                          },
-                          child: Row(
-                            children: [
-                              CustomNetworkImage(
-                                imageUrl: AppConstants.profileImage,
-                                height: 70.h,
-                                width: 70.w,
-                                boxShape: BoxShape.circle,
-                                border: Border.all(color: AppColors.primary, width: 3),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CustomText(
-                                    text: "Mehedi Bin Ab. Salam",
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.location_on,
-                                        color: AppColors.primary,
-                                        size: 20,
-                                      ),
-                                      CustomText(
-                                        text: "Bushwhack Brooklyn, NY, USA",
-                                        fontSize: 12,
-                                        color: AppColors.primary,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ],
-                                  ),
+                        UserProfileScreen(),
 
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
 
                         SizedBox(
                           height: 20,
@@ -139,7 +102,7 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
                           Column(
                             children: [
 
-                              ///Search Bar**
+                              ///Search Bar invitation Event
                               CustomTextField(
                                 textEditingController:joinEventController.queryInviteEventController.value,
                                 fillColor: AppColors.neutral02,
@@ -175,242 +138,238 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
                                 height: 12.h,
                               ),
 
+                              joinEventController.notificationInvitaionEventList.isEmpty?
+                              SizedBox(
+                                height: MediaQuery.of(context).size.height/4,
+                                child: Center(
+                                  child: CustomText(
+                                    text: "No event invitation  yet!!",
+                                    fontSize:isTablet?12.sp: 24.sp,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.lightRed,
+                                  ),
+                                ),
+                              ):
                               joinEventController.obx((state){
 
-                                if(state?.isEmpty??true){
+                                return ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: state?.length,
+                                    itemBuilder: (BuildContext context,index){
 
-                                  return SizedBox(
-                                    height: MediaQuery.of(context).size.height/2,
-                                    child: Center(
-                                      child: CustomText(
-                                        text: "No event invitation  yet!!",
-                                        fontSize:isTablet?12.sp: 24.sp,
-                                        fontWeight: FontWeight.w700,
-                                        color: AppColors.lightRed,
-                                      ),
-                                    ),
-                                  );
-                                }else{
+                                      final invitedEventModel =state?[index];
 
-                                  return ListView.builder(
-                                      shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      itemCount: state?.length,
-                                      itemBuilder: (BuildContext context,index){
+                                      return Padding(
+                                        padding: const EdgeInsets.only(bottom: 20.0),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
 
-                                        final invitedEventModel =state?[index];
+                                            invitedEventModel?.contentId?.images?.isNotEmpty??true?
+                                            CustomNetworkImage(
+                                              /// imageUrl: AppConstants.eventImage,
+                                              imageUrl:"${ApiUrl.imageUrl}${invitedEventModel?.contentId?.images?[0]}",
+                                              height: isTablet ? 200.h : 170.h,
+                                              width: isTablet ? 180.w : 180.w,
+                                              borderRadius: BorderRadius.circular(10),
+                                            ):Image.asset("assets/images/event_image.png",
+                                              height: isTablet ? 200.h : 170.h,
+                                              width: isTablet ? 180.w : 180.w,fit: BoxFit.fill,),
 
-                                        return Padding(
-                                          padding: const EdgeInsets.only(bottom: 20.0),
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
+                                            SizedBox(
+                                              width: 10.w,
+                                            ),
 
-                                              invitedEventModel?.contentId?.images?.isNotEmpty??true?
-                                              CustomNetworkImage(
-                                                /// imageUrl: AppConstants.eventImage,
-                                                imageUrl:"${ApiUrl.imageUrl}${invitedEventModel?.contentId?.images?[0]}",
-                                                height: isTablet ? 200.h : 170.h,
-                                                width: isTablet ? 180.w : 180.w,
-                                                borderRadius: BorderRadius.circular(10),
-                                              ):Image.asset("assets/images/event_image.png",
-                                                height: isTablet ? 200.h : 170.h,
-                                                width: isTablet ? 180.w : 180.w,fit: BoxFit.fill,),
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
 
-                                              SizedBox(
-                                                width: 10.w,
-                                              ),
+                                                CustomText(
+                                                  textAlign: TextAlign.start,
+                                                  text: "${invitedEventModel?.contentId?.name}",
+                                                  maxLines: 3,
+                                                  fontSize:isTablet?8.sp: 14.sp,
+                                                  fontWeight: FontWeight.w600,
+                                                  bottom: 5,
+                                                  overflow: TextOverflow.ellipsis,
+                                                ),
 
-                                              Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                children: [
-
-                                                  CustomText(
-                                                    textAlign: TextAlign.start,
-                                                    text: "${invitedEventModel?.contentId?.name}",
-                                                    maxLines: 3,
-                                                    fontSize:isTablet?8.sp: 14.sp,
-                                                    fontWeight: FontWeight.w600,
-                                                    bottom: 5,
-                                                    overflow: TextOverflow.ellipsis,
-                                                  ),
-
-                                                  /// Location
-                                                  Row(
-                                                    children: [
-                                                      const Icon(
-                                                        Icons.location_on,
-                                                        color: AppColors.black,
-                                                        size: 20,
-                                                      ),
-                                                      SizedBox(
-                                                        width: 150.w,
-                                                        child: CustomText(
-                                                          text: "${invitedEventModel?.contentId?.address?.state},${invitedEventModel?.contentId?.address?.city},${invitedEventModel?.contentId?.address?.zip}",
-                                                          ///  text: "${administratorController.getAddressFromLatLng(model.cords?.lat??0.0,model.cords?.lng??0.0)}",
-                                                          fontSize:isTablet?6.sp: 8.sp,
-                                                          color: AppColors.black_80,
-                                                          fontWeight: FontWeight.w400,
-                                                          maxLines: 4,
-                                                          textAlign: TextAlign.start,
-                                                          overflow: TextOverflow.ellipsis,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-
-                                                  SizedBox(
-                                                    height: 5,
-                                                  ),
-                                                  // Leader
-                                                  /// Leader
-                                                  Row(
-                                                    children: [
-                                                      CustomNetworkImage(
-                                                        imageUrl: AppConstants.profileImage,
-                                                        height: 30,
-                                                        width: 30,
-                                                        boxShape: BoxShape.circle,
-                                                      ),
-                                                      CustomText(
-                                                        text: "${invitedEventModel?.contentId?.creator?.name}",
-                                                        fontSize:isTablet?6.sp: 12.sp,
-                                                        color: AppColors.black,
-                                                        fontWeight: FontWeight.w600,
-                                                        overflow: TextOverflow.ellipsis, // Show "..." for overflowing text
-                                                        maxLines: 2,
+                                                /// Location
+                                                Row(
+                                                  children: [
+                                                    const Icon(
+                                                      Icons.location_on,
+                                                      color: AppColors.black,
+                                                      size: 20,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 150.w,
+                                                      child: CustomText(
+                                                        text: "${invitedEventModel?.contentId?.address?.state},${invitedEventModel?.contentId?.address?.city},${invitedEventModel?.contentId?.address?.zip}",
+                                                        ///  text: "${administratorController.getAddressFromLatLng(model.cords?.lat??0.0,model.cords?.lng??0.0)}",
+                                                        fontSize:isTablet?6.sp: 8.sp,
+                                                        color: AppColors.black_80,
+                                                        fontWeight: FontWeight.w400,
+                                                        maxLines: 4,
                                                         textAlign: TextAlign.start,
-                                                        left: 4,
+                                                        overflow: TextOverflow.ellipsis,
                                                       ),
+                                                    ),
+                                                  ],
+                                                ),
 
-                                                      CustomText(
-                                                        text: "Leader",
-                                                        fontSize:isTablet?6.sp: 12.sp,
-                                                        color: AppColors.blue,
-                                                        fontWeight: FontWeight.w600,
-                                                        left: 4,                                        ),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    children: [
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                // Leader
+                                                /// Leader
+                                                Row(
+                                                  children: [
+                                                    CustomNetworkImage(
+                                                      imageUrl: AppConstants.profileImage,
+                                                      height: 30,
+                                                      width: 30,
+                                                      boxShape: BoxShape.circle,
+                                                    ),
+                                                    CustomText(
+                                                      text: "${invitedEventModel?.contentId?.creator?.name}",
+                                                      fontSize:isTablet?6.sp: 12.sp,
+                                                      color: AppColors.black,
+                                                      fontWeight: FontWeight.w600,
+                                                      overflow: TextOverflow.ellipsis, // Show "..." for overflowing text
+                                                      maxLines: 2,
+                                                      textAlign: TextAlign.start,
+                                                      left: 4,
+                                                    ),
 
-                                                      InkWell(
-                                                        onTap: () {
-                                                          Get.toNamed(AppRoutes.joinDetailsScreen,arguments: [
-                                                            {
-                                                              "eventId":invitedEventModel?.contentId?.id,
-                                                              "inviationId":invitedEventModel?.id
-                                                            }
-                                                          ]);
+                                                    CustomText(
+                                                      text: "Leader",
+                                                      fontSize:isTablet?6.sp: 12.sp,
+                                                      color: AppColors.blue,
+                                                      fontWeight: FontWeight.w600,
+                                                      left: 4,                                        ),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
 
-                                                        },
-                                                        child: Container(
-                                                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                                                          decoration: BoxDecoration(
-                                                            color: AppColors.primary,
-                                                            borderRadius: BorderRadius.circular(10),
-                                                          ),
-                                                          child: CustomText(
-                                                            text: "Explore",
-                                                            fontSize: 14,
-                                                            fontWeight: FontWeight.w500,
-                                                            color: AppColors.black,
-                                                          ),
+                                                    InkWell(
+                                                      onTap: () {
+                                                        Get.toNamed(AppRoutes.joinDetailsScreen,arguments: [
+                                                          {
+                                                            "eventId":invitedEventModel?.contentId?.id,
+                                                            "inviationId":invitedEventModel?.id
+                                                          }
+                                                        ]);
+
+                                                      },
+                                                      child: Container(
+                                                        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                                        decoration: BoxDecoration(
+                                                          color: AppColors.primary,
+                                                          borderRadius: BorderRadius.circular(10),
+                                                        ),
+                                                        child: CustomText(
+                                                          text: "Explore",
+                                                          fontSize: 14,
+                                                          fontWeight: FontWeight.w500,
+                                                          color: AppColors.black,
                                                         ),
                                                       ),
+                                                    ),
 
-                                                      SizedBox(width: 5.w),
+                                                    SizedBox(width: 5.w),
 
-                                                      InkWell(
-                                                        onTap: () {
+                                                    InkWell(
+                                                      onTap: () {
 
-                                                          showDialog(
-                                                            context: context,
-                                                            builder: (ctx) => AlertDialog(
-                                                              backgroundColor: Colors.white,
-                                                              insetPadding: EdgeInsets.all(8),
-                                                              contentPadding: EdgeInsets.all(8),
-                                                              title: SizedBox(),
-                                                              content: SizedBox(
-                                                                width: MediaQuery.sizeOf(context).width,
-                                                                ///child: AlertDialogEvent(title: "Are you sure you want to \n Delete this Event?",discription: "",),
-                                                                child: SingleChildScrollView(
-                                                                  child: Padding(
-                                                                    padding: const EdgeInsets.all(8.0),
-                                                                    child: Column(
-                                                                      mainAxisSize: MainAxisSize.min,
-                                                                      children: [
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (ctx) => AlertDialog(
+                                                            backgroundColor: Colors.white,
+                                                            insetPadding: EdgeInsets.all(8),
+                                                            contentPadding: EdgeInsets.all(8),
+                                                            title: SizedBox(),
+                                                            content: SizedBox(
+                                                              width: MediaQuery.sizeOf(context).width,
+                                                              ///child: AlertDialogEvent(title: "Are you sure you want to \n Delete this Event?",discription: "",),
+                                                              child: SingleChildScrollView(
+                                                                child: Padding(
+                                                                  padding: const EdgeInsets.all(8.0),
+                                                                  child: Column(
+                                                                    mainAxisSize: MainAxisSize.min,
+                                                                    children: [
 
 
-                                                                        CustomText(
-                                                                          text:"Are you sure you want to \n Decline this Event?",
-                                                                          fontSize: 22,
-                                                                          fontWeight: FontWeight.w600,
-                                                                          color: AppColors.black_80,
-                                                                        ),
+                                                                      CustomText(
+                                                                        text:"Are you sure you want to \n Decline this Event?",
+                                                                        fontSize: 22,
+                                                                        fontWeight: FontWeight.w600,
+                                                                        color: AppColors.black_80,
+                                                                      ),
 
-                                                                        SizedBox(
-                                                                          height: 8.h,
-                                                                        ),
+                                                                      SizedBox(
+                                                                        height: 8.h,
+                                                                      ),
 
-                                                                        joinEventController.eventInvitationDeleteLoading.value?Center(child: CircularProgressIndicator(color: Colors.orange,)):
-                                                                        CustomButton(onTap: (){
+                                                                      joinEventController.eventInvitationDeleteLoading.value?Center(child: CircularProgressIndicator(color: Colors.orange,)):
+                                                                      CustomButton(onTap: (){
 
-                                                                          joinEventController.eventDelete(invitedEventModel?.id.toString()??"");
+                                                                        joinEventController.eventDelete(invitedEventModel?.id.toString()??"");
 
-                                                                          if(joinEventController.eventInvitationDeleteLoading.value){
-                                                                            Navigator.of(context).pop();
-                                                                          }
-
-                                                                        },title:"Yes",height:isTablet?70.h: 45.h,fontSize: 12.sp,),
-
-                                                                        SizedBox(
-                                                                          height: 12.h,
-                                                                        ),
-                                                                        CustomButton(onTap: (){
+                                                                        if(joinEventController.eventInvitationDeleteLoading.value){
                                                                           Navigator.of(context).pop();
-                                                                        },title:"NO",height:isTablet?70.h: 45.h,
-                                                                          fontSize: 12.sp,fillColor: AppColors.white,
-                                                                          textColor: AppColors.primary,
-                                                                          isBorder: true,borderWidth: 1,)
-                                                                      ],
-                                                                    ),
+                                                                        }
+
+                                                                      },title:"Yes",height:isTablet?70.h: 45.h,fontSize: 12.sp,),
+
+                                                                      SizedBox(
+                                                                        height: 12.h,
+                                                                      ),
+                                                                      CustomButton(onTap: (){
+                                                                        Navigator.of(context).pop();
+                                                                      },title:"NO",height:isTablet?70.h: 45.h,
+                                                                        fontSize: 12.sp,fillColor: AppColors.white,
+                                                                        textColor: AppColors.primary,
+                                                                        isBorder: true,borderWidth: 1,)
+                                                                    ],
                                                                   ),
                                                                 ),
                                                               ),
                                                             ),
-                                                          );
-                                                        },
-                                                        child: Container(
-                                                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                                                          decoration: BoxDecoration(
-                                                            color: AppColors.primary,
-                                                            borderRadius: BorderRadius.circular(10),
                                                           ),
-                                                          child: CustomText(
-                                                            text: "Decline",
-                                                            fontSize: 14,
-                                                            fontWeight: FontWeight.w500,
-                                                            color: AppColors.black,
-                                                          ),
+                                                        );
+                                                      },
+                                                      child: Container(
+                                                        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                                        decoration: BoxDecoration(
+                                                          color: AppColors.primary,
+                                                          borderRadius: BorderRadius.circular(10),
                                                         ),
-                                                      )
+                                                        child: CustomText(
+                                                          text: "Decline",
+                                                          fontSize: 14,
+                                                          fontWeight: FontWeight.w500,
+                                                          color: AppColors.black,
+                                                        ),
+                                                      ),
+                                                    )
 
-                                                    ],
-                                                  ),
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                        );
-                                      });
-                                }
+                                                  ],
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      );
+                                    });
                               }),
 
                             ],
@@ -418,133 +377,220 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
 
 
                         if(eventsController.currentIndex.value ==1)
-                          Column(
-                              children: List.generate(2, (index) {
+                         Column(
+                           mainAxisAlignment: MainAxisAlignment.start,
+                           children: [
 
-                                return Padding(
-                                  padding: const EdgeInsets.only(bottom: 20.0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
+                             ///Search Bar running complete Event
+                             CustomTextField(
+                               textEditingController:runningController.queryRunningCompleteEventController.value,
+                               fillColor: AppColors.neutral02,
+                               //  hintText: AppStrings.search,
+                               hintText: "Search for event name...",
+                               onChanged: (value){
 
-                                      CustomNetworkImage(
-                                        imageUrl: AppConstants.eventImage,
-                                        height: 170.h,
-                                        width: 170.h,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
+                                 runningController.queryEvent.value = value;
 
-                                      SizedBox(
-                                        width: 8,
-                                      ),
+                                 runningController.searchEventList(runningController.queryEvent.value);
+                               },
 
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        children: [
+                               suffixIcon: runningController.queryEvent.value.isBlank == true || runningController.queryEvent.value.isEmpty
+                                   ? Icon(
+                                 FluentIcons.search_24_regular,
+                                 size: 24,
+                               )
+                                   : IconButton(
+                                   icon: Icon(Icons.close,size: 24,),
+                                   onPressed: () {
 
-                                          SizedBox(
-                                            width: 150.w,
-                                            child: CustomText(
-                                              textAlign: TextAlign.start,
-                                              text: "Cox’s Bazar Beach Helping Peolple",
-                                              maxLines: 3,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w500,
-                                              bottom: 5,
-                                            ),
-                                          ),
+                                     runningController.queryEvent.value = "";
 
-                                          /// Location
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Icon(
-                                                Icons.location_on,
-                                                color: AppColors.black,
-                                                size: 20,
-                                              ),
-                                              CustomText(
-                                                text: "Cox’s Bazar, Bangladesh",
-                                                fontSize: 12,
-                                                color: AppColors.black_80,
-                                                fontWeight: FontWeight.w400,
-                                                textAlign: TextAlign.start,
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          // Leader
-                                          Row(
-                                            children: [
-                                              CustomNetworkImage(
-                                                imageUrl: AppConstants.profileImage,
-                                                height: 30,
-                                                width: 30,
-                                                boxShape: BoxShape.circle,
-                                              ),
-                                              CustomText(
-                                                text: "Mehedi",
-                                                fontSize: 14,
-                                                color: AppColors.black,
-                                                fontWeight: FontWeight.w600,
-                                                right: 10.w,
-                                                left: 10.w,
-                                              ),
-                                              CustomText(
-                                                text: "Leader",
-                                                fontSize: 14,
-                                                color: AppColors.blue,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
+                                     runningController.queryRunningCompleteEventController.value.clear();
+                                     FocusScope.of(context).unfocus();
 
-                                              InkWell(
-                                                onTap: () {
-                                                  Get.toNamed(AppRoutes.joinDetailsScreen);
+                                     runningController.searchEventList("");
+                                   }),
+                             ),
 
-                                                },
-                                                child: Container(
-                                                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                                                  decoration: BoxDecoration(
-                                                    color: AppColors.primary,
-                                                    borderRadius: BorderRadius.circular(10),
-                                                  ),
-                                                  child: CustomText(
-                                                    text: "Explore",
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: AppColors.black,
-                                                  ),
-                                                ),
-                                              ),
+                             SizedBox(
+                               height: 12.h,
+                             ),
+                             runningController.runningCompleteEventList.isEmpty?
+                             SizedBox(
+                               height: MediaQuery.of(context).size.height/4,
+                               child: Center(
+                                 child: CustomText(
+                                   text: "No event yet!!",
+                                   fontSize:isTablet?12.sp: 24.sp,
+                                   fontWeight: FontWeight.w700,
+                                   color: AppColors.lightRed,
+                                 ),
+                               ),
+                             ):
+                             runningController.obx((state){
+
+                               return ListView.builder(
+                                   shrinkWrap: true,
+                                   physics: NeverScrollableScrollPhysics(),
+                                   itemCount: state?.length,
+                                   itemBuilder: (BuildContext context,index){
+
+                                     final eventModel =state?[index];
+
+                                     return Padding(
+                                       padding: const EdgeInsets.only(bottom: 20.0),
+                                       child: Row(
+                                         mainAxisAlignment: MainAxisAlignment.start,
+                                         crossAxisAlignment: CrossAxisAlignment.start,
+                                         children: [
+
+                                           eventModel?.images?.isNotEmpty??true?
+                                           CustomNetworkImage(
+                                             /// imageUrl: AppConstants.eventImage,
+                                             imageUrl:"${ApiUrl.imageUrl}${eventModel?.images?[0]}",
+                                             height: isTablet ? 200.h : 170.h,
+                                             width: isTablet ? 180.w : 180.w,
+                                             borderRadius: BorderRadius.circular(10),
+                                           ):Image.asset("assets/images/event_image.png",
+                                             height: isTablet ? 200.h : 170.h,
+                                             width: isTablet ? 180.w : 180.w,fit: BoxFit.fill,),
+
+                                           SizedBox(
+                                             width: 10.w,
+                                           ),
+
+                                           Column(
+                                             crossAxisAlignment: CrossAxisAlignment.start,
+                                             mainAxisAlignment: MainAxisAlignment.start,
+                                             children: [
+
+                                               CustomText(
+                                                 textAlign: TextAlign.start,
+                                                 text: "${eventModel?.name}",
+                                                 maxLines: 3,
+                                                 fontSize:isTablet?8.sp: 14.sp,
+                                                 fontWeight: FontWeight.w600,
+                                                 bottom: 5,
+                                                 overflow: TextOverflow.ellipsis,
+                                               ),
+
+                                               /// Location
+                                               Row(
+                                                 children: [
+                                                   const Icon(
+                                                     Icons.location_on,
+                                                     color: AppColors.black,
+                                                     size: 20,
+                                                   ),
+                                                   SizedBox(
+                                                     width: 150.w,
+                                                     child: CustomText(
+                                                       text: "${eventModel?.address?.state},${eventModel?.address?.city},${eventModel?.address?.zip}",
+                                                       ///  text: "${administratorController.getAddressFromLatLng(model.cords?.lat??0.0,model.cords?.lng??0.0)}",
+                                                       fontSize:isTablet?6.sp: 8.sp,
+                                                       color: AppColors.black_80,
+                                                       fontWeight: FontWeight.w400,
+                                                       maxLines: 4,
+                                                       textAlign: TextAlign.start,
+                                                       overflow: TextOverflow.ellipsis,
+                                                     ),
+                                                   ),
+                                                 ],
+                                               ),
+
+                                               SizedBox(
+                                                 height: 5,
+                                               ),
+                                               // Leader
+                                               /// Leader
+                                               Row(
+                                                 children: [
+                                                   CustomNetworkImage(
+                                                     imageUrl: AppConstants.profileImage,
+                                                     height: 30,
+                                                     width: 30,
+                                                     boxShape: BoxShape.circle,
+                                                   ),
+                                                   CustomText(
+                                                     text: "${eventModel?.creator?.name}",
+                                                     fontSize:isTablet?6.sp: 12.sp,
+                                                     color: AppColors.black,
+                                                     fontWeight: FontWeight.w600,
+                                                     overflow: TextOverflow.ellipsis, // Show "..." for overflowing text
+                                                     maxLines: 2,
+                                                     textAlign: TextAlign.start,
+                                                     left: 4,
+                                                   ),
+
+                                                   CustomText(
+                                                     text: "Leader",
+                                                     fontSize:isTablet?6.sp: 12.sp,
+                                                     color: AppColors.blue,
+                                                     fontWeight: FontWeight.w600,
+                                                     left: 4,                                        ),
+                                                 ],
+                                               ),
+                                               SizedBox(
+                                                 height: 10,
+                                               ),
+                                               Row(
+                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                 children: [
+
+                                                   InkWell(
+                                                     onTap: () {
+                                                     /*  Get.toNamed(AppRoutes.joinDetailsScreen,arguments: [
+                                                         {
+                                                           "eventId":eventModel?.id,
+                                                           "inviationId":eventModel?.id
+                                                         }
+                                                       ]);*/
+
+                                                       Get.toNamed(AppRoutes.recentEventExploreDetails,arguments: [
+                                                         {
+                                                           "eventId":eventModel?.id
+                                                         }
+                                                       ]);
+                                                     },
+                                                     child: Container(
+                                                       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                                       decoration: BoxDecoration(
+                                                         color: AppColors.primary,
+                                                         borderRadius: BorderRadius.circular(10),
+                                                       ),
+                                                       child: CustomText(
+                                                         text: "Explore",
+                                                         fontSize: 14,
+                                                         fontWeight: FontWeight.w500,
+                                                         color: AppColors.black,
+                                                       ),
+                                                     ),
+                                                   ),
+
+                                                   SizedBox(width: 5.w),
 
 
-                                            ],
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                );
-                              })
-                          ),
+                                                 ],
+                                               ),
+                                             ],
+                                           )
+                                         ],
+                                       ),
+                                     );
+                                   });
+                             }),
+                           ],
+                         )
                       ],
                     )
                   ],
                 ), onRefresh: ()async {
-                  await joinEventController.notificationInvitationEventShow();
+                  if(eventsController.currentIndex.value ==0)
+                   await joinEventController.notificationInvitationEventShow();
+
+                  if(eventsController.currentIndex.value ==1)
+                    await runningController.runningCompleteEventShow();
+
                 });
               }
           ),

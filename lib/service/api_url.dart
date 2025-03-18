@@ -59,11 +59,8 @@ class ApiUrl {
   ///=================== leader Show   ==============
   static String leaderShow ="/mission/organizer/search";
 
-
   ///=================== deleteOrganization  ==============
   static String deleteMission ({required String mission_Id}) =>"/mission/delete/$mission_Id";
-
-
 
   ///=================== Remove specific organizer from a mission  ==============
   static String removeSpecificOrganizer ({required String missionId}) =>"/mission/remove/organizer/$missionId";
@@ -194,5 +191,32 @@ class ApiUrl {
 
   ///=================== volunteer  My Organization list  ==============
   static String volunteerMyOrganization ({required String userId}) =>"/volunteer/retrieve/organizations/volunteer/$userId";
+
+
+  ///Retrive all   Running Complete event volunteer
+  static String runningCompleteEvent({required String userId}) =>"/volunteer/event/$userId/search";
+
+  ///=================== Retrive all events by userId ========================================
+  static String retriveAllEventReport ({required String userId}) =>"/volunteer/event/retrive/report/volunteer/$userId";
+
+  ///=================== Retrive  Specific fromDate events volunteer report ========================================
+  static String retriveSpecificFromDateEventByUserId ({required String userId,required String fromDate}) =>"/volunteer/event/retrive/report/volunteer/$userId?fromDate=$fromDate";
+
+  ///=================== Retrive  Specific fromDate events volunteer report ========================================
+  static String retriveSpecificFromDateToDateEventUser ({required String userId,required String fromDate,required String toDate}) =>"/volunteer/event/retrive/report/volunteer/$userId?fromDate=$fromDate&toDate=$toDate";
+
+  ///donation/create
+  static String createDonation="/donation/create";
+
+  ///Retrive organic users by specific user
+  static String inviteFriendsList({required String userId}) =>"/friendship/retrive/organic-user/$userId/search";
+
+
+  ///=================== Retrive organic users by specific user search ==============
+  static String searchInviteFriends ({required String userId,required String query}) =>"/friendship/retrive/organic-user/$userId/search?query=$query";
+
+  ///=================== Invite friend request ==============
+  static String inviteFriend ="/friendship/create";
+
 
 }

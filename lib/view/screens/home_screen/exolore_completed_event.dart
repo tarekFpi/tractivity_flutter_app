@@ -148,7 +148,7 @@ class _ExoloreEventCompletedScreenState extends State<ExoloreEventCompletedScree
                           height: MediaQuery.of(context).size.height/2,
                           child: Center(
                             child: CustomText(
-                              text: "No Events yet!!",
+                              text: "No completed events yet!!",
                               fontSize:isTablet?12.sp: 24.sp,
                               fontWeight: FontWeight.w700,
                               color: AppColors.lightRed,

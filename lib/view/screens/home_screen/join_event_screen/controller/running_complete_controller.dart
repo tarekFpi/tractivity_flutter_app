@@ -16,40 +16,40 @@ import 'package:tractivity_app/view/screens/home_screen/notification_evnet_invit
 import 'package:tractivity_app/view/screens/home_screen/notification_mission_inviteModel/notification_missionInviteModel.dart';
 
 
-class JoinEventController extends GetxController with StateMixin<List<RetriveNotificationEventInviteResponeModel>>  {
+class RunningCompleteController extends GetxController with StateMixin<List<CompletedEventResponeModel>>  {
 
 
-  Rx<TextEditingController> queryInviteEventController = TextEditingController().obs;
+  Rx<TextEditingController> queryRunningCompleteEventController = TextEditingController().obs;
 
   ///Retrive all invitation event notification by volunteer
-  RxString queryevent = "".obs;
+  RxString queryEvent = "".obs;
 
-  RxBool notificationInvitationEventLodding = false.obs;
+  RxBool runningCompleteEventLodding = false.obs;
 
-  RxList<RetriveNotificationEventInviteResponeModel> notificationInvitaionEventList = <RetriveNotificationEventInviteResponeModel>[].obs;
+  RxList<CompletedEventResponeModel> runningCompleteEventList = <CompletedEventResponeModel>[].obs;
 
-  Future<void> notificationInvitationEventShow() async{
+  Future<void> runningCompleteEventShow() async{
 
-    notificationInvitationEventLodding.value=true;
+    runningCompleteEventLodding.value=true;
 
     var userId = await SharePrefsHelper.getString(AppConstants.userId);
 
-    var response = await ApiClient.getData(ApiUrl.inviteVolunteerEvent(userId: userId));
+    var response = await ApiClient.getData(ApiUrl.runningCompleteEvent(userId: userId));
 
     try{
       if (response.statusCode == 200) {
 
-        notificationInvitaionEventList.value = List.from(response.body["data"].map((m)=> RetriveNotificationEventInviteResponeModel.fromJson(m)));
+        runningCompleteEventList.value = List.from(response.body["data"].map((m)=> CompletedEventResponeModel.fromJson(m)));
 
-       change(notificationInvitaionEventList.value, status: RxStatus.success());
+        change(runningCompleteEventList.value, status: RxStatus.success());
 
-        if(notificationInvitaionEventList.isEmpty){
+        if(runningCompleteEventList.isEmpty){
 
           change(null, status: RxStatus.empty());
           refresh();
         }
 
-        debugPrint("notificationInvitaionEventList:${notificationInvitaionEventList.value}");
+        debugPrint("notificationInvitaionEventList:${runningCompleteEventList.value}");
 
         refresh();
 
@@ -80,58 +80,23 @@ class JoinEventController extends GetxController with StateMixin<List<RetriveNot
 
 
 
-  ///===================== Reject event invitation by invitaionId =====================
-  RxBool eventInvitationDeleteLoading = false.obs;
-
-  Future<void> eventDelete(String invitationId) async{
-
-    eventInvitationDeleteLoading.value = true;
-
-    var response = await ApiClient.deleteData(ApiUrl.deleteEventInviation(invitationId: invitationId));
-
-    if (response.statusCode == 200) {
-
-      Toast.successToast(response.body['message']);
-
-      eventInvitationDeleteLoading.value =false;
-
-      notificationInvitationEventShow();
-
-    } else {
-
-      eventInvitationDeleteLoading.value =false;
-
-      if (response.statusText == ApiClient.somethingWentWrong) {
-
-        Toast.errorToast(AppStrings.checknetworkconnection);
-        refresh();
-        return;
-      } else {
-
-        ApiChecker.checkApi(response);
-
-        refresh();
-        return;
-      }
-    }
-  }
 
   ///===================== search notification Invitaion EventL ist volunteers =====================
-  Future<void> searchNotificationInvitaionEventList(String query) async{
+  Future<void> searchEventList(String query) async{
 
     change(null, status: RxStatus.loading());
 
     if (query == null || query.isEmpty) {
 
-      change(notificationInvitaionEventList.value, status: RxStatus.success());
+      change(runningCompleteEventList.value, status: RxStatus.success());
 
     }else{
 
 
-       try{
+      try{
 
-        final filteredList = notificationInvitaionEventList.value
-            .where((element) =>element.contentId!.name!.toLowerCase().contains(query.toLowerCase().trim())
+        final filteredList = runningCompleteEventList.value
+            .where((element) =>element.name!.toLowerCase().contains(query.toLowerCase().trim())
         ).toList();
 
         if(filteredList.isEmpty){

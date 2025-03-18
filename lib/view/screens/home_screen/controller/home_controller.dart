@@ -21,7 +21,7 @@ import 'package:tractivity_app/view/screens/adminstrator_home_screen/specific_mi
 import 'package:tractivity_app/view/screens/home_screen/completed_event_model/CompletedEventResponeModel.dart';
 import 'package:tractivity_app/view/screens/home_screen/notification_evnet_inviteModel/RetriveNotificationEventInviteResponeModel.dart';
 import 'package:tractivity_app/view/screens/home_screen/notification_mission_inviteModel/notification_missionInviteModel.dart';
-import 'package:tractivity_app/view/screens/home_screen/retrive_my_eventModel/RetriveMyEventResponeModel.dart';
+
 
 
 class HomeController extends GetxController with StateMixin<List<OrganizationResponeModel>>  {
@@ -759,107 +759,10 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
     }
   }
 
+
+
   ///======Retrive My events by specific volunteer =========
   RxInt sliderCurrentIndex = 0.obs;
-  /*RxList<CompletedEventResponeModel> myEventShowList = <CompletedEventResponeModel>[].obs;
-  RxBool myEventShowLoading = false.obs;
-
-  Future<void> retriveMyEventShow() async{
-
-    var userId = await SharePrefsHelper.getString(AppConstants.userId);
-
-    myEventShowLoading.value = true;
-
-    var response = await ApiClient.getData(ApiUrl.volunteerMyEventName(userId: userId));
-
-    if (response.statusCode == 200) {
-
-      if (response.body['data'] == null || (response.body['data']).isEmpty) {
-
-        var response = await ApiClient.getData(ApiUrl.volunteerMyEventNameIntialized(userId: userId));
-        myEventShowList.value = List.from(response.body["data"].map((m)=> CompletedEventResponeModel.fromJson(m)));
-        refresh();
-
-      }else{
-
-        refresh();
-        myEventShowList.value = List.from(response.body["data"].map((m)=> CompletedEventResponeModel.fromJson(m)));
-      }
-
-
-      myEventShowLoading.value =false;
-      refresh();
-
-    } else {
-
-      myEventShowLoading.value =false;
-
-      if (response.statusText == ApiClient.somethingWentWrong) {
-        Toast.errorToast(AppStrings.checknetworkconnection);
-        refresh();
-        return;
-      } else {
-
-        ApiChecker.checkApi(response);
-
-        refresh();
-        return;
-      }
-    }
-  }*/
-
-/*
-  /// Retrive My events  specific volunteer search ====
-  Rx<TextEditingController> myeventController = TextEditingController().obs;
-  RxBool searchMyEventLoading = false.obs;
-
-  Future<void> searchMyEventList(String query) async{
-
-    if (query.isEmpty) {
-
-      retriveCompletedEventShow();
-      refresh();
-
-    }else{
-
-      debugPrint("myEventNameShowList:${query}");
-
-      var userId = await SharePrefsHelper.getString(AppConstants.userId);
-
-      searchVolunteerNameLoading.value = true;
-
-      var response = await ApiClient.getData(ApiUrl.searchVolunteerEventNameSearch(query: query,userId: userId));
-
-      myEventShowList.refresh();
-
-      if (response.statusCode == 200) {
-
-        myEventShowList.value = List.from(response.body["data"].map((m)=> CompletedEventResponeModel.fromJson(m)));
-
-        searchVolunteerNameLoading.value =false;
-
-        refresh();
-
-      } else {
-
-        searchVolunteerNameLoading.value =false;
-
-        if (response.statusText == ApiClient.somethingWentWrong) {
-          Toast.errorToast(AppStrings.checknetworkconnection);
-          refresh();
-          return;
-        } else {
-
-          ApiChecker.checkApi(response);
-
-          refresh();
-          return;
-        }
-      }
-    }
-  }
-
-*/
 
 
   ///===================== retrive Specific event by Id event download  =====================

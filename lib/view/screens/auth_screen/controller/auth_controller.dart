@@ -373,6 +373,7 @@ class AuthController extends GetxController {
       SharePrefsHelper.setString(AppConstants.userId, response.body["data"]["_id"]);
 
       SharePrefsHelper.setString(AppConstants.userEmail, response.body["data"]["email"]);
+      SharePrefsHelper.setString(AppConstants.fullName, response.body["data"]["fullName"]);
 
       Get.toNamed(AppRoutes.homeScreen);
 

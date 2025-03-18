@@ -199,120 +199,111 @@ class _MissionToVolunteersInviteScreenState extends State<MissionToVolunteersInv
                             height: 12.h,
                           ),
 
-
+                          missionToVoluntController.retriveVolunteersMissionsList.isEmpty?
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height/4,
+                            child: Center(
+                              child: CustomText(
+                                text: "No invite volunteers yet!!",
+                                fontSize:isTablet?12.sp: 24.sp,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.lightRed,
+                              ),
+                            ),
+                          ):
                           missionToVoluntController.obx((state){
 
-                            if (state!=null && state.isEmpty) {
+                            return ListView.builder(
+                              itemCount:state?.length,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemBuilder: (BuildContext context, int index) {
 
-                              return SizedBox(
-                                // height: MediaQuery.of(context).size.height/3,
-                                child: Center(
-                                  child: CustomText(
-                                    text: "No volunteers yet!!",
-                                    fontSize:isTablet?12.sp: 24.sp,
-                                    fontWeight: FontWeight.w700,
-                                    color: AppColors.red,
-                                  ),
-                                ),
-                              );
+                                final model =state?[index];
 
-                            }else{
-                             Toast.successToast("eslw");
+                                return Card(
+                                  elevation: 0.5,
+                                  color: Colors.white,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(bottom: 10.h,left: 8,right: 8),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: (){},
+                                          child: Row(
+                                            children: [
 
-                              return ListView.builder(
-                                itemCount:state?.length,
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                itemBuilder: (BuildContext context, int index) {
+                                              model?.image==""? CustomNetworkImage(
+                                                imageUrl: AppConstants.profileImage,
+                                                height:isTablet?64.h: 60.h,
+                                                width:isTablet?64.w: 60.w,
+                                                boxShape: BoxShape.circle,
+                                              ):CustomNetworkImage(
+                                                imageUrl: "${ApiUrl.imageUrl}${model?.image}",
+                                                height:isTablet?64.h: 60.h,
+                                                width:isTablet?64.w: 60.w,
+                                                boxShape: BoxShape.circle,
+                                              ),
 
-                                  final model =state?[index];
-
-                                  return Card(
-                                    elevation: 0.5,
-                                    color: Colors.white,
-                                    child: Padding(
-                                      padding: EdgeInsets.only(bottom: 10.h,left: 8,right: 8),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          GestureDetector(
-                                            onTap: (){},
-                                            child: Row(
-                                              children: [
-
-                                                model?.image==""? CustomNetworkImage(
-                                                  imageUrl: AppConstants.profileImage,
-                                                  height:isTablet?64.h: 60.h,
-                                                  width:isTablet?64.w: 60.w,
-                                                  boxShape: BoxShape.circle,
-                                                ):CustomNetworkImage(
-                                                  imageUrl: "${ApiUrl.imageUrl}${model?.image}",
-                                                  height:isTablet?64.h: 60.h,
-                                                  width:isTablet?64.w: 60.w,
-                                                  boxShape: BoxShape.circle,
-                                                ),
-
-                                                SizedBox(
-                                                  width: 10.w,
-                                                ),
-                                                Column(
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    CustomText(
-                                                      text: "${model?.fullName}",
-                                                      fontSize: 16,
-                                                      fontWeight: FontWeight.w600,
-                                                      color: AppColors.black,
-                                                    ),
-                                                    CustomText(
-                                                      text: "${model?.profession}",
-                                                      fontSize: 12,
-                                                      fontWeight: FontWeight.w400,
-                                                      color: AppColors.black_80,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
+                                              SizedBox(
+                                                width: 10.w,
+                                              ),
+                                              Column(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  CustomText(
+                                                    text: "${model?.fullName}",
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: AppColors.black,
+                                                  ),
+                                                  CustomText(
+                                                    text: "${model?.profession}",
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w400,
+                                                    color: AppColors.black_80,
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
                                           ),
-                                          Obx(()=> Checkbox(
-                                            checkColor: AppColors.white,
-                                            activeColor: AppColors.primary,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(3.0),
-                                            ),
-                                            side: const BorderSide(
-                                              // ======> CHANGE THE BORDER COLOR HERE <======
-                                              color: AppColors.primary,
-                                              // Give your checkbox border a custom width
-                                              width: 1.4,
-                                            ),
-                                            ///value: administratorController.selectedOranization.value,
-                                            value: missionToVoluntController.volunteersIdList.contains(model?.id),
-                                            onChanged: (bool? value) {
-
-                                              missionToVoluntController.selectedVolunteers.value = value!;
-
-                                              if(missionToVoluntController.selectedVolunteers.value){
-
-                                                missionToVoluntController.volunteersIdList.add(model!.id.toString());
-
-                                              }else{
-                                                missionToVoluntController.volunteersIdList.remove(model?.id.toString());
-                                              }
-
-                                            },
+                                        ),
+                                        Obx(()=> Checkbox(
+                                          checkColor: AppColors.white,
+                                          activeColor: AppColors.primary,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(3.0),
                                           ),
+                                          side: const BorderSide(
+                                            // ======> CHANGE THE BORDER COLOR HERE <======
+                                            color: AppColors.primary,
+                                            // Give your checkbox border a custom width
+                                            width: 1.4,
                                           ),
-                                        ],
-                                      ),
+                                          ///value: administratorController.selectedOranization.value,
+                                          value: missionToVoluntController.volunteersIdList.contains(model?.id),
+                                          onChanged: (bool? value) {
+
+                                            missionToVoluntController.selectedVolunteers.value = value!;
+
+                                            if(missionToVoluntController.selectedVolunteers.value){
+
+                                              missionToVoluntController.volunteersIdList.add(model!.id.toString());
+
+                                            }else{
+                                              missionToVoluntController.volunteersIdList.remove(model?.id.toString());
+                                            }
+
+                                          },
+                                        ),
+                                        ),
+                                      ],
                                     ),
-                                  );
-                                },);
-                            }
-
-
+                                  ),
+                                );
+                              },);
 
                           }),
 

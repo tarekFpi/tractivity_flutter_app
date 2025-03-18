@@ -43,7 +43,6 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
 
   final missionReportController = Get.put(MissionToReportController());
 
-
   final queryEditingController = TextEditingController();
 
   String query = "";
@@ -1261,7 +1260,7 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
                       color: PdfColor.fromInt(Colors.white60.value),
                       borderRadius:  pw.BorderRadius.circular(10),
                     ),child:pw.Text(
-                    "Hours: ${administratorController.missionDetailsShowList.value.report?.hours}",
+                    "Hours: ${administratorController.missionDetailsShowList.value.report?.hours != null ? (administratorController.missionDetailsShowList.value.report?.hours.round()): 0} H",
                     style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold, color: PdfColors.blue),
                   ),
                   ),
@@ -1275,7 +1274,7 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
                       color:  PdfColor.fromInt(Colors.white60.value),
                       borderRadius:  pw.BorderRadius.circular(10),
                     ),child:pw.Text(
-                    "Millage: ${administratorController.missionDetailsShowList.value.report?.mileage}",
+                    "Millage: ${administratorController.missionDetailsShowList.value.report?.mileage != null ? (administratorController.missionDetailsShowList.value.report?.hours.round()): 0} Km",
                     style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold, color: PdfColors.blue),
                   ),
                   ),
@@ -1322,7 +1321,7 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
 
                     pw.Text("${missionReportController.obs.value.state?[i].name}",style: pw.TextStyle(fontSize: 14, fontWeight: pw.FontWeight.bold)),
                     pw.Container(
-                      padding: const pw.EdgeInsets.only(bottom: 16),
+                      padding:   pw.EdgeInsets.only(bottom: 16),
                       alignment: pw.Alignment.centerLeft,
                       decoration: pw.BoxDecoration(
                         color: PdfColors.grey100,
@@ -1334,7 +1333,7 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
                           crossAxisAlignment: pw.CrossAxisAlignment.start,
                           children: [
                             pw.Text(
-                              "Hours: ${missionReportController.obs.value.state?[0].report?.hours}",
+                              "Hours: ${missionReportController.obs.value.state?[i].report?.hours != null ? (missionReportController.obs.value.state?[i].report?.hours.round()): 0} H",
                               style: pw.TextStyle(fontSize: 14, fontWeight: pw.FontWeight.bold),
                             ),
                             pw.SizedBox(height: 4),
@@ -1342,7 +1341,7 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
                               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                               children: [
                                 pw.Text(
-                                  "Mileage: ${missionReportController.obs.value.state?[0].report?.mileage}",
+                                  "Mileage: ${missionReportController.obs.value.state?[i].report?.mileage != null ? (missionReportController.obs.value.state?[i].report?.hours.round()):0} Km",
                                   style: pw.TextStyle(fontSize: 14, fontWeight: pw.FontWeight.bold),
                                 ),
 

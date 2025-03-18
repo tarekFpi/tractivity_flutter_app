@@ -23,7 +23,7 @@ import 'package:tractivity_app/view/screens/auth_screen/verification_screen/veri
 import 'package:tractivity_app/view/screens/friend_screen/friend_screen.dart';
 import 'package:tractivity_app/view/screens/auth_screen/signup_screen/signup_screen.dart';
 import 'package:tractivity_app/view/screens/friend_screen/remove_friend_screen.dart';
-import 'package:tractivity_app/view/screens/home_screen/donation_screen.dart';
+import 'package:tractivity_app/view/screens/home_screen/donation/donation_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/exolore_complete_details_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/exolore_completed_event.dart';
 import 'package:tractivity_app/view/screens/home_screen/exolore_event_screen/event_member_details_screen/event_member_details_screen.dart';

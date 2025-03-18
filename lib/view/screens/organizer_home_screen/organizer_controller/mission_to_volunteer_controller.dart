@@ -117,7 +117,7 @@ class MissionToVolunteerController extends GetxController with StateMixin<List<R
       "volunteers": volunteersIdList
     };
 
-    var response = await ApiClient.postData(ApiUrl.inviteVolunteerToMissionByMission(missionId: missionId), body);
+    var response = await ApiClient.postData(ApiUrl.inviteVolunteerToMissionByMission(missionId: missionId), jsonEncode(body));
 
     if (response.statusCode == 200) {
 
