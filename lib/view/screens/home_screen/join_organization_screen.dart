@@ -100,29 +100,21 @@ class _JoinOrganizationScreenState extends State<JoinOrganizationScreen> {
                     height: 12,
                   ),
 
+                  homeController.organizationShowList.isEmpty?
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height/2,
+                    child: Center(
+                      child: CustomText(
+                        text: "No Organization yet!!",
+                        fontSize:isTablet?12.sp: 24.sp,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.lightRed,
+                      ),
+                    ),
+                  ):
                   homeController.obx((state){
 
-                   // Toast.errorToast("No Organization yet!!");
-
-                    if (state == null || state.isEmpty) {
-
-                     return SizedBox(
-                        height: MediaQuery.of(context).size.height/2,
-                        child: Center(
-                          child: CustomText(
-                            text: "No Organization yet!!",
-                            fontSize:isTablet?12.sp: 24.sp,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.red,
-                          ),
-                        ),
-                      );
-
-
-                    }else{
-
-                    //  Toast.errorToast("  Organization yet!!");
-                      return ListView.builder(
+                   return ListView.builder(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           itemCount: state?.length,
@@ -240,7 +232,6 @@ class _JoinOrganizationScreenState extends State<JoinOrganizationScreen> {
                               ],
                             );
                           });
-                    }
 
                      })
 

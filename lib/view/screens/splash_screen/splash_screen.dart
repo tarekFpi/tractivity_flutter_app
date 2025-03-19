@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
+import 'package:tractivity_app/helper/shared_prefe/shared_prefe.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
+import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/view/components/custom_image/custom_image.dart';
 import '../../../utils/app_images/app_images.dart';
 
@@ -20,11 +22,26 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(seconds: 3), () {
-       Get.offAllNamed(AppRoutes.onboardingScreen);
+
+      Future.delayed(  Duration(seconds: 3), () async{
+
+        var token = await SharePrefsHelper.getString(AppConstants.bearerToken);
+
+        if(token.isEmpty){
+
+          Get.offAllNamed(AppRoutes.onboardingScreen);
+
+        }else{
+
+          Get.offAllNamed(AppRoutes.homeScreen);
+        }
+
       });
     });
+
+
   }
 
   void configLoading() {

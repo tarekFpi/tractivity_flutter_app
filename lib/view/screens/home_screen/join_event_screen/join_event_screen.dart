@@ -172,11 +172,11 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
                                               /// imageUrl: AppConstants.eventImage,
                                               imageUrl:"${ApiUrl.imageUrl}${invitedEventModel?.contentId?.images?[0]}",
                                               height: isTablet ? 200.h : 170.h,
-                                              width: isTablet ? 180.w : 180.w,
+                                              width: isTablet ? 170.w : 170.w,
                                               borderRadius: BorderRadius.circular(10),
                                             ):Image.asset("assets/images/event_image.png",
                                               height: isTablet ? 200.h : 170.h,
-                                              width: isTablet ? 180.w : 180.w,fit: BoxFit.fill,),
+                                              width: isTablet ? 170.w : 170.w,fit: BoxFit.fill,),
 
                                             SizedBox(
                                               width: 10.w,
@@ -234,15 +234,18 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
                                                       width: 30,
                                                       boxShape: BoxShape.circle,
                                                     ),
-                                                    CustomText(
-                                                      text: "${invitedEventModel?.contentId?.creator?.name}",
-                                                      fontSize:isTablet?6.sp: 12.sp,
-                                                      color: AppColors.black,
-                                                      fontWeight: FontWeight.w600,
-                                                      overflow: TextOverflow.ellipsis, // Show "..." for overflowing text
-                                                      maxLines: 2,
-                                                      textAlign: TextAlign.start,
-                                                      left: 4,
+                                                    SizedBox(
+                                                      width: 100.w,
+                                                      child: CustomText(
+                                                        text: "${invitedEventModel?.contentId?.creator?.name}",
+                                                        fontSize:isTablet?6.sp: 12.sp,
+                                                        color: AppColors.black,
+                                                        fontWeight: FontWeight.w600,
+                                                        overflow: TextOverflow.ellipsis, // Show "..." for overflowing text
+                                                        maxLines: 3,
+                                                        textAlign: TextAlign.start,
+                                                        left: 4,
+                                                      ),
                                                     ),
 
                                                     CustomText(
@@ -250,7 +253,7 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
                                                       fontSize:isTablet?6.sp: 12.sp,
                                                       color: AppColors.blue,
                                                       fontWeight: FontWeight.w600,
-                                                      left: 4,                                        ),
+                                                      left: 4),
                                                   ],
                                                 ),
                                                 SizedBox(

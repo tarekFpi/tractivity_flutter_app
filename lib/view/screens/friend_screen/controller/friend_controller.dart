@@ -11,6 +11,7 @@ import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
 import 'package:tractivity_app/utils/toast.dart';
 import 'package:tractivity_app/view/screens/friend_screen/model/InviteFriendsResponeModel.dart';
+import 'package:tractivity_app/view/screens/friend_screen/request_friends_model/RequestFriendsResponeModel.dart';
 import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/model/UserProfileResponeModel.dart';
 
 class FriendController extends GetxController{
@@ -116,7 +117,7 @@ class FriendController extends GetxController{
   }
 
   /// organic users by specific user invite friends search
-  RxBool searchInviteLoading = false.obs;
+  RxBool searchMyFriendsLoading = false.obs;
   Rx<TextEditingController> eventSelectedSearchDateController = TextEditingController().obs;
 
   Future<void> searchInviteFriends(String query) async{
@@ -132,7 +133,7 @@ class FriendController extends GetxController{
 
       var userId = await SharePrefsHelper.getString(AppConstants.userId);
 
-      searchInviteLoading.value = true;
+      searchMyFriendsLoading.value = true;
 
       var response = await ApiClient.getData(ApiUrl.searchInviteFriends(query: query,userId: userId));
 
@@ -142,13 +143,13 @@ class FriendController extends GetxController{
 
         inviteFriendsShowList.value = List.from(response.body["data"].map((m)=> InviteFriendsResponeModel.fromJson(m)));
 
-        searchInviteLoading.value =false;
+        searchMyFriendsLoading.value =false;
 
         refresh();
 
       } else {
 
-        searchInviteLoading.value =false;
+        searchMyFriendsLoading.value =false;
 
         if (response.statusText == ApiClient.somethingWentWrong) {
           Toast.errorToast(AppStrings.checknetworkconnection);
@@ -217,31 +218,32 @@ class FriendController extends GetxController{
 
 
 
-/*  ///===================== Retrive organic users by specific user =====================
-  RxList<InviteFriendsResponeModel> inviteFriendsShowList = <InviteFriendsResponeModel>[].obs;
+   ///===================== Retrive all requested friendships =====================
 
-  RxBool inviteFriendsShowListLoading = false.obs;
+  RxList<RequestFriendsResponeModel> requestFriendsShowList = <RequestFriendsResponeModel>[].obs;
 
-  Future<void> inviteFriendsFetchList() async{
+  RxBool requestFriendsShowListLoading = false.obs;
 
-    inviteFriendsShowListLoading.value = true;
+  Future<void> requestFriendsFetchList() async{
+
+    requestFriendsShowListLoading.value = true;
 
     var userId = await SharePrefsHelper.getString(AppConstants.userId);
 
-    var response = await ApiClient.getData(ApiUrl.inviteFriendsList(userId: userId));
+    var response = await ApiClient.getData(ApiUrl.requestedFriendsList(userId: userId));
 
     if (response.statusCode == 200) {
 
-      inviteFriendsShowList.value = List.from(response.body["data"].map((m)=> InviteFriendsResponeModel.fromJson(m)));
-      debugPrint("userProfileShowList:${userProfileShowList.toJson()}");
+      requestFriendsShowList.value = List.from(response.body["data"].map((m)=> RequestFriendsResponeModel.fromJson(m)));
+      debugPrint("requestFriendsShowList:${userProfileShowList.toJson()}");
 
 
-      inviteFriendsShowListLoading.value =false;
+      requestFriendsShowListLoading.value =false;
       refresh();
 
     } else {
 
-      inviteFriendsShowListLoading.value =false;
+      requestFriendsShowListLoading.value =false;
 
       if (response.statusText == ApiClient.somethingWentWrong) {
         Toast.errorToast(AppStrings.checknetworkconnection);
@@ -255,5 +257,191 @@ class FriendController extends GetxController{
         return;
       }
     }
-  }*/
+  }
+
+
+  ///===================== Retrive all requested friendship search =====================
+
+  RxBool searchRequestedLoading = false.obs;
+  Rx<TextEditingController> requestSearchDateController = TextEditingController().obs;
+
+  Future<void> searchRequestedFriends(String query) async{
+
+    if (query.isEmpty) {
+
+      requestFriendsFetchList();
+      refresh();
+
+    }else{
+
+      debugPrint("searchRequestedFriends:${query}");
+
+      var userId = await SharePrefsHelper.getString(AppConstants.userId);
+
+      searchRequestedLoading.value = true;
+
+      var response = await ApiClient.getData(ApiUrl.searchRequestFriends(query: query,userId: userId));
+
+      requestFriendsShowList.refresh();
+
+      if (response.statusCode == 200) {
+
+        requestFriendsShowList.value = List.from(response.body["data"].map((m)=> RequestFriendsResponeModel.fromJson(m)));
+
+        searchRequestedLoading.value =false;
+
+        refresh();
+
+      } else {
+
+        searchRequestedLoading.value =false;
+
+        if (response.statusText == ApiClient.somethingWentWrong) {
+          Toast.errorToast(AppStrings.checknetworkconnection);
+          refresh();
+          return;
+        } else {
+
+          ApiChecker.checkApi(response);
+
+          refresh();
+          return;
+        }
+      }
+    }
+  }
+
+
+  ///Accept friendship by friendshipId
+  RxBool acceptFriendsLoading = false.obs;
+  Future<void> acceptFriendsRequest(String friendsId) async{
+
+    acceptFriendsLoading.value = true;
+
+    var body = {
+      "removedOrganizers":"",
+    };
+
+    var response = await ApiClient.patchData(ApiUrl.acceptRequestFriends(friendshipId: friendsId), jsonEncode(body),);
+
+    if (response.statusCode == 200) {
+
+      Toast.successToast(response.body['message']);
+
+      acceptFriendsLoading.value =false;
+
+      requestFriendsFetchList();
+
+    } else {
+
+      acceptFriendsLoading.value =false;
+
+      if (response.statusText == ApiClient.somethingWentWrong) {
+
+        Toast.errorToast(AppStrings.checknetworkconnection);
+        refresh();
+        return;
+      } else {
+
+        ApiChecker.checkApi(response);
+
+        refresh();
+        return;
+      }
+    }
+  }
+
+
+  ///Retrive all friends by userId
+  RxList<RequestFriendsResponeModel> myFriendsShowList = <RequestFriendsResponeModel>[].obs;
+
+  RxBool myFriendsShowListLoading = false.obs;
+
+  Future<void> myFriendsFetchList() async{
+
+    myFriendsShowListLoading.value = true;
+
+    var userId = await SharePrefsHelper.getString(AppConstants.userId);
+
+    var response = await ApiClient.getData(ApiUrl.retriveFriendsAllFriends(userId: userId));
+
+    if (response.statusCode == 200) {
+
+      myFriendsShowList.value = List.from(response.body["data"].map((m)=> RequestFriendsResponeModel.fromJson(m)));
+      debugPrint("myFriendsShowList:${myFriendsShowList.toJson()}");
+
+
+      myFriendsShowListLoading.value =false;
+      refresh();
+
+    } else {
+
+      myFriendsShowListLoading.value =false;
+
+      if (response.statusText == ApiClient.somethingWentWrong) {
+        Toast.errorToast(AppStrings.checknetworkconnection);
+        refresh();
+        return;
+      } else {
+
+        ApiChecker.checkApi(response);
+
+        refresh();
+        return;
+      }
+    }
+  }
+
+  /// Retrive all friendsList by search
+
+  RxBool searchMyFriendLoading = false.obs;
+  Rx<TextEditingController> myFriendsSearchDateController = TextEditingController().obs;
+
+  Future<void> searchMyFriendFriends(String query) async{
+
+    if (query.isEmpty) {
+
+      myFriendsFetchList();
+      refresh();
+
+    }else{
+
+      debugPrint("searchMyFriendFriends:${query}");
+
+      var userId = await SharePrefsHelper.getString(AppConstants.userId);
+
+      searchMyFriendLoading.value = true;
+
+      var response = await ApiClient.getData(ApiUrl.searchMyFriends(query: query,userId: userId));
+
+      myFriendsShowList.refresh();
+
+      if (response.statusCode == 200) {
+
+        myFriendsShowList.value = List.from(response.body["data"].map((m)=> RequestFriendsResponeModel.fromJson(m)));
+
+        searchMyFriendLoading.value =false;
+
+        refresh();
+
+      } else {
+
+        searchMyFriendLoading.value =false;
+
+        if (response.statusText == ApiClient.somethingWentWrong) {
+          Toast.errorToast(AppStrings.checknetworkconnection);
+          refresh();
+          return;
+        } else {
+
+          ApiChecker.checkApi(response);
+
+          refresh();
+          return;
+        }
+      }
+    }
+  }
+
+
 }

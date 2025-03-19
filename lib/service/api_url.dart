@@ -18,14 +18,16 @@ class ApiUrl {
   static const String signUp = "/user/create";
   static const String register = "/user/create";
   static const String createNewPassword = "/auth/change-password";
+
+  static const String aboutUS = "/about-us/retrive";
   static const String privacyPolicy = "/privacy-policy/retrive";
+
   static const String termsCondition = "/terms-condition/retrive";
-  static const String infoRetrieve = "/info/retrive/all";
+
 
 
   ///============= Profile Apis ===============
   static String getUserProfile({required String userId}) => "/user/$userId";
-  static String updateProfile({required String userId}) => "/user/update/$userId";
   static String getReviewMode({required String userId}) => "/review-mode/user/intervals/$userId";
   static String friendSearch({required String cetagory, required String query}) => "/user/search?$cetagory=$query";
 
@@ -218,5 +220,26 @@ class ApiUrl {
   ///=================== Invite friend request ==============
   static String inviteFriend ="/friendship/create";
 
+  ///Retrive all requested friendship
+  static String requestedFriendsList({required String userId}) =>"/friendship/retrive/requested/$userId/search";
+
+  ///=================== Retrive all requested friendship  search ==============
+  static String searchRequestFriends ({required String userId,required String query}) =>"/friendship/retrive/requested/$userId/search?query=$query";
+
+  ///=================== Accept friendship by friendshipId ==============
+  static String acceptRequestFriends ({required String friendshipId}) =>"/friendship/accept/$friendshipId";
+
+  ///=================== Retrive all friends by userId ==============
+  static String retriveFriendsAllFriends({required String userId}) =>"/friendship/retrive/friends/$userId/search";
+
+  ///=================== Retrive all friends by userId search ==============
+  static String searchMyFriends ({required String userId,required String query}) =>"/friendship/retrive/friends/$userId/search?query=$query";
+
+  ///Change profile picture
+  static String chageProfile ({required String userId}) =>"/user/update/profile-picture/$userId";
+
+  static String userProfileShow ({required String userId}) =>"/user/retrive/$userId";
+
+  static String updateProfile ({required String userId}) =>"/user/update/$userId";
 
 }

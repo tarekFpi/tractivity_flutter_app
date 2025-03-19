@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:geocoding/geocoding.dart';
@@ -14,6 +15,7 @@ import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
 import 'package:tractivity_app/utils/toast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tractivity_app/view/screens/auth_screen/user_profile_model/UserProfileShowResponseModel.dart';
 
 class AuthController extends GetxController {
 
@@ -37,16 +39,191 @@ class AuthController extends GetxController {
       if (pickedFile != null) {
         // Convert XFile to File if needed
 
-        chooseUserImage.value = pickedFile.path; // Ensure the file path is valid
+        chooseUserImage.value = pickedFile.path;
+        chageProfile();
       }
     } catch (e) {
       debugPrint(e.toString());
     }
   }
 
+  ///Change profile picture
+  RxBool changeProfileLoading = false.obs;
+  Future<void> chageProfile() async{
+
+    changeProfileLoading.value = true;
+    var userId = await SharePrefsHelper.getString(AppConstants.userId);
+
+    var body = {
+      "name": "",
+    };
+
+    var response = await ApiClient.patchMultipartData(ApiUrl.chageProfile(userId: userId), body,
+        multipartBody: [MultipartBody('image', File(chooseUserImage.value))]);
+
+    if (response.statusCode == 200) {
+
+      Toast.successToast("User profile change successfull");
+
+      changeProfileLoading.value =false;
+
+    } else {
+
+      changeProfileLoading.value =false;
+
+      if (response.statusText == ApiClient.somethingWentWrong) {
+
+        Toast.errorToast(AppStrings.checknetworkconnection);
+        refresh();
+        return;
+      } else {
+
+        ApiChecker.checkApi(response);
+
+        refresh();
+        return;
+      }
+    }
+  }
+
+
+  ///======================================>> users-profile-show <<================================
+
+  Rx<UserProfileShowResponseModel> userProfileShow = UserProfileShowResponseModel().obs;
+
+  RxBool userInfoShowLoading = false.obs;
+
+  Future<void> userInformationShow() async {
+
+    userInfoShowLoading.value=true;
+
+    var userId= await SharePrefsHelper.getString(AppConstants.userId);
+
+    var response = await ApiClient.getData(ApiUrl.userProfileShow(userId: userId));
+
+    if (response.statusCode == 200) {
+
+      userProfileShow.value = UserProfileShowResponseModel.fromJson(response.body["data"]);
+
+      debugPrint("userProfileResponseModel:${userProfileShow.value.toJson()}");
+
+      refresh();
+
+      userInfoShowLoading.value=false;
+
+    } else {
+
+      userInfoShowLoading.value=false;
+      refresh();
+      if (response.statusText == ApiClient.somethingWentWrong) {
+
+        showCustomSnackBar(AppStrings.checknetworkconnection, isError: true);
+
+        return;
+      } else {
+        ApiChecker.checkApi(response);
+        return;
+      }
+    }
+  }
+
+  ///Update specific user
+  Rx<TextEditingController> editfullNameController = TextEditingController().obs;
+  Rx<TextEditingController> edittalentSkillController = TextEditingController().obs;
+  Rx<TextEditingController> editphoneNumberController = TextEditingController().obs;
+  Rx<TextEditingController> editlocationController = TextEditingController().obs;
+
+  RxList<String>editRolesList = <String>[].obs;
+
+  RxBool userInfoUpdateShowLoading = false.obs;
+
+  Future<void> profileUpdate(double latitude,double longitude) async {
+
+    userInfoUpdateShowLoading.value = true;
+    var userId= await SharePrefsHelper.getString(AppConstants.userId);
+
+
+    var body = json.encode({
+      "fullName": editfullNameController.value.text,
+      "profession": edittalentSkillController.value.text,
+      "phone": editphoneNumberController.value.text,
+      "roles":editRolesList.value,
+      "cords": {
+        "lat": latitude,
+        "lng": longitude
+      },
+      "address": editlocationController.value.text,
+      "isSocial": false,
+      "fcmToken": null
+    });
+
+    var response = await ApiClient.patchData(ApiUrl.updateProfile(userId: userId), body);
+
+    if (response.statusCode == 200) {
+
+      Toast.successToast("User modified successfull");
+      Get.back();
+
+      refresh();
+      userInfoUpdateShowLoading.value = false;
+
+      editfullNameController.value.clear();
+      edittalentSkillController.value.clear();
+      editphoneNumberController.value.clear();
+       editlocationController.value.clear();
+
+    } else {
+      userInfoUpdateShowLoading.value = false;
+      if (response.statusText == ApiClient.somethingWentWrong) {
+
+        Toast.errorToast(AppStrings.checknetworkconnection);
+
+        return;
+      } else {
+
+        ApiChecker.checkApi(response);
+        userInfoUpdateShowLoading.value = false;
+        refresh();
+        return;
+      }
+    }
+  }
+
+
+
+  var latitude = 0.0.obs;
+  var longitude = 0.0.obs;
+  var isLoading = false.obs;
+
+  Future<void> getLatLongFromAddress() async {
+
+    try {
+
+      isLoading.value = true;
+      List<Location> locations = await locationFromAddress(editlocationController.value.text);
+
+      if (locations.isNotEmpty) {
+        latitude.value = locations.first.latitude;
+        longitude.value = locations.first.longitude;
+
+         profileUpdate(latitude.value,longitude.value);
+        debugPrint("locationFromAddress: ${latitude.value}, Long: ${longitude.value}");
+
+      }else{
+
+        profileUpdate(_currentPosition?.latitude??0.0,_currentPosition?.longitude??0.0);
+      }
+    } catch (e) {
+
+      debugPrint("Location not found: $e");
+
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
 
   ///==================== get User Current Location and address ==================
-
   RxString address = "".obs;
 
   Position? _currentPosition;

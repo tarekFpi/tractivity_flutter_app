@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/helper/shared_prefe/shared_prefe.dart';
+import 'package:tractivity_app/service/api_url.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_icons/app_icons.dart';
@@ -16,6 +17,8 @@ import 'package:tractivity_app/utils/app_strings/app_strings.dart';
 import 'package:tractivity_app/view/components/custom_image/custom_image.dart';
 import 'package:tractivity_app/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
+import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/events_controller/events_controller.dart';
+import 'package:tractivity_app/view/screens/profile_screen/user_profile_screen.dart';
 
 class HomeSideDrawer extends StatefulWidget {
   const HomeSideDrawer({super.key});
@@ -29,6 +32,8 @@ class _HomeSideDrawerState extends State<HomeSideDrawer> {
   final storage = GetStorage();
 
   String status = "";
+
+  final eventController = Get.put(EventsController());
 
   @override
   void initState() {
@@ -61,25 +66,30 @@ class _HomeSideDrawerState extends State<HomeSideDrawer> {
             ),
 
             ///================================ APP LOGO ==============================///
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CustomNetworkImage(
-                  imageUrl: AppConstants.profileImage,
-                  height:isTablet?150:80,
-                  width:isTablet?150: 80,
-                  boxShape: BoxShape.circle,
-                  border: Border.all(color: AppColors.primary, width: 3),
-                ),
-                SizedBox(
-                  height: 12,
-                ),
-                CustomText(
-                  text: "Mehedi Bin Ab. Salam",
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
-              ],
+            Obx(
+               () {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+
+                    CustomNetworkImage(
+                      imageUrl:eventController.userProfileShowList.value.image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}${eventController.userProfileShowList.value.image}",
+                      height: 100.h,
+                      width: 100.w,
+                      boxShape: BoxShape.circle,
+                      border: Border.all(color: AppColors.primary, width: 3),
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    CustomText(
+                      text: "${eventController.userProfileShowList.value.fullName}",
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ],
+                );
+              }
             ),
 
             Expanded(

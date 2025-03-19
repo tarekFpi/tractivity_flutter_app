@@ -248,8 +248,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   myEventController.searchMyEventVolunteersList("");
 
                                 }),
-
-                          ),
+                             ),
 
                           SizedBox(
                             height: 12.h,

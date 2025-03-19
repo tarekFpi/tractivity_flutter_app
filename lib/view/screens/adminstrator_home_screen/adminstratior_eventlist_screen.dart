@@ -420,7 +420,7 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                           decoration: BoxDecoration(
                             color: AppColors.neutral02,
                             borderRadius: BorderRadius.circular(10),
-                          ),child: CustomText(text: "Hours: ${hours.round()} H",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
+                          ),child: CustomText(text: "Hours: ${hours != null ? hours.round() : 0} H",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
                         ),
 
                         SizedBox(
@@ -431,7 +431,7 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                           decoration: BoxDecoration(
                             color: AppColors.neutral02,
                             borderRadius: BorderRadius.circular(10),
-                          ),child: CustomText(text: "Millage: ${mileage.round()} km",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
+                          ),child: CustomText(text: "Millage: ${mileage != null ? mileage.round() : 0} km",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
                         ),
                       ],
                     ),

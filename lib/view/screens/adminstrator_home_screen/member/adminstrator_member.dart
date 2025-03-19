@@ -94,7 +94,7 @@ class _AdminstratorMemberState extends State<AdminstratorMember> {
 
                                       if (invitedVolunteer[index].volunteer != null)
                                       CustomNetworkImage(
-                                        imageUrl: invitedVolunteer[index].volunteer?.image==""?AppConstants.profileImage:"${ApiUrl.imageUrl}/${invitedVolunteer[index].volunteer?.image}",
+                                        imageUrl: invitedVolunteer[index].volunteer?.image==""?AppConstants.profileImage:"${ApiUrl.imageUrl}${invitedVolunteer[index].volunteer?.image}",
                                         height:isTablet?64.h: 60.h,
                                         width:isTablet?64.w: 60.w,
                                         boxShape: BoxShape.circle,
@@ -134,9 +134,9 @@ class _AdminstratorMemberState extends State<AdminstratorMember> {
                                   child: GestureDetector(
                                     onTap: (){
 
-                                      workingTimeController.text =invitedVolunteer[index].totalWorkedHour.toString();
+                                      workingTimeController.text ="${invitedVolunteer[index].totalWorkedHour!= null ? invitedVolunteer[index].totalWorkedHour.round() : 0} H";
 
-                                      workingRoleController.text =invitedVolunteer[index].mileage.toString();
+                                      workingRoleController.text ="${invitedVolunteer[index].mileage != null ? invitedVolunteer[index].mileage.round() : 0} Km";
 
                                       showDialog(
                                         context: context,

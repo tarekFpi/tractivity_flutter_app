@@ -345,7 +345,7 @@ class _AdminstratorEventDetailsScreenState extends State<AdminstratorEventDetail
                         children: [
 
                           CustomNetworkImage(
-                            imageUrl: connectedOrgsLeader[i].image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}/${connectedOrgsLeader[i].image}",
+                            imageUrl: connectedOrgsLeader[i].image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}${connectedOrgsLeader[i].image}",
                             height:isTablet?42.h: 32.h,
                             width:isTablet?42.w: 32.w,
                             boxShape: BoxShape.circle,
@@ -412,7 +412,7 @@ class _AdminstratorEventDetailsScreenState extends State<AdminstratorEventDetail
 
                         CustomText(
                          text:administratorController.retriveSpecificByEventShowList.value.date==""?"2025-01-25": "${DateConverter.timeFormetString("${administratorController.retriveSpecificByEventShowList.value.date}")}, ${administratorController.retriveSpecificByEventShowList.value.startTime} - ${administratorController.retriveSpecificByEventShowList.value.endTime}",
-                        fontSize:isTablet?6.sp: 16.sp,
+                        fontSize:isTablet?6.sp: 14.sp,
                         fontWeight: FontWeight.w400,
                         color: AppColors.black_80,
                       ),

@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
+import 'package:tractivity_app/service/api_url.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
+import 'package:tractivity_app/utils/toast.dart';
 import 'package:tractivity_app/view/components/custom_button/custom_button.dart';
 import 'package:tractivity_app/view/components/custom_from_card/custom_from_card.dart';
 import 'package:tractivity_app/view/components/custom_netwrok_image/custom_network_image.dart';
@@ -31,6 +33,15 @@ class _EditPersonProfileScreenState extends State<EditPersonProfileScreen> {
   final authController = Get.put(AuthController());
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    authController.userInformationShow();
+    authController.getUserCurrentLocation();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context,constraints){
 
@@ -45,192 +56,306 @@ class _EditPersonProfileScreenState extends State<EditPersonProfileScreen> {
           child: Padding(
             padding:
             const EdgeInsets.only(left: 15, right: 15, top: 16, bottom: 50),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+            child: Obx(
+               () {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
 
-                ///====================== profile image===================
+                    ///====================== profile image===================
 
-                Center(
-                  child: Stack(
-                    children: [
-                      Container(
-                        height: 120.h,
-                        width: 120.w,
-                        decoration: BoxDecoration(
+                    Center(
+                      child: Stack(
+                        children: [
+
+                         /* CustomNetworkImage(
+                            imageUrl:
+                            "${ApiUrl.imageUrl}${authController.userProfileShow.value.image ?? ""}",
+                            height: 120.h,
+                            width: 120.w,
+                            ///boxShape: BoxShape.circle,
+                          ),*/
+
+                          authController.chooseUserImage.value==""?
+                          Container(
+                            height: 120.h,
+                            width: 120.w,
+                          decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.grey,
-                          border: Border.all(
-                            width: 1,
-                            color: AppColors.primary,
-                          ),
-                          image: DecorationImage(
-                            image: FileImage(File(authController.chooseUserImage.value)),
-                            fit: BoxFit.cover,
-                          ),
+                        color: Colors.grey,
+                        border: Border.all(
+                          width: 1,
+                          color: AppColors.primary,
                         ),
-                      ),
-                      Positioned(
-                        bottom: 5,
-                        right: isTablet? -80:0,
-                        left: 0,
-                        child: GestureDetector(
-                          onTap: () {
-                            authController.chooseUserPhoto();
-                          },
-                          child: Container(
-                            height: 30,
-                            width: 30,
+                        image: DecorationImage(
+                          image: NetworkImage("${ApiUrl.imageUrl}${authController.userProfileShow.value.image ?? ""}"),
+                          fit: BoxFit.cover,
+                        ),
+                         ),
+                          ):
+                          Container(
+                            height: 120.h,
+                            width: 120.w,
                             decoration: BoxDecoration(
-                              color: AppColors.primary,
                               shape: BoxShape.circle,
+                              color: Colors.grey,
+                              border: Border.all(
+                                width: 1,
+                                color: AppColors.primary,
+                              ),
+                              image: DecorationImage(
+                                image: FileImage(File(authController.chooseUserImage.value)),
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                            child: const Icon(
-                              Icons.camera_alt,
-                              size: 18,
-                              color: AppColors.white,
+                          ),
+                          Positioned(
+                            bottom: 4,
+                            right: isTablet? -80:-60,
+                            left: 0,
+                            child: GestureDetector(
+                              onTap: () {
+                                authController.chooseUserPhoto();
+                              },
+                              child: Container(
+                                height: 30,
+                                width: 30,
+                                decoration: BoxDecoration(
+                                  color: AppColors.primary,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Icon(
+                                  Icons.camera_alt,
+                                  size: 18,
+                                  color: AppColors.white,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
+                    ),
 
-                /// =====Profile Name List =========
-                SizedBox(
-                  height: 12.h,
-                ),
+                    /// =====Profile Name List =========
+                    SizedBox(
+                      height: 12.h,
+                    ),
 
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
                         children: [
-                          Radio(
-                            value: "Volunteer",
-                            fillColor:
-                            MaterialStateColor.resolveWith((states) => AppColors.primary),
-                            groupValue: checkValueStatues,
-                            onChanged: (String? value) {
-                              setState(() {
-                                checkValueStatues = value!;
-                              });
-                            },
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+
+                              Checkbox(
+                                checkColor: AppColors.white,
+                                activeColor: AppColors.primary,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(3.0),
+                                ),
+                                side: const BorderSide(
+                                  // ======> CHANGE THE BORDER COLOR HERE <======
+                                  color: AppColors.primary,
+                                  // Give your checkbox border a custom width
+                                  width: 1.4,
+                                ),
+                                value: authController.volunteer.value,
+                                onChanged: (bool? value) {
+
+                                  authController.volunteer.value = value!;
+
+                                  if(authController.volunteer.value){
+
+                                    authController.editRolesList.add("volunteer");
+                                  }else{
+                                    authController.editRolesList.remove("volunteer");
+                                  }
+
+                                },
+                              ),
+
+                              CustomText(
+                                text: "Volunteer",
+                                fontSize:isTablet?10.sp: 14.sp,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.primary,
+                              ),
+                            ],
                           ),
-                          const CustomText(
-                            text: "Volunteer",
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
+
+                          SizedBox(
+                            width: 4.w,
+                          ),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+
+                              Checkbox(
+                                checkColor: AppColors.white,
+                                activeColor: AppColors.primary,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(3.0),
+                                ),
+                                side: const BorderSide(
+                                  // ======> CHANGE THE BORDER COLOR HERE <======
+                                  color: AppColors.primary,
+                                  // Give your checkbox border a custom width
+                                  width: 1.4,
+                                ),
+                                value: authController.organizer.value,
+                                onChanged: (bool? value) {
+
+                                  authController.organizer.value=value!;
+
+                                  if(authController.organizer.value){
+
+                                    authController.editRolesList.add("organizer");
+                                  }else{
+                                    authController.editRolesList.remove("organizer");
+                                  }
+                                },
+                              ),
+                              CustomText(
+                                text: "Organizer",
+                                fontSize:isTablet?10.sp: 14.sp,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.primary,
+                              ),
+
+                            ],
+                          ),
+
+                          SizedBox(
+                            width: 4.w,
+                          ),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+
+                              Checkbox(
+                                checkColor: AppColors.white,
+                                activeColor: AppColors.primary,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(3.0),
+                                ),
+                                side: const BorderSide(
+                                  // ======> CHANGE THE BORDER COLOR HERE <======
+                                  color: AppColors.primary,
+                                  // Give your checkbox border a custom width
+                                  width: 1.4,
+                                ),
+                                value: authController.administrator.value,
+                                onChanged: (bool? value) {
+
+                                  authController.administrator.value=value!;
+
+                                  if(authController.administrator.value){
+
+                                    authController.editRolesList.add("administrator");
+                                  }else{
+                                    authController.editRolesList.remove("administrator");
+                                  }
+                                },
+                              ),
+
+                              CustomText(
+                                text: "Administrator",
+                                fontSize:isTablet?10.sp: 14.sp,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.primary,
+                              ),
+                            ],
                           ),
                         ],
                       ),
+                    ),
 
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Radio(
-                            value: "Organizer",
-                            groupValue: checkValueStatues,
-                            fillColor:
-                            MaterialStateColor.resolveWith((states) => AppColors.primary),
-                            onChanged: (value) {
-                              setState(() {
-                                checkValueStatues = value!;
-                              });
-                            },
-                          ),
-                          CustomText(
-                            text: "Organizer",
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ],
-                      ),
+                    SizedBox(
+                      height: 12.h,
+                    ),
+                    ///============ First Name ============
+                    CustomFormCard(
+                        title: AppStrings.yourFirstName,
+                        hintText: AppStrings.enterYourName,
+                        fontSize: isTablet?16:16,
+                        hasBackgroundColor: true,
+                        controller: authController.editfullNameController.value),
 
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
+                    ///============ Last Name ============
+                    CustomFormCard(
+                        title: "Talent/Skill",
+                        hintText: "Enter Talent/Skill",
+                        fontSize: isTablet?16:16,
+                        hasBackgroundColor: true,
+                        controller: authController.edittalentSkillController.value),
 
-                          Radio(
-                            value: "Administrator",
-                            groupValue: checkValueStatues,
-                            fillColor:
-                            MaterialStateColor.resolveWith((states) => AppColors.primary),
-                            onChanged: (value) {
-                              setState(() {
-                                checkValueStatues = value!;
-                              });
-                            },
-                          ),
+                    ///============ phoneNumber ============
+                    CustomFormCard(
+                        title: AppStrings.phoneNumber,
+                        hintText: AppStrings.enterYourPhone,
+                        hasBackgroundColor: true,
+                        fontSize: isTablet?16:16,
+                        keyboardType: TextInputType.number,
+                        controller: authController.editphoneNumberController.value),
 
-                          CustomText(
-                            text: "Administrator",
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
+             /*       ///============ email ============
+                    CustomFormCard(
+                        title: AppStrings.email,
+                        hintText: AppStrings.enterYourEmail,
+                        hasBackgroundColor: true,
+                        fontSize: isTablet?16:16,
+                        controller: authController.editemailController.value),
+*/
+                    ///============ Location ============
+                    CustomFormCard(
+                        title: AppStrings.location,
+                        hintText: AppStrings.enterYourLocation,
+                        hasBackgroundColor: true,
+                        fontSize: isTablet?16:16,
+                        controller: authController.editlocationController.value),
 
-                SizedBox(
-                  height: 12.h,
-                ),
-                ///============ First Name ============
-                CustomFormCard(
-                    title: AppStrings.yourFirstName,
-                    hintText: AppStrings.enterYourName,
-                    fontSize: isTablet?16:16,
-                    hasBackgroundColor: true,
-                    controller: TextEditingController()),
+                   authController.userInfoUpdateShowLoading.value?CircularProgressIndicator(color: Colors.amber,):
+                    CustomButton(
+                      onTap: () {
 
-                ///============ Last Name ============
-                CustomFormCard(
-                    title: "Talent/Skill",
-                    hintText: "Enter Talent/Skill",
-                    fontSize: isTablet?16:16,
-                    hasBackgroundColor: true,
-                    controller: TextEditingController()),
+                       if(authController.editfullNameController.value.text==""){
 
-                ///============ phoneNumber ============
-                CustomFormCard(
-                    title: AppStrings.phoneNumber,
-                    hintText: AppStrings.enterYourPhone,
-                    hasBackgroundColor: true,
-                    fontSize: isTablet?16:16,
-                    controller: TextEditingController()),
+                          Toast.errorToast("full name is empty!!");
 
-                ///============ email ============
-                CustomFormCard(
-                    title: AppStrings.email,
-                    hintText: AppStrings.enterYourEmail,
-                    hasBackgroundColor: true,
-                    fontSize: isTablet?16:16,
-                    controller: TextEditingController()),
+                        }else if(authController.edittalentSkillController.value.text==""){
 
-                ///============ Location ============
-                CustomFormCard(
-                    title: AppStrings.location,
-                    hintText: AppStrings.enterYourLocation,
-                    hasBackgroundColor: true,
-                    fontSize: isTablet?16:16,
-                    controller: TextEditingController()),
+                         Toast.errorToast("profession Skill is empty!!");
 
+                        }else if(authController.editphoneNumberController.value.text==""){
 
-                CustomButton(
-                  onTap: () {
-                    //  Get.toNamed(AppRoutes.loginScreen);
-                  },
-                  title: "SAVE SETTINGS",
-                  height: isTablet?70:60,
-                  fontSize: isTablet ? 16 : 14,
-                )
-              ],
+                         Toast.errorToast("phone number is Empty!..");
+
+                       }else if(authController.editRolesList.isEmpty){
+
+                         Toast.errorToast("user roles is Empty!..");
+
+                       }else if(authController.editlocationController.value.text==""){
+
+                         Toast.errorToast("location name is Empty!..");
+
+                       }else{
+
+                         authController.getLatLongFromAddress();
+                        }
+
+                      },
+                      title: "Save & Change",
+                      height: isTablet?70:60,
+                      fontSize: isTablet ? 16 : 14,
+                    )
+                  ],
+                );
+              }
             ),
           ),
         ),

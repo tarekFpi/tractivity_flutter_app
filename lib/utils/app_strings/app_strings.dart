@@ -125,7 +125,7 @@ class   AppStrings {
   static const String setting = "Setting";
   static const String noDontDelete = "NO,DON’T DELETE";
   static const String aboutus = "About Us";
-  static const String profileSetting = "Profile Setting";
+  static const String profileSetting = "Profile update";
   static const String meetUpList = "Meet Ups List";
   static const String meetUp = "Meet Ups";
   static const String promos = "Promos";
