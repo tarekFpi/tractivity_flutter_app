@@ -38,7 +38,7 @@ import 'package:tractivity_app/view/screens/home_screen/member_screen/member_scr
 import 'package:tractivity_app/view/screens/home_screen/recent_event_explore_details.dart';
 import 'package:tractivity_app/view/screens/home_screen/user_event_profile/user_event_profile.dart';
 import 'package:tractivity_app/view/screens/home_screen/user_event_profile/volunteer_report_screen.dart';
-import 'package:tractivity_app/view/screens/home_screen/volunteer_chart_screen.dart';
+import 'package:tractivity_app/view/screens/home_screen/chart/volunteer_chart_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/volunteer_to_mission_jon_screen.dart';
 import 'package:tractivity_app/view/screens/notification/notification_screen.dart';
 import 'package:tractivity_app/view/screens/onboarding_screen/onboarding_screen.dart';

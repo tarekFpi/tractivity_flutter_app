@@ -30,6 +30,7 @@ class _JoinDetailsScreenState extends State<JoinDetailsScreen> {
   String eventId="";
 
   String inviationId="";
+  String eventName="";
 
   final administratorController = Get.put(AdministratiorController());
 
@@ -40,11 +41,13 @@ class _JoinDetailsScreenState extends State<JoinDetailsScreen> {
     // TODO: implement initState
     super.initState();
 
-    if(Get.arguments[0]["eventId"]!=null && Get.arguments[0]["inviationId"]!=null){
+    if(Get.arguments[0]["eventId"]!=null && Get.arguments[0]["inviationId"]!=null && Get.arguments[0]["eventName"]!=null){
 
       eventId = Get.arguments[0]["eventId"];
 
       inviationId = Get.arguments[0]["inviationId"];
+
+      eventName = Get.arguments[0]["eventName"];
 
       administratorController.retriveSpecificByEventShow(eventId);
 
@@ -167,7 +170,7 @@ class _JoinDetailsScreenState extends State<JoinDetailsScreen> {
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(10),
                                             color: Colors.white,
-                                            boxShadow: [
+                                            boxShadow: const [
                                               BoxShadow(color: AppColors.primary, spreadRadius: 1),
                                             ],
                                           ),
@@ -607,7 +610,7 @@ class _JoinDetailsScreenState extends State<JoinDetailsScreen> {
                                 CustomButton(
                                   onTap: () {
 
-                                    homeController.acceptSpecificEvent(inviationId,true,eventId);
+                                    homeController.acceptSpecificEvent(inviationId,true,eventId,eventName);
                                   },
                                   title: "Join",
                                   height: 45.h,

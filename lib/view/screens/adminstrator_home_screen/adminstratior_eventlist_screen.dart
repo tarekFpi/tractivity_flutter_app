@@ -510,11 +510,11 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                                   /// imageUrl: AppConstants.eventImage,
                                   imageUrl:"${ApiUrl.imageUrl}${model.images?[0]}",
                                   height: isTablet ? 200.h : 170.h,
-                                  width: isTablet ? 180.w : 180.w,
+                                  width: isTablet ? 160.w : 160.w,
                                   borderRadius: BorderRadius.circular(10),
                                 ):Image.asset("assets/images/event_image.png",
                                   height: isTablet ? 200.h : 170.h,
-                                  width: isTablet ? 180.w : 180.w,fit: BoxFit.fill,),
+                                  width: isTablet ? 160.w : 160.w,fit: BoxFit.fill,),
 
                                 const SizedBox(
                                   width: 10,
@@ -530,7 +530,7 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                                         textAlign: TextAlign.start,
                                         text: "${model.name}",
                                         maxLines: 3,
-                                        fontSize:isTablet?8.sp: 14.sp,
+                                        fontSize:isTablet?8.sp: 12.sp,
                                         fontWeight: FontWeight.w600,
                                         bottom: 5,
                                       ),
@@ -553,7 +553,7 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                                             fontWeight: FontWeight.w400,
                                             maxLines: 3,
                                             textAlign: TextAlign.start,
-                                            overflow: TextOverflow.clip,
+                                            overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
                                       ],
@@ -571,15 +571,18 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                                           width: 30,
                                           boxShape: BoxShape.circle,
                                         ),
-                                        CustomText(
-                                          text: "${model.creator?.name}",
-                                          fontSize:isTablet?6.sp: 12.sp,
-                                          color: AppColors.black,
-                                          fontWeight: FontWeight.w600,
-                                          overflow: TextOverflow.ellipsis, // Show "..." for overflowing text
-                                          maxLines: 2,
-                                          textAlign: TextAlign.start,
-                                          left: 4,
+                                        SizedBox(
+                                           width: 100.w,
+                                          child: CustomText(
+                                            text: "${model.creator?.name}",
+                                            fontSize:isTablet?6.sp: 12.sp,
+                                            color: AppColors.black,
+                                            fontWeight: FontWeight.w600,
+                                            overflow: TextOverflow.ellipsis, // Show "..." for overflowing text
+                                            maxLines: 1,
+                                            textAlign: TextAlign.start,
+                                            left: 4,
+                                          ),
                                         ),
 
                                         CustomText(

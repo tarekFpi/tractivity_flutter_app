@@ -105,7 +105,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                   Get.toNamed(AppRoutes.joinDetailsScreen,arguments: [
                                     {
                                       "eventId":notificationModel?.contentId?.id,
-                                      "inviationId":notificationModel?.id
+                                      "inviationId":notificationModel?.id,
+                                      "eventName":notificationModel?.contentId?.name,
                                     }
                                   ]);
                                 },
@@ -154,7 +155,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                               CustomButton(
                                                 onTap: () {
                                                   /// last parameter id event
-                                                  homeController.acceptSpecificEvent(notificationModel?.id.toString()??"",true,notificationModel?.contentId?.id.toString()??"");
+                                                  homeController.acceptSpecificEvent(notificationModel?.id.toString()??"",true,notificationModel?.contentId?.id.toString()??"",notificationModel?.contentId!.name.toString()??"");
                                                 },
                                                 title: "Join",
                                                 width: 70.w,

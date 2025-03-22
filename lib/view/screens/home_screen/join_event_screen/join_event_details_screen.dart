@@ -37,6 +37,7 @@ class _JoinEventDetailsScreenState extends State<JoinEventDetailsScreen> {
   String inviationId="";
 
   String userId="";
+  String eventName="";
 
   final homeController = Get.find<HomeController>();
 
@@ -51,10 +52,12 @@ class _JoinEventDetailsScreenState extends State<JoinEventDetailsScreen> {
     _initializeData();
   }
 
+
   void _initializeData() async {
-    if (Get.arguments[0]["eventId"] != null && Get.arguments[0]["inviationId"] != null) {
+    if (Get.arguments[0]["eventId"] != null && Get.arguments[0]["inviationId"] != null && Get.arguments[0]["eventName"] != null) {
       eventId = Get.arguments[0]["eventId"];
       inviationId = Get.arguments[0]["inviationId"];
+      eventName = Get.arguments[0]["eventName"];
       await homeController.retriveSpecificByEventShow(eventId);
     }
 
@@ -106,7 +109,8 @@ class _JoinEventDetailsScreenState extends State<JoinEventDetailsScreen> {
                      }
                    }*/
 
-                   return RefreshIndicator(child: ListView(
+                   return RefreshIndicator(child:
+                   ListView(
                      children: [
 
                        Column(
@@ -161,9 +165,11 @@ class _JoinEventDetailsScreenState extends State<JoinEventDetailsScreen> {
                            Align(
                              alignment: Alignment.centerRight,
                              child:
+                              homeController.conversationLoading.value?CircularProgressIndicator(color: Colors.amber,):
                              GestureDetector(
                                  onTap: (){
-                                   Get.toNamed(AppRoutes.volunteerChartScreen);
+                                  // Get.toNamed(AppRoutes.volunteerChartScreen);
+                                   homeController.groupIntoEvent(eventName,eventId);
                                  },
                                  child: CustomImage(imageSrc: AppIcons.chart)),
 
@@ -357,7 +363,7 @@ class _JoinEventDetailsScreenState extends State<JoinEventDetailsScreen> {
                                  children: [
 
                                    CustomNetworkImage(
-                                     imageUrl: connectedOrgsLeader[i].image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}/${connectedOrgsLeader[i].image}",
+                                     imageUrl: connectedOrgsLeader[i].image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}${connectedOrgsLeader[i].image}",
                                      height:isTablet?42.h: 32.h,
                                      width:isTablet?42.w: 32.w,
                                      boxShape: BoxShape.circle,

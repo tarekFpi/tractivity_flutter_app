@@ -1,15 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:tractivity_app/helper/shared_prefe/shared_prefe.dart';
+import 'package:tractivity_app/helper/time_converter/time_converter.dart';
+import 'package:tractivity_app/utils/SocketApi.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
 import 'package:tractivity_app/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:tractivity_app/view/components/custom_text_field/custom_text_field.dart';
+import 'package:tractivity_app/view/screens/home_screen/controller/home_controller.dart';
 
 
-class VolunteerChartScreen extends StatelessWidget {
+class VolunteerChartScreen extends StatefulWidget {
   VolunteerChartScreen({super.key});
+
+  @override
+  State<VolunteerChartScreen> createState() => _VolunteerChartScreenState();
+}
+
+class _VolunteerChartScreenState extends State<VolunteerChartScreen> {
   final List<bool> align = [
     true,
     false,
@@ -25,6 +36,29 @@ class VolunteerChartScreen extends StatelessWidget {
   ];
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+
+  final homeController = Get.find<HomeController>();
+  var user_id = "";
+
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    homeController.listenNewMessage();
+    homeController.conversationAllMessageShow(homeController.conversationtShowList.value.id.toString());
+
+    getUserId();
+  }
+
+  ///======================= create Room Chat =================
+  void getUserId() async{
+
+    user_id = await  SharePrefsHelper.getString(AppConstants.userId);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,68 +110,81 @@ class VolunteerChartScreen extends StatelessWidget {
           ),
 
         ),
-        body:Column(
-          children: [
-            //============================= Measage Screen =============================
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.0.w),
-                child: ListView(
-                  shrinkWrap: true,
-                  children: List.generate(
-                    align.length,
-                        (index) => CustomInboxMassage(
-                      alignment: align[index],
-                      message:
-                      'Mi sento bene adesso. Ma ho un problema. Puoi fare una chiamata?',
-                      messageTime: '2:00 PM',),
+        body:Obx(
+          () {
+            return Column(
+              children: [
+                //============================= Measage Screen =============================
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0.w),
+                    child: ListView.builder(
+                        reverse: true,
+                        itemCount: homeController.conversationAllMessageShowList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final model = homeController.conversationAllMessageShowList[index];
+
+                          return CustomInboxMassage(
+                            alignment: model.sender?.id==user_id?false:true,
+                            message:
+                            '${model.content}',
+                            messageTime: '${DateConverter.timeFormetString(model.createdAt.toString())}',);
+                        }
+                    ),
                   ),
                 ),
-              ),
-            ),
-            //========================= Write Message Screen ==========================
-            Padding(
-              padding: const EdgeInsets.only(right: 20.0, left: 20, bottom: 20),
-              child: Row(
-                children: [
+                //========================= Write Message Screen ==========================
+                Padding(
+                  padding: const EdgeInsets.only(right: 20.0, left: 20, bottom: 20),
+                  child: Row(
+                    children: [
 
-                  ///===================== Write message field =======================
-                  Expanded(
-                      child: CustomTextField(
-                        suffixIcon:
-                        IconButton(onPressed: () {}, icon: const Icon(Icons.image)),
-                        fillColor: Colors.grey.withOpacity(.1),
-                        hintText: 'Write your message',
-                        fieldBorderColor: Colors.grey,
-                      )),
-                  SizedBox(
-                    width: 10.w,
+                      ///===================== Write message field =======================
+                      Expanded(
+                          child: CustomTextField(
+                            textEditingController: homeController.messageController.value,
+                            suffixIcon:
+                            IconButton(onPressed: () {}, icon: const Icon(Icons.image)),
+                            fillColor: Colors.grey.withOpacity(.1),
+                            hintText: 'Write your message',
+                            fieldBorderColor: Colors.grey,
+                          )),
+                      SizedBox(
+                        width: 10.w,
+                      ),
+                      //====================== Camera button =======================
+
+                    //  homeController.sendLoading.value?CircularProgressIndicator(color: Colors.amber,):
+                      GestureDetector(
+                        onTap: (){
+
+                          homeController.sendChat(homeController.conversationtShowList.value.id.toString());
+                        },
+                        child: Container(
+                          height: 45,
+                          width: 45,
+                          decoration: BoxDecoration(
+                            color: AppColors.primary,
+                            borderRadius: BorderRadius.circular(70),
+                          ),
+                          child: const Icon(
+                            Icons.send,
+                            color: AppColors.white,
+                          ),
+                        ),
+                      )
+
+                      //=================== Record button ====================
+                    ],
                   ),
-                  //====================== Camera button =======================
-                  Container(
-                    height: 45,
-                    width: 45,
-                    decoration: BoxDecoration(
-                      color: AppColors.primary,
-                      borderRadius: BorderRadius.circular(70),
-                    ),
-                    child: const Icon(
-                      Icons.send,
-                      color: AppColors.white,
-                    ),
-                  )
-
-                  //=================== Record button ====================
-                ],
-              ),
-            )
-          ],
+                )
+              ],
+            );
+          }
         ),
       );
     });
   }
-
-
 }
 
 class CustomInboxMassage extends StatelessWidget {

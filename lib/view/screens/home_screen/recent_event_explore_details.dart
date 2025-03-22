@@ -10,6 +10,7 @@ import 'package:tractivity_app/service/api_url.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_icons/app_icons.dart';
+import 'package:tractivity_app/utils/toast.dart';
 import 'package:tractivity_app/view/components/custom_button/custom_button.dart';
 import 'package:tractivity_app/view/components/custom_from_card/custom_from_card.dart';
 import 'package:tractivity_app/view/components/custom_image/custom_image.dart';
@@ -53,6 +54,7 @@ class _RecentEventExploreDetailsState extends State<RecentEventExploreDetails> {
     }
 
     userId = await SharePrefsHelper.getString(AppConstants.userId);
+
 
   }
 
@@ -135,9 +137,11 @@ class _RecentEventExploreDetailsState extends State<RecentEventExploreDetails> {
                         Align(
                           alignment: Alignment.centerRight,
                           child:
+                          homeController.conversationLoading.value?CircularProgressIndicator(color: Colors.amber,):
                           GestureDetector(
                               onTap: (){
-                                Get.toNamed(AppRoutes.volunteerChartScreen);
+                                // Get.toNamed(AppRoutes.volunteerChartScreen);
+                                homeController.groupIntoEvent(homeController.retriveSpecificByEventShowList.value.name.toString(),eventId);
                               },
                               child: CustomImage(imageSrc: AppIcons.chart)),
 
@@ -331,7 +335,7 @@ class _RecentEventExploreDetailsState extends State<RecentEventExploreDetails> {
                               children: [
 
                                 CustomNetworkImage(
-                                  imageUrl: connectedOrgsLeader[i].image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}/${connectedOrgsLeader[i].image}",
+                                  imageUrl: connectedOrgsLeader[i].image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}${connectedOrgsLeader[i].image}",
                                   height:isTablet?42.h: 32.h,
                                   width:isTablet?42.w: 32.w,
                                   boxShape: BoxShape.circle,

@@ -3,7 +3,8 @@ class ApiUrl {
 
   static const String imageUrl = "http://10.0.60.55:5001/v1/";
 
-  static  String socketUrl({required String id}) => "http://192.168.12.100:5005?userId=$id";
+
+  static  String socketUrl({required String id}) => "http://10.0.60.55:5001?userId=$id";
   // server url : http://115.127.156.14:5002/api/v1
   // local url : http://192.168.12.31:5003/api/v1
 
@@ -238,8 +239,18 @@ class ApiUrl {
   ///Change profile picture
   static String chageProfile ({required String userId}) =>"/user/update/profile-picture/$userId";
 
+  ///get user profile show
   static String userProfileShow ({required String userId}) =>"/user/retrive/$userId";
 
+  ///user profile  update
   static String updateProfile ({required String userId}) =>"/user/update/$userId";
 
+
+  static String conversationAllMessage ({required String conversationId}) =>"/message/retrive/$conversationId";
+
+  ///Create and retrive conversation
+  static String createConversation="/conversation/create";
+
+  ///Send message
+  static String send_message="/message/send";
 }

@@ -10,6 +10,7 @@ import 'package:tractivity_app/helper/shared_prefe/shared_prefe.dart';
 import 'package:tractivity_app/service/api_check.dart';
 import 'package:tractivity_app/service/api_client.dart';
 import 'package:tractivity_app/service/api_url.dart';
+import 'package:tractivity_app/utils/SocketApi.dart';
 import 'package:tractivity_app/utils/ToastMsg/toast_message.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
@@ -140,8 +141,8 @@ class AuthController extends GetxController {
   Future<void> profileUpdate(double latitude,double longitude) async {
 
     userInfoUpdateShowLoading.value = true;
-    var userId= await SharePrefsHelper.getString(AppConstants.userId);
 
+    var userId= await SharePrefsHelper.getString(AppConstants.userId);
 
     var body = json.encode({
       "fullName": editfullNameController.value.text,
@@ -555,6 +556,7 @@ class AuthController extends GetxController {
       Get.toNamed(AppRoutes.homeScreen);
 
       Toast.successToast(response.body['message']!);
+      SocketApi.init();
 
     } else {
 

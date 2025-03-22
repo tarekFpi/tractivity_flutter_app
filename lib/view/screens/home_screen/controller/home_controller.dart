@@ -13,11 +13,14 @@ import 'package:tractivity_app/helper/shared_prefe/shared_prefe.dart';
 import 'package:tractivity_app/service/api_check.dart';
 import 'package:tractivity_app/service/api_client.dart';
 import 'package:tractivity_app/service/api_url.dart';
+import 'package:tractivity_app/utils/SocketApi.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
 import 'package:tractivity_app/utils/toast.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/organization_model/OrganizationResponeModel.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/specific_mission_event_model/SpecificIdEventsResponeModel.dart';
+import 'package:tractivity_app/view/screens/home_screen/chart/conversation_allmessage_model/ConversationRetriveResponseModel.dart';
+import 'package:tractivity_app/view/screens/home_screen/chart/conversation_model/ConversationResponseModel.dart';
 import 'package:tractivity_app/view/screens/home_screen/completed_event_model/CompletedEventResponeModel.dart';
 import 'package:tractivity_app/view/screens/home_screen/notification_evnet_inviteModel/RetriveNotificationEventInviteResponeModel.dart';
 import 'package:tractivity_app/view/screens/home_screen/notification_mission_inviteModel/notification_missionInviteModel.dart';
@@ -272,7 +275,7 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
 ///Accept event invitation volunteer ============
   RxBool notificationInvitationEventAcceptLodding = false.obs;
 
-  Future<void> acceptSpecificEvent(String invitationId,bool statue,String eventId) async{
+  Future<void> acceptSpecificEvent(String invitationId,bool statue,String eventId,String eventName) async{
 
     notificationInvitationEventAcceptLodding.value = true;
 
@@ -297,7 +300,8 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
           Get.offNamed(AppRoutes.joinEventDetailsScreen,arguments: [
             {
               "eventId":eventId,
-              "inviationId":invitationId
+              "inviationId":invitationId,
+              "eventName":eventName,
             }
           ]);
 
@@ -710,6 +714,176 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
       }
     }
   }
+
+
+  /// in join to event group
+  RxBool conversationLoading = false.obs;
+  Rx<ConversationResponseModel> conversationtShowList = ConversationResponseModel().obs;
+
+  Future<void> groupIntoEvent(String eventName,String eventId) async {
+
+    conversationLoading.value = true;
+
+    var userId = await SharePrefsHelper.getString(AppConstants.userId);
+
+    var fullName = await SharePrefsHelper.getString(AppConstants.fullName);
+
+    var body = json.encode({
+      "sender": {
+        "name": "$fullName",
+        "senderId": "$userId"
+      },
+      "receiver": {
+        "name": "$eventName",
+        "receiverId": "$eventId" // event id
+      },
+      "type": "group"
+    });
+
+    var response = await ApiClient.postData(ApiUrl.createConversation, body);
+
+    if (response.statusCode == 200) {
+
+      //Toast.successToast(response.body['message']);
+
+      conversationtShowList.value = ConversationResponseModel.fromJson(response.body["data"]);
+
+      debugPrint("conversationtShowList:${conversationtShowList.value}");
+
+      refresh();
+      conversationLoading.value = false;
+
+      Get.toNamed(AppRoutes.volunteerChartScreen);
+
+    } else {
+
+      conversationLoading.value = false;
+      if (response.statusText == ApiClient.somethingWentWrong) {
+
+        Toast.errorToast(AppStrings.checknetworkconnection);
+
+        return;
+      } else {
+
+        ApiChecker.checkApi(response);
+        conversationLoading.value = false;
+        refresh();
+        return;
+      }
+    }
+  }
+
+
+
+  /// Send message
+  Rx<TextEditingController> messageController = TextEditingController().obs;
+
+  RxBool sendLoading = false.obs;
+
+  void sendChat(String conversationId)async{
+
+    sendLoading.value=true;
+
+    var userId = await SharePrefsHelper.getString(AppConstants.userId);
+
+      var body = {
+        "conversation": "$conversationId",
+        "sender": "$userId",
+        "type": 'text',
+        "content": messageController.value.text,
+      };
+
+
+    var response = await ApiClient.postData(ApiUrl.send_message, jsonEncode(body));
+
+    if (response.statusCode == 201) {
+
+      Toast.successToast(response.body['message']);
+      messageController.value.text="";
+      refresh();
+      sendLoading.value = false;
+
+    } else {
+
+      sendLoading.value = false;
+      if (response.statusText == ApiClient.somethingWentWrong) {
+
+        Toast.errorToast(AppStrings.checknetworkconnection);
+
+        return;
+      } else {
+
+        ApiChecker.checkApi(response);
+        sendLoading.value = false;
+        refresh();
+        return;
+      }
+    }
+  }
+
+  ///Retrive all message by conversation
+
+  RxList<ConversationRetriveResponseModel> conversationAllMessageShowList = <ConversationRetriveResponseModel>[].obs;
+  RxBool conversationAllMessageLoading = false.obs;
+
+  Future<void> conversationAllMessageShow(String conversationId) async{
+
+    var userId = await SharePrefsHelper.getString(AppConstants.userId);
+
+    conversationAllMessageLoading.value = true;
+
+    var response = await ApiClient.getData(ApiUrl.conversationAllMessage(conversationId: conversationId));
+
+    if (response.statusCode == 201) {
+
+      conversationAllMessageShowList.value = List.from(response.body["data"].map((m)=> ConversationRetriveResponseModel.fromJson(m)));
+
+      conversationAllMessageLoading.value =false;
+
+      debugPrint("conversationAllMessageShowList:${jsonEncode(conversationAllMessageShowList)}");
+      refresh();
+
+    } else {
+
+      conversationAllMessageLoading.value =false;
+
+      if (response.statusText == ApiClient.somethingWentWrong) {
+        Toast.errorToast(AppStrings.checknetworkconnection);
+        refresh();
+        return;
+      } else {
+
+        ApiChecker.checkApi(response);
+
+        refresh();
+        return;
+      }
+    }
+  }
+
+
+
+  ///listen New all message by conversation
+  listenNewMessage()async {
+    debugPrint("Faction Socket===========>>>>>>>>>>>>");
+    SocketApi.socket.on("newMessage", (dynamic value) async{
+      debugPrint("message-receive Socket===========>>>>>>>>>>>>$value");
+
+      if (value is Map<String, dynamic>) {
+        var newMessage = ConversationRetriveResponseModel.fromJson(value);
+
+        conversationAllMessageShowList.add(newMessage);
+
+        conversationAllMessageShowList.refresh();
+        ///conversationAllMessageShow(value[""]);
+        debugPrint("newMessage:${conversationAllMessageShowList}");
+        refresh();
+      }
+
+    });
+  }
+
+
 
   /// Retrive events Name by specific volunteer search ====
   RxBool searchVolunteerNameLoading = false.obs;
