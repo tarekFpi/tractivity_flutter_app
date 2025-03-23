@@ -452,11 +452,11 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
                                              /// imageUrl: AppConstants.eventImage,
                                              imageUrl:"${ApiUrl.imageUrl}${eventModel?.images?[0]}",
                                              height: isTablet ? 200.h : 170.h,
-                                             width: isTablet ? 180.w : 180.w,
+                                             width: isTablet ? 160.w : 160.w,
                                              borderRadius: BorderRadius.circular(10),
                                            ):Image.asset("assets/images/event_image.png",
                                              height: isTablet ? 200.h : 170.h,
-                                             width: isTablet ? 180.w : 180.w,fit: BoxFit.fill,),
+                                             width: isTablet ? 160.w : 160.w,fit: BoxFit.fill,),
 
                                            SizedBox(
                                              width: 10.w,
@@ -516,18 +516,18 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
                                                    ),
                                                    CustomText(
                                                      text: "${eventModel?.creator?.name}",
-                                                     fontSize:isTablet?6.sp: 12.sp,
+                                                     fontSize:isTablet?6.sp: 9.sp,
                                                      color: AppColors.black,
                                                      fontWeight: FontWeight.w600,
                                                      overflow: TextOverflow.ellipsis, // Show "..." for overflowing text
-                                                     maxLines: 2,
+                                                     maxLines: 1,
                                                      textAlign: TextAlign.start,
                                                      left: 4,
                                                    ),
 
                                                    CustomText(
                                                      text: "Leader",
-                                                     fontSize:isTablet?6.sp: 12.sp,
+                                                     fontSize:isTablet?6.sp: 9.sp,
                                                      color: AppColors.blue,
                                                      fontWeight: FontWeight.w600,
                                                      left: 4,                                        ),

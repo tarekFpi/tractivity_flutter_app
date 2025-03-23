@@ -120,14 +120,14 @@ class _JoinEventDetailsScreenState extends State<JoinEventDetailsScreen> {
 
                            CarouselSlider.builder(
                              options: CarouselOptions(
-                               initialPage: homeController.sliderCurrentIndex.value,
+                               initialPage: homeController.sliderChatCurrentIndex.value,
                                autoPlay: true,
                                aspectRatio: 2.0,
                                enlargeCenterPage: true,
                                height: MediaQuery.sizeOf(context).height / 5,
                                onPageChanged: (index, reason) {
 
-                                 homeController.sliderCurrentIndex.value = index;
+                                 homeController.sliderChatCurrentIndex.value = index;
                                },
                              ),
                              itemCount: homeController.retriveSpecificByEventShowList.value.images?.length??0,
@@ -782,11 +782,11 @@ class _JoinEventDetailsScreenState extends State<JoinEventDetailsScreen> {
   Container buildDot(int index, BuildContext context) {
     return Container(
       height: 4,
-      width: homeController.sliderCurrentIndex.value == index ? 30 : 15,
+      width: homeController.sliderChatCurrentIndex.value == index ? 30 : 15,
       margin: EdgeInsets.only(right: 5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: homeController.sliderCurrentIndex.value == index
+        color: homeController.sliderChatCurrentIndex.value == index
             ? AppColors.lightRed
             : AppColors.grey_1,
       ),

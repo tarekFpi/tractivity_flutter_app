@@ -94,14 +94,14 @@ class _RecentEventExploreDetailsState extends State<RecentEventExploreDetails> {
 
                         CarouselSlider.builder(
                           options: CarouselOptions(
-                            initialPage: homeController.sliderCurrentIndex.value,
+                            initialPage: homeController.sliderChatCurrentIndex.value,
                             autoPlay: true,
                             aspectRatio: 2.0,
                             enlargeCenterPage: true,
                             height: MediaQuery.sizeOf(context).height / 5,
                             onPageChanged: (index, reason) {
 
-                              homeController.sliderCurrentIndex.value = index;
+                              homeController.sliderChatCurrentIndex.value = index;
                             },
                           ),
                           itemCount: homeController.retriveSpecificByEventShowList.value.images?.length??0,
@@ -140,7 +140,7 @@ class _RecentEventExploreDetailsState extends State<RecentEventExploreDetails> {
                           homeController.conversationLoading.value?CircularProgressIndicator(color: Colors.amber,):
                           GestureDetector(
                               onTap: (){
-                                // Get.toNamed(AppRoutes.volunteerChartScreen);
+                                ///Get.toNamed(AppRoutes.volunteerChartScreen);
                                 homeController.groupIntoEvent(homeController.retriveSpecificByEventShowList.value.name.toString(),eventId);
                               },
                               child: CustomImage(imageSrc: AppIcons.chart)),
@@ -331,28 +331,31 @@ class _RecentEventExploreDetailsState extends State<RecentEventExploreDetails> {
                         ),
                         if (connectedOrgsLeader != null)
                           for (int i = 0; i < connectedOrgsLeader.length; i++)
-                            Row(
-                              children: [
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 4),
+                              child: Row(
+                                children: [
 
-                                CustomNetworkImage(
-                                  imageUrl: connectedOrgsLeader[i].image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}${connectedOrgsLeader[i].image}",
-                                  height:isTablet?42.h: 32.h,
-                                  width:isTablet?42.w: 32.w,
-                                  boxShape: BoxShape.circle,
-                                  border: Border.all(color: AppColors.primary, width: 3),
-                                ),
-                                SizedBox(
-                                  width: 10.w,
-                                ),
-                                CustomText(
-                                  text: "${connectedOrgsLeader[i].fullName}",
-                                  fontSize:isTablet?6.sp: 14.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.black_80,
-                                  bottom: 6,
-                                ),
+                                  CustomNetworkImage(
+                                    imageUrl: connectedOrgsLeader[i].image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}${connectedOrgsLeader[i].image}",
+                                    height:isTablet?42.h: 32.h,
+                                    width:isTablet?42.w: 32.w,
+                                    boxShape: BoxShape.circle,
+                                    border: Border.all(color: AppColors.primary, width: 3),
+                                  ),
+                                  SizedBox(
+                                    width: 10.w,
+                                  ),
+                                  CustomText(
+                                    text: "${connectedOrgsLeader[i].fullName}",
+                                    fontSize:isTablet?6.sp: 14.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColors.black_80,
+                                    bottom: 6,
+                                  ),
 
-                              ],
+                                ],
+                              ),
                             ),
 
                         SizedBox(
@@ -754,11 +757,11 @@ class _RecentEventExploreDetailsState extends State<RecentEventExploreDetails> {
   Container buildDot(int index, BuildContext context) {
     return Container(
       height: 4,
-      width: homeController.sliderCurrentIndex.value == index ? 30 : 15,
+      width: homeController.sliderChatCurrentIndex.value == index ? 30 : 15,
       margin: EdgeInsets.only(right: 5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: homeController.sliderCurrentIndex.value == index
+        color: homeController.sliderChatCurrentIndex.value == index
             ? AppColors.lightRed
             : AppColors.grey_1,
       ),

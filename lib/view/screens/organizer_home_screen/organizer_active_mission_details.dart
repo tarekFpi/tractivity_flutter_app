@@ -58,11 +58,11 @@ class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDe
           leftIcon: true,
           titleName: "Mission Details",
         ),
-        body:RefreshIndicator(child: ListView(
+        body:RefreshIndicator(child:
+        ListView(
           children: [
 
-            Obx(
-                    () {
+                Obx(() {
 
                   var hours = administratorController.missionDetailsShowList.value.report?.hours;
 
@@ -651,9 +651,6 @@ class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDe
                             ),
                           ],
                         ),
-
-
-
                         SizedBox(
                           height: 12.h,
                         ),
@@ -729,11 +726,11 @@ class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDe
                                       /// imageUrl: AppConstants.eventImage,
                                       imageUrl:"${ApiUrl.imageUrl}${model.images?[0]}",
                                       height: isTablet ? 200.h : 170.h,
-                                      width: isTablet ? 180.w : 180.w,
+                                      width: isTablet ? 170.w : 170.w,
                                       borderRadius: BorderRadius.circular(10),
                                     ):Image.asset("assets/images/event_image.png",
                                       height: isTablet ? 200.h : 170.h,
-                                      width: isTablet ? 180.w : 180.w,fit: BoxFit.fill,),
+                                      width: isTablet ? 170.w : 170.w,fit: BoxFit.fill,),
 
                                     const SizedBox(
                                       width: 10,
@@ -789,18 +786,18 @@ class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDe
                                             ),
                                             CustomText(
                                               text: "${model.creator?.name}",
-                                              fontSize:isTablet?6.sp: 12.sp,
+                                              fontSize:isTablet?6.sp: 9.sp,
                                               color: AppColors.black,
                                               fontWeight: FontWeight.w600,
                                               overflow: TextOverflow.ellipsis, // Show "..." for overflowing text
-                                              maxLines: 2,
+                                              maxLines: 1,
                                               textAlign: TextAlign.start,
                                               left: 4,
                                             ),
 
                                             CustomText(
                                               text: "Leader",
-                                              fontSize:isTablet?6.sp: 12.sp,
+                                              fontSize:isTablet?6.sp: 9.sp,
                                               color: AppColors.blue,
                                               fontWeight: FontWeight.w600,
                                               left: 4,                                        ),
@@ -817,7 +814,7 @@ class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDe
                                             GestureDetector(
                                               onTap: () {
 
-                                                Get.toNamed(AppRoutes.adminstratorEventDetailsScreen,arguments: [
+                                                Get.toNamed(AppRoutes.organizationEventdetailsScreen,arguments: [
                                                   {
                                                     "eventId":model.id
                                                   }
@@ -837,8 +834,6 @@ class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDe
                                                 ),
                                               ),
                                             ),
-
-
 
                                           ],
                                         ),

@@ -245,7 +245,7 @@ class ApiUrl {
   ///user profile  update
   static String updateProfile ({required String userId}) =>"/user/update/$userId";
 
-
+///Retrive all message by conversation
   static String conversationAllMessage ({required String conversationId}) =>"/message/retrive/$conversationId";
 
   ///Create and retrive conversation
@@ -253,4 +253,8 @@ class ApiUrl {
 
   ///Send message
   static String send_message="/message/send";
+
+  ///Retrive conversations by specific user
+  static String conversationByspecificUser ({required String userId}) =>"/conversation/retrive/$userId";
+
 }

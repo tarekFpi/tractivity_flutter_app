@@ -65,7 +65,6 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
     organizerController.pickedFiles.clear();
     organizerController.selectedImages.clear();
     organizerController.getUserCurrentLocation();
-
     organizerController.clearData();
   }
 

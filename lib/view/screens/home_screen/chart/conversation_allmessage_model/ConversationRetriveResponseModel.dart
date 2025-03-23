@@ -14,7 +14,7 @@ class ConversationRetriveResponseModel {
   Sender? sender;
   String? type;
   String? content;
-  List<dynamic>? attachment;
+  List<String>? attachment;
   DateTime? createdAt;
   DateTime? updatedAt;
   int? v;
@@ -37,7 +37,7 @@ class ConversationRetriveResponseModel {
     sender: json["sender"] == null ? null : Sender.fromJson(json["sender"]),
     type: json["type"],
     content: json["content"],
-    attachment: json["attachment"] == null ? [] : List<dynamic>.from(json["attachment"]!.map((x) => x)),
+    attachment: json["attachment"] == null ? [] : List<String>.from(json["attachment"]!.map((x) => x)),
     createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
     updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
     v: json["__v"],

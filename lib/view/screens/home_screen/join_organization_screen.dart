@@ -53,190 +53,189 @@ class _JoinOrganizationScreenState extends State<JoinOrganizationScreen> {
           ),
           body:Padding(
             padding:  EdgeInsets.symmetric(horizontal: 12, vertical: isTablet?28:0),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+            child: ListView(
+             children: [
+               Column(
+                 mainAxisAlignment: MainAxisAlignment.start,
+                 crossAxisAlignment: CrossAxisAlignment.start,
+                 children: [
 
-                  SizedBox(
-                    height: 8.h,
-                  ),
-                  ///======== Organization Search Bar ==============
-                  CustomTextField(
-                    textEditingController:queryEditingController,
-                    fillColor: AppColors.neutral02,
-                    //  hintText: AppStrings.search,
-                    hintText: "Search for name...",
-                    onChanged: (value){
-                      setState(() {
-                        query = value;
-                      });
-                      homeController.searchOrganizationList(query);
-                    },
+                   SizedBox(
+                     height: 8.h,
+                   ),
+                   ///======== Organization Search Bar ==============
+                   CustomTextField(
+                     textEditingController:queryEditingController,
+                     fillColor: AppColors.neutral02,
+                     //  hintText: AppStrings.search,
+                     hintText: "Search for name...",
+                     onChanged: (value){
+                       setState(() {
+                         query = value;
+                       });
+                       homeController.searchOrganizationList(query);
+                     },
 
-                    suffixIcon: query.isBlank == true || query.isEmpty
-                        ? Icon(
-                      FluentIcons.search_24_regular,
-                      size: 24,
-                    )
-                        : IconButton(
-                        icon: Icon(Icons.close,size: 24,),
-                        onPressed: () {
-                          setState(() {
-                            query = "";
-                          });
-                          queryEditingController.clear();
-                          FocusScope.of(context).unfocus();
+                     suffixIcon: query.isBlank == true || query.isEmpty
+                         ? Icon(
+                       FluentIcons.search_24_regular,
+                       size: 24,
+                     )
+                         : IconButton(
+                         icon: Icon(Icons.close,size: 24,),
+                         onPressed: () {
+                           setState(() {
+                             query = "";
+                           });
+                           queryEditingController.clear();
+                           FocusScope.of(context).unfocus();
 
-                          homeController.searchOrganizationList("");
+                           homeController.searchOrganizationList("");
 
-                        }),
+                         }),
 
-                  ),
+                   ),
 
 
-                  const SizedBox(
-                    height: 12,
-                  ),
+                   const SizedBox(
+                     height: 12,
+                   ),
 
-                  homeController.organizationShowList.isEmpty?
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height/2,
-                    child: Center(
-                      child: CustomText(
-                        text: "No Organization yet!!",
-                        fontSize:isTablet?12.sp: 24.sp,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.lightRed,
-                      ),
-                    ),
-                  ):
-                  homeController.obx((state){
+                   homeController.organizationShowList.isEmpty?
+                   SizedBox(
+                     height: MediaQuery.of(context).size.height/2,
+                     child: Center(
+                       child: CustomText(
+                         text: "No Organization yet!!",
+                         fontSize:isTablet?12.sp: 24.sp,
+                         fontWeight: FontWeight.w700,
+                         color: AppColors.lightRed,
+                       ),
+                     ),
+                   ):
+                   homeController.obx((state){
 
-                   return ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: state?.length,
-                          itemBuilder: (BuildContext context,index){
+                     return ListView.builder(
+                         shrinkWrap: true,
+                         physics: NeverScrollableScrollPhysics(),
+                         itemCount: state?.length,
+                         itemBuilder: (BuildContext context,index){
 
-                            final model = state?[index];
+                           final model = state?[index];
 
-                            return Column(
-                              children: [
+                           return Padding(
+                             padding: const EdgeInsets.all(4.0),
+                             child: Container(
+                               height:isTablet?140.h: 110.h,
+                               decoration: BoxDecoration(
+                                 color: AppColors.grey_3.withOpacity(0.5),
+                                 borderRadius: BorderRadius.circular(15),
+                               ),
+                               padding: EdgeInsets.all(12),
+                               child: Column(
+                                 mainAxisAlignment: MainAxisAlignment.start,
+                                 children: [
 
-                                Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Container(
-                                    height:isTablet?130.h: 110.h,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.grey_3.withOpacity(0.5),
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    padding: EdgeInsets.all(12),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
+                                   Row(
+                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                     crossAxisAlignment: CrossAxisAlignment.start,
+                                     children: [
 
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
+                                       Row(
+                                         mainAxisAlignment: MainAxisAlignment.start,
+                                         crossAxisAlignment: CrossAxisAlignment.start,
+                                         children: [
+                                           CustomText(
+                                             text: "${index+1}.",
+                                             fontSize: isTablet?6.sp:14.sp,
+                                             color: AppColors.black_80,
+                                             fontWeight: FontWeight.w600,
+                                           ),
 
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                CustomText(
-                                                  text: "${index+1}.",
-                                                  fontSize: isTablet?6.sp:14.sp,
-                                                  color: AppColors.black_80,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
+                                           CustomText(
+                                             text: "${model?.name}",
+                                             fontSize:isTablet?6.sp: 14.sp,
+                                             color: AppColors.black_80,
+                                             fontWeight: FontWeight.w600,
+                                             overflow: TextOverflow.clip,
+                                             textAlign: TextAlign.start,
+                                           ),
+                                         ],
+                                       ),
 
-                                                CustomText(
-                                                  text: "${model?.name}",
-                                                  fontSize:isTablet?6.sp: 14.sp,
-                                                  color: AppColors.black_80,
-                                                  fontWeight: FontWeight.w600,
-                                                  overflow: TextOverflow.clip,
-                                                  textAlign: TextAlign.start,
-                                                ),
-                                              ],
-                                            ),
+                                     ],
+                                   ),
 
-                                          ],
-                                        ),
+                                   const SizedBox(
+                                     height: 4,
+                                   ),
 
-                                        const SizedBox(
-                                          height: 4,
-                                        ),
+                                   Expanded(
+                                     child: Row(
+                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                       //  crossAxisAlignment: CrossAxisAlignment.start,
+                                       children: [
 
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          //  crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
+                                         Expanded(
+                                           child: CustomText(
+                                             text: "${model?.description}",
+                                             fontSize: 12,
+                                             color: AppColors.black_80,
+                                             fontWeight: FontWeight.w400,
+                                             textAlign: TextAlign.start,
+                                             overflow: TextOverflow.ellipsis,
+                                             maxLines: 3,
+                                           ),
+                                         ),
+                                     
+                                         Obx(()=> Checkbox(
+                                           checkColor: AppColors.white,
+                                           activeColor: AppColors.primary,
+                                           shape: RoundedRectangleBorder(
+                                             borderRadius: BorderRadius.circular(3.0),
+                                           ),
+                                           side: const BorderSide(
+                                             // ======> CHANGE THE BORDER COLOR HERE <======
+                                             color: AppColors.primary,
+                                             // Give your checkbox border a custom width
+                                             width: 1.4,
+                                           ),
+                                           ///value: administratorController.selectedOranization.value,
+                                           value: homeController.organizationIdList.contains(model?.id),
+                                           onChanged: (bool? value) {
+                                     
+                                             homeController.selectedOranization.value = value!;
+                                     
+                                             if(homeController.selectedOranization.value){
+                                     
+                                               homeController.organizationIdList.add(model!.id.toString());
+                                     
+                                             }else{
+                                               homeController.organizationIdList.remove(model?.id.toString());
+                                             }
+                                     
+                                           },
+                                         ),
+                                         ),
+                                       ],
+                                     ),
+                                   ),
 
-                                            Expanded(
-                                              child: CustomText(
-                                                text: "${model?.description}",
-                                                fontSize: 12,
-                                                color: AppColors.black_80,
-                                                fontWeight: FontWeight.w400,
-                                                textAlign: TextAlign.start,
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 3,
-                                              ),
-                                            ),
+                                   const SizedBox(
+                                     height: 4,
+                                   ),
 
-                                            Obx(()=> Checkbox(
-                                              checkColor: AppColors.white,
-                                              activeColor: AppColors.primary,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(3.0),
-                                              ),
-                                              side: const BorderSide(
-                                                // ======> CHANGE THE BORDER COLOR HERE <======
-                                                color: AppColors.primary,
-                                                // Give your checkbox border a custom width
-                                                width: 1.4,
-                                              ),
-                                              ///value: administratorController.selectedOranization.value,
-                                              value: homeController.organizationIdList.contains(model?.id),
-                                              onChanged: (bool? value) {
+                                 ],
+                               ),
+                             ),
+                           );
+                         });
 
-                                                homeController.selectedOranization.value = value!;
+                   })
 
-                                                if(homeController.selectedOranization.value){
-
-                                                  homeController.organizationIdList.add(model!.id.toString());
-
-                                                }else{
-                                                  homeController.organizationIdList.remove(model?.id.toString());
-                                                }
-
-                                              },
-                                            ),
-                                            ),
-                                          ],
-                                        ),
-
-                                        const SizedBox(
-                                          height: 4,
-                                        ),
-
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            );
-                          });
-
-                     })
-
-                ],
-              ),
+                 ],
+               )
+             ],
             ),
           ),
 

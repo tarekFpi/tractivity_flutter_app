@@ -53,6 +53,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
         drawer: HomeSideDrawer(),
         //drawerScrimColor: Colors.black,
         appBar: AppBar(
+          scrolledUnderElevation: 0,
           leading: Builder(builder: (context) {
             return IconButton(
                 onPressed: () => Scaffold.of(context).openDrawer(),

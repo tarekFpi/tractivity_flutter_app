@@ -1,26 +1,30 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/helper/shared_prefe/shared_prefe.dart';
 import 'package:tractivity_app/helper/time_converter/time_converter.dart';
 import 'package:tractivity_app/service/api_url.dart';
-import 'package:tractivity_app/utils/app_colors/app_colors.dart';
-import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:tractivity_app/view/components/custom_text_field/custom_text_field.dart';
+import 'package:tractivity_app/view/screens/adminstrator_home_screen/alert_dialog_event.dart';
 import 'package:tractivity_app/view/screens/home_screen/controller/home_controller.dart';
+import '../../../../../utils/app_colors/app_colors.dart';
+import '../../../../../utils/app_const/app_const.dart';
+import '../../../../../utils/app_strings/app_strings.dart';
 
-
-class VolunteerChartScreen extends StatefulWidget {
-  VolunteerChartScreen({super.key});
+class SingleMessageScreen extends StatefulWidget {
+  SingleMessageScreen({super.key});
 
   @override
-  State<VolunteerChartScreen> createState() => _VolunteerChartScreenState();
+  State<SingleMessageScreen> createState() => _SingleMessageScreenState();
 }
 
-class _VolunteerChartScreenState extends State<VolunteerChartScreen> {
+class _SingleMessageScreenState extends State<SingleMessageScreen> {
   final List<bool> align = [
     true,
     false,
@@ -35,13 +39,10 @@ class _VolunteerChartScreenState extends State<VolunteerChartScreen> {
     false
   ];
 
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
-
   final homeController = Get.find<HomeController>();
   var user_id = "";
 
-
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -49,7 +50,7 @@ class _VolunteerChartScreenState extends State<VolunteerChartScreen> {
     super.initState();
 
     homeController.listenNewMessage();
-    homeController.conversationAllMessageShow(homeController.conversationtShowList.value.id.toString());
+    homeController.conversationAllMessageShow(homeController.conversationtUserShowList.value.id.toString());
 
     getUserId();
   }
@@ -101,7 +102,7 @@ class _VolunteerChartScreenState extends State<VolunteerChartScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomText(
-                        text: "${homeController.conversationtShowList.value.receiver?.name}",
+                        text: "${homeController.conversationtUserShowList.value.receiver?.name}",
                         fontSize:isTablet?10.sp: 20.sp,
                         fontWeight: FontWeight.w700,
                         color: AppColors.black),
@@ -111,80 +112,80 @@ class _VolunteerChartScreenState extends State<VolunteerChartScreen> {
 
         ),
         body:Obx(
-          () {
-            return Column(
-              children: [
-                //============================= Message Screen =============================
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0.w),
-                    child: ListView.builder(
-                        reverse: true,
-                        itemCount: homeController.conversationAllMessageShowList.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          final model = homeController.conversationAllMessageShowList[index];
+                () {
+              return Column(
+                children: [
+                  //============================= Message Screen =============================
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.0.w),
+                      child: ListView.builder(
+                          reverse: true,
+                          itemCount: homeController.conversationAllMessageShowList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final model = homeController.conversationAllMessageShowList[index];
 
-                          return CustomInboxMassage(
-                            alignment: model.sender?.id==user_id?false:true,
-                            message:'${model.content}',
-                            image:'${model.sender?.image}',
-                            attachments: model.attachment!.toList(),
-                            messageTime: '${DateConverter.timeFormetString(model.createdAt.toString())}',);
-                        }
+                            return CustomInboxMassage(
+                              alignment: model.sender?.id==user_id?false:true,
+                              message:'${model.content}',
+                              image:'${model.sender?.image}',
+                              attachments: model.attachment!.toList(),
+                              messageTime: '${DateConverter.timeFormetString(model.createdAt.toString())}',);
+                          }
+                      ),
                     ),
                   ),
-                ),
-                //========================= Write Message Screen ==========================
-                Padding(
-                  padding: const EdgeInsets.only(right: 20.0, left: 20, bottom: 20),
-                  child: Row(
-                    children: [
+                  //========================= Write Message Screen ==========================
+                  Padding(
+                    padding: const EdgeInsets.only(right: 20.0, left: 20, bottom: 20),
+                    child: Row(
+                      children: [
 
-                      ///===================== Write message field =======================
-                      Expanded(
-                          child: CustomTextField(
-                            textEditingController: homeController.messageController.value,
-                            suffixIcon:
-                            IconButton(onPressed: () {
+                        ///===================== Write message field =======================
+                        Expanded(
+                            child: CustomTextField(
+                              textEditingController: homeController.messageController.value,
+                              suffixIcon:
+                              IconButton(onPressed: () {
 
-                              homeController.pickImagesFromGallery();
-                            }, icon: const Icon(Icons.image)),
-                            fillColor: Colors.grey.withOpacity(.1),
-                            hintText: 'Write your message',
-                            fieldBorderColor: Colors.grey,
-                          )),
-                      SizedBox(
-                        width: 10.w,
-                      ),
-                      //====================== Camera button =======================
-
-                    //  homeController.sendLoading.value?CircularProgressIndicator(color: Colors.amber,):
-                      GestureDetector(
-                        onTap: (){
-
-                          homeController.sendChat(homeController.conversationtShowList.value.id.toString());
-                        },
-                        child: Container(
-                          height: 45,
-                          width: 45,
-                          decoration: BoxDecoration(
-                            color: AppColors.primary,
-                            borderRadius: BorderRadius.circular(70),
-                          ),
-                          child: const Icon(
-                            Icons.send,
-                            color: AppColors.white,
-                          ),
+                                homeController.pickImagesFromGallery();
+                              }, icon: const Icon(Icons.image)),
+                              fillColor: Colors.grey.withOpacity(.1),
+                              hintText: 'Write your message',
+                              fieldBorderColor: Colors.grey,
+                            )),
+                        SizedBox(
+                          width: 10.w,
                         ),
-                      )
+                        //====================== Camera button =======================
 
-                      //=================== Record button ====================
-                    ],
-                  ),
-                )
-              ],
-            );
-          }
+                        //  homeController.sendLoading.value?CircularProgressIndicator(color: Colors.amber,):
+                        GestureDetector(
+                          onTap: (){
+
+                            homeController.sendChat(homeController.conversationtShowList.value.id.toString());
+                          },
+                          child: Container(
+                            height: 45,
+                            width: 45,
+                            decoration: BoxDecoration(
+                              color: AppColors.primary,
+                              borderRadius: BorderRadius.circular(70),
+                            ),
+                            child: const Icon(
+                              Icons.send,
+                              color: AppColors.white,
+                            ),
+                          ),
+                        )
+
+                        //=================== Record button ====================
+                      ],
+                    ),
+                  )
+                ],
+              );
+            }
         ),
       );
     });
@@ -192,7 +193,7 @@ class _VolunteerChartScreenState extends State<VolunteerChartScreen> {
 }
 
 class CustomInboxMassage extends StatelessWidget {
-    CustomInboxMassage({
+  CustomInboxMassage({
     super.key,
     required this.alignment,
     required this.message,
@@ -520,7 +521,7 @@ class CustomInboxMassage extends StatelessWidget {
                                               ],
                                             ),
 
-                                           /* Image.network(
+                                            /* Image.network(
                                               "${ApiUrl.imageUrl}$imageUrl",
                                                width:MediaQuery.sizeOf(context).width,
                                                height: 200.h,
@@ -595,10 +596,10 @@ class CustomInboxMassage extends StatelessWidget {
                                     child: Padding(
                                       padding: const EdgeInsets.only(top: 4,right: 2),
                                       child: InkWell(
-                                        onTap: (){
+                                          onTap: (){
 
-                                          homeController.startImageDownload("${ApiUrl.baseUrl}/${imageUrl}","${imageUrl.split("\\").last}");
-                                        },
+                                            homeController.startImageDownload("${ApiUrl.baseUrl}/${imageUrl}","${imageUrl.split("\\").last}");
+                                          },
                                           child: Icon(Icons.arrow_circle_down_outlined,color: Colors.white,size: 24,)),
                                     )),
                               ],
@@ -606,7 +607,7 @@ class CustomInboxMassage extends StatelessWidget {
                           ),
                         ),
                         )
-                       .toList(),
+                            .toList(),
                       ),
                     ),
                 ],
@@ -646,6 +647,3 @@ class CustomInboxMassage extends StatelessWidget {
     );
   }
 }
-
-
-

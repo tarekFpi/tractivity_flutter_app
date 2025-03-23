@@ -8,14 +8,8 @@ import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrato
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/event_complete_screen.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/member/adminstrator_member.dart';
 import 'package:tractivity_app/view/screens/auth_screen/signup_screen/location_map_screen.dart';
-import 'package:tractivity_app/view/screens/chat_screen/chat_screen.dart';
-import 'package:tractivity_app/view/screens/chat_screen/inner_widget/group_message_screen.dart';
-import 'package:tractivity_app/view/screens/chat_screen/inner_widget/single_message_screen.dart';
-import 'package:tractivity_app/view/screens/chat_screen/massage_list_screen.dart';
-import 'package:tractivity_app/view/screens/create_team_screen/add_events_screen/add_events_screen.dart';
-import 'package:tractivity_app/view/screens/create_team_screen/all_member_screen/all_member_screen.dart';
-import 'package:tractivity_app/view/screens/create_team_screen/create_team_screen.dart';
-import 'package:tractivity_app/view/screens/create_team_screen/history_screeen/history_screeen.dart';
+import 'package:tractivity_app/view/screens/home_screen/chart/single_message_screen.dart';
+import 'package:tractivity_app/view/screens/home_screen/chart/massage_list_screen.dart';
 import 'package:tractivity_app/view/screens/auth_screen/forgot_password/forgot_password.dart';
 import 'package:tractivity_app/view/screens/auth_screen/login_screen/login_screen.dart';
 import 'package:tractivity_app/view/screens/auth_screen/verification_mail_screen/verification_mail_screen.dart';
@@ -45,6 +39,7 @@ import 'package:tractivity_app/view/screens/onboarding_screen/onboarding_screen.
 import 'package:tractivity_app/view/screens/organizer_home_screen/Invite_member_screen.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/mission_to_volunteers_invite_screen.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organization_event_list_screen.dart';
+import 'package:tractivity_app/view/screens/organizer_home_screen/organization_eventdetails_screen.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organize_details_screen.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_active_mission_details.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/organizer_inactive_mission_details.dart';
@@ -134,6 +129,7 @@ class AppRoutes {
   static const String adminstratorOrganizationDetailsScreen = "/AdminstratorOrganizationDetailsScreen";
   static const String joinOrganizationScreen = "/joinOrganizationScreen";
   static const String adminstratorOrganizationToReportScreen = "/AdminstratorOrganizationToReportScreen";
+  static const String organizationEventdetailsScreen = "/OrganizationEventdetailsScreen";
 
   static List<GetPage> routes = [
 
@@ -155,16 +151,10 @@ class AppRoutes {
     GetPage(name: privacyPolicyScreen, page: () => PrivacyPolicyScreen()),
     GetPage(name: termsConditionScreen, page: () => TermsConditionScreen()),
     GetPage(name: friendScreen, page: () => FriendScreen()),
-    GetPage(name: createTeamScreen, page: () => CreateTeamScreen()),
-    GetPage(name: allMemberScreen, page: () => AllMemberScreen()),
     GetPage(name: memberScreen, page: () => MemberScreen()),
-    GetPage(name: addEventsScreen, page: () => AddEventsScreen()),
-    GetPage(name: historyScreeen, page: () => HistoryScreeen()),
     GetPage(name: massageListScreen, page: () => MassageListScreen()),
-    GetPage(name: messageScreen, page: () => MessageScreen()),
     GetPage(name: singleMessageScreen, page: () => SingleMessageScreen()),
     GetPage(name: removeFriendScreen, page: () => RemoveFriendScreen()),
-    GetPage(name: chatScreen, page: () => ChatScreen()),
     GetPage(name: homeScreen, page: () => HomeScreen()),
     GetPage(name: exploreEventScreen, page: () => ExploreEventScreen()),
     GetPage(name: exoloreCompleteDetailsScreen, page: () => ExoloreCompleteDetailsScreen()),
@@ -193,6 +183,7 @@ class AppRoutes {
     GetPage(name: joinDetailsScreen, page: () => JoinDetailsScreen()),
     GetPage(name: joinEventDetailsScreen, page: () => JoinEventDetailsScreen()),
     GetPage(name: adminstratorEventDetailsScreen, page: () => AdminstratorEventDetailsScreen()),
+    GetPage(name: organizationEventdetailsScreen, page: () => OrganizationEventdetailsScreen()),
     GetPage(name: organizationEventListScreen, page: () => OrganizationEventListScreen()),
     GetPage(name: adminstratiorEventListScreen, page: () => AdminstratiorEventListScreen()),
     GetPage(name: volunteerChartScreen, page: () => VolunteerChartScreen()),

@@ -56,9 +56,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
     storage.write("status", "volunteer");
 
-   ///homeController.retriveMyEventShow();
-
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       myEventController.myEventShow();
 
