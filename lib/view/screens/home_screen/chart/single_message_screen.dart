@@ -49,7 +49,7 @@ class _SingleMessageScreenState extends State<SingleMessageScreen> {
     // TODO: implement initState
     super.initState();
 
-    homeController.listenNewMessage();
+     homeController.listenNewMessage();
     homeController.conversationAllMessageShow(homeController.conversationtUserShowList.value.id.toString());
 
     getUserId();

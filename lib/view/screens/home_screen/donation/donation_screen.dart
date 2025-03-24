@@ -28,6 +28,13 @@ class _DonationScreenState extends State<DonationScreen> {
 
   final  donationController = Get.put(DonationController());
 
+ @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    donationController.showDonationText();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +52,8 @@ class _DonationScreenState extends State<DonationScreen> {
         builder: (context, constraints) {
           final isTablet = constraints.maxWidth > 600; // Detect if it's a tablet
 
-          return Obx(
-                  () {
+          return Obx(() {
+
                 return Padding(
                   padding: EdgeInsets.all(isTablet ? 20.0 : 12.0), // Adjust padding
                   child: SingleChildScrollView(
@@ -66,7 +73,7 @@ class _DonationScreenState extends State<DonationScreen> {
                       ),*/
 
                         CustomText(
-                          text: longText,
+                          text: "${donationController.donationText.value}",
                           fontSize:isTablet?6.sp: 14.sp,
                           fontWeight: FontWeight.w500,
                           textAlign: TextAlign.start,
@@ -82,12 +89,12 @@ class _DonationScreenState extends State<DonationScreen> {
 
                             if(isTablet){
 
-                              showAlertDialog(context, longText,longText.length,isTablet);
+                              showAlertDialog(context, donationController.donationText.value.toString(),donationController.donationText.value.length,isTablet);
 
                             }else{
 
                               ///Show BottomSheet when clicking on the text
-                              showBottomSheet(context, longText,longText.length,isTablet);
+                              showBottomSheet(context, donationController.donationText.value.toString(),donationController.donationText.value.length,isTablet);
                             }
 
                           },
@@ -348,7 +355,7 @@ class _DonationScreenState extends State<DonationScreen> {
   }
 
 
-  // Function to show the full text in a BottomSheet
+  ///Function to show the full text in a BottomSheet
   void showBottomSheet(BuildContext context, String longText,int maxLines, bool isTablet) {
     showModalBottomSheet(
       context: context,

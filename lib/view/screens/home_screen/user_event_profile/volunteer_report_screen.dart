@@ -789,7 +789,7 @@ class _VolunteerEventReportScreenState extends State<VolunteerEventReportScreen>
 
                                               CustomText(
                                                 textAlign: TextAlign.start,
-                                                text: "Hours: ${model?.report?.hours != null ? model?.report?.hours?.round() : 0}",
+                                                text: "Hours: ${model?.report?.hours != null ? model?.report?.hours?.round() : 0} H",
                                                 maxLines: 3,
                                                 fontSize:isTablet?6.sp: 14,
                                                 fontWeight: FontWeight.w500,
@@ -805,7 +805,7 @@ class _VolunteerEventReportScreenState extends State<VolunteerEventReportScreen>
 
                                                   CustomText(
                                                     textAlign: TextAlign.start,
-                                                    text: "Mileage: ${model?.report?.mileage!= null ? model?.report?.mileage?.round() : 0}",
+                                                    text: "Mileage: ${model?.report?.mileage != null ? model?.report?.mileage?.round() : 0} Km",
                                                     maxLines: 3,
                                                     fontSize:isTablet?6.sp: 14,
                                                     fontWeight: FontWeight.w500,
@@ -980,7 +980,7 @@ class _VolunteerEventReportScreenState extends State<VolunteerEventReportScreen>
                           crossAxisAlignment: pw.CrossAxisAlignment.start,
                           children: [
                             pw.Text(
-                              "Hours: ${volunteerController.obs.value.state?[i].report?.hours!=null? (volunteerController.obs.value.state?[i].report?.hours):0} H",
+                              "Hours: ${volunteerController.obs.value.state?[i].report?.hours!=null? (volunteerController.obs.value.state?[i].report?.hours?.round()):0} H",
                               style: pw.TextStyle(fontSize: 14, fontWeight: pw.FontWeight.bold),
                             ),
                             pw.SizedBox(height: 4),
@@ -988,7 +988,7 @@ class _VolunteerEventReportScreenState extends State<VolunteerEventReportScreen>
                               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                               children: [
                                 pw.Text(
-                                  "Mileage: ${volunteerController.obs.value.state?[i].report?.mileage !=null? (volunteerController.obs.value.state?[i].report?.mileage):0} Km",
+                                  "Mileage: ${volunteerController.obs.value.state?[i].report?.mileage !=null? (volunteerController.obs.value.state?[i].report?.mileage?.round()):0} Km",
                                   style: pw.TextStyle(fontSize: 14, fontWeight: pw.FontWeight.bold),
                                 ),
 

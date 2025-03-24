@@ -9,11 +9,7 @@ import 'package:tractivity_app/service/api_url.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
 import 'package:tractivity_app/utils/toast.dart';
-import 'package:tractivity_app/view/screens/adminstrator_home_screen/organization_model/OrganizationResponeModel.dart';
 import 'package:tractivity_app/view/screens/home_screen/completed_event_model/CompletedEventResponeModel.dart';
-import 'package:tractivity_app/view/screens/home_screen/my_organization_model/MyOrganizationResponeModel.dart';
-import 'package:tractivity_app/view/screens/home_screen/notification_evnet_inviteModel/RetriveNotificationEventInviteResponeModel.dart';
-import 'package:tractivity_app/view/screens/home_screen/notification_mission_inviteModel/notification_missionInviteModel.dart';
 
 
 class DonationController extends GetxController  {
@@ -100,7 +96,46 @@ class DonationController extends GetxController  {
   }
 
 
+  ///======================================>> get donation api <<================================
+  var donationText="".obs;
 
+  RxBool donationTextLoading = false.obs;
+
+  Future<void> showDonationText() async{
+
+    donationTextLoading.value=true;
+
+    try{
+      var response = await ApiClient.getData(ApiUrl.getDonationText);
+
+      if (response.statusCode == 200) {
+
+        donationText.value = response.body["data"]["text"];
+
+      } else {
+
+        donationTextLoading.value=false;
+        if (response.statusText == ApiClient.somethingWentWrong) {
+          Toast.errorToast(AppStrings.checknetworkconnection);
+          refresh();
+          return;
+        } else {
+
+          ApiChecker.checkApi(response);
+
+          refresh();
+          return;
+        }
+      }
+    }catch(e){
+
+      donationTextLoading.value=false;
+      Toast.errorToast(e.toString());
+      debugPrint(e.toString());
+    }
+  }
+
+/*
   ///Retrive all invitation event notification by volunteer
   RxString queryEvent = "".obs;
 
@@ -154,6 +189,7 @@ class DonationController extends GetxController  {
 
     }
   }
+*/
 
 
 

@@ -132,7 +132,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
                                           CustomText(
                                             text: "${notificationModel?.contentId?.creator?.name} invite you for a event.",
-                                            fontSize: 14,
+                                            fontSize: 12,
                                             fontWeight: FontWeight.w600,
                                           ),
 
@@ -315,8 +315,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                         children: [
 
                                           CustomText(
-                                            text: "${missionModel?.contentId?.creator?.name},${index+1} invite you for a mission.",
-                                            fontSize: 14,
+                                            text: "${missionModel?.contentId?.creator?.name} invite you for a mission.",
+                                            fontSize: 12,
+                                            maxLines:1,
+                                            overflow: TextOverflow.ellipsis,
                                             fontWeight: FontWeight.w600,
                                           ),
 

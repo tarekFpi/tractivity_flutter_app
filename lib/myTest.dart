@@ -1,49 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_places_autocomplete_widgets/address_autocomplete_widgets.dart';
 
-
-
-class NameListScreen extends StatefulWidget {
-  @override
-  _NameListScreenState createState() => _NameListScreenState();
-}
-
-class _NameListScreenState extends State<NameListScreen> {
-  // Sample data in the list
-  List<String> names = [
-    "Nahid Hossain",
-    "NM Sujon",
-    "John Doe",
-    "Jane Smith",
-  ];
-
-  void _removeName(int index) {
-    setState(() {
-      names.removeAt(index);  // Remove item from the list
-    });
-  }
+class AddressSearchPage extends StatelessWidget {
+  final TextEditingController _addressController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Name List with Remove Icon")),
-      body: ListView.builder(
-        itemCount: names.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(
-              names[index],
-              style: TextStyle(fontSize: 16, color: Colors.blue),
-            ),
-            trailing: IconButton(
-              icon: Icon(Icons.remove_circle, color: Colors.red), // Remove icon
-              onPressed: () {
-                _removeName(index);  // Call remove function when clicked
-              },
-            ),
-          );
-        },
+      appBar: AppBar(title: Text('Address Autocomplete')),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: AddressAutocompleteTextField(
+          controller: _addressController,
+          mapsApiKey: 'YOUR_GOOGLE_MAPS_API_KEY',
+          decoration: InputDecoration(
+            labelText: 'Enter Address',
+            border: OutlineInputBorder(),
+          ),
+          onSuggestionClick: (place) {
+
+          },
+        ),
       ),
     );
   }
 }
-

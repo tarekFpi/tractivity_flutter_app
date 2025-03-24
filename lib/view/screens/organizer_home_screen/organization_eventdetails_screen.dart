@@ -64,8 +64,7 @@ class _OrganizationEventdetailsScreenState extends State<OrganizationEventdetail
           padding: const EdgeInsets.all(16.0),
           child: RefreshIndicator(child: ListView(
             children: [
-              Obx(
-                      () {
+              Obx( () {
 
                     var connectedOrgs = administratorController.retriveSpecificByEventShowList.value.missionId?.connectedOrganizations;
 

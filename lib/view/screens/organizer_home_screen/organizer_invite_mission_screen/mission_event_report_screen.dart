@@ -32,7 +32,6 @@ class MissionEventReportScreen extends StatefulWidget {
 
 class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
 
-
   final  organizerController = Get.find<OrganizerController>();
 
   String missionId="";
@@ -105,13 +104,14 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
           leftIcon: true,
           titleName: "Mission Report",
         ),
-        body: SingleChildScrollView(
-          child: Obx(
-           () {
+        body: RefreshIndicator(child:
+        ListView(
+          children: [
+            Obx(() {
 
-             var hours = administratorController.missionDetailsShowList.value.report?.hours;
+              var hours = administratorController.missionDetailsShowList.value.report?.hours;
 
-             var mileage = administratorController.missionDetailsShowList.value.report?.mileage;
+              var mileage = administratorController.missionDetailsShowList.value.report?.mileage;
 
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 16),
@@ -131,15 +131,15 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
                           color: AppColors.primary,
                           bottom: 5,
                         ),
-                        FloatingActionButton.small(onPressed: (){
 
+                        /*   FloatingActionButton.small(onPressed: (){
 
                           missionReportController.retriveAllEventByMissionShow(missionId);
 
                         }, child:  missionReportController.missionEventShowLoading.value?CircularProgressIndicator(color: Colors.white,strokeWidth: 1.0,
                           valueColor: AlwaysStoppedAnimation<Color>(Colors.white),):Icon(Icons.refresh, color: Colors.white,),
                           backgroundColor: AppColors.primary,
-                        )
+                        )*/
                       ],
                     ),
 
@@ -290,566 +290,566 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
 
-                         Expanded(
-                           child: Column(
-                             mainAxisAlignment: MainAxisAlignment.start,
-                             crossAxisAlignment: CrossAxisAlignment.start,
-                             children: [
-                           
-                               CustomText(
-                                 text: "From",
-                                 fontSize:isTablet?6.sp: 16.sp,
-                                 fontWeight: FontWeight.bold,
-                                 textAlign: TextAlign.start,
-                               ),
-                               TextFormField(
-                                 controller: missionReportController.eventStartSelectedSearchDateController.value,
-                                 textAlign: TextAlign.center,
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+
+                                CustomText(
+                                  text: "From",
+                                  fontSize:isTablet?6.sp: 16.sp,
+                                  fontWeight: FontWeight.bold,
+                                  textAlign: TextAlign.start,
+                                ),
+                                TextFormField(
+                                  controller: missionReportController.eventStartSelectedSearchDateController.value,
+                                  textAlign: TextAlign.center,
                                   showCursor: false,
-                                 readOnly: true,
-                                 onTap: (){
+                                  readOnly: true,
+                                  onTap: (){
 
-                                   showModalBottomSheet(
-                                     context: context,
-                                     //background color for modal bottom screen
-                                     backgroundColor: Colors.white,
-                                     //elevates modal bottom screen
-                                     elevation: 10,
-                                     // gives rounded corner to modal bottom screen
-                                     shape: RoundedRectangleBorder(
-                                       borderRadius: BorderRadius.circular(10.0),
-                                     ),
-                                     builder: (BuildContext context) {
-                                       // UDE : SizedBox instead of Container for whitespaces
-                                       return SizedBox(
-                                         height: MediaQuery.sizeOf(context).height/3,
-                                         child: Padding(
-                                           padding: const EdgeInsets.all(16.0),
-                                           child: Obx(
-                                            () {
-                                               return Column(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                 children: [
-                                                   // Title
-                                                   Row(
-                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                     children: [
+                                    showModalBottomSheet(
+                                      context: context,
+                                      //background color for modal bottom screen
+                                      backgroundColor: Colors.white,
+                                      //elevates modal bottom screen
+                                      elevation: 10,
+                                      // gives rounded corner to modal bottom screen
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10.0),
+                                      ),
+                                      builder: (BuildContext context) {
+                                        // UDE : SizedBox instead of Container for whitespaces
+                                        return SizedBox(
+                                          height: MediaQuery.sizeOf(context).height/3,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(16.0),
+                                            child: Obx(
+                                                    () {
+                                                  return Column(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      // Title
+                                                      Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
 
-                                                       const Text(
-                                                         'From date',
-                                                         style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                                                       ),
+                                                          const Text(
+                                                            'From date',
+                                                            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                                                          ),
 
-                                                       InkWell(
-                                                           onTap: (){
-                                                             Navigator.pop(context);
-                                                           },
-                                                           child: Icon(Icons.clear,size: 32,))
-                                                     ],
-                                                   ),
+                                                          InkWell(
+                                                              onTap: (){
+                                                                Navigator.pop(context);
+                                                              },
+                                                              child: Icon(Icons.clear,size: 32,))
+                                                        ],
+                                                      ),
 
-                                                   SizedBox(
-                                                     height: 8.h,
-                                                   ),
+                                                      SizedBox(
+                                                        height: 8.h,
+                                                      ),
 
-                                                   Row(
-                                                     children: [
+                                                      Row(
+                                                        children: [
 
-                                                       Expanded(
-                                                         child: TextFormField(
-                                                           textAlign: TextAlign.center,
-                                                           showCursor: false,
-                                                           readOnly: true,
-                                                           onTap: (){
+                                                          Expanded(
+                                                            child: TextFormField(
+                                                              textAlign: TextAlign.center,
+                                                              showCursor: false,
+                                                              readOnly: true,
+                                                              onTap: (){
 
-                                                             missionReportController.frompickYear();
-                                                           },
-                                                           controller: missionReportController.eventStartSearchDateController.value,
-                                                           decoration: InputDecoration(
-                                                             hintText: "YYYY",
-                                                             hintStyle: TextStyle(fontSize: 12.0,),
-                                                             filled: true,
-                                                             fillColor:AppColors.grey_3.withOpacity(0.5),
-                                                             ///prefixIcon: Icon(Icons.search, color: Colors.black54),
-                                                             suffixIcon: missionReportController.eventStartSearchDateController.value.text.isNotEmpty
-                                                                 ? IconButton(
-                                                               icon: Icon(Icons.clear, color: Colors.black54),
-                                                               onPressed: (){
-                                                                 missionReportController.eventStartSearchDateController.value.clear();
-                                                                 FocusScope.of(context).unfocus();
-                                                               },
-                                                             ) : IconButton(onPressed: (){
-                                                               // organizerController.eventEndSearchDate();
-                                                             }, icon: Icon(Icons.calendar_month)),
-                                                             border: OutlineInputBorder(
-                                                               borderRadius: BorderRadius.circular(8),
-                                                               borderSide: BorderSide.none,
-                                                             ),
-                                                             contentPadding: EdgeInsets.all(0),
-                                                           ),
-                                                           onChanged: (query) {
-                                                             // Handle search query change (e.g., filtering data)
+                                                                missionReportController.frompickYear();
+                                                              },
+                                                              controller: missionReportController.eventStartSearchDateController.value,
+                                                              decoration: InputDecoration(
+                                                                hintText: "YYYY",
+                                                                hintStyle: TextStyle(fontSize: 12.0,),
+                                                                filled: true,
+                                                                fillColor:AppColors.grey_3.withOpacity(0.5),
+                                                                ///prefixIcon: Icon(Icons.search, color: Colors.black54),
+                                                                suffixIcon: missionReportController.eventStartSearchDateController.value.text.isNotEmpty
+                                                                    ? IconButton(
+                                                                  icon: Icon(Icons.clear, color: Colors.black54),
+                                                                  onPressed: (){
+                                                                    missionReportController.eventStartSearchDateController.value.clear();
+                                                                    FocusScope.of(context).unfocus();
+                                                                  },
+                                                                ) : IconButton(onPressed: (){
+                                                                  // organizerController.eventEndSearchDate();
+                                                                }, icon: Icon(Icons.calendar_month)),
+                                                                border: OutlineInputBorder(
+                                                                  borderRadius: BorderRadius.circular(8),
+                                                                  borderSide: BorderSide.none,
+                                                                ),
+                                                                contentPadding: EdgeInsets.all(0),
+                                                              ),
+                                                              onChanged: (query) {
+                                                                // Handle search query change (e.g., filtering data)
 
-                                                           },
-                                                         ),
-                                                       ),
+                                                              },
+                                                            ),
+                                                          ),
 
-                                                       SizedBox(
-                                                         width: 8.w,
-                                                       ),
-                                                       Expanded(
-                                                         child: InputDecorator(
-                                                           decoration: const InputDecoration(
-                                                             border: OutlineInputBorder(
-                                                               borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                                                             ),
-                                                             contentPadding: EdgeInsets.all(4),
-                                                           ),
-                                                           child: DropdownButtonHideUnderline(
-                                                             child: DropdownButton2<String>(
-                                                               isExpanded: true,
-                                                               hint: Text(
-                                                                 //  AppStrings.discountType,
-                                                                 missionReportController.selectedStartMonthValue.value,
-                                                                 style: const TextStyle(
-                                                                   fontSize: 14,
-                                                                   fontWeight: FontWeight.w500,
-                                                                 ),
-                                                               ),
-                                                               items: missionReportController.monthItems
-                                                                   .toSet() // Ensure unique values
-                                                                   .map(
-                                                                     (String item) => DropdownMenuItem<String>(
-                                                                   value: item,
-                                                                   child: Text(
-                                                                     item,
-                                                                     style: const TextStyle(
-                                                                       fontSize: 14,
-                                                                     ),
-                                                                   ),
-                                                                 ),
-                                                               ).toList(),
-                                                               value: missionReportController.dayItems.contains(missionReportController.selectedStartMonthValue.value)
-                                                                   ? missionReportController.selectedStartMonthValue.value
-                                                                   : null, // Handle invalid selection
-                                                               onChanged: (String? value) {
-                                                                 missionReportController.selectedStartMonthValue.value = value!;
-                                                               },
-                                                             ),
-                                                           ),
-                                                         ),
-                                                       ),
+                                                          SizedBox(
+                                                            width: 8.w,
+                                                          ),
+                                                          Expanded(
+                                                            child: InputDecorator(
+                                                              decoration: const InputDecoration(
+                                                                border: OutlineInputBorder(
+                                                                  borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                                                                ),
+                                                                contentPadding: EdgeInsets.all(4),
+                                                              ),
+                                                              child: DropdownButtonHideUnderline(
+                                                                child: DropdownButton2<String>(
+                                                                  isExpanded: true,
+                                                                  hint: Text(
+                                                                    //  AppStrings.discountType,
+                                                                    missionReportController.selectedStartMonthValue.value,
+                                                                    style: const TextStyle(
+                                                                      fontSize: 14,
+                                                                      fontWeight: FontWeight.w500,
+                                                                    ),
+                                                                  ),
+                                                                  items: missionReportController.monthItems
+                                                                      .toSet() // Ensure unique values
+                                                                      .map(
+                                                                        (String item) => DropdownMenuItem<String>(
+                                                                      value: item,
+                                                                      child: Text(
+                                                                        item,
+                                                                        style: const TextStyle(
+                                                                          fontSize: 14,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ).toList(),
+                                                                  value: missionReportController.dayItems.contains(missionReportController.selectedStartMonthValue.value)
+                                                                      ? missionReportController.selectedStartMonthValue.value
+                                                                      : null, // Handle invalid selection
+                                                                  onChanged: (String? value) {
+                                                                    missionReportController.selectedStartMonthValue.value = value!;
+                                                                  },
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
 
-                                                       SizedBox(
-                                                         width: 8.w,
-                                                       ),
-                                                       Expanded(
-                                                         child: InputDecorator(
-                                                           decoration: const InputDecoration(
-                                                             border: OutlineInputBorder(
-                                                               borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                                                             ),
-                                                             contentPadding: EdgeInsets.all(4),
-                                                           ),
-                                                           child: DropdownButtonHideUnderline(
-                                                             child: DropdownButton2<String>(
-                                                               isExpanded: true,
-                                                               hint: Text(
-                                                                 //  AppStrings.discountType,
-                                                                 missionReportController.selectedStartday.value,
-                                                                 style: const TextStyle(
-                                                                   fontSize: 14,
-                                                                   fontWeight: FontWeight.w500,
-                                                                 ),
-                                                               ),
-                                                               items: missionReportController.dayItems
-                                                                   .toSet() // Ensure unique values
-                                                                   .map(
-                                                                     (String item) => DropdownMenuItem<String>(
-                                                                   value: item,
-                                                                   child: Text(
-                                                                     item,
-                                                                     style: const TextStyle(
-                                                                       fontSize: 14,
-                                                                     ),
-                                                                   ),
-                                                                 ),
-                                                               ).toList(),
-                                                               value: missionReportController.monthItems.contains(missionReportController.selectedStartday.value)
-                                                                   ? missionReportController.selectedStartday.value
-                                                                   : null, // Handle invalid selection
-                                                               onChanged: (String? value) {
-                                                                 missionReportController.selectedStartday.value = value!;
-                                                               },
-                                                             ),
-                                                           ),
-                                                         ),
-                                                       ),
-                                                     ],
-                                                   ),
+                                                          SizedBox(
+                                                            width: 8.w,
+                                                          ),
+                                                          Expanded(
+                                                            child: InputDecorator(
+                                                              decoration: const InputDecoration(
+                                                                border: OutlineInputBorder(
+                                                                  borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                                                                ),
+                                                                contentPadding: EdgeInsets.all(4),
+                                                              ),
+                                                              child: DropdownButtonHideUnderline(
+                                                                child: DropdownButton2<String>(
+                                                                  isExpanded: true,
+                                                                  hint: Text(
+                                                                    //  AppStrings.discountType,
+                                                                    missionReportController.selectedStartday.value,
+                                                                    style: const TextStyle(
+                                                                      fontSize: 14,
+                                                                      fontWeight: FontWeight.w500,
+                                                                    ),
+                                                                  ),
+                                                                  items: missionReportController.dayItems
+                                                                      .toSet() // Ensure unique values
+                                                                      .map(
+                                                                        (String item) => DropdownMenuItem<String>(
+                                                                      value: item,
+                                                                      child: Text(
+                                                                        item,
+                                                                        style: const TextStyle(
+                                                                          fontSize: 14,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ).toList(),
+                                                                  value: missionReportController.monthItems.contains(missionReportController.selectedStartday.value)
+                                                                      ? missionReportController.selectedStartday.value
+                                                                      : null, // Handle invalid selection
+                                                                  onChanged: (String? value) {
+                                                                    missionReportController.selectedStartday.value = value!;
+                                                                  },
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
 
-                                                   SizedBox(
-                                                     height: 16.h,
-                                                   ),
+                                                      SizedBox(
+                                                        height: 16.h,
+                                                      ),
 
-                                                   CustomButton(
-                                                     height: isTablet?70:60,
-                                                     onTap: () {
+                                                      CustomButton(
+                                                        height: isTablet?70:60,
+                                                        onTap: () {
 
-                                                     if(missionReportController.eventStartSearchDateController.value.text.isNotEmpty && missionReportController.selectedStartMonthValue.value=="select month" && missionReportController.selectedStartday.value=="select day"){
+                                                          if(missionReportController.eventStartSearchDateController.value.text.isNotEmpty && missionReportController.selectedStartMonthValue.value=="select month" && missionReportController.selectedStartday.value=="select day"){
 
 
-                                                       missionReportController.formateDate.value ="${missionReportController.eventStartSearchDateController.value.text}";
+                                                            missionReportController.formateDate.value ="${missionReportController.eventStartSearchDateController.value.text}";
 
-                                                       missionReportController.retriveSpecificFromDateEventReportShow(administratorController.missionDetailsShowList.value.id.toString(),missionReportController.formateDate.value);
+                                                            missionReportController.retriveSpecificFromDateEventReportShow(administratorController.missionDetailsShowList.value.id.toString(),missionReportController.formateDate.value);
 
-                                                       debugPrint("year:${missionReportController.formateDate.value}");
+                                                            debugPrint("year:${missionReportController.formateDate.value}");
 
-                                                       missionReportController.eventStartSelectedSearchDateController.value.text="${missionReportController.formateDate.value}";
-                                                       Navigator.of(context).pop();
+                                                            missionReportController.eventStartSelectedSearchDateController.value.text="${missionReportController.formateDate.value}";
+                                                            Navigator.of(context).pop();
 
-                                                     }else{
+                                                          }else{
 
-                                                       if(missionReportController.eventStartSearchDateController.value.text==""){
-                                                         Toast.errorToast("Year is empty!!");
-                                                       }else if(missionReportController.selectedStartMonthValue.value=="select month"){
-                                                         Toast.errorToast("Month is empty!!");
-                                                       }else if(missionReportController.selectedStartday.value=="select day"){
-                                                         Toast.errorToast("Day is empty!!");
-                                                       }else{
+                                                            if(missionReportController.eventStartSearchDateController.value.text==""){
+                                                              Toast.errorToast("Year is empty!!");
+                                                            }else if(missionReportController.selectedStartMonthValue.value=="select month"){
+                                                              Toast.errorToast("Month is empty!!");
+                                                            }else if(missionReportController.selectedStartday.value=="select day"){
+                                                              Toast.errorToast("Day is empty!!");
+                                                            }else{
 
-                                                         missionReportController.formateDate.value ="${missionReportController.eventStartSearchDateController.value.text}-${missionReportController.selectedStartMonthValue.value}-${missionReportController.selectedStartday.value}";
+                                                              missionReportController.formateDate.value ="${missionReportController.eventStartSearchDateController.value.text}-${missionReportController.selectedStartMonthValue.value}-${missionReportController.selectedStartday.value}";
 
-                                                         missionReportController.retriveSpecificFromDateEventReportShow(administratorController.missionDetailsShowList.value.id.toString(),missionReportController.formateDate.value);
-                                                         debugPrint("dateFormat:${missionReportController.formateDate.value}");
+                                                              missionReportController.retriveSpecificFromDateEventReportShow(administratorController.missionDetailsShowList.value.id.toString(),missionReportController.formateDate.value);
+                                                              debugPrint("dateFormat:${missionReportController.formateDate.value}");
 
-                                                           missionReportController.eventStartSelectedSearchDateController.value.text="${missionReportController.formateDate.value}";
+                                                              missionReportController.eventStartSelectedSearchDateController.value.text="${missionReportController.formateDate.value}";
 
-                                                         Navigator.of(context).pop();
-                                                       }
-                                                     }
-                                                     },
-                                                     title: "Done",
-                                                     fontSize: isTablet ? 16 : 14,
-                                                   )
-                                                 ],
-                                               );
-                                             }
-                                           ),
-                                         ),
-                                       );
-                                     },
-                                   );
-                                 },
-                                 decoration: InputDecoration(
-                                   hintText: "0000-00-00",
-                                   hintStyle: TextStyle(fontSize: 12.0,),
-                                   filled: true,
-                                   fillColor:AppColors.grey_3.withOpacity(0.5),
-                                   ///prefixIcon: Icon(Icons.search, color: Colors.black54),
-                                   suffixIcon:  IconButton(onPressed: (){
-                                   //  organizerController.eventSartSearchDate();
-                                   }, icon: Icon(Icons.calendar_month)),
-                                   border: OutlineInputBorder(
-                                     borderRadius: BorderRadius.circular(8),
-                                     borderSide: BorderSide.none,
-                                   ),
-                                   contentPadding: EdgeInsets.all(0),
-                                 ),
-                                 onChanged: (query) {
-                                   // Handle search query change (e.g., filtering data)
-                                 },
-                               ),
-                             ],
-                           ),
-                         ),
+                                                              Navigator.of(context).pop();
+                                                            }
+                                                          }
+                                                        },
+                                                        title: "Done",
+                                                        fontSize: isTablet ? 16 : 14,
+                                                      )
+                                                    ],
+                                                  );
+                                                }
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                  decoration: InputDecoration(
+                                    hintText: "0000-00-00",
+                                    hintStyle: TextStyle(fontSize: 12.0,),
+                                    filled: true,
+                                    fillColor:AppColors.grey_3.withOpacity(0.5),
+                                    ///prefixIcon: Icon(Icons.search, color: Colors.black54),
+                                    suffixIcon:  IconButton(onPressed: (){
+                                      //  organizerController.eventSartSearchDate();
+                                    }, icon: Icon(Icons.calendar_month)),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                    contentPadding: EdgeInsets.all(0),
+                                  ),
+                                  onChanged: (query) {
+                                    // Handle search query change (e.g., filtering data)
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
 
                           SizedBox(
                             width: 12.h,
                           ),
 
-                         Expanded(
-                           child: Column(
-                             mainAxisAlignment: MainAxisAlignment.start,
-                             crossAxisAlignment: CrossAxisAlignment.start,
-                             children: [
-                               
-                               CustomText(
-                                 text: "to",
-                                 fontSize:isTablet?6.sp: 16.sp,
-                                 fontWeight: FontWeight.bold,
-                                 textAlign: TextAlign.start,
-                               ),
-                               TextFormField(
-                                 textAlign: TextAlign.center,
-                                 showCursor: false,
-                                 readOnly: true,
-                                 onTap: (){
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
 
-                                   showModalBottomSheet(
-                                     context: context,
-                                     //background color for modal bottom screen
-                                     backgroundColor: Colors.white,
-                                     //elevates modal bottom screen
-                                     elevation: 10,
-                                     // gives rounded corner to modal bottom screen
-                                     shape: RoundedRectangleBorder(
-                                       borderRadius: BorderRadius.circular(10.0),
-                                     ),
-                                     builder: (BuildContext context) {
-                                       // UDE : SizedBox instead of Container for whitespaces
-                                       return SizedBox(
-                                         height: MediaQuery.sizeOf(context).height/3,
-                                         child: Padding(
-                                           padding: const EdgeInsets.all(16.0),
-                                           child: Obx(
-                                                   () {
-                                                 return Column(
-                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                CustomText(
+                                  text: "to",
+                                  fontSize:isTablet?6.sp: 16.sp,
+                                  fontWeight: FontWeight.bold,
+                                  textAlign: TextAlign.start,
+                                ),
+                                TextFormField(
+                                  textAlign: TextAlign.center,
+                                  showCursor: false,
+                                  readOnly: true,
+                                  onTap: (){
 
-                                                   children: [
-                                                     // Title
-                                                     Row(
-                                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                       children: [
+                                    showModalBottomSheet(
+                                      context: context,
+                                      //background color for modal bottom screen
+                                      backgroundColor: Colors.white,
+                                      //elevates modal bottom screen
+                                      elevation: 10,
+                                      // gives rounded corner to modal bottom screen
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10.0),
+                                      ),
+                                      builder: (BuildContext context) {
+                                        // UDE : SizedBox instead of Container for whitespaces
+                                        return SizedBox(
+                                          height: MediaQuery.sizeOf(context).height/3,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(16.0),
+                                            child: Obx(
+                                                    () {
+                                                  return Column(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-                                                         const Text(
-                                                           'To date',
-                                                           style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                                                         ),
+                                                    children: [
+                                                      // Title
+                                                      Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
 
-                                                         InkWell(
-                                                             onTap: (){
-                                                               Navigator.pop(context);
-                                                             },
-                                                             child: Icon(Icons.clear,size: 32,))
-                                                       ],
-                                                     ),
+                                                          const Text(
+                                                            'To date',
+                                                            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                                                          ),
 
-                                                     SizedBox(
-                                                       width: 8.h,
-                                                     ),
+                                                          InkWell(
+                                                              onTap: (){
+                                                                Navigator.pop(context);
+                                                              },
+                                                              child: Icon(Icons.clear,size: 32,))
+                                                        ],
+                                                      ),
 
-                                                     Row(
-                                                       children: [
+                                                      SizedBox(
+                                                        width: 8.h,
+                                                      ),
 
-                                                         Expanded(
-                                                           child: TextFormField(
-                                                             textAlign: TextAlign.center,
-                                                             showCursor: false,
-                                                             readOnly: true,
-                                                             onTap: (){
+                                                      Row(
+                                                        children: [
 
-                                                               missionReportController.topickYear();
-                                                             },
-                                                             controller: missionReportController.eventEndSearchDateController.value,
-                                                             decoration: InputDecoration(
-                                                               hintText: "YYYY",
-                                                               hintStyle: TextStyle(fontSize: 12.0,),
-                                                               filled: true,
-                                                               fillColor:AppColors.grey_3.withOpacity(0.5),
-                                                               ///prefixIcon: Icon(Icons.search, color: Colors.black54),
-                                                               suffixIcon: missionReportController.eventEndSearchDateController.value.text.isNotEmpty
-                                                                   ? IconButton(
-                                                                 icon: Icon(Icons.clear, color: Colors.black54),
-                                                                 onPressed: (){
-                                                                   missionReportController.eventEndSearchDateController.value.clear();
-                                                                   missionReportController.eventEndSelectedSearchDateController.value.clear();
-                                                                   FocusScope.of(context).unfocus();
-                                                                 },
-                                                               ) : IconButton(onPressed: (){
-                                                                 // organizerController.eventEndSearchDate();
-                                                               }, icon: Icon(Icons.calendar_month)),
-                                                               border: OutlineInputBorder(
-                                                                 borderRadius: BorderRadius.circular(8),
-                                                                 borderSide: BorderSide.none,
-                                                               ),
-                                                               contentPadding: EdgeInsets.all(0),
-                                                             ),
-                                                             onChanged: (query) {
-                                                               ///Handle search query change (e.g., filtering data)
-                                                             },
-                                                           ),
-                                                         ),
+                                                          Expanded(
+                                                            child: TextFormField(
+                                                              textAlign: TextAlign.center,
+                                                              showCursor: false,
+                                                              readOnly: true,
+                                                              onTap: (){
 
-                                                         SizedBox(
-                                                           width: 8.w,
-                                                         ),
-                                                         Expanded(
-                                                           child: InputDecorator(
-                                                             decoration: const InputDecoration(
-                                                               border: OutlineInputBorder(
-                                                                 borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                                                               ),
-                                                               contentPadding: EdgeInsets.all(4),
-                                                             ),
-                                                             child: DropdownButtonHideUnderline(
-                                                               child: DropdownButton2<String>(
-                                                                 isExpanded: true,
-                                                                 hint: Text(
-                                                                   ///AppStrings.discountType,
-                                                                   missionReportController.selectedEndingMonthValue.value,
-                                                                   style: const TextStyle(
-                                                                     fontSize: 14,
-                                                                     fontWeight: FontWeight.w500,
-                                                                   ),
-                                                                 ),
-                                                                 items: missionReportController.monthItems
-                                                                     .toSet() /// Ensure unique values
-                                                                     .map(
-                                                                       (String item) => DropdownMenuItem<String>(
-                                                                     value: item,
-                                                                     child: Text(
-                                                                       item,
-                                                                       style: const TextStyle(
-                                                                         fontSize: 14,
-                                                                       ),
-                                                                     ),
-                                                                   ),
-                                                                 ).toList(),
-                                                                 value: missionReportController.monthEndItems.contains(missionReportController.selectedEndingMonthValue.value)
-                                                                     ? missionReportController.selectedEndingMonthValue.value
-                                                                     : null, // Handle invalid selection
-                                                                 onChanged: (String? value) {
-                                                                   missionReportController.selectedEndingMonthValue.value = value!;
-                                                                 },
-                                                               ),
-                                                             ),
-                                                           ),
-                                                         ),
+                                                                missionReportController.topickYear();
+                                                              },
+                                                              controller: missionReportController.eventEndSearchDateController.value,
+                                                              decoration: InputDecoration(
+                                                                hintText: "YYYY",
+                                                                hintStyle: TextStyle(fontSize: 12.0,),
+                                                                filled: true,
+                                                                fillColor:AppColors.grey_3.withOpacity(0.5),
+                                                                ///prefixIcon: Icon(Icons.search, color: Colors.black54),
+                                                                suffixIcon: missionReportController.eventEndSearchDateController.value.text.isNotEmpty
+                                                                    ? IconButton(
+                                                                  icon: Icon(Icons.clear, color: Colors.black54),
+                                                                  onPressed: (){
+                                                                    missionReportController.eventEndSearchDateController.value.clear();
+                                                                    missionReportController.eventEndSelectedSearchDateController.value.clear();
+                                                                    FocusScope.of(context).unfocus();
+                                                                  },
+                                                                ) : IconButton(onPressed: (){
+                                                                  // organizerController.eventEndSearchDate();
+                                                                }, icon: Icon(Icons.calendar_month)),
+                                                                border: OutlineInputBorder(
+                                                                  borderRadius: BorderRadius.circular(8),
+                                                                  borderSide: BorderSide.none,
+                                                                ),
+                                                                contentPadding: EdgeInsets.all(0),
+                                                              ),
+                                                              onChanged: (query) {
+                                                                ///Handle search query change (e.g., filtering data)
+                                                              },
+                                                            ),
+                                                          ),
 
-                                                         SizedBox(
-                                                           width: 8.w,
-                                                         ),
-                                                         Expanded(
-                                                           child: InputDecorator(
-                                                             decoration: const InputDecoration(
-                                                               border: OutlineInputBorder(
-                                                                 borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                                                               ),
-                                                               contentPadding: EdgeInsets.all(4),
-                                                             ),
-                                                             child: DropdownButtonHideUnderline(
-                                                               child: DropdownButton2<String>(
-                                                                 isExpanded: true,
-                                                                 hint: Text(
-                                                                   //  AppStrings.discountType,
-                                                                   missionReportController.selectedEnding_day.value,
-                                                                   style: const TextStyle(
-                                                                     fontSize: 14,
-                                                                     fontWeight: FontWeight.w500,
-                                                                   ),
-                                                                 ),
-                                                                 items: missionReportController.dayEndItems
-                                                                     .toSet() // Ensure unique values
-                                                                     .map(
-                                                                       (String item) => DropdownMenuItem<String>(
-                                                                     value: item,
-                                                                     child: Text(
-                                                                       item,
-                                                                       style: const TextStyle(
-                                                                         fontSize: 14,
-                                                                       ),
-                                                                     ),
-                                                                   ),
-                                                                 ).toList(),
-                                                                 value: missionReportController.dayEndItems.contains(missionReportController.selectedEnding_day.value)
-                                                                     ? missionReportController.selectedEnding_day.value
-                                                                     : null, // Handle invalid selection
-                                                                 onChanged: (String? value) {
-                                                                   missionReportController.selectedEnding_day.value = value!;
-                                                                 },
-                                                               ),
-                                                             ),
-                                                           ),
-                                                         ),
-                                                       ],
-                                                     ),
+                                                          SizedBox(
+                                                            width: 8.w,
+                                                          ),
+                                                          Expanded(
+                                                            child: InputDecorator(
+                                                              decoration: const InputDecoration(
+                                                                border: OutlineInputBorder(
+                                                                  borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                                                                ),
+                                                                contentPadding: EdgeInsets.all(4),
+                                                              ),
+                                                              child: DropdownButtonHideUnderline(
+                                                                child: DropdownButton2<String>(
+                                                                  isExpanded: true,
+                                                                  hint: Text(
+                                                                    ///AppStrings.discountType,
+                                                                    missionReportController.selectedEndingMonthValue.value,
+                                                                    style: const TextStyle(
+                                                                      fontSize: 14,
+                                                                      fontWeight: FontWeight.w500,
+                                                                    ),
+                                                                  ),
+                                                                  items: missionReportController.monthItems
+                                                                      .toSet() /// Ensure unique values
+                                                                      .map(
+                                                                        (String item) => DropdownMenuItem<String>(
+                                                                      value: item,
+                                                                      child: Text(
+                                                                        item,
+                                                                        style: const TextStyle(
+                                                                          fontSize: 14,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ).toList(),
+                                                                  value: missionReportController.monthEndItems.contains(missionReportController.selectedEndingMonthValue.value)
+                                                                      ? missionReportController.selectedEndingMonthValue.value
+                                                                      : null, // Handle invalid selection
+                                                                  onChanged: (String? value) {
+                                                                    missionReportController.selectedEndingMonthValue.value = value!;
+                                                                  },
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
 
-                                                     SizedBox(
-                                                       height: 16.h,
-                                                     ),
-                                                     CustomButton(
-                                                       height: isTablet?70:60,
-                                                       onTap: () {
+                                                          SizedBox(
+                                                            width: 8.w,
+                                                          ),
+                                                          Expanded(
+                                                            child: InputDecorator(
+                                                              decoration: const InputDecoration(
+                                                                border: OutlineInputBorder(
+                                                                  borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                                                                ),
+                                                                contentPadding: EdgeInsets.all(4),
+                                                              ),
+                                                              child: DropdownButtonHideUnderline(
+                                                                child: DropdownButton2<String>(
+                                                                  isExpanded: true,
+                                                                  hint: Text(
+                                                                    //  AppStrings.discountType,
+                                                                    missionReportController.selectedEnding_day.value,
+                                                                    style: const TextStyle(
+                                                                      fontSize: 14,
+                                                                      fontWeight: FontWeight.w500,
+                                                                    ),
+                                                                  ),
+                                                                  items: missionReportController.dayEndItems
+                                                                      .toSet() // Ensure unique values
+                                                                      .map(
+                                                                        (String item) => DropdownMenuItem<String>(
+                                                                      value: item,
+                                                                      child: Text(
+                                                                        item,
+                                                                        style: const TextStyle(
+                                                                          fontSize: 14,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ).toList(),
+                                                                  value: missionReportController.dayEndItems.contains(missionReportController.selectedEnding_day.value)
+                                                                      ? missionReportController.selectedEnding_day.value
+                                                                      : null, // Handle invalid selection
+                                                                  onChanged: (String? value) {
+                                                                    missionReportController.selectedEnding_day.value = value!;
+                                                                  },
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
 
-                                                         if(missionReportController.formateDate.isEmpty){
+                                                      SizedBox(
+                                                        height: 16.h,
+                                                      ),
+                                                      CustomButton(
+                                                        height: isTablet?70:60,
+                                                        onTap: () {
 
-                                                           Toast.errorToast("From year Date is empty!!");
+                                                          if(missionReportController.formateDate.isEmpty){
 
-                                                         }else if(missionReportController.eventEndSearchDateController.value.text.isNotEmpty && missionReportController.selectedEndingMonthValue.value=="select month" && missionReportController.selectedEnding_day.value=="select day"){
+                                                            Toast.errorToast("From year Date is empty!!");
 
-                                                           missionReportController.formateToDate.value ="${missionReportController.eventEndSearchDateController.value.text}";
+                                                          }else if(missionReportController.eventEndSearchDateController.value.text.isNotEmpty && missionReportController.selectedEndingMonthValue.value=="select month" && missionReportController.selectedEnding_day.value=="select day"){
 
-                                                           missionReportController.retriveSpecificDateToDateEventReportShow(administratorController.missionDetailsShowList.value.id.toString(),missionReportController.formateDate.value,missionReportController.formateToDate.value);
+                                                            missionReportController.formateToDate.value ="${missionReportController.eventEndSearchDateController.value.text}";
 
-                                                           debugPrint("year:${missionReportController.formateDate.value},,${missionReportController.formateToDate.value}");
+                                                            missionReportController.retriveSpecificDateToDateEventReportShow(administratorController.missionDetailsShowList.value.id.toString(),missionReportController.formateDate.value,missionReportController.formateToDate.value);
 
-                                                           missionReportController.eventEndSelectedSearchDateController.value.text="${missionReportController.formateToDate.value}";
-                                                           Navigator.of(context).pop();
+                                                            debugPrint("year:${missionReportController.formateDate.value},,${missionReportController.formateToDate.value}");
 
-                                                         }else{
+                                                            missionReportController.eventEndSelectedSearchDateController.value.text="${missionReportController.formateToDate.value}";
+                                                            Navigator.of(context).pop();
 
-
-                                                           if(missionReportController.eventEndSearchDateController.value.text==""){
-                                                             Toast.errorToast("Year is empty!!");
-                                                           }else if(missionReportController.eventEndSearchDateController.value.text==""){
-                                                             Toast.errorToast("Year is empty!!");
-                                                           }else if(missionReportController.selectedEndingMonthValue.value=="select month"){
-                                                             Toast.errorToast("Month is empty!!");
-                                                           }else if(missionReportController.selectedEnding_day.value=="select day"){
-                                                             Toast.errorToast("Day is empty!!");
-                                                           }else{
+                                                          }else{
 
 
-                                                             missionReportController.formateToDate.value ="${missionReportController.eventEndSearchDateController.value.text}-${missionReportController.selectedEndingMonthValue.value}-${missionReportController.selectedEnding_day.value}";
+                                                            if(missionReportController.eventEndSearchDateController.value.text==""){
+                                                              Toast.errorToast("Year is empty!!");
+                                                            }else if(missionReportController.eventEndSearchDateController.value.text==""){
+                                                              Toast.errorToast("Year is empty!!");
+                                                            }else if(missionReportController.selectedEndingMonthValue.value=="select month"){
+                                                              Toast.errorToast("Month is empty!!");
+                                                            }else if(missionReportController.selectedEnding_day.value=="select day"){
+                                                              Toast.errorToast("Day is empty!!");
+                                                            }else{
 
-                                                             missionReportController.retriveSpecificDateToDateEventReportShow(administratorController.missionDetailsShowList.value.id.toString(),missionReportController.formateDate.value,missionReportController.formateToDate.value);
 
-                                                             debugPrint("toFormat:${missionReportController.formateDate.value},${missionReportController.formateToDate.value}");
+                                                              missionReportController.formateToDate.value ="${missionReportController.eventEndSearchDateController.value.text}-${missionReportController.selectedEndingMonthValue.value}-${missionReportController.selectedEnding_day.value}";
 
-                                                             missionReportController.eventEndSelectedSearchDateController.value.text="${missionReportController.formateToDate.value}";
+                                                              missionReportController.retriveSpecificDateToDateEventReportShow(administratorController.missionDetailsShowList.value.id.toString(),missionReportController.formateDate.value,missionReportController.formateToDate.value);
 
-                                                             Navigator.of(context).pop();
-                                                           }
-                                                         }
+                                                              debugPrint("toFormat:${missionReportController.formateDate.value},${missionReportController.formateToDate.value}");
 
-                                                       },
-                                                       title: "Done",
-                                                       fontSize: isTablet ? 16 : 14,
-                                                     )
-                                                   ],
-                                                 );
-                                               }
-                                           ),
-                                         ),
-                                       );
-                                     },
-                                   );
-                                 },
-                                 controller:missionReportController.eventEndSelectedSearchDateController.value,
-                                 decoration: InputDecoration(
-                                   hintText: "0000-00-00",
-                                   hintStyle: TextStyle(fontSize: 12.0,),
-                                   filled: true,
-                                   fillColor:AppColors.grey_3.withOpacity(0.5),
-                                   ///prefixIcon: Icon(Icons.search, color: Colors.black54),
-                                   suffixIcon: IconButton(onPressed: (){
-                                    // organizerController.eventEndSearchDate();
-                                   }, icon: Icon(Icons.calendar_month)),
-                                   border: OutlineInputBorder(
-                                     borderRadius: BorderRadius.circular(8),
-                                     borderSide: BorderSide.none,
-                                   ),
-                                   contentPadding: EdgeInsets.all(0),
-                                 ),
-                                 onChanged: (query) {
-                                   // Handle search query change (e.g., filtering data)
-                                 },
-                               ),
-                             ],
-                           ),
-                         )
+                                                              missionReportController.eventEndSelectedSearchDateController.value.text="${missionReportController.formateToDate.value}";
+
+                                                              Navigator.of(context).pop();
+                                                            }
+                                                          }
+
+                                                        },
+                                                        title: "Done",
+                                                        fontSize: isTablet ? 16 : 14,
+                                                      )
+                                                    ],
+                                                  );
+                                                }
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                  controller:missionReportController.eventEndSelectedSearchDateController.value,
+                                  decoration: InputDecoration(
+                                    hintText: "0000-00-00",
+                                    hintStyle: TextStyle(fontSize: 12.0,),
+                                    filled: true,
+                                    fillColor:AppColors.grey_3.withOpacity(0.5),
+                                    ///prefixIcon: Icon(Icons.search, color: Colors.black54),
+                                    suffixIcon: IconButton(onPressed: (){
+                                      // organizerController.eventEndSearchDate();
+                                    }, icon: Icon(Icons.calendar_month)),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                    contentPadding: EdgeInsets.all(0),
+                                  ),
+                                  onChanged: (query) {
+                                    // Handle search query change (e.g., filtering data)
+                                  },
+                                ),
+                              ],
+                            ),
+                          )
                         ],
                       ),
                     ),
@@ -869,104 +869,107 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
                       height: 8.h,
                     ),
 
-                   missionReportController.obx((state){
+                    missionReportController.obx((state){
 
-                     if(state?.isEmpty??true){
-                       return SizedBox(
-                         height: MediaQuery.of(context).size.height/2,
-                         child: Center(
-                           child: CustomText(
-                             text: "No event yet!!",
-                             fontSize:isTablet?12.sp: 24.sp,
-                             fontWeight: FontWeight.w700,
-                             color: AppColors.lightRed,
-                           ),
-                         ),
-                       );
-                     }else{
-                       return ListView.builder(
-                           itemCount: state?.length,
-                           shrinkWrap: true,
-                           physics: NeverScrollableScrollPhysics(),
-                           itemBuilder: (BuildContext context, int index) {
+                      if(state?.isEmpty??true){
+                        return SizedBox(
+                          height: MediaQuery.of(context).size.height/2,
+                          child: Center(
+                            child: CustomText(
+                              text: "No event yet!!",
+                              fontSize:isTablet?12.sp: 24.sp,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.lightRed,
+                            ),
+                          ),
+                        );
+                      }else{
+                        return ListView.builder(
+                            itemCount: state?.length,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (BuildContext context, int index) {
 
-                             final model = state?[index];
+                              final model = state?[index];
 
-                             return Card(
-                               color: Colors.white,
-                               elevation: 0.2,
-                               child: ExpansionTile(
-                                 shape: Border(),
-                                 title: Text("${model?.name}",style: TextStyle(fontSize: isTablet?9.sp:14.sp),),
-                                 children: [
+                              return Card(
+                                color: Colors.white,
+                                elevation: 0.2,
+                                child: ExpansionTile(
+                                  shape: Border(),
+                                  title: Text("${model?.name}",style: TextStyle(fontSize: isTablet?9.sp:14.sp),),
+                                  children: [
 
-                                   Container(
-                                     alignment: Alignment.centerLeft,
-                                     decoration: BoxDecoration(
-                                       color: AppColors.grey_3.withOpacity(0.3),
-                                       borderRadius: BorderRadius.circular(15),
-                                     ),
+                                    Container(
+                                      alignment: Alignment.centerLeft,
+                                      decoration: BoxDecoration(
+                                        color: AppColors.grey_3.withOpacity(0.3),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
 
-                                     child: Padding(
-                                       padding: const EdgeInsets.all(8.0),
-                                       child: Column(
-                                         mainAxisAlignment: MainAxisAlignment.start,
-                                         crossAxisAlignment: CrossAxisAlignment.start,
-                                         children: [
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
 
-                                           CustomText(
-                                             textAlign: TextAlign.start,
-                                             text: "Hours: ${model?.report?.hours}",
-                                             maxLines: 3,
-                                             fontSize:isTablet?6.sp: 14,
-                                             fontWeight: FontWeight.w500,
-                                           ),
+                                            CustomText(
+                                              textAlign: TextAlign.start,
+                                              text: "Hours: ${model?.report?.hours != null ? model?.report?.hours.round() : 0} H",
+                                              maxLines: 3,
+                                              fontSize:isTablet?6.sp: 14,
+                                              fontWeight: FontWeight.w500,
+                                            ),
 
-                                           SizedBox(
-                                             height: 4.h,
-                                           ),
+                                            SizedBox(
+                                              height: 4.h,
+                                            ),
 
-                                           Row(
-                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                             children: [
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
 
-                                               CustomText(
-                                                 textAlign: TextAlign.start,
-                                                 text: "Mileage: ${model?.report?.mileage}",
-                                                 maxLines: 3,
-                                                 fontSize:isTablet?6.sp: 14,
-                                                 fontWeight: FontWeight.w500,
-                                                 bottom: 5,
-                                               ),
+                                                CustomText(
+                                                  textAlign: TextAlign.start,
+                                                  text: "Mileage: ${model?.report?.mileage != null ? model?.report?.mileage.round() : 0} Km",
+                                                  maxLines: 3,
+                                                  fontSize:isTablet?6.sp: 14,
+                                                  fontWeight: FontWeight.w500,
+                                                  bottom: 5,
+                                                ),
 
-                                               FloatingActionButton.small(onPressed: (){
+                                                FloatingActionButton.small(onPressed: (){
 
-                                                 generateSpecificDownloadPDF(model);
-                                               },
-                                                 backgroundColor: Colors.amber,
-                                                 child: Icon(Icons.arrow_circle_down_outlined,color: Colors.white,),)
-                                             ],
-                                           ),
+                                                  generateSpecificDownloadPDF(model);
+                                                },
+                                                  backgroundColor: Colors.amber,
+                                                  child: Icon(Icons.arrow_circle_down_outlined,color: Colors.white,),)
+                                              ],
+                                            ),
 
-                                         ],
-                                       ),
-                                     ),
-                                   )
+                                          ],
+                                        ),
+                                      ),
+                                    )
 
-                                 ],
-                               ),
-                             );
-                           });
-                        }
+                                  ],
+                                ),
+                              );
+                            });
+                      }
 
-                      })
+                    })
 
                   ],
                 ),
               );
             }
-          ),
-        ),
+            )
+          ],
+        ), onRefresh: ()async{
+          await  missionReportController.retriveAllEventByMissionShow(missionId);
+        }),
 
       );
     });
@@ -1067,7 +1070,7 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
                       color: PdfColor.fromInt(Colors.white60.value),
                       borderRadius:  pw.BorderRadius.circular(10),
                     ),child:pw.Text(
-                    "Hours: ${administratorController.missionDetailsShowList.value.report?.hours}",
+                    "Hours: ${administratorController.missionDetailsShowList.value.report?.hours != null ? administratorController.missionDetailsShowList.value.report?.hours.round() : 0} H",
                     style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold, color: PdfColors.blue),
                   ),
                   ),
@@ -1081,7 +1084,7 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
                       color:  PdfColor.fromInt(Colors.white60.value),
                       borderRadius:  pw.BorderRadius.circular(10),
                     ),child:pw.Text(
-                    "Millage: ${administratorController.missionDetailsShowList.value.report?.mileage}",
+                    "Millage: ${administratorController.missionDetailsShowList.value.report?.mileage != null ? administratorController.missionDetailsShowList.value.report?.mileage.round() : 0} Km",
                     style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold, color: PdfColors.blue),
                   ),
                   ),
@@ -1140,7 +1143,7 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
                           crossAxisAlignment: pw.CrossAxisAlignment.start,
                           children: [
                             pw.Text(
-                              "Hours: ${model?.report?.hours}",
+                              "Hours: ${model?.report?.hours != null ? model?.report?.hours.round() : 0} H",
                               style: pw.TextStyle(fontSize: 14, fontWeight: pw.FontWeight.bold),
                             ),
                             pw.SizedBox(height: 4),
@@ -1148,7 +1151,7 @@ class _MissionEventReportScreenState extends State<MissionEventReportScreen> {
                               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                               children: [
                                 pw.Text(
-                                  "Mileage: ${model?.report?.mileage}",
+                                  "Mileage: ${model?.report?.mileage != null ? model?.report?.mileage.round() : 0} Km",
                                   style: pw.TextStyle(fontSize: 14, fontWeight: pw.FontWeight.bold),
                                 ),
 

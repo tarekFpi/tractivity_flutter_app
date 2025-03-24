@@ -602,6 +602,7 @@ class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDe
 
                             CustomButton(
                               onTap: () {
+
                                 Get.toNamed(AppRoutes.missionEventReportScreen,arguments: [
                                   {
                                     "missionId":"${administratorController.missionDetailsShowList.value.id}",

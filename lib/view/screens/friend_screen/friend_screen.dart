@@ -7,8 +7,10 @@ import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/service/api_url.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
+import 'package:tractivity_app/utils/app_icons/app_icons.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
 import 'package:tractivity_app/view/components/custom_button/custom_button.dart';
+import 'package:tractivity_app/view/components/custom_image/custom_image.dart';
 import 'package:tractivity_app/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tractivity_app/view/components/custom_royel_appbar/custom_royel_appbar.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
@@ -29,15 +31,16 @@ class _FriendScreenState extends State<FriendScreen> {
 
   final friendsController = Get.put(FriendController());
 
-  @override
+/*  @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    friendsController.inviteFriendsFetchList();
-    friendsController.requestFriendsFetchList();
-    friendsController.myFriendsFetchList();
-  }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+
+    });
+
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +53,7 @@ class _FriendScreenState extends State<FriendScreen> {
         return RefreshIndicator(child: ListView(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8.0),
               child: Obx(
                       () {
                     return Column(
@@ -98,7 +101,6 @@ class _FriendScreenState extends State<FriendScreen> {
                             }),
                           ),
                         ),
-
 
                         SizedBox(height: 16.h,),
 
@@ -161,116 +163,63 @@ class _FriendScreenState extends State<FriendScreen> {
 
                                     final myModel = friendsController.myFriendsShowList[index];
 
-                                    return Padding(
-                                      padding: EdgeInsets.only(bottom: 10.h),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
+                                    return Card(
+                                      color: Colors.white,
+                                      child: Padding(
+                                        padding: EdgeInsets.only(bottom: 10.h),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
 
-                                              CustomNetworkImage(
-                                                imageUrl:myModel.requester?.requesterId?.image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}/${myModel.requester?.requesterId?.image}",
-                                                height: 60.h,
-                                                width: 60.w,
-                                                boxShape: BoxShape.circle,
-                                                border: Border.all(color: AppColors.primary, width: 3),
-                                              ),
-                                              SizedBox(
-                                                width: 10.w,
-                                              ),
-                                              Column(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                            Padding(
+                                              padding: const EdgeInsets.all(6.0),
+                                              child: Row(
                                                 children: [
-                                                  CustomText(
-                                                    text: "${myModel.requester?.requesterId?.fullName}",
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: AppColors.black,
+
+                                                  CustomNetworkImage(
+                                                    imageUrl:myModel.requester?.requesterId?.image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}/${myModel.requester?.requesterId?.image}",
+                                                    height: 60.h,
+                                                    width: 60.w,
+                                                    boxShape: BoxShape.circle,
+                                                    border: Border.all(color: AppColors.primary, width: 3),
                                                   ),
-                                                  CustomText(
-                                                    text: "${myModel.requester?.requesterId?.profession}",
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: AppColors.black_80,
+                                                  SizedBox(
+                                                    width: 10.w,
+                                                  ),
+                                                  Column(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      CustomText(
+                                                        text: "${myModel.requester?.requesterId?.fullName}",
+                                                        fontSize: 16,
+                                                        fontWeight: FontWeight.w600,
+                                                        color: AppColors.black,
+                                                      ),
+                                                      CustomText(
+                                                        text: "${myModel.requester?.requesterId?.profession}",
+                                                        fontSize: 12,
+                                                        fontWeight: FontWeight.w400,
+                                                        color: AppColors.black_80,
+                                                      ),
+                                                    ],
                                                   ),
                                                 ],
                                               ),
-                                            ],
-                                          ),
-                                     /*     GestureDetector(
-                                            onTap: (){
-
-                                              showDialog(
-                                                context: context,
-                                                builder: (ctx) => AlertDialog(
-                                                  backgroundColor: Colors.white,
-                                                  insetPadding: EdgeInsets.all(8),
-                                                  contentPadding: EdgeInsets.all(8),
-                                                  title: SizedBox(),
-                                                  content: SizedBox(
-                                                    width: MediaQuery.sizeOf(context).width,
-                                                    child: Padding(
-                                                      padding: const EdgeInsets.all(8.0),
-                                                      child: Column(
-                                                        mainAxisSize: MainAxisSize.min,
-                                                        children: [
-
-                                                          const CustomText(
-                                                            text:"Are you sure you want to \n Remove this Friends?",
-                                                            fontSize: 22,
-                                                            fontWeight: FontWeight.w600,
-                                                            color: AppColors.black_80,
-                                                          ),
-
-                                                          SizedBox(
-                                                            height: 8.h,
-                                                          ),
-
-                                                          //  friendsController.organizationDeleteLoading.value?CircularProgressIndicator(color: AppColors.primary,):
-                                                          CustomButton(onTap: (){
-
-
-                                                            *//*    friendsController.organizationDelete("${model.id}");
-                                                        if(friendsController.organizationDeleteLoading.value){
-                                                          Navigator.of(context).pop();
-                                                        }*//*
-                                                            Navigator.of(context).pop();
-                                                          },title:"Yes",height:isTablet?70.h: 45.h,fontSize: 12.sp,),
-
-                                                          SizedBox(
-                                                            height: 12.h,
-                                                          ),
-                                                          CustomButton(onTap: (){
-                                                            Navigator.of(context).pop();
-                                                          },title:"NO",height:isTablet?70.h: 45.h,
-                                                            fontSize: 12.sp,fillColor: AppColors.white,
-                                                            textColor: AppColors.primary,
-                                                            isBorder: true,borderWidth: 1,)
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    //  child: AlertDialogEvent(title: "Are you sure you want to \n delete ?",discription: "",),
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                            child: Container(
-                                              padding: EdgeInsets.all(10),
-                                              decoration: BoxDecoration(
-                                                color: AppColors.primary,
-                                                borderRadius: BorderRadius.circular(10.r),
-                                              ),
-                                              child: CustomText(
-                                                text: "Remove",
-                                                color: AppColors.white,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w600,
-                                              ),
                                             ),
-                                          )*/
-                                        ],
+                                      
+                                            InkWell(
+                                              onTap: (){
+
+                                              },
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(right: 4),
+                                                child: CustomImage(imageSrc: AppIcons.chart),
+                                              ),
+                                            )
+
+                                          ],
+                                        ),
                                       ),
                                     );
                                   }),
@@ -336,68 +285,78 @@ class _FriendScreenState extends State<FriendScreen> {
 
                                     final model = friendsController.inviteFriendsShowList[index];
 
-                                    return Padding(
-                                      padding: EdgeInsets.only(bottom: 10.h),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
+                                    return Card(
+                                      color: Colors.white,
+                                      child: Padding(
+                                        padding: EdgeInsets.only(bottom: 10.h),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
 
-                                          Row(
-                                            children: [
-                                              CustomNetworkImage(
-                                                imageUrl:model.image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}/${model.image}",
-                                                height: 60.h,
-                                                width: 60.w,
-                                                boxShape: BoxShape.circle,
-                                                border: Border.all(color: AppColors.primary, width: 3),
-                                              ),
-                                              SizedBox(
-                                                width: 10.w,
-                                              ),
-                                              Column(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                            Padding(
+                                              padding: const EdgeInsets.all(6.0),
+                                              child: Row(
                                                 children: [
-                                                  CustomText(
-                                                    text:"${model.fullName}",
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: AppColors.black,
+                                                  CustomNetworkImage(
+                                                    imageUrl:model.image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}/${model.image}",
+                                                    height: 60.h,
+                                                    width: 60.w,
+                                                    boxShape: BoxShape.circle,
+                                                    border: Border.all(color: AppColors.primary, width: 3),
                                                   ),
-                                                  CustomText(
-                                                    text: "${model.profession}",
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: AppColors.black_80,
+                                                  SizedBox(
+                                                    width: 10.w,
+                                                  ),
+                                                  Column(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      CustomText(
+                                                        text:"${model.fullName}",
+                                                        fontSize: 16,
+                                                        fontWeight: FontWeight.w600,
+                                                        color: AppColors.black,
+                                                      ),
+                                                      CustomText(
+                                                        text: "${model.profession}",
+                                                        fontSize: 12,
+                                                        fontWeight: FontWeight.w400,
+                                                        color: AppColors.black_80,
+                                                      ),
+                                                    ],
                                                   ),
                                                 ],
                                               ),
-                                            ],
-                                          ),
+                                            ),
 
-                                          Container(
-                                            padding: EdgeInsets.all(10),
-                                            decoration: BoxDecoration(
-                                              color: AppColors.primary,
-                                              borderRadius: BorderRadius.circular(10.r),
-                                              // border: Border.all(color: AppColors.primary,width: 2),
+                                            Padding(
+                                              padding: const EdgeInsets.only(right: 6),
+                                              child: Container(
+                                                padding: EdgeInsets.all(10),
+                                                decoration: BoxDecoration(
+                                                  color: AppColors.primary,
+                                                  borderRadius: BorderRadius.circular(10.r),
+                                                  // border: Border.all(color: AppColors.primary,width: 2),
+                                                ),
+                                                child:
+                                                friendsController.inviteFriendsLoading.value?CircularProgressIndicator(color: Colors.amber,):
+                                                GestureDetector(
+                                                  onTap: (){
+                                                    friendsController.inviteFriendsSend(model.id.toString(),model.fullName.toString());
+                                                  },
+                                                  child: Center(
+                                                      child: CustomText(
+                                                        text: "Invite",
+                                                        color: AppColors.white,
+                                                        fontSize: 14,
+                                                        fontWeight: FontWeight.w600,
+                                                      )),
+                                                ),
+                                              ),
                                             ),
-                                            child:
-                                            friendsController.inviteFriendsLoading.value?CircularProgressIndicator(color: Colors.amber,):
-                                            GestureDetector(
-                                              onTap: (){
-                                                friendsController.inviteFriendsSend(model.id.toString(),model.fullName.toString());
-                                              },
-                                              child: Center(
-                                                  child: CustomText(
-                                                    text: "Invite",
-                                                    color: AppColors.white,
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w600,
-                                                  )),
-                                            ),
-                                          )
-                                        ],
+
+                                          ],
+                                        ),
                                       ),
                                     );
                                   }),

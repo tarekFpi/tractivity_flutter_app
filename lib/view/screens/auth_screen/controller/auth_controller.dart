@@ -108,6 +108,30 @@ class AuthController extends GetxController {
 
       debugPrint("userProfileResponseModel:${userProfileShow.value.toJson()}");
 
+      editfullNameController.value.text =userProfileShow.value.fullName.toString();
+      edittalentSkillController.value.text = userProfileShow.value.profession.toString();
+     editphoneNumberController.value.text =  userProfileShow.value.phone.toString();
+     editlocationController.value.text = userProfileShow.value.address.toString();
+
+
+      userProfileShow.value.roles?.forEach((role) {
+        if (role == "organizer") {
+          organizer.value = true;
+          editRolesList.add("organizer");
+
+        } if (role == "administrator") {
+
+          administrator.value = true;
+          editRolesList.add("administrator");
+
+        } if (role == "volunteer") {
+
+          volunteer.value = true;
+          editRolesList.add("volunteer");
+        }
+        debugPrint("editRolesList: $role");
+      });
+
       refresh();
 
       userInfoShowLoading.value=false;
@@ -160,6 +184,7 @@ class AuthController extends GetxController {
 
     var response = await ApiClient.patchData(ApiUrl.updateProfile(userId: userId), body);
 
+
     if (response.statusCode == 200) {
 
       Toast.successToast("User modified successfull");
@@ -196,6 +221,8 @@ class AuthController extends GetxController {
   var longitude = 0.0.obs;
   var isLoading = false.obs;
 
+  var  addressAutocomplete="".obs;
+
   Future<void> getLatLongFromAddress() async {
 
     try {
@@ -207,8 +234,8 @@ class AuthController extends GetxController {
         latitude.value = locations.first.latitude;
         longitude.value = locations.first.longitude;
 
-         profileUpdate(latitude.value,longitude.value);
-        debugPrint("locationFromAddress: ${latitude.value}, Long: ${longitude.value}");
+          profileUpdate(latitude.value,longitude.value);
+          debugPrint("locationFromAddress: ${latitude.value}, Long: ${longitude.value},editlocationController:${editlocationController.value.text}");
 
       }else{
 

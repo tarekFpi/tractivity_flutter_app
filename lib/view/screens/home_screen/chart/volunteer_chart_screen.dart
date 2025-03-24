@@ -120,6 +120,7 @@ class _VolunteerChartScreenState extends State<VolunteerChartScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 20.0.w),
                     child: ListView.builder(
                         reverse: true,
+                        shrinkWrap: true,
                         itemCount: homeController.conversationAllMessageShowList.length,
                         itemBuilder: (BuildContext context, int index) {
                           final model = homeController.conversationAllMessageShowList[index];
@@ -158,7 +159,7 @@ class _VolunteerChartScreenState extends State<VolunteerChartScreen> {
                       ),
                       //====================== Camera button =======================
 
-                    //  homeController.sendLoading.value?CircularProgressIndicator(color: Colors.amber,):
+                    ///homeController.sendLoading.value?CircularProgressIndicator(color: Colors.amber,):
                       GestureDetector(
                         onTap: (){
 
@@ -233,6 +234,9 @@ class CustomInboxMassage extends StatelessWidget {
                   width: 45.w,
                   boxShape: BoxShape.circle,
                 ),
+                SizedBox(
+                  width: 6.w,
+                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -254,11 +258,12 @@ class CustomInboxMassage extends StatelessWidget {
                       ),
                       child: Padding(
                         padding: EdgeInsets.symmetric(
-                            horizontal: 14.0.h, vertical: 10.h),
+                            horizontal: 10.0.h, vertical: 10.h),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+
                             CustomText(
                               textAlign: TextAlign.left,
                               text: message,
@@ -454,11 +459,11 @@ class CustomInboxMassage extends StatelessWidget {
                 children: [
                   Padding(
                     padding: EdgeInsets.symmetric(
-                        horizontal: 14.0.h, vertical: 0.h),
+                        horizontal: 8.0.h, vertical: 6.h),
                     child: CustomText(
                       textAlign: TextAlign.left,
                       text: message,
-                      fontSize:isTablet?14: 14.sp,
+                      fontSize:isTablet?6.sp: 14.sp,
                       color: alignment ? AppColors.black : AppColors.white,
                       fontWeight: FontWeight.w400,
                       maxLines: 20,
@@ -474,8 +479,8 @@ class CustomInboxMassage extends StatelessWidget {
                         spacing: 8,
                         runSpacing: 8,
                         children: attachments
-                            .map((imageUrl) => GestureDetector(
-
+                            .map((imageUrl) =>
+                            GestureDetector(
                           onTap: () {
                             // Handle image click (open full view)
                             debugPrint("Open image: $imageUrl");

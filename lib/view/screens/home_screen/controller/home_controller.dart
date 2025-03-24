@@ -807,7 +807,7 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
 
     if (response.statusCode == 200) {
 
-     Toast.successToast(response.body['message']);
+   //  Toast.successToast(response.body['message']);
 
      conversationtUserShowList.value = ConversationResponseModel.fromJson(response.body["data"]);
 
@@ -1020,23 +1020,29 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
   ///listen New all message by conversation
   listenNewMessage()async {
     debugPrint("Faction Socket===========>>>>>>>>>>>>");
+     conversationAllMessageShowList.refresh();
+
     SocketApi.socket.on("newMessage", (dynamic value) async{
       debugPrint("message-receive Socket===========>>>>>>>>>>>>$value");
 
-      if (value is Map<String, dynamic>) {
+      var newMessage = ConversationRetriveResponseModel.fromJson(value);
 
-       ///var newMessage = ConversationRetriveResponseModel.fromJson(value);
-        ///conversationAllMessageShowList.add(newMessage);
-        ///conversationAllMessageShowList.refresh();
+      var currentMessage=conversationAllMessageShowList;
+      conversationAllMessageShowList.value = [newMessage, ...currentMessage];
+      update();
+
+
+   /*  if (value is Map<String, dynamic>) {
 
         String conversationId = value["conversation"] ?? "Unknown ID";
         debugPrint("conversationId:${conversationId}");
 
         conversationAllMessageShow(conversationId);
-      }
+      }*/
 
     });
   }
+
 
 
   ///========= Image Picker GetX Controller Code ===========//
@@ -1120,19 +1126,18 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
     String filePath = await downloadPDF(url, fileName);
 
     if (filePath.isNotEmpty) {
-      await showDownloadImageNotification(filePath);
+      await showDownloadNotification(filePath);
     }
   }
 
-  Future<void> showDownloadImageNotification(String filePath) async {
-
+  Future<void> showDownloadNotification(String filePath) async {
     final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
     AndroidNotificationDetails(
-      'pdf_download_channel',
-      'PDF Downloads',
+      'image_download_channel',
+      'Image Downloads',
       channelDescription: 'Notifications for PDF downloads',
       importance: Importance.high,
       priority: Priority.high,
@@ -1144,11 +1149,12 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
     await flutterLocalNotificationsPlugin.show(
       0,
       'Download Complete',
-      'Tap to open PDF',
+      'Tap to open Image',
       platformChannelSpecifics,
       payload: filePath,
     );
   }
+
 
 
   Future<String> downloadPDF(String url, String fileName) async {
@@ -1193,7 +1199,10 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
     }
   }
 
-  Future<void> showDownloadNotification(String filePath) async {
+/// ===================== Download Image and Show Notification =====================
+
+  Future<void> showDownloadImageNotification(String filePath) async {
+
     final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
@@ -1201,7 +1210,7 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
     AndroidNotificationDetails(
       'image_download_channel',
       'Image Downloads',
-      channelDescription: 'Notifications for PDF downloads',
+      channelDescription: 'Notifications for Image downloads',
       importance: Importance.high,
       priority: Priority.high,
     );
@@ -1223,6 +1232,7 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
     // TODO: implement onInit
     super.onInit();
     selectedOranization.value=false;
-    //organizationIdList.clear();
+
+
   }
 }

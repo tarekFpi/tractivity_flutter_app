@@ -444,4 +444,14 @@ class FriendController extends GetxController{
   }
 
 
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+
+     inviteFriendsFetchList();
+     requestFriendsFetchList();
+     myFriendsFetchList();
+  }
+
 }

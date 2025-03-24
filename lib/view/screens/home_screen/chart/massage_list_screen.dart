@@ -35,10 +35,12 @@ class _MassageListScreenState extends State<MassageListScreen> {
     // TODO: implement initState
     super.initState();
 
-    homeController.conversationBySpecificUserShow();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+
+      homeController.conversationBySpecificUserShow();
+    });
 
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,94 +51,97 @@ class _MassageListScreenState extends State<MassageListScreen> {
 
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-          child: Obx(
-           () {
-              return Column(
-                children: [
-                  CustomTextField(
-                      hintText: AppStrings.searchForSomeone,
-                      suffixIcon: Icon(
-                        Icons.search,
-                        color: AppColors.black_60,
-                        size:isTablet?32: 24,
-                      )),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  homeController.conversationBySpecificMessageLoading.value?
-                  Center(child: CircularProgressIndicator(color: Colors.amber,)):
-                  homeController.conversationBySpecificUserShowList.isEmpty?
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height/2,
-                    child: Center(
-                      child: CustomText(
-                        text: "No conversations user yet!!",
-                        fontSize:isTablet?12.sp: 24.sp,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.lightRed,
-                      ),
-                    ),
-                  ):
-                  ListView.builder(
-                    itemCount: homeController.conversationBySpecificUserShowList.length,
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (BuildContext context,index){
-
-                   final model=homeController.conversationBySpecificUserShowList[index];
-
-                    return GestureDetector(
-                      onTap: (){
-
-
-                        if(model.type=="group"){
-
-                         homeController.groupIntoEvent(model.receiver?.name.toString()??"",model.id.toString());
-                        }if(model.type=="direct"){
-
-                          homeController.groupIntoSingleUser(model.receiver?.name.toString()??"",model.receiver?.receiverId?.id.toString()??"");
-
-                        }
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                model.type=="group"?Icon(Icons.group_work_outlined,color: Colors.grey,size: 42,):
-                                CustomNetworkImage(
-                               //   imageUrl: AppConstants.profileImage,
-                                  imageUrl:model.receiver?.receiverId?.image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}${model.receiver?.receiverId?.image}",
-                                  height: 50,
-                                  width: 50,
-                                  boxShape: BoxShape.circle,
-                                ),
-                                CustomText(
-                                  text: "${model.receiver?.name}",
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                  left: 10,
-                                ),
-                              ],
-                            ),
-                            CustomText(
-                              text: "${DateConverter.timeFormetString(model.createdAt.toString())}",
-                              fontSize: 12,
-                              color: AppColors.primary,
-                              fontWeight: FontWeight.w600,
-                            )
-                          ],
+          child: RefreshIndicator(child: ListView(
+            children: [
+              Obx(
+                      () {
+                    return Column(
+                      children: [
+                        CustomTextField(
+                            hintText: AppStrings.searchForSomeone,
+                            suffixIcon: Icon(
+                              Icons.search,
+                              color: AppColors.black_60,
+                              size:isTablet?32: 24,
+                            )),
+                        SizedBox(
+                          height: 20.h,
                         ),
-                      ),
-                    );
-                  }),
+                        homeController.conversationBySpecificMessageLoading.value?
+                        Center(child: CircularProgressIndicator(color: Colors.amber,)):
+                        homeController.conversationBySpecificUserShowList.isEmpty?
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height/2,
+                          child: Center(
+                            child: CustomText(
+                              text: "No conversations user yet!!",
+                              fontSize:isTablet?12.sp: 24.sp,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.lightRed,
+                            ),
+                          ),
+                        ):
+                        ListView.builder(
+                            itemCount: homeController.conversationBySpecificUserShowList.length,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (BuildContext context,index){
+
+                              final model=homeController.conversationBySpecificUserShowList[index];
+
+                              return GestureDetector(
+                                onTap: (){
+
+
+                                  if(model.type=="group"){
+
+                                    homeController.groupIntoEvent(model.receiver?.name.toString()??"",model.id.toString());
+                                  }if(model.type=="direct"){
+
+                                    homeController.groupIntoSingleUser(model.receiver?.name.toString()??"",model.receiver?.receiverId?.id.toString()??"");
+
+                                  }
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+
+                                      Row(
+                                        children: [
+                                          model.type=="group"?Image.asset("assets/icons/group.png",width: 45,height: 45,color: Colors.black,):
+                                          CustomNetworkImage(
+                                            //   imageUrl: AppConstants.profileImage,
+                                            imageUrl:model.receiver?.receiverId?.image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}${model.receiver?.receiverId?.image}",
+                                            height: 50,
+                                            width: 50,
+                                            boxShape: BoxShape.circle,
+                                          ),
+                                          CustomText(
+                                            text: "${model.receiver?.name}",
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w600,
+                                            left: 10,
+                                          ),
+                                        ],
+                                      ),
+                                      CustomText(
+                                        text: "${DateConverter.timeFormetString(model.createdAt.toString())}",
+                                        fontSize: 12,
+                                        color: AppColors.primary,
+                                        fontWeight: FontWeight.w600,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }),
 
 
 
 
-                       /*     /// ================= Group Messenger ================================
+                        /*     /// ================= Group Messenger ================================
 
                   GestureDetector(
                     onTap: (){
@@ -186,10 +191,14 @@ class _MassageListScreenState extends State<MassageListScreen> {
                       ],
                     ),
                   )*/
-                ],
-              );
-            }
-          ),
+                      ],
+                    );
+                  }
+              )
+            ],
+          ), onRefresh: ()async{
+            await  homeController.notificationInvitationEventShow();
+          })
         );
       }),
       bottomNavigationBar: NavBar(currentIndex: 2),

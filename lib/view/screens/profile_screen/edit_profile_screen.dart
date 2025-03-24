@@ -1,6 +1,7 @@
 
 import 'dart:io';
 
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,7 @@ import 'package:tractivity_app/view/components/custom_netwrok_image/custom_netwo
 import 'package:tractivity_app/view/components/custom_royel_appbar/custom_royel_appbar.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:tractivity_app/view/screens/auth_screen/controller/auth_controller.dart';
+import 'package:google_maps_places_autocomplete_widgets/address_autocomplete_widgets.dart';
 
 class EditPersonProfileScreen extends StatefulWidget {
   const EditPersonProfileScreen({super.key});
@@ -31,6 +33,8 @@ class _EditPersonProfileScreenState extends State<EditPersonProfileScreen> {
   String checkValueStatues = "";
 
   final authController = Get.put(AuthController());
+
+  static const String googleApiKey = "AIzaSyBjXcqOT4CPR-xseDQjhJYUY0_JtlAjXRE";
 
   @override
   void initState() {
@@ -55,7 +59,7 @@ class _EditPersonProfileScreenState extends State<EditPersonProfileScreen> {
         body: SingleChildScrollView(
           child: Padding(
             padding:
-            const EdgeInsets.only(left: 15, right: 15, top: 16, bottom: 50),
+            const EdgeInsets.only(left: 8, right: 8, top: 16,),
             child: Obx(
                () {
                 return Column(
@@ -311,15 +315,60 @@ class _EditPersonProfileScreenState extends State<EditPersonProfileScreen> {
                         fontSize: isTablet?16:16,
                         controller: authController.editemailController.value),
 */
+
+                    SizedBox(
+                      height: 12.h,
+                    ),
+                    AddressAutocompleteTextField(
+                      controller: authController.editlocationController.value,
+                      mapsApiKey: googleApiKey,
+                      decoration: InputDecoration(
+                        labelText: 'Enter Address',
+                        labelStyle: TextStyle(fontSize:isTablet?18: 18,fontWeight: FontWeight.bold),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(16), // Rounded corners
+                          borderSide: BorderSide(
+                            color: Colors.black, // Border color
+                            width: 1.5,         // Border width
+                          ),
+                        ),
+                          suffixIcon: authController.addressAutocomplete.value.isBlank == true || authController.addressAutocomplete.value.isEmpty
+                                ? Icon(
+                              FluentIcons.search_24_regular,
+                              size: 24,
+                            )
+                              : IconButton(
+                              icon: Icon(Icons.close,size: 24,),
+                              onPressed: () {
+                                authController.addressAutocomplete.value="";
+                                authController.editlocationController.value.clear();
+                                FocusScope.of(context).unfocus();
+                              })
+                      ),
+
+                      onSuggestionClick: (place) {
+
+                        authController.addressAutocomplete.value="${place.name},${place.state},${place.country},${place.city}";
+
+                        authController.editlocationController.value.text=authController.addressAutocomplete.toString();
+                        // Handle the selected place details
+                        print('Selected place: ${place.name},${place.state},${place.country},${place.city}');
+                      },
+
+                    ),
+
                     ///============ Location ============
-                    CustomFormCard(
+             /*       CustomFormCard(
                         title: AppStrings.location,
                         hintText: AppStrings.enterYourLocation,
                         hasBackgroundColor: true,
                         fontSize: isTablet?16:16,
-                        controller: authController.editlocationController.value),
+                        controller: authController.editlocationController.value),*/
 
-                   authController.userInfoUpdateShowLoading.value?CircularProgressIndicator(color: Colors.amber,):
+                    SizedBox(
+                      height: 24.h,
+                    ),
+                   authController.userInfoUpdateShowLoading.value?Center(child: CircularProgressIndicator(color: Colors.amber,)):
                     CustomButton(
                       onTap: () {
 

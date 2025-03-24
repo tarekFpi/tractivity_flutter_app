@@ -1,10 +1,14 @@
 class ApiUrl {
-  static const String baseUrl = "http://10.0.60.55:5001/v1";
 
-  static const String imageUrl = "http://10.0.60.55:5001/v1/";
+  //static const String baseUrl = "http://10.0.60.55:5001/v1";
+
+  static const String baseUrl = "https://joinup-tracactivity-server.onrender.com/v1";
+
+  static const String imageUrl = "https://joinup-tracactivity-server.onrender.com/v1";
 
 
-  static  String socketUrl({required String id}) => "http://10.0.60.55:5001?userId=$id";
+  static  String socketUrl({required String id}) => "https://joinup-tracactivity-server.onrender.com?userId=$id";
+
   // server url : http://115.127.156.14:5002/api/v1
   // local url : http://192.168.12.31:5003/api/v1
 
@@ -257,4 +261,8 @@ class ApiUrl {
   ///Retrive conversations by specific user
   static String conversationByspecificUser ({required String userId}) =>"/conversation/retrive/$userId";
 
+
+  ///Retrieve donation text
+
+   static String getDonationText="/donation/text/retrieve";
 }
