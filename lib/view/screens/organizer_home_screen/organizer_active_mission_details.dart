@@ -696,6 +696,7 @@ class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDe
                           bottom: 8.h,
                         ),
 
+                        administratorController.missionEventShowLoading.value?const Center(child: CircularProgressIndicator(color: Colors.orange,)):
                         administratorController.missionEventShowList.isEmpty?
                         SizedBox(
                           height: MediaQuery.of(context).size.height/2,
@@ -708,7 +709,6 @@ class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDe
                             ),
                           ),
                         ):
-                        administratorController.missionEventShowLoading.value?const Center(child: CircularProgressIndicator(color: Colors.orange,)):
                         ListView.builder(
                             itemCount: administratorController.missionEventShowList.length,
                             shrinkWrap: true,
@@ -727,11 +727,11 @@ class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDe
                                       /// imageUrl: AppConstants.eventImage,
                                       imageUrl:"${ApiUrl.imageUrl}${model.images?[0]}",
                                       height: isTablet ? 200.h : 170.h,
-                                      width: isTablet ? 170.w : 170.w,
+                                      width: isTablet ? 160.w : 160.w,
                                       borderRadius: BorderRadius.circular(10),
                                     ):Image.asset("assets/images/event_image.png",
                                       height: isTablet ? 200.h : 170.h,
-                                      width: isTablet ? 170.w : 170.w,fit: BoxFit.fill,),
+                                      width: isTablet ? 160.w : 160.w,fit: BoxFit.fill,),
 
                                     const SizedBox(
                                       width: 10,
@@ -829,7 +829,34 @@ class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDe
                                                 ),
                                                 child: const CustomText(
                                                   text:  "Explore",
-                                                  fontSize: 14,
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: AppColors.black,
+                                                ),
+                                              ),
+                                            ),
+
+                                            SizedBox(
+                                              width: 6.h,
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+
+                                             /*   Get.toNamed(AppRoutes.organizationEventdetailsScreen,arguments: [
+                                                  {
+                                                    "eventId":model.id
+                                                  }
+                                                ]);*/
+                                              },
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                                                decoration: BoxDecoration(
+                                                  color: AppColors.primary,
+                                                  borderRadius: BorderRadius.circular(10),
+                                                ),
+                                                child: const CustomText(
+                                                  text:  "Duplicate",
+                                                  fontSize: 12,
                                                   fontWeight: FontWeight.w500,
                                                   color: AppColors.black,
                                                 ),

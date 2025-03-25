@@ -54,8 +54,6 @@ class _RecentEventExploreDetailsState extends State<RecentEventExploreDetails> {
     }
 
     userId = await SharePrefsHelper.getString(AppConstants.userId);
-
-
   }
 
   @override
@@ -634,6 +632,7 @@ class _RecentEventExploreDetailsState extends State<RecentEventExploreDetails> {
                                           homeController.endWorkEvent(eventId);
                                          /// homeController.retriveSpecificByEventShow(eventId);
                                           showDialog(
+                                            barrierDismissible: false,
                                             context: context,
                                             builder: (ctx) => AlertDialog(
                                               backgroundColor: Colors.white,
@@ -690,8 +689,8 @@ class _RecentEventExploreDetailsState extends State<RecentEventExploreDetails> {
                                                         ),
 
                                                         CustomFormCard(
-                                                          title: "working Time",
-                                                          hintText: "4:30 Hours",
+                                                          title: "Total Worked Hour",
+                                                          hintText: "0.0 H",
                                                           hasBackgroundColor: true,
                                                           fontSize: isTablet?16:16,
                                                           readOnly: true,
@@ -700,8 +699,8 @@ class _RecentEventExploreDetailsState extends State<RecentEventExploreDetails> {
 
 
                                                         CustomFormCard(
-                                                          title: "working Time",
-                                                          hintText: "4:30 Hours",
+                                                          title: "Total mileage",
+                                                          hintText: "0.0 Km",
                                                           hasBackgroundColor: true,
                                                           fontSize: isTablet?16:16,
                                                           readOnly: true,

@@ -118,16 +118,18 @@ class _OrganizeDetailsScreenState extends State<OrganizeDetailsScreen> {
                                       ),
                                       CustomText(
                                         text: "${organizationResponeModel.creator?.name}",
-                                        fontSize: 14,
+                                        fontSize: 12,
                                         fontWeight: FontWeight.w500,
                                         left: 8.h,
                                         right: 8.h,
                                       ),
-                                      CustomText(
-                                        text: "(Adminstrator)",
-                                        fontSize: 14,
-                                        color: AppColors.blue,
-                                        fontWeight: FontWeight.w500,
+                                      Flexible(
+                                        child: CustomText(
+                                          text: "(Adminstrator)",
+                                          fontSize: 12,
+                                          color: AppColors.blue,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                       ),
                                     ],
                                   )
@@ -222,16 +224,17 @@ class _OrganizeDetailsScreenState extends State<OrganizeDetailsScreen> {
                                             ),
                                             CustomText(
                                               text: "${modelmission.creator?.name}",
-                                              fontSize: 14,
+                                              fontSize: 12,
                                               fontWeight: FontWeight.w500,
                                               left: 8.h,
-                                              right: 8.h,
                                             ),
-                                            CustomText(
-                                              text: "(Adminstrator)",
-                                              fontSize: 14,
-                                              color: AppColors.blue,
-                                              fontWeight: FontWeight.w500,
+                                            Flexible(
+                                              child: CustomText(
+                                                text: "(Adminstrator)",
+                                                fontSize: 12,
+                                                color: AppColors.blue,
+                                                fontWeight: FontWeight.w500,
+                                              ),
                                             ),
                                           ],
                                         )
@@ -248,6 +251,9 @@ class _OrganizeDetailsScreenState extends State<OrganizeDetailsScreen> {
                                         fontWeight: FontWeight.w400,
                                       ),
 
+                                      SizedBox(
+                                        height: 4.h,
+                                      ),
                                       CustomButton(onTap: (){
                                         ///OrganizerApprovedScreen
 

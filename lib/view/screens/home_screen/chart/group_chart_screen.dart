@@ -13,14 +13,14 @@ import 'package:tractivity_app/view/components/custom_text_field/custom_text_fie
 import 'package:tractivity_app/view/screens/home_screen/controller/home_controller.dart';
 
 
-class VolunteerChartScreen extends StatefulWidget {
-  VolunteerChartScreen({super.key});
+class GroupChartScreen extends StatefulWidget {
+  GroupChartScreen({super.key});
 
   @override
-  State<VolunteerChartScreen> createState() => _VolunteerChartScreenState();
+  State<GroupChartScreen> createState() => _GroupChartScreenState();
 }
 
-class _VolunteerChartScreenState extends State<VolunteerChartScreen> {
+class _GroupChartScreenState extends State<GroupChartScreen> {
   final List<bool> align = [
     true,
     false,
@@ -39,9 +39,8 @@ class _VolunteerChartScreenState extends State<VolunteerChartScreen> {
 
 
   final homeController = Get.find<HomeController>();
+
   var user_id = "";
-
-
 
   @override
   void initState() {
@@ -92,7 +91,9 @@ class _VolunteerChartScreenState extends State<VolunteerChartScreen> {
           title: Row(
             children: [
 
-              Icon(Icons.groups_outlined,color: Colors.black,size: 32,),
+           //   Icon(Icons.groups_outlined,color: Colors.black,size: 32,),
+
+              Image.asset("assets/icons/group.png",width: 45,height: 45,color: Colors.black,),
 
               SizedBox(
                 width: 8.w,

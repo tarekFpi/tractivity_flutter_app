@@ -37,7 +37,6 @@ class _JoinOrganizationScreenState extends State<JoinOrganizationScreen> {
 
     homeController.organizationShow();
 
-
   }
 
   @override
@@ -65,6 +64,7 @@ class _JoinOrganizationScreenState extends State<JoinOrganizationScreen> {
                           SizedBox(
                             height: 8.h,
                           ),
+
                           ///======== Organization Search Bar ==============
                           CustomTextField(
                             textEditingController:queryEditingController,
@@ -147,6 +147,7 @@ class _JoinOrganizationScreenState extends State<JoinOrganizationScreen> {
                                                 mainAxisAlignment: MainAxisAlignment.start,
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
+
                                                   CustomText(
                                                     text: "${index+1}.",
                                                     fontSize: isTablet?6.sp:14.sp,

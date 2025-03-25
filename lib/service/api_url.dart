@@ -4,7 +4,7 @@ class ApiUrl {
 
   static const String baseUrl = "https://joinup-tracactivity-server.onrender.com/v1";
 
-  static const String imageUrl = "https://joinup-tracactivity-server.onrender.com/v1";
+  static const String imageUrl = "https://joinup-tracactivity-server.onrender.com/v1/";
 
 
   static  String socketUrl({required String id}) => "https://joinup-tracactivity-server.onrender.com?userId=$id";

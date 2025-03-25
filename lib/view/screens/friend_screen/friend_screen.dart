@@ -19,6 +19,7 @@ import 'package:tractivity_app/view/components/nav_bar/nav_bar.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/alert_dialog_event.dart';
 import 'package:tractivity_app/view/screens/friend_screen/controller/friend_controller.dart';
 import 'package:tractivity_app/view/screens/friend_screen/inner_widget/custom_friend_list.dart';
+import 'package:tractivity_app/view/screens/home_screen/chart/message_list/messagelist_controller.dart';
 import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/events_controller/events_controller.dart';
 class FriendScreen extends StatefulWidget {
   FriendScreen({super.key});
@@ -30,6 +31,8 @@ class FriendScreen extends StatefulWidget {
 class _FriendScreenState extends State<FriendScreen> {
 
   final friendsController = Get.put(FriendController());
+
+  final messageListController =Get.put(MessagelistController());
 
 /*  @override
   void initState() {
@@ -210,6 +213,8 @@ class _FriendScreenState extends State<FriendScreen> {
                                       
                                             InkWell(
                                               onTap: (){
+
+                                              messageListController.groupIntoSingleUser(myModel.requester?.requesterId?.fullName.toString()??"",myModel.requester?.requesterId?.id.toString()??"");
 
                                               },
                                               child: Padding(
@@ -422,68 +427,77 @@ class _FriendScreenState extends State<FriendScreen> {
 
                                     final model = friendsController.requestFriendsShowList[index];
 
-                                    return Padding(
-                                      padding: EdgeInsets.only(bottom: 10.h),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
+                                    return Card(
+                                      color: Colors.white,
+                                      child: Padding(
+                                        padding: EdgeInsets.only(bottom: 10.h),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
 
-                                          Row(
-                                            children: [
-                                              CustomNetworkImage(
-                                                imageUrl:model.requester?.requesterId?.image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}/${model.requester?.requesterId?.image}",
-                                                height: 60.h,
-                                                width: 60.w,
-                                                boxShape: BoxShape.circle,
-                                                border: Border.all(color: AppColors.primary, width: 3),
-                                              ),
-                                              SizedBox(
-                                                width: 10.w,
-                                              ),
-                                              Column(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                            Padding(
+                                              padding: const EdgeInsets.all(6.0),
+                                              child: Row(
                                                 children: [
-                                                  CustomText(
-                                                    text:"${model.requester?.requesterId?.fullName}",
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: AppColors.black,
+                                                  CustomNetworkImage(
+                                                    imageUrl:model.requester?.requesterId?.image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}/${model.requester?.requesterId?.image}",
+                                                    height: 60.h,
+                                                    width: 60.w,
+                                                    boxShape: BoxShape.circle,
+                                                    border: Border.all(color: AppColors.primary, width: 3),
                                                   ),
-                                                  CustomText(
-                                                    text: "${model.requester?.requesterId?.profession}",
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: AppColors.black_80,
+                                                  SizedBox(
+                                                    width: 10.w,
+                                                  ),
+                                                  Column(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      CustomText(
+                                                        text:"${model.requester?.requesterId?.fullName}",
+                                                        fontSize: 16,
+                                                        fontWeight: FontWeight.w600,
+                                                        color: AppColors.black,
+                                                      ),
+                                                      CustomText(
+                                                        text: "${model.requester?.requesterId?.profession}",
+                                                        fontSize: 12,
+                                                        fontWeight: FontWeight.w400,
+                                                        color: AppColors.black_80,
+                                                      ),
+                                                    ],
                                                   ),
                                                 ],
                                               ),
-                                            ],
-                                          ),
+                                            ),
 
-                                          Container(
-                                            padding: EdgeInsets.all(10),
-                                            decoration: BoxDecoration(
-                                              color: AppColors.primary,
-                                              borderRadius: BorderRadius.circular(10.r),
-                                              // border: Border.all(color: AppColors.primary,width: 2),
-                                            ),
-                                            child:
-                                            friendsController.acceptFriendsLoading.value?CircularProgressIndicator(color: Colors.amber,):
-                                            GestureDetector(
-                                              onTap: (){
-                                                friendsController.acceptFriendsRequest(model.id.toString());
-                                              },
-                                              child: Center(
-                                                  child: CustomText(
-                                                    text: "Accept",
-                                                    color: AppColors.white,
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w600,
-                                                  )),
-                                            ),
-                                          )
-                                        ],
+                                            Padding(
+                                              padding: const EdgeInsets.only(right: 6),
+                                              child: Container(
+                                                padding: EdgeInsets.all(10),
+                                                decoration: BoxDecoration(
+                                                  color: AppColors.primary,
+                                                  borderRadius: BorderRadius.circular(10.r),
+                                                  // border: Border.all(color: AppColors.primary,width: 2),
+                                                ),
+                                                child:
+                                                friendsController.acceptFriendsLoading.value?CircularProgressIndicator(color: Colors.amber,):
+                                                GestureDetector(
+                                                  onTap: (){
+                                                    friendsController.acceptFriendsRequest(model.id.toString());
+                                                  },
+                                                  child: Center(
+                                                      child: CustomText(
+                                                        text: "Accept",
+                                                        color: AppColors.white,
+                                                        fontSize: 14,
+                                                        fontWeight: FontWeight.w600,
+                                                      )),
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     );
                                   }),

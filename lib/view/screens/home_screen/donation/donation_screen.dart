@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_icons/app_icons.dart';
@@ -14,6 +15,7 @@ import 'package:tractivity_app/view/components/custom_text_field/custom_text_fie
 import 'package:tractivity_app/view/components/nav_bar/nav_bar.dart';
 import 'package:tractivity_app/view/screens/home_screen/controller/home_controller.dart';
 import 'package:tractivity_app/view/screens/home_screen/donation/donation_controller.dart';
+import 'package:html/parser.dart' as htmlParser;
 
 class DonationScreen extends StatefulWidget {
   const DonationScreen({super.key});
@@ -36,6 +38,11 @@ class _DonationScreenState extends State<DonationScreen> {
     donationController.showDonationText();
   }
 
+  String parseHtmlString(String htmlString) {
+    final document = htmlParser.parse(htmlString);
+    return document.body?.text ?? "";
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -48,12 +55,11 @@ class _DonationScreenState extends State<DonationScreen> {
         fontSize: 22,
         leftIcon: false,
       ),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
+      body: LayoutBuilder(builder: (context, constraints) {
+
           final isTablet = constraints.maxWidth > 600; // Detect if it's a tablet
 
           return Obx(() {
-
                 return Padding(
                   padding: EdgeInsets.all(isTablet ? 20.0 : 12.0), // Adjust padding
                   child: SingleChildScrollView(
@@ -61,24 +67,42 @@ class _DonationScreenState extends State<DonationScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
 
-                        SizedBox(height: isTablet ? 20 : 12),
+                        SizedBox(height: isTablet ? 20 : 12.h),
 
-                        /// Donation Description**
-                        /* CustomText(
+                    /// Donation Description
+
+                   /*
+                    CustomText(
                         text: "100% of your donation will go towards building the infrastructure  of Serve Out. We have no paid staff.building the infrastructure  of Serve Out. We have no paid staff.",
                         fontSize: isTablet ? 8.sp : 18.sp,
                         fontWeight: FontWeight.w500,
                         textAlign: TextAlign.start,
                         maxLines: 3,
-                      ),*/
+                      ),
+                      */
 
-                        CustomText(
+                       /* CustomText(
                           text: "${donationController.donationText.value}",
                           fontSize:isTablet?6.sp: 14.sp,
                           fontWeight: FontWeight.w500,
                           textAlign: TextAlign.start,
                           maxLines: 3,
                         ),
+                        */
+
+                        Text(
+                          parseHtmlString(donationController.donationText.value),
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: isTablet ? 6.sp : 14.sp,
+                          ),
+                        ),
+
+                       /*
+                        HtmlWidget('${donationController.donationText.value}',textStyle: TextStyle(color: Colors.black,fontSize:isTablet?6.sp:14.sp,)
+                        ),*/
 
                         SizedBox(height: 4.h),
                         // Show more/less button
@@ -116,7 +140,6 @@ class _DonationScreenState extends State<DonationScreen> {
 
                         /// **Email Field**
                         CustomFormCard(
-
                           title: AppStrings.email,
                           hintText: AppStrings.enterYourEmail,
                           fontSize: isTablet?16:16,
@@ -390,13 +413,15 @@ class _DonationScreenState extends State<DonationScreen> {
                   ),
                   SizedBox(height: 12.h),
 
-                  CustomText(
+                  HtmlWidget('${longText}',textStyle: TextStyle(color: Colors.black,fontSize:isTablet?6.sp:14.sp)),
+
+              /*    CustomText(
                     text: longText,
                     fontSize:isTablet?6.sp:14.sp,
                     fontWeight: FontWeight.w500,
                     textAlign: TextAlign.start,
                     maxLines: maxLines,
-                  ),
+                  ),*/
                   SizedBox(height: 10),
 
                 ],
@@ -455,13 +480,15 @@ class _DonationScreenState extends State<DonationScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
 
-                CustomText(
+                HtmlWidget('${longText}',textStyle: TextStyle(color: Colors.black,fontSize:isTablet?6.sp:14.sp)),
+
+              /*  CustomText(
                   text: longText,
                   fontSize:isTablet?6.sp:14.sp,
                   fontWeight: FontWeight.w500,
                   textAlign: TextAlign.start,
                   maxLines: maxLines,
-                ),
+                ),*/
                 SizedBox(height: 10),
 
               ],

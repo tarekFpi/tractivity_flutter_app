@@ -36,15 +36,6 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
 
   final storage = GetStorage();
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    //organizerController.retriveInvitedMissionsShow();
-   // organizerController.retrieveMissionsActive();
-   // organizerController.retrieveMissionsInActive();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -775,7 +766,13 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
 
                                       return InkWell(
                                         onTap: (){
-                                          Get.toNamed(AppRoutes.organizerInactiveMissionDetails);
+                                          Get.toNamed(AppRoutes.organizerInactiveMissionDetails,
+                                              arguments: [
+                                                {
+                                                  "missionId":modelInActiveMissions.id,
+                                                }
+                                              ]
+                                          );
                                         },
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
@@ -817,7 +814,7 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
                                                 Padding(
                                                   padding: const EdgeInsets.only(left: 12,right: 8),
                                                   child: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
 
                                                       CustomText(
@@ -877,8 +874,8 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
                                                                       )
                                                                     ],
                                                                   ),
-                                                                  content: Obx(
-                                                                          () {
+                                                                      content: Obx((){
+
                                                                         return SingleChildScrollView(
                                                                           child: SizedBox(
                                                                             width: MediaQuery.sizeOf(context).width,
@@ -991,14 +988,13 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
                                                                                       fontWeight: FontWeight.w600,
                                                                                       color: AppColors.primary,
                                                                                     ),
-
                                                                                   ],
                                                                                 ),
 
                                                                                 Padding(
                                                                                   padding: const EdgeInsets.only(left: 12,right: 12,bottom: 12,top: 12),
                                                                                   child:
-                                                                                  organizerController.updateInActiveMissionLoading.value?CustomLoader():
+                                                                                  organizerController.updateInActiveMissionLoading.value?Center(child: CircularProgressIndicator(color: Colors.amber,)):
                                                                                   CustomButton(
                                                                                     onTap: () {
 

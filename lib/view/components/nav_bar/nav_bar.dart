@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:tractivity_app/view/screens/home_screen/chart/massage_list_screen.dart';
+import 'package:tractivity_app/view/screens/home_screen/chart/message_list/massage_list_screen.dart';
 import 'package:tractivity_app/view/screens/friend_screen/friend_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/donation/donation_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/home_screen.dart';

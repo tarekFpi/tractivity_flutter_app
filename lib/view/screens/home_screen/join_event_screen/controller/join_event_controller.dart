@@ -9,11 +9,7 @@ import 'package:tractivity_app/service/api_url.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
 import 'package:tractivity_app/utils/toast.dart';
-import 'package:tractivity_app/view/screens/adminstrator_home_screen/organization_model/OrganizationResponeModel.dart';
-import 'package:tractivity_app/view/screens/home_screen/completed_event_model/CompletedEventResponeModel.dart';
-import 'package:tractivity_app/view/screens/home_screen/my_organization_model/MyOrganizationResponeModel.dart';
 import 'package:tractivity_app/view/screens/home_screen/notification_evnet_inviteModel/RetriveNotificationEventInviteResponeModel.dart';
-import 'package:tractivity_app/view/screens/home_screen/notification_mission_inviteModel/notification_missionInviteModel.dart';
 
 
 class JoinEventController extends GetxController with StateMixin<List<RetriveNotificationEventInviteResponeModel>>  {
@@ -32,11 +28,14 @@ class JoinEventController extends GetxController with StateMixin<List<RetriveNot
 
     notificationInvitationEventLodding.value=true;
 
+    change(null, status: RxStatus.loading());
+
     var userId = await SharePrefsHelper.getString(AppConstants.userId);
 
     var response = await ApiClient.getData(ApiUrl.inviteVolunteerEvent(userId: userId));
 
     try{
+
       if (response.statusCode == 200) {
 
         notificationInvitaionEventList.value = List.from(response.body["data"].map((m)=> RetriveNotificationEventInviteResponeModel.fromJson(m)));

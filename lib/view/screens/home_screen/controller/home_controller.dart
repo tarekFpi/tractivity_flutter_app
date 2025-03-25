@@ -20,7 +20,6 @@ import 'package:tractivity_app/utils/app_strings/app_strings.dart';
 import 'package:tractivity_app/utils/toast.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/organization_model/OrganizationResponeModel.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/specific_mission_event_model/SpecificIdEventsResponeModel.dart';
-import 'package:tractivity_app/view/screens/home_screen/chart/conversationBySpecificUser_model/conversationBySpecificUserResponseModel.dart';
 import 'package:tractivity_app/view/screens/home_screen/chart/conversation_allmessage_model/ConversationRetriveResponseModel.dart';
 import 'package:tractivity_app/view/screens/home_screen/chart/conversation_model/ConversationResponseModel.dart';
 import 'package:tractivity_app/view/screens/home_screen/completed_event_model/CompletedEventResponeModel.dart';
@@ -578,7 +577,7 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
 
       totalWorkedHourController.value.text =totalWorkedHour.value.round().toString();
 
-      mileageController.value.text =mileage.value.round().toString();
+      mileageController.value.text = mileage.value.round().toString();
 
       startWorkEventLodding.value =false;
       refresh();
@@ -592,6 +591,7 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
       if (response.statusText == ApiClient.somethingWentWrong) {
 
         Toast.errorToast(AppStrings.checknetworkconnection);
+
         refresh();
         return;
       } else {
@@ -839,7 +839,7 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
 
 
 
-  /// Send message
+  /// Send message send group
   Rx<TextEditingController> messageController = TextEditingController().obs;
 
   RxBool sendLoading = false.obs;
@@ -847,7 +847,9 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
   void sendChat(String conversationId)async{
 
     sendLoading.value=true;
+
     var body;
+
     var userId = await SharePrefsHelper.getString(AppConstants.userId);
 
     if(selectedImages.isNotEmpty){
@@ -857,7 +859,6 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
         "type": 'attachment',
         "content": messageController.value.text,
       };
-
 
         List<MultipartBody>? multipartBody = [];
 
@@ -870,7 +871,6 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
         );
 
         if (response.statusCode == 201) {
-
 
 
           messageController.value.text="";
@@ -936,7 +936,6 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
   }
 
   ///Retrive all message by conversation event group
-
   RxList<ConversationRetriveResponseModel> conversationAllMessageShowList = <ConversationRetriveResponseModel>[].obs;
   RxBool conversationAllMessageLoading = false.obs;
 
@@ -975,70 +974,28 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
 
 
 
-/// Retrive conversations by specific user
-  RxList<ConversationBySpecificUserResponseModel> conversationBySpecificUserShowList = <ConversationBySpecificUserResponseModel>[].obs;
-  RxBool conversationBySpecificMessageLoading = false.obs;
-
-  Future<void> conversationBySpecificUserShow() async{
-
-    conversationBySpecificMessageLoading.value = true;
-
-    var userId = await SharePrefsHelper.getString(AppConstants.userId);
-
-    var response = await ApiClient.getData(ApiUrl.conversationByspecificUser(userId: userId));
-
-    if (response.statusCode == 200) {
-
-      conversationBySpecificUserShowList.value = List.from(response.body["data"].map((m)=> ConversationBySpecificUserResponseModel.fromJson(m)));
-
-      conversationBySpecificMessageLoading.value =false;
-
-      debugPrint("conversationBySpecificUserShowList:${jsonEncode(conversationBySpecificUserShowList)}");
-      refresh();
-
-    } else {
-
-      conversationBySpecificMessageLoading.value =false;
-
-      if (response.statusText == ApiClient.somethingWentWrong) {
-        Toast.errorToast(AppStrings.checknetworkconnection);
-        refresh();
-        return;
-      } else {
-
-        ApiChecker.checkApi(response);
-
-        refresh();
-        return;
-      }
-    }
-  }
-
-
-
-
-  ///listen New all message by conversation
+  ///listen New all message by conversation group
   listenNewMessage()async {
     debugPrint("Faction Socket===========>>>>>>>>>>>>");
-     conversationAllMessageShowList.refresh();
+
 
     SocketApi.socket.on("newMessage", (dynamic value) async{
       debugPrint("message-receive Socket===========>>>>>>>>>>>>$value");
 
-      var newMessage = ConversationRetriveResponseModel.fromJson(value);
+ /*     var newMessage = ConversationRetriveResponseModel.fromJson(value);
 
       var currentMessage=conversationAllMessageShowList;
       conversationAllMessageShowList.value = [newMessage, ...currentMessage];
       update();
+*/
 
-
-   /*  if (value is Map<String, dynamic>) {
+     if (value is Map<String, dynamic>) {
 
         String conversationId = value["conversation"] ?? "Unknown ID";
         debugPrint("conversationId:${conversationId}");
 
         conversationAllMessageShow(conversationId);
-      }*/
+      }
 
     });
   }

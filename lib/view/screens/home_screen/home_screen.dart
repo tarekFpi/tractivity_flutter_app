@@ -396,8 +396,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   ),
                                                 ),
 
-
-
                                               ],
                                             ),
                                           ],
@@ -521,16 +519,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     ),
                                                     CustomText(
                                                       text: "${model?.creator?.name}",
-                                                      fontSize: 14,
+                                                      fontSize: 12,
                                                       fontWeight: FontWeight.w500,
                                                       left: 8.h,
-                                                      right: 8.h,
                                                     ),
-                                                    CustomText(
-                                                      text: "(Adminstrator)",
-                                                      fontSize: 14,
-                                                      color: AppColors.blue,
-                                                      fontWeight: FontWeight.w500,
+                                                    Expanded(
+                                                      child: CustomText(
+                                                        text: "(Adminstrator)",
+                                                        fontSize: 12,
+                                                        color: AppColors.blue,
+                                                        fontWeight: FontWeight.w500,
+                                                      ),
                                                     ),
                                                   ],
                                                 )
@@ -570,9 +569,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   );
                                 });
-
                           })
-
 
                         ],
                       ),

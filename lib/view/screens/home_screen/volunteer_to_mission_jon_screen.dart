@@ -60,7 +60,6 @@ class _VolunteerToMissionJonScreenState extends State<VolunteerToMissionJonScree
     }
 
     userId = await SharePrefsHelper.getString(AppConstants.userId);
-
   }
 
   @override
@@ -174,6 +173,7 @@ class _VolunteerToMissionJonScreenState extends State<VolunteerToMissionJonScree
                                 ],
                               );
                             }),
+
                         SizedBox(
                           height: 4.h,
                         ),
@@ -438,6 +438,7 @@ class _VolunteerToMissionJonScreenState extends State<VolunteerToMissionJonScree
                         SizedBox(
                           height: 12.h,
                         ),
+
                         Row(
                           children: [
                             Container(
@@ -461,7 +462,6 @@ class _VolunteerToMissionJonScreenState extends State<VolunteerToMissionJonScree
                           ],
                         ),
 
-
                         SizedBox(
                           height: 12.h,
                         ),
@@ -484,8 +484,8 @@ class _VolunteerToMissionJonScreenState extends State<VolunteerToMissionJonScree
                               color: AppColors.cardBarClr,
                             )
                           ],
-
                         ),
+
                         SizedBox(
                           height: 4.h,
                         ),
@@ -535,11 +535,11 @@ class _VolunteerToMissionJonScreenState extends State<VolunteerToMissionJonScree
                                       /// imageUrl: AppConstants.eventImage,
                                       imageUrl:"${ApiUrl.imageUrl}${model.images?[0]}",
                                       height: isTablet ? 200.h : 170.h,
-                                      width: isTablet ? 180.w : 180.w,
+                                      width: isTablet ? 160.w : 160.w,
                                       borderRadius: BorderRadius.circular(10),
                                     ):Image.asset("assets/images/event_image.png",
                                       height: isTablet ? 200.h : 170.h,
-                                      width: isTablet ? 180.w : 180.w,fit: BoxFit.fill,),
+                                      width: isTablet ? 160.w : 160.w,fit: BoxFit.fill,),
 
                                     const SizedBox(
                                       width: 10,
@@ -598,7 +598,7 @@ class _VolunteerToMissionJonScreenState extends State<VolunteerToMissionJonScree
                                             ),
                                             CustomText(
                                               text: "${model.creator?.name}",
-                                              fontSize:isTablet?6.sp: 12.sp,
+                                              fontSize:isTablet?6.sp: 10.sp,
                                               color: AppColors.black,
                                               fontWeight: FontWeight.w600,
                                               overflow: TextOverflow.ellipsis, // Show "..." for overflowing text
@@ -609,7 +609,7 @@ class _VolunteerToMissionJonScreenState extends State<VolunteerToMissionJonScree
 
                                             CustomText(
                                               text: "Leader",
-                                              fontSize:isTablet?6.sp: 12.sp,
+                                              fontSize:isTablet?6.sp: 10.sp,
                                               color: AppColors.blue,
                                               fontWeight: FontWeight.w600,
                                               left: 4,                                        ),
@@ -647,8 +647,6 @@ class _VolunteerToMissionJonScreenState extends State<VolunteerToMissionJonScree
                                               ),
                                             ),
 
-
-
                                           ],
                                         ),
                                       ],
@@ -669,18 +667,18 @@ class _VolunteerToMissionJonScreenState extends State<VolunteerToMissionJonScree
             }
         ),
 
-        bottomNavigationBar: Obx(
-           () {
+        bottomNavigationBar: Obx((){
+
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [
 
-              //   for (int i = 0; i < (administratorController.missionDetailsShowList.value?.requestedVolunteers?.length ?? 0) ; i++)
-                 // if((administratorController.missionDetailsShowList.value.requestedVolunteers?[i].id==userId))
+              ///for (int i = 0; i < (administratorController.missionDetailsShowList.value?.requestedVolunteers?.length ?? 0) ; i++)
+                 ///if((administratorController.missionDetailsShowList.value.requestedVolunteers?[i].id==userId))
 
 
-                if( homeController.isUserRequested.value)
-                Padding(
+                if(homeController.isUserRequested.value)
+                 Padding(
                   padding: const EdgeInsets.only(left: 12,right: 12,bottom: 24),
                   child:  homeController.notificationInvitationMissionAcceptLodding.value?Center(child: CircularProgressIndicator(color: Colors.orange,)):
                   CustomButton (

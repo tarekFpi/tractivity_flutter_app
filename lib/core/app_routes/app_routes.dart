@@ -9,7 +9,7 @@ import 'package:tractivity_app/view/screens/adminstrator_home_screen/event_compl
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/member/adminstrator_member.dart';
 import 'package:tractivity_app/view/screens/auth_screen/signup_screen/location_map_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/chart/single_message_screen.dart';
-import 'package:tractivity_app/view/screens/home_screen/chart/massage_list_screen.dart';
+import 'package:tractivity_app/view/screens/home_screen/chart/message_list/massage_list_screen.dart';
 import 'package:tractivity_app/view/screens/auth_screen/forgot_password/forgot_password.dart';
 import 'package:tractivity_app/view/screens/auth_screen/login_screen/login_screen.dart';
 import 'package:tractivity_app/view/screens/auth_screen/verification_mail_screen/verification_mail_screen.dart';
@@ -32,7 +32,7 @@ import 'package:tractivity_app/view/screens/home_screen/member_screen/member_scr
 import 'package:tractivity_app/view/screens/home_screen/recent_event_explore_details.dart';
 import 'package:tractivity_app/view/screens/home_screen/user_event_profile/user_event_profile.dart';
 import 'package:tractivity_app/view/screens/home_screen/user_event_profile/volunteer_report_screen.dart';
-import 'package:tractivity_app/view/screens/home_screen/chart/volunteer_chart_screen.dart';
+import 'package:tractivity_app/view/screens/home_screen/chart/group_chart_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/volunteer_to_mission_jon_screen.dart';
 import 'package:tractivity_app/view/screens/notification/notification_screen.dart';
 import 'package:tractivity_app/view/screens/onboarding_screen/onboarding_screen.dart';
@@ -186,7 +186,7 @@ class AppRoutes {
     GetPage(name: organizationEventdetailsScreen, page: () => OrganizationEventdetailsScreen()),
     GetPage(name: organizationEventListScreen, page: () => OrganizationEventListScreen()),
     GetPage(name: adminstratiorEventListScreen, page: () => AdminstratiorEventListScreen()),
-    GetPage(name: volunteerChartScreen, page: () => VolunteerChartScreen()),
+    GetPage(name: volunteerChartScreen, page: () => GroupChartScreen()),
 
     GetPage(name: volunteerEventReportScreen, page: () => VolunteerEventReportScreen()),
     GetPage(name: organizeDetailsScreen, page: () => OrganizeDetailsScreen()),

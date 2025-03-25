@@ -32,6 +32,8 @@ class RunningCompleteController extends GetxController with StateMixin<List<Comp
 
     runningCompleteEventLodding.value=true;
 
+    change(null, status: RxStatus.loading());
+
     var userId = await SharePrefsHelper.getString(AppConstants.userId);
 
     var response = await ApiClient.getData(ApiUrl.runningCompleteEvent(userId: userId));

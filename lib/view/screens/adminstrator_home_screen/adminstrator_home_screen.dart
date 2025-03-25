@@ -1768,11 +1768,12 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                   size: 24,
                                                 ),
                                                 onChanged: (String value){
+
                                                   if(value.isEmpty){
 
                                                     FocusScope.of(context).unfocus();
 
-                                                  Future.delayed(Duration(seconds: 1), () {
+                                                    Future.delayed(Duration(seconds: 1), () {
 
                                                     administratorController.searchOragizationLoading.value?CircularProgressIndicator(color: AppColors.primary,):
                                                     administratorController.searchOrganizationList("");
@@ -1804,12 +1805,13 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                         final model = administratorController.organizationShowList[index];
 
                                                         return Column(
+
                                                           children: [
 
                                                             Padding(
                                                               padding: const EdgeInsets.all(4.0),
                                                               child: Container(
-                                                                height:isTablet?130.h: 110.h,
+                                                                height:isTablet?130.h: 120.h,
                                                                 decoration: BoxDecoration(
                                                                   color: AppColors.grey_3.withOpacity(0.5),
                                                                   borderRadius: BorderRadius.circular(15),

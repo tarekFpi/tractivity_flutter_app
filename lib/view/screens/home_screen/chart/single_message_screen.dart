@@ -12,6 +12,8 @@ import 'package:tractivity_app/view/components/custom_netwrok_image/custom_netwo
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:tractivity_app/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/alert_dialog_event.dart';
+import 'package:tractivity_app/view/screens/home_screen/chart/message_list/massage_list_screen.dart';
+import 'package:tractivity_app/view/screens/home_screen/chart/message_list/messagelist_controller.dart';
 import 'package:tractivity_app/view/screens/home_screen/controller/home_controller.dart';
 import '../../../../../utils/app_colors/app_colors.dart';
 import '../../../../../utils/app_const/app_const.dart';
@@ -39,18 +41,23 @@ class _SingleMessageScreenState extends State<SingleMessageScreen> {
     false
   ];
 
-  final homeController = Get.find<HomeController>();
+  //final homeController = Get.find<HomeController>();
+
+  final messageController = Get.put(MessagelistController());
+
   var user_id = "";
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-     homeController.listenNewMessage();
-    homeController.conversationAllMessageShow(homeController.conversationtUserShowList.value.id.toString());
+    messageController.listenNewMessage();
+    messageController.conversationAllMessageShow(messageController.conversationtUserShowList.value.id.toString());
 
     getUserId();
   }
@@ -86,14 +93,18 @@ class _SingleMessageScreenState extends State<SingleMessageScreen> {
                   Icons.arrow_back_ios,
                   color: AppColors.black,
                 ),
-                onPressed: () => Navigator.pop(context),
+                onPressed: (){
+
+                  Get.off(() => MassageListScreen());
+                 // Navigator.pop(context);
+                }
               ),
             ],
           ),
           title: Row(
             children: [
 
-              Icon(Icons.groups_outlined,color: Colors.black,size: 32,),
+              Icon(Icons.group,color: Colors.black,size: 32,),
 
               SizedBox(
                 width: 8.w,
@@ -102,7 +113,7 @@ class _SingleMessageScreenState extends State<SingleMessageScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomText(
-                        text: "${homeController.conversationtUserShowList.value.receiver?.name}",
+                        text: "${messageController.conversationtUserShowList.value.receiver?.name}",
                         fontSize:isTablet?10.sp: 20.sp,
                         fontWeight: FontWeight.w700,
                         color: AppColors.black),
@@ -121,9 +132,9 @@ class _SingleMessageScreenState extends State<SingleMessageScreen> {
                       padding: EdgeInsets.symmetric(horizontal: 20.0.w),
                       child: ListView.builder(
                           reverse: true,
-                          itemCount: homeController.conversationAllMessageShowList.length,
+                          itemCount: messageController.conversationAllMessageShowList.length,
                           itemBuilder: (BuildContext context, int index) {
-                            final model = homeController.conversationAllMessageShowList[index];
+                            final model = messageController.conversationAllMessageShowList[index];
 
                             return CustomInboxMassage(
                               alignment: model.sender?.id==user_id?false:true,
@@ -144,16 +155,17 @@ class _SingleMessageScreenState extends State<SingleMessageScreen> {
                         ///===================== Write message field =======================
                         Expanded(
                             child: CustomTextField(
-                              textEditingController: homeController.messageController.value,
+                              textEditingController: messageController.messageController.value,
                               suffixIcon:
                               IconButton(onPressed: () {
 
-                                homeController.pickImagesFromGallery();
+                                messageController.pickImagesFromGallery();
                               }, icon: const Icon(Icons.image)),
                               fillColor: Colors.grey.withOpacity(.1),
                               hintText: 'Write your message',
                               fieldBorderColor: Colors.grey,
                             )),
+
                         SizedBox(
                           width: 10.w,
                         ),
@@ -163,7 +175,7 @@ class _SingleMessageScreenState extends State<SingleMessageScreen> {
                         GestureDetector(
                           onTap: (){
 
-                            homeController.sendChat(homeController.conversationtShowList.value.id.toString());
+                            messageController.sendChat(messageController.conversationtUserShowList.value.id.toString());
                           },
                           child: Container(
                             height: 45,
@@ -208,7 +220,8 @@ class CustomInboxMassage extends StatelessWidget {
   final List<String> attachments;
   final String? messageTime;
 
-  final  homeController = Get.find<HomeController>();
+  final  messageController = Get.find<MessagelistController>();
+
   @override
   Widget build(BuildContext context) {
 
@@ -336,14 +349,14 @@ class CustomInboxMassage extends StatelessWidget {
 
                                                       CarouselSlider.builder(
                                                         options: CarouselOptions(
-                                                          initialPage: homeController.sliderChatCurrentIndex.value,
+                                                          initialPage: messageController.sliderChatCurrentIndex.value,
                                                           autoPlay: true,
                                                           aspectRatio: 2.0,
                                                           enlargeCenterPage: true,
                                                           height: MediaQuery.sizeOf(context).height / 5,
                                                           onPageChanged: (index, reason) {
 
-                                                            homeController.sliderChatCurrentIndex.value = index;
+                                                            messageController.sliderChatCurrentIndex.value = index;
                                                           },
                                                         ),
                                                         itemCount: attachments.length??0,
@@ -403,7 +416,7 @@ class CustomInboxMassage extends StatelessWidget {
                                                 child: InkWell(
                                                     onTap: (){
 
-                                                      homeController.startImageDownload("${ApiUrl.baseUrl}/${imageUrl}","${imageUrl.split("\\").last}");
+                                                      messageController.startImageDownload("${ApiUrl.baseUrl}/${imageUrl}","${imageUrl.split("\\").last}");
                                                     },
                                                     child: Icon(Icons.arrow_circle_down_outlined,color: Colors.white,size: 24,)),
                                               )),
@@ -531,14 +544,14 @@ class CustomInboxMassage extends StatelessWidget {
 
                                             CarouselSlider.builder(
                                               options: CarouselOptions(
-                                                initialPage: homeController.sliderChatCurrentIndex.value,
+                                                initialPage: messageController.sliderChatCurrentIndex.value,
                                                 autoPlay: true,
                                                 aspectRatio: 2.0,
                                                 enlargeCenterPage: true,
                                                 height: MediaQuery.sizeOf(context).height / 5,
                                                 onPageChanged: (index, reason) {
 
-                                                  homeController.sliderChatCurrentIndex.value = index;
+                                                  messageController.sliderChatCurrentIndex.value = index;
                                                 },
                                               ),
                                               itemCount: attachments.length??0,
@@ -598,7 +611,7 @@ class CustomInboxMassage extends StatelessWidget {
                                       child: InkWell(
                                           onTap: (){
 
-                                            homeController.startImageDownload("${ApiUrl.baseUrl}/${imageUrl}","${imageUrl.split("\\").last}");
+                                            messageController.startImageDownload("${ApiUrl.baseUrl}/${imageUrl}","${imageUrl.split("\\").last}");
                                           },
                                           child: Icon(Icons.arrow_circle_down_outlined,color: Colors.white,size: 24,)),
                                     )),
@@ -636,11 +649,11 @@ class CustomInboxMassage extends StatelessWidget {
   Container buildDot(int index, BuildContext context) {
     return Container(
       height: 4,
-      width: homeController.sliderChatCurrentIndex.value == index ? 30 : 15,
+      width: messageController.sliderChatCurrentIndex.value == index ? 30 : 15,
       margin: EdgeInsets.only(right: 5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: homeController.sliderChatCurrentIndex.value == index
+        color: messageController.sliderChatCurrentIndex.value == index
             ? AppColors.lightRed
             : AppColors.grey_1,
       ),
