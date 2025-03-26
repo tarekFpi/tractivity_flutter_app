@@ -6,6 +6,7 @@ import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_icons/app_icons.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
+import 'package:tractivity_app/utils/toast.dart';
 import 'package:tractivity_app/view/components/custom_button/custom_button.dart';
 import 'package:tractivity_app/view/components/custom_from_card/custom_from_card.dart';
 import 'package:tractivity_app/view/components/custom_image/custom_image.dart';
@@ -155,7 +156,18 @@ class _LoginScreenState extends State<LoginScreen> {
                       CustomButton(
                         height: isTablet?70:60,
                         onTap: () {
-                         authController.userLogin();
+
+                         if(authController.loginEmailController.value.text==""){
+
+                           Toast.errorToast("email cannot be empty!");
+
+                         }else if(authController.loginPasswordController.value.text==""){
+                           Toast.errorToast("password cannot be empty!");
+                         }else{
+
+                           authController.userLogin();
+                         }
+
                         },
                         title: AppStrings.logIn,
                         fontSize: isTablet ? 16 : 14,

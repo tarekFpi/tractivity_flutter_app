@@ -180,7 +180,7 @@ class _FriendScreenState extends State<FriendScreen> {
                                                 children: [
 
                                                   CustomNetworkImage(
-                                                    imageUrl:myModel.requester?.requesterId?.image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}/${myModel.requester?.requesterId?.image}",
+                                                    imageUrl:myModel.requester?.requesterId?.image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}${myModel.requester?.requesterId?.image}",
                                                     height: 60.h,
                                                     width: 60.w,
                                                     boxShape: BoxShape.circle,
@@ -303,7 +303,7 @@ class _FriendScreenState extends State<FriendScreen> {
                                               child: Row(
                                                 children: [
                                                   CustomNetworkImage(
-                                                    imageUrl:model.image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}/${model.image}",
+                                                    imageUrl:model.image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}${model.image}",
                                                     height: 60.h,
                                                     width: 60.w,
                                                     boxShape: BoxShape.circle,
@@ -440,7 +440,7 @@ class _FriendScreenState extends State<FriendScreen> {
                                               child: Row(
                                                 children: [
                                                   CustomNetworkImage(
-                                                    imageUrl:model.requester?.requesterId?.image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}/${model.requester?.requesterId?.image}",
+                                                    imageUrl:model.requester?.requesterId?.image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}${model.requester?.requesterId?.image}",
                                                     height: 60.h,
                                                     width: 60.w,
                                                     boxShape: BoxShape.circle,

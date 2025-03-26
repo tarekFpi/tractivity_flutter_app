@@ -115,7 +115,8 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: EdgeInsets.symmetric(horizontal: isTablet ? 24 : 12),
           child: Obx(() {
 
-            return RefreshIndicator(child: ListView(
+            return RefreshIndicator(child:
+            ListView(
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

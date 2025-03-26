@@ -1024,6 +1024,10 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
     }
   }
 
+  // Remove image by index
+  void removeImage(int index) {
+    selectedImages.removeAt(index);
+  }
 
   /// Retrive events Name by specific volunteer search ====
   RxBool searchVolunteerNameLoading = false.obs;

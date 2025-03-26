@@ -211,7 +211,7 @@ class _JoinEventDetailsScreenState extends State<JoinEventDetailsScreen> {
                                                SizedBox(width: 4,),
 
                                                CustomText(
-                                                 text: "${homeController.retriveSpecificByEventShowList.value.documents?[index].split("\\").last}",
+                                                 text: "${homeController.retriveSpecificByEventShowList.value.documents?[index].split("/").last}",
                                                  fontSize: 14,
                                                  fontWeight: FontWeight.w500,
                                                  color: AppColors.black_80,

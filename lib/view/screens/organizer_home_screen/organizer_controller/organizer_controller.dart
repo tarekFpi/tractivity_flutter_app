@@ -599,7 +599,7 @@ class OrganizerController extends GetxController{
 
   Rx<TextEditingController> longitudeController = TextEditingController().obs;
 
-  Rx<TextEditingController> dateController = TextEditingController().obs;
+  ///Rx<TextEditingController> dateController = TextEditingController().obs;
 
   Rx<TextEditingController> volunteersRoleController = TextEditingController().obs;
 
@@ -680,6 +680,7 @@ class OrganizerController extends GetxController{
 
 
   void clearData(){
+
     volunteersRoleList.clear();
     eventNameController.value.clear();
     eventDescriptionController.value.clear();

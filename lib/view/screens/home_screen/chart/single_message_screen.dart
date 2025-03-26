@@ -147,6 +147,39 @@ class _SingleMessageScreenState extends State<SingleMessageScreen> {
                     ),
                   ),
                   //========================= Write Message Screen ==========================
+
+                  if ((messageController.selectedImages.isNotEmpty))
+                    SizedBox(
+                      height: 100,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: messageController.selectedImages.length,
+                        itemBuilder: (context, index) {
+                          return Stack(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Image.file(
+                                  messageController.selectedImages[index],
+                                  width: 80,
+                                  height: 80,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Positioned(
+                                right: 0,
+                                top: 0,
+                                child: IconButton(
+                                  icon: const Icon(Icons.cancel, color: Colors.red),
+                                  onPressed: () =>
+                                      messageController.removeImage(index),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
                   Padding(
                     padding: const EdgeInsets.only(right: 20.0, left: 20, bottom: 20),
                     child: Row(
@@ -339,13 +372,6 @@ class CustomInboxMassage extends StatelessWidget {
                                                         ],
                                                       ),
 
-                                                      /* Image.network(
-                                              "${ApiUrl.imageUrl}$imageUrl",
-                                               width:MediaQuery.sizeOf(context).width,
-                                               height: 200.h,
-                                              fit: BoxFit.fill,
-                                            )*/
-
 
                                                       CarouselSlider.builder(
                                                         options: CarouselOptions(
@@ -418,7 +444,7 @@ class CustomInboxMassage extends StatelessWidget {
 
                                                       messageController.startImageDownload("${ApiUrl.baseUrl}/${imageUrl}","${imageUrl.split("\\").last}");
                                                     },
-                                                    child: Icon(Icons.arrow_circle_down_outlined,color: Colors.white,size: 24,)),
+                                                    child: Icon(Icons.download,color: Colors.green,size: 28,)),
                                               )),
                                         ],
                                       ),
@@ -534,13 +560,6 @@ class CustomInboxMassage extends StatelessWidget {
                                               ],
                                             ),
 
-                                            /* Image.network(
-                                              "${ApiUrl.imageUrl}$imageUrl",
-                                               width:MediaQuery.sizeOf(context).width,
-                                               height: 200.h,
-                                              fit: BoxFit.fill,
-                                            )*/
-
 
                                             CarouselSlider.builder(
                                               options: CarouselOptions(
@@ -613,14 +632,13 @@ class CustomInboxMassage extends StatelessWidget {
 
                                             messageController.startImageDownload("${ApiUrl.baseUrl}/${imageUrl}","${imageUrl.split("\\").last}");
                                           },
-                                          child: Icon(Icons.arrow_circle_down_outlined,color: Colors.white,size: 24,)),
+                                          child: Icon(Icons.download,color: Colors.green,size: 28,)),
                                     )),
                               ],
                             ),
                           ),
                         ),
-                        )
-                            .toList(),
+                        ) .toList(),
                       ),
                     ),
                 ],

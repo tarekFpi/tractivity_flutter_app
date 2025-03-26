@@ -276,6 +276,11 @@ class MessagelistController extends GetxController with StateMixin<List<Conversa
     }
   }
 
+  // Remove image by index
+  void removeImage(int index) {
+    selectedImages.removeAt(index);
+  }
+
   /// Send message
   Rx<TextEditingController> messageController = TextEditingController().obs;
 

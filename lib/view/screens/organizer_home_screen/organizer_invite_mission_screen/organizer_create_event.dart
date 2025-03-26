@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
+import 'package:tractivity_app/helper/time_converter/time_converter.dart';
 import 'package:tractivity_app/service/api_url.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
@@ -21,6 +22,7 @@ import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:tractivity_app/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/alert_dialog_event.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/controller/administratior_controller.dart';
+import 'package:tractivity_app/view/screens/adminstrator_home_screen/specific_mission_event_model/SpecificIdEventsResponeModel.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/specific_missionby_mission_model/RetriveSpecificMissionByMissionResponeModel.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/invite_volunteers_model/InviteVolunteerResponeModel.dart';
 import 'package:tractivity_app/view/screens/organizer_home_screen/invite_volunteers_model/volunteer_slotList_model/volunteers_listmodel.dart';
@@ -37,7 +39,7 @@ class OrganizerEventCreateScreen extends StatefulWidget {
 
 class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen> {
 
-  RetriveSpecificMissionByMissionResponeModel? missionByMissionResponeModel;
+  SpecificIdEventsResponeModel? specificIdEventsResponeModel;
 
   String missionName="";
 
@@ -57,9 +59,11 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
   void initState() {
     super.initState();
 
-    if(Get.arguments[0]["missionOrganization"]!=null){
+    if(Get.arguments[0]["eventModel"]!=null){
 
-      // missionByMissionResponeModel = Get.arguments[0]["missionOrganization"];
+      specificIdEventsResponeModel = Get.arguments[0]["eventModel"];
+
+
     }
 
     organizerController.pickedFiles.clear();
@@ -86,6 +90,36 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
         body: SingleChildScrollView(
           child: Obx(
              () {
+
+               WidgetsBinding.instance.addPostFrameCallback((_) {
+
+                 if(specificIdEventsResponeModel!=null){
+
+                     organizerController.eventNameController.value.text=specificIdEventsResponeModel?.name.toString()??"";
+                     organizerController.eventDescriptionController.value.text=specificIdEventsResponeModel?.description.toString()??"";
+                     organizerController.cityController.value.text=specificIdEventsResponeModel?.address?.city.toString()??"";
+                     organizerController.stateController.value.text=specificIdEventsResponeModel?.address?.state.toString()??"";
+                     organizerController.zipController.value.text=specificIdEventsResponeModel?.address?.zip.toString()??"";
+                     organizerController.timeOpenPicker.value=specificIdEventsResponeModel?.startTime.toString()??"";
+                     organizerController.timeClosePicker.value=specificIdEventsResponeModel?.endTime.toString()??"";
+
+                   ///organizerController.selectedDate.value="${DateConverter.timeDateFormetString("${specificIdEventsResponeModel?.date.toString()??""}")}";
+                    // organizerController.eventAccessmode.value="${specificIdEventsResponeModel?.mode.toString()??""}";
+
+                   /*   if(specificIdEventsResponeModel?.mode=="private"){
+                        organizerController.toggleButton(1);
+                       organizerController.eventAccessmode.value="private";
+
+                     } if(specificIdEventsResponeModel?.mode=="public"){
+                       organizerController.eventAccessmode.value="public";
+                       organizerController.toggleButton(2);
+
+                     }*/
+
+                 }
+
+               });
+
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
@@ -95,7 +129,7 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
 
                     CustomText(
                       textAlign: TextAlign.start,
-                      text: "Mission",
+                      text: "Mission:  ",
                       fontSize:isTablet?6.sp: 16.sp,
                       fontWeight: FontWeight.w500,
                       color: AppColors.primary,
@@ -137,7 +171,7 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                               borderRadius: BorderRadius.circular(15),
                             ),
                             padding: const EdgeInsets.only(top: 12),
-                            child: Column(
+                            child: const Column(
                               children: [
 
                                 CustomImage(imageSrc: AppIcons.uploadIcon,width: 45,height: 45,),
@@ -1055,7 +1089,7 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                           Toast.errorToast("Date is empty!!");
                         } else if (organizerController.eventAccessmode.value.isEmpty) {
 
-                          Toast.errorToast("Event Access mode is empty!!");
+                          Toast.errorToast("Event access mode is empty!!");
 
                         }else if (organizerController.volunteersRoleList.isEmpty) {
                           Toast.errorToast("volunteer role is empty!!");

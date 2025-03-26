@@ -9,6 +9,7 @@ import 'package:tractivity_app/service/api_url.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_images/app_images.dart';
+import 'package:tractivity_app/utils/toast.dart';
 import 'package:tractivity_app/view/components/custom_button/custom_button.dart';
 import 'package:tractivity_app/view/components/custom_loader/custom_loader.dart';
 import 'package:tractivity_app/view/components/custom_netwrok_image/custom_network_image.dart';
@@ -24,7 +25,7 @@ class OrganizerActiveMissionDetails extends StatefulWidget {
   State<OrganizerActiveMissionDetails> createState() => _OrganizerActiveMissionDetailsState();
 }
 
-class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDetails> {
+class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDetails>{
 
   final storage = GetStorage();
 
@@ -45,6 +46,11 @@ class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDe
       administratorController.retriveAllEventByMissionShow(missionId);
     }
   }
+
+
+
+
+
 
 
   @override
@@ -842,11 +848,13 @@ class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDe
                                             GestureDetector(
                                               onTap: () {
 
-                                             /*   Get.toNamed(AppRoutes.organizationEventdetailsScreen,arguments: [
+                                                 Get.toNamed(AppRoutes.organizerEventCreateScreen,arguments: [
                                                   {
-                                                    "eventId":model.id
+                                                    "eventModel":model
                                                   }
-                                                ]);*/
+                                                ]);
+
+                                                debugPrint("duplicate:${model.id}");
                                               },
                                               child: Container(
                                                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
@@ -887,7 +895,6 @@ class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDe
         bottomNavigationBar: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-
 
             Padding(
               padding: const EdgeInsets.all(8.0),

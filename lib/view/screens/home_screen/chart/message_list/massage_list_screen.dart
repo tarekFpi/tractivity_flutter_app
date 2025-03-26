@@ -127,14 +127,12 @@ class _MassageListScreenState extends State<MassageListScreen> {
                                 return GestureDetector(
                                   onTap: (){
 
-
                                     if(model?.type=="group"){
 
                                       homeController.groupIntoEvent(model?.receiver?.name.toString()??"",model!.id.toString());
                                     }if(model?.type=="direct"){
 
                                       messageListController.groupIntoSingleUser(model?.receiver?.name.toString()??"",model?.receiver?.receiverId?.id.toString()??"");
-
                                     }
                                   },
                                   child: Padding(

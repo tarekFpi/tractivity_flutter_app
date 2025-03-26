@@ -137,13 +137,47 @@ class _GroupChartScreenState extends State<GroupChartScreen> {
                   ),
                 ),
                 //========================= Write Message Screen ==========================
+                if ((homeController.selectedImages.isNotEmpty))
+                  SizedBox(
+                    height: 100,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: homeController.selectedImages.length,
+                      itemBuilder: (context, index) {
+                        return Stack(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.file(
+                                homeController.selectedImages[index],
+                                width: 80,
+                                height: 80,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Positioned(
+                              right: 0,
+                              top: 0,
+                              child: IconButton(
+                                icon: const Icon(Icons.cancel, color: Colors.red),
+                                onPressed: () =>
+                                    homeController.removeImage(index),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+
+
                 Padding(
                   padding: const EdgeInsets.only(right: 20.0, left: 20, bottom: 20),
                   child: Row(
                     children: [
 
                       ///===================== Write message field =======================
-                      Expanded(
+                        Expanded(
                           child: CustomTextField(
                             textEditingController: homeController.messageController.value,
                             suffixIcon:
@@ -410,7 +444,7 @@ class CustomInboxMassage extends StatelessWidget {
 
                                                       homeController.startImageDownload("${ApiUrl.baseUrl}/${imageUrl}","${imageUrl.split("\\").last}");
                                                     },
-                                                    child: Icon(Icons.arrow_circle_down_outlined,color: Colors.white,size: 24,)),
+                                                    child: Icon(Icons.download,color: Colors.green,size: 24,)),
                                               )),
                                         ],
                                       ),
@@ -458,9 +492,10 @@ class CustomInboxMassage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+
                   Padding(
                     padding: EdgeInsets.symmetric(
-                        horizontal: 8.0.h, vertical: 6.h),
+                    horizontal: 8.0.h, vertical: 6.h),
                     child: CustomText(
                       textAlign: TextAlign.left,
                       text: message,
@@ -605,7 +640,7 @@ class CustomInboxMassage extends StatelessWidget {
 
                                           homeController.startImageDownload("${ApiUrl.baseUrl}/${imageUrl}","${imageUrl.split("\\").last}");
                                         },
-                                          child: Icon(Icons.arrow_circle_down_outlined,color: Colors.white,size: 24,)),
+                                          child: Icon(Icons.download,color: Colors.green,size: 28,)),
                                     )),
                               ],
                             ),
