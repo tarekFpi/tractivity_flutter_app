@@ -39,7 +39,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             },
             child: Row(
               children: [
-                eventController.userProfileShowLoading.value?CustomLoader():
+                eventController.userProfileShowLoading.value?Center(child: CircularProgressIndicator(color: Colors.orange,)):
                 CustomNetworkImage(
                   imageUrl:eventController.userProfileShowList.value.image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}${eventController.userProfileShowList.value.image}",
                   height: 100.h,

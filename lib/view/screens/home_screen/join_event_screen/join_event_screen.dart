@@ -29,11 +29,13 @@ class JoinEventScreen extends StatefulWidget {
 
 class _JoinEventScreenState extends State<JoinEventScreen> {
 
-  final   eventsController = Get.find<EventsController>();
+  final eventsController = Get.find<EventsController>();
 
   final joinEventController =Get.put(JoinEventController());
 
   final runningController =Get.put(RunningCompleteController());
+
+ /// final eventController = Get.put(EventsController());
 
   @override
   void initState() {
@@ -593,7 +595,7 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
 
                   if(eventsController.currentIndex.value ==1)
                     await runningController.runningCompleteEventShow();
-
+                     await eventsController.userProfileShow();
                 });
               }
           ),

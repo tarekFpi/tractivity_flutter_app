@@ -22,6 +22,7 @@ import 'package:tractivity_app/view/screens/home_screen/controller/home_controll
 import 'package:tractivity_app/view/screens/home_screen/controller/my_event_controller.dart';
 import 'package:tractivity_app/view/screens/home_screen/controller/my_organization_controller.dart';
 import 'package:tractivity_app/view/screens/home_screen/homepage_drawer.dart';
+import 'package:tractivity_app/view/screens/profile_screen/events_profile_screen/events_controller/events_controller.dart';
 import 'package:tractivity_app/view/screens/profile_screen/user_profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -48,6 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final queryEditingController = TextEditingController();
 
   final queryOrganizationEditingController = TextEditingController();
+
+  final eventController = Get.put(EventsController());
 
 @override
   void initState() {
@@ -582,6 +585,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ), onRefresh: ()async {
               await  myEventController.myEventShow();
               await  myOrganizationController.myOrganizationShow();
+              await  eventController.userProfileShow();
 
             });
           },

@@ -183,7 +183,7 @@ class _EditPersonProfileScreenState extends State<EditPersonProfileScreen> {
 
                               CustomText(
                                 text: "Volunteer",
-                                fontSize:isTablet?10.sp: 14.sp,
+                                fontSize:isTablet?8.sp: 14.sp,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.primary,
                               ),
@@ -225,7 +225,7 @@ class _EditPersonProfileScreenState extends State<EditPersonProfileScreen> {
                               ),
                               CustomText(
                                 text: "Organizer",
-                                fontSize:isTablet?10.sp: 14.sp,
+                                fontSize:isTablet?8.sp: 14.sp,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.primary,
                               ),
@@ -269,7 +269,7 @@ class _EditPersonProfileScreenState extends State<EditPersonProfileScreen> {
 
                               CustomText(
                                 text: "Administrator",
-                                fontSize:isTablet?10.sp: 14.sp,
+                                fontSize:isTablet?8.sp: 14.sp,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.primary,
                               ),
@@ -282,11 +282,12 @@ class _EditPersonProfileScreenState extends State<EditPersonProfileScreen> {
                     SizedBox(
                       height: 12.h,
                     ),
+
                     ///============ First Name ============
                     CustomFormCard(
                         title: AppStrings.yourFirstName,
                         hintText: AppStrings.enterYourName,
-                        fontSize: isTablet?16:16,
+                        fontSize: isTablet?14:16,
                         hasBackgroundColor: true,
                         controller: authController.editfullNameController.value),
 
@@ -294,7 +295,7 @@ class _EditPersonProfileScreenState extends State<EditPersonProfileScreen> {
                     CustomFormCard(
                         title: "Talent/Skill",
                         hintText: "Enter Talent/Skill",
-                        fontSize: isTablet?16:16,
+                        fontSize: isTablet?14:16,
                         hasBackgroundColor: true,
                         controller: authController.edittalentSkillController.value),
 
@@ -303,7 +304,7 @@ class _EditPersonProfileScreenState extends State<EditPersonProfileScreen> {
                         title: AppStrings.phoneNumber,
                         hintText: AppStrings.enterYourPhone,
                         hasBackgroundColor: true,
-                        fontSize: isTablet?16:16,
+                        fontSize: isTablet?14:16,
                         keyboardType: TextInputType.number,
                         controller: authController.editphoneNumberController.value),
 
@@ -400,7 +401,7 @@ class _EditPersonProfileScreenState extends State<EditPersonProfileScreen> {
                       },
                       title: "Save & Change",
                       height: isTablet?70:60,
-                      fontSize: isTablet ? 16 : 14,
+                      fontSize: isTablet ? 14 : 14,
                     )
                   ],
                 );

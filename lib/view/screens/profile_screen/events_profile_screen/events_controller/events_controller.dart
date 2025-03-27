@@ -48,7 +48,6 @@ class EventsController extends GetxController{
 
       debugPrint("userProfileShowList:${userProfileShowList.toJson()}");
 
-
       userProfileShowLoading.value =false;
       refresh();
 

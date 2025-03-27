@@ -104,7 +104,7 @@ class _AdminstratorEventDetailsScreenState extends State<AdminstratorEventDetail
                             },
                           ),
 
-                          /*  model.images?.isNotEmpty??true?
+                     /*  model.images?.isNotEmpty??true?
                       CustomNetworkImage(
                         /// imageUrl: AppConstants.eventImage,
                         imageUrl:"${ApiUrl.imageUrl}${model.images?[0]}",
@@ -115,6 +115,7 @@ class _AdminstratorEventDetailsScreenState extends State<AdminstratorEventDetail
                         height: isTablet ? 200.h : 170.h,
                         width: isTablet ? 180.w : 180.w,fit: BoxFit.fill,),
                       */
+
                           SizedBox(
                             height: 16.h,
                           ),
@@ -342,28 +343,31 @@ class _AdminstratorEventDetailsScreenState extends State<AdminstratorEventDetail
                           ),
                           if (connectedOrgsLeader != null)
                             for (int i = 0; i < connectedOrgsLeader.length; i++)
-                              Row(
-                                children: [
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Row(
+                                  children: [
 
-                                  CustomNetworkImage(
-                                    imageUrl: connectedOrgsLeader[i].image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}${connectedOrgsLeader[i].image}",
-                                    height:isTablet?42.h: 32.h,
-                                    width:isTablet?42.w: 32.w,
-                                    boxShape: BoxShape.circle,
-                                    border: Border.all(color: AppColors.primary, width: 3),
-                                  ),
-                                  SizedBox(
-                                    width: 10.w,
-                                  ),
-                                  CustomText(
-                                    text: "${connectedOrgsLeader[i].fullName}",
-                                    fontSize:isTablet?6.sp: 14.sp,
-                                    fontWeight: FontWeight.w600,
-                                    color: AppColors.black_80,
-                                    bottom: 6,
-                                  ),
+                                    CustomNetworkImage(
+                                      imageUrl: connectedOrgsLeader[i].image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}${connectedOrgsLeader[i].image}",
+                                      height:isTablet?42.h: 32.h,
+                                      width:isTablet?42.w: 32.w,
+                                      boxShape: BoxShape.circle,
+                                      border: Border.all(color: AppColors.primary, width: 3),
+                                    ),
+                                    SizedBox(
+                                      width: 10.w,
+                                    ),
+                                    CustomText(
+                                      text: "${connectedOrgsLeader[i].fullName}",
+                                      fontSize:isTablet?6.sp: 14.sp,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.black_80,
+                                      bottom: 6,
+                                    ),
 
-                                ],
+                                  ],
+                                ),
                               ),
 
                           SizedBox(
