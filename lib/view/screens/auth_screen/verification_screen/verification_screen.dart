@@ -44,6 +44,25 @@ class _VerificationScreenState extends State<VerificationScreen> {
       final isTablet = constraints.maxWidth > 600;
 
       return Scaffold(
+        appBar: AppBar(
+          scrolledUnderElevation: 0,
+          title: Text(
+            AppStrings.serveOut,
+            style: TextStyle(
+                color: AppColors.black,
+                fontSize: 22.sp,
+                fontWeight: FontWeight.w600),
+          ),
+          leading: Builder(
+            builder: (context) {
+              return IconButton(
+                onPressed: () => Get.back(),
+                icon: Icon(Icons.arrow_back_rounded, color: AppColors.black,size: isTablet?28.w:32.w
+                  ,),
+              );
+            },
+          ),
+        ),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
           child: SingleChildScrollView(
@@ -51,25 +70,16 @@ class _VerificationScreenState extends State<VerificationScreen> {
               height: MediaQuery.of(context).size.height/1.1,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
 
-                  SizedBox(
-                    height: 16.h,
-                  ),
 
-                  CustomText(
-                    text: AppStrings.serveOut,
-                    fontSize:isTablet?18.sp: 28.sp,
-                    fontWeight: FontWeight.w600,
-                    bottom: 20.h,
-                  ),
 
                   Column(
                     children: [
 
                       CustomText(
-                        top: 80.h,
+                        top: 40.h,
                         text: AppStrings.enterCode,
                         fontSize: 32,
                         fontWeight: FontWeight.w600,

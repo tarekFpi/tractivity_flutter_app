@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'dart:convert';
-
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -73,7 +72,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
         body: RefreshIndicator(
             onRefresh: ()async{
               await  administratorController.organizationShow();
-              await  administratorController.leaderShow();
+             //await  administratorController.leaderShow();
               await  administratorController.missionListShow();
             },
           child: ListView(
@@ -199,6 +198,9 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                             CustomButton(
                                               onTap: () {
 
+                                                ///exiting organizationIdList clear
+                                                administratorController.organizationIdList.clear();
+
                                                 showDialog(
                                                   context: context,
                                                   barrierDismissible: false,
@@ -241,6 +243,8 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                     ),
                                                        content: Obx(
                                                             () {
+                                                         administratorController.organizationIdList.add(model.id.toString());
+
                                                           return SingleChildScrollView(
                                                             child: Column(
                                                               mainAxisAlignment: MainAxisAlignment.start,
@@ -257,6 +261,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                                     bottom: 8,
                                                                   ),
                                                                 ),
+
                                                                 Container(
                                                                   width: double.infinity,
                                                                   padding: EdgeInsets.all(8),
@@ -319,6 +324,17 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                                     ),
                                                                     /// height: 70.h,
                                                                     child: ExpansionTile(
+                                                                      onExpansionChanged: (isExpanded) {
+                                                                        if (isExpanded) {
+
+                                                                          if(administratorController.organizationIdList.isNotEmpty){
+                                                                            administratorController.leaderShow();
+                                                                          }else{
+                                                                            administratorController.leaderShowList.clear();
+                                                                            Toast.errorToast("No Organizer found");
+                                                                          }
+                                                                        }
+                                                                      },
                                                                       title: CustomText(
                                                                         text: "Select Organizer",
                                                                         fontSize:isTablet? 6.sp:14.sp,
@@ -357,7 +373,18 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                                         const SizedBox(
                                                                           height: 12,
                                                                         ),
-
+                                                                        administratorController.leaderShowList.isEmpty?
+                                                                        SizedBox(
+                                                                          height: MediaQuery.of(context).size.height/5,
+                                                                          child: Center(
+                                                                            child: CustomText(
+                                                                              text: "No leader  yet!!",
+                                                                              fontSize:isTablet?12.sp: 24.sp,
+                                                                              fontWeight: FontWeight.w700,
+                                                                              color: AppColors.lightRed,
+                                                                            ),
+                                                                          ),
+                                                                        ):
                                                                         Column(
                                                                           children:  List.generate(
                                                                               administratorController.leaderShowList.length,
@@ -1638,10 +1665,10 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                   onTap: () {
 
                                     Navigator.of(context).pop();
-                                    administratorController.organizationIdList.clear();
-                                    administratorController.createLeaderIdList.clear();
+                                   administratorController.organizationIdList.clear();
+                                   ///administratorController.createLeaderIdList.clear();
                                     administratorController.organizationShow();
-                                    administratorController.leaderShow();
+                                   ///administratorController.leaderShow();
                                   },
                                   child: const Icon(
                                     Icons.close,
@@ -1880,6 +1907,17 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                           ),
                                           /// height: 70.h,
                                           child: ExpansionTile(
+                                            onExpansionChanged: (isExpanded) {
+                                              if (isExpanded) {
+
+                                                if(administratorController.organizationIdList.isNotEmpty){
+                                                  administratorController.leaderShow();
+                                                }else{
+                                                  administratorController.leaderShowList.clear();
+                                                  Toast.errorToast("Please select at least one Oranization");
+                                                }
+                                              }
+                                            },
                                             title: CustomText(
                                               text: "Select Leader",
                                               fontSize:isTablet? 6.sp:14.sp,
@@ -1921,6 +1959,18 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                               const SizedBox(
                                                 height: 12,
                                               ),
+                                              administratorController.leaderShowList.isEmpty?
+                                              SizedBox(
+                                                height: MediaQuery.of(context).size.height/5,
+                                                child: Center(
+                                                  child: CustomText(
+                                                    text: "No leader  yet!!",
+                                                    fontSize:isTablet?12.sp: 24.sp,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: AppColors.lightRed,
+                                                  ),
+                                                ),
+                                              ):
                                               Column(
                                                 children:  List.generate(
                                                     administratorController.leaderShowList.length,

@@ -142,7 +142,6 @@ class _AdminstratorEventDetailsScreenState extends State<AdminstratorEventDetail
 
                                     if (administratorController.retriveSpecificByEventShowList.value?.joinedVolunteer?.isEmpty ?? true) {
 
-
                                       Toast.errorToast("No joined Volunteer yet !!");
 
                                     }else{
@@ -195,7 +194,7 @@ class _AdminstratorEventDetailsScreenState extends State<AdminstratorEventDetail
                                               SizedBox(width: 4,),
 
                                               CustomText(
-                                                text: "${administratorController.retriveSpecificByEventShowList.value.documents?[index].split("\\").last}",
+                                                text: "${administratorController.retriveSpecificByEventShowList.value.documents?[index].split("/").last}",
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w500,
                                                 color: AppColors.black_80,
@@ -207,7 +206,7 @@ class _AdminstratorEventDetailsScreenState extends State<AdminstratorEventDetail
                                                   child: GestureDetector(
                                                     onTap: (){
 
-                                                      administratorController.startDownload("${ApiUrl.baseUrl}/${administratorController.retriveSpecificByEventShowList.value.documents?[index]}","${administratorController.retriveSpecificByEventShowList.value.documents?[index].split("\\").last}");
+                                                      administratorController.startDownload("${ApiUrl.baseUrl}/${administratorController.retriveSpecificByEventShowList.value.documents?[index]}","${administratorController.retriveSpecificByEventShowList.value.documents?[index].split("/").last}");
                                                     },
                                                     child: const CustomText(
                                                       text: "Download",
@@ -293,7 +292,6 @@ class _AdminstratorEventDetailsScreenState extends State<AdminstratorEventDetail
                                 color: AppColors.black_80,
                                 bottom: 6,
                               ),
-
                             ],
                           ),
 

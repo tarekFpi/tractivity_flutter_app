@@ -207,7 +207,7 @@ class _OrganizationEventdetailsScreenState extends State<OrganizationEventdetail
                                             SizedBox(width: 4,),
 
                                             CustomText(
-                                              text: "${administratorController.retriveSpecificByEventShowList.value.documents?[index].split("\\").last}",
+                                              text: "${administratorController.retriveSpecificByEventShowList.value.documents?[index].split("/").last}",
                                               fontSize: 14,
                                               fontWeight: FontWeight.w500,
                                               color: AppColors.black_80,
@@ -219,7 +219,7 @@ class _OrganizationEventdetailsScreenState extends State<OrganizationEventdetail
                                                 child: GestureDetector(
                                                   onTap: (){
 
-                                                    administratorController.startDownload("${ApiUrl.baseUrl}/${administratorController.retriveSpecificByEventShowList.value.documents?[index]}","${administratorController.retriveSpecificByEventShowList.value.documents?[index].split("\\").last}");
+                                                    administratorController.startDownload("${ApiUrl.baseUrl}/${administratorController.retriveSpecificByEventShowList.value.documents?[index]}","${administratorController.retriveSpecificByEventShowList.value.documents?[index].split("/").last}");
                                                   },
                                                   child: const CustomText(
                                                     text: "Download",

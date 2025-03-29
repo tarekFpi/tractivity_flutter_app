@@ -270,7 +270,8 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
                                                         Get.toNamed(AppRoutes.joinDetailsScreen,arguments: [
                                                           {
                                                             "eventId":invitedEventModel?.contentId?.id,
-                                                            "inviationId":invitedEventModel?.id
+                                                            "inviationId":invitedEventModel?.id,
+                                                            "eventName":invitedEventModel?.contentId?.name
                                                           }
                                                         ]);
 

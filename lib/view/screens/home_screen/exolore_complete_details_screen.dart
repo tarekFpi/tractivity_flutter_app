@@ -182,7 +182,7 @@ class _ExoloreCompleteDetailsScreenState extends State<ExoloreCompleteDetailsScr
                                           SizedBox(width: 4,),
 
                                           CustomText(
-                                            text: "${administratorController.retriveSpecificByEventShowList.value.documents?[index].split("\\").last}",
+                                            text: "${administratorController.retriveSpecificByEventShowList.value.documents?[index].split("/").last}",
                                             fontSize: 14,
                                             fontWeight: FontWeight.w500,
                                             color: AppColors.black_80,
@@ -194,7 +194,7 @@ class _ExoloreCompleteDetailsScreenState extends State<ExoloreCompleteDetailsScr
                                               child: GestureDetector(
                                                 onTap: (){
 
-                                                  administratorController.startDownload("${ApiUrl.baseUrl}/${administratorController.retriveSpecificByEventShowList.value.documents?[index]}","${administratorController.retriveSpecificByEventShowList.value.documents?[index].split("\\").last}");
+                                                  administratorController.startDownload("${ApiUrl.baseUrl}/${administratorController.retriveSpecificByEventShowList.value.documents?[index]}","${administratorController.retriveSpecificByEventShowList.value.documents?[index].split("/").last}");
                                                 },
                                                 child: const CustomText(
                                                   text: "Download",
@@ -330,28 +330,31 @@ class _ExoloreCompleteDetailsScreenState extends State<ExoloreCompleteDetailsScr
                       ),
                       if (connectedOrgsLeader != null)
                         for (int i = 0; i < connectedOrgsLeader.length; i++)
-                          Row(
-                            children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 4),
+                            child: Row(
+                              children: [
 
-                              CustomNetworkImage(
-                                imageUrl: connectedOrgsLeader[i].image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}/${connectedOrgsLeader[i].image}",
-                                height:isTablet?42.h: 32.h,
-                                width:isTablet?42.w: 32.w,
-                                boxShape: BoxShape.circle,
-                                border: Border.all(color: AppColors.primary, width: 3),
-                              ),
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              CustomText(
-                                text: "${connectedOrgsLeader[i].fullName}",
-                                fontSize:isTablet?6.sp: 14.sp,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.black_80,
-                                bottom: 6,
-                              ),
+                                CustomNetworkImage(
+                                  imageUrl: connectedOrgsLeader[i].image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}${connectedOrgsLeader[i].image}",
+                                  height:isTablet?42.h: 32.h,
+                                  width:isTablet?42.w: 32.w,
+                                  boxShape: BoxShape.circle,
+                                  border: Border.all(color: AppColors.primary, width: 3),
+                                ),
+                                SizedBox(
+                                  width: 10.w,
+                                ),
+                                CustomText(
+                                  text: "${connectedOrgsLeader[i].fullName}",
+                                  fontSize:isTablet?6.sp: 14.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.black_80,
+                                  bottom: 6,
+                                ),
 
-                            ],
+                              ],
+                            ),
                           ),
 
                       SizedBox(

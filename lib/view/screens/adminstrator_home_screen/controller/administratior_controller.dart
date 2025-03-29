@@ -277,8 +277,11 @@ class AdministratiorController extends GetxController {
   Future<void> leaderShow() async{
 
     leaderShowLoading.value = true;
+    var body = {
+      "organizations": organizationIdList,
+    };
 
-    var response = await ApiClient.getData(ApiUrl.leaderShow);
+    var response = await ApiClient.postData(ApiUrl.leaderShow,jsonEncode(body));
 
     if (response.statusCode == 200) {
 
@@ -931,7 +934,7 @@ class AdministratiorController extends GetxController {
 
     organizationShow();
 
-    leaderShow();
+   // leaderShow();
 
     missionListShow();
   }

@@ -657,8 +657,10 @@ class _JoinEventDetailsScreenState extends State<JoinEventDetailsScreen> {
                                            onTap: () {
 
                                              homeController.endWorkEvent(eventId);
-                                            // administratorController.retriveSpecificByEventShow(eventId);
+
+
                                              showDialog(
+                                               barrierDismissible: false,
                                                context: context,
                                                builder: (ctx) => AlertDialog(
                                                  backgroundColor: Colors.white,
