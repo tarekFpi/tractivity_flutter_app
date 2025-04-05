@@ -25,7 +25,7 @@ class SpecificIdEventsResponeModel {
   String? mode;
   String? status;
   List<InvitedVolunteer>? invitedVolunteer;
-  List<dynamic>? joinedVolunteer;
+  List<InvitedVolunteer>? joinedVolunteer;
   DateTime? createdAt;
   DateTime? updatedAt;
   int? v;
@@ -69,8 +69,11 @@ class SpecificIdEventsResponeModel {
     date: json["date"] == null ? null : DateTime.parse(json["date"]),
     mode: json["mode"],
     status: json["status"],
+
+    // List<InvitedVolunteer>.from(json["invitedVolunteer"]!.map((x) => InvitedVolunteer.fromJson(x)))
+
     invitedVolunteer: json["invitedVolunteer"] == null ? [] : List<InvitedVolunteer>.from(json["invitedVolunteer"]!.map((x) => InvitedVolunteer.fromJson(x))),
-    joinedVolunteer: json["joinedVolunteer"] == null ? [] : List<dynamic>.from(json["joinedVolunteer"]!.map((x) => x)),
+    joinedVolunteer: json["joinedVolunteer"] == null ? [] : List<InvitedVolunteer>.from(json["joinedVolunteer"]!.map((x) => InvitedVolunteer.fromJson(x))),
     createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
     updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
     v: json["__v"],
@@ -177,8 +180,8 @@ class InvitedVolunteer {
   Volunteer? volunteer;
   String? workTitle;
   String? workStatus;
-  int? totalWorkedHour;
-  int? mileage;
+  dynamic? totalWorkedHour;
+  dynamic? mileage;
   String? id;
 
   InvitedVolunteer({
@@ -305,8 +308,8 @@ class ConnectedOrganization {
 }
 
 class Report {
-  int? hours;
-  int? mileage;
+  dynamic ? hours;
+  dynamic ? mileage;
 
   Report({
     this.hours,

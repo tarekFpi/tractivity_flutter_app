@@ -8,6 +8,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:open_file/open_file.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/core/dependency/dependency_injection.dart';
+import 'package:tractivity_app/utils/SocketApi.dart';
 import 'utils/app_colors/app_colors.dart';
 import 'package:oktoast/oktoast.dart';
 
@@ -16,7 +17,7 @@ void main() async{
  // DeviceUtils.lockDevicePortrait();
   DependencyInjection di = DependencyInjection();
   di.dependencies();
-  //SocketApi.init();
+  SocketApi.init();
 
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -26,14 +27,11 @@ void main() async{
   ));
 
   await GetStorage.init();
-
   runApp(const MyApp());
-
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
-
 
   await initNotifications();
 }

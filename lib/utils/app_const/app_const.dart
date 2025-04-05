@@ -3,6 +3,7 @@ class AppConstants {
   static String refreshToken = "RefreshToken";
   static String userId = "UserId";
   static String userEmail = "userEmail";
+  static String fullName = "fullName";
 
   static String onBoard = "Onboard";
 

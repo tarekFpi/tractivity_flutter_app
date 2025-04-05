@@ -73,6 +73,9 @@ class _OrganizerMissionDetailsScreenState extends State<OrganizerMissionDetailsS
         body: Obx(
                 () {
 
+                var hours =administratorController.missionDetailsShowList.value.report?.hours;
+
+                var mileage =administratorController.missionDetailsShowList.value.report?.mileage;
 
               return SingleChildScrollView(
                 child: Padding(
@@ -89,7 +92,7 @@ class _OrganizerMissionDetailsScreenState extends State<OrganizerMissionDetailsS
                       ),
                     ),
                   ):
-                  administratorController.missionDetailsShowLoading.value?CustomLoader():
+                  administratorController.missionDetailsShowLoading.value?Center(child: CircularProgressIndicator(color: Colors.orange,)):
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -411,7 +414,7 @@ class _OrganizerMissionDetailsScreenState extends State<OrganizerMissionDetailsS
                             decoration: BoxDecoration(
                               color: AppColors.neutral02,
                               borderRadius: BorderRadius.circular(10),
-                            ),child: CustomText(text: "Hours: ${administratorController.missionDetailsShowList.value.report?.hours}",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
+                            ),child: CustomText(text: "Hours: ${hours.round()} H",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
                           ),
 
                           SizedBox(
@@ -422,7 +425,7 @@ class _OrganizerMissionDetailsScreenState extends State<OrganizerMissionDetailsS
                             decoration: BoxDecoration(
                               color: AppColors.neutral02,
                               borderRadius: BorderRadius.circular(10),
-                            ),child: CustomText(text: "Millage: ${administratorController.missionDetailsShowList.value.report?.mileage}",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
+                            ),child: CustomText(text: "Millage: ${mileage.round()} km",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
                           ),
                         ],
                       ),
@@ -482,7 +485,7 @@ class _OrganizerMissionDetailsScreenState extends State<OrganizerMissionDetailsS
                           ),
                         ),
                       ):
-                      administratorController.missionEventShowLoading.value?const CustomLoader():
+                      administratorController.missionEventShowLoading.value?const Center(child: CircularProgressIndicator(color: Colors.orange,)):
                       ListView.builder(
                           itemCount: administratorController.missionEventShowList.length,
                           shrinkWrap: true,
@@ -496,13 +499,16 @@ class _OrganizerMissionDetailsScreenState extends State<OrganizerMissionDetailsS
                               child: Row(
                                 children: [
 
+                                  model.images?.isNotEmpty??true?
                                   CustomNetworkImage(
                                     /// imageUrl: AppConstants.eventImage,
                                     imageUrl:"${ApiUrl.imageUrl}${model.images?[0]}",
                                     height: isTablet ? 200.h : 170.h,
                                     width: isTablet ? 180.w : 180.w,
                                     borderRadius: BorderRadius.circular(10),
-                                  ),
+                                  ):Image.asset("assets/images/event_image.png",
+                                    height: isTablet ? 200.h : 170.h,
+                                    width: isTablet ? 180.w : 180.w,fit: BoxFit.fill,),
 
                                   const SizedBox(
                                     width: 10,

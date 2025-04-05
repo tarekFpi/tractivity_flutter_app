@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
@@ -33,14 +34,28 @@ class _OrganizeMapScreenState extends State<OrganizeMapScreen> {
 
   String address = '';
 
+  var latitude =0.0;
+  var longitude =0.0;
+
   @override
   void initState() {
     super.initState();
 
-    getUserCurrentLocation();
+
+
+    if(Get.arguments[0]["lat"]!=null && Get.arguments[0]["lng"]!=null){
+
+      latitude = Get.arguments[0]["lat"];
+
+      longitude = Get.arguments[0]["lng"];
+
+      getUserCurrentLocation(latitude,longitude);
+
+      debugPrint("latitude:${latitude},longitude:${longitude}");
+    }
   }
 
-  Future<void> getUserCurrentLocation() async {
+  Future<void> getUserCurrentLocation(double latitude,double longitude) async {
     try {
       await Geolocator.requestPermission();
       Position position = await Geolocator.getCurrentPosition();
@@ -49,9 +64,10 @@ class _OrganizeMapScreenState extends State<OrganizeMapScreen> {
         _currentPosition = position;
         _currentLocationMarker = Marker(
           markerId: MarkerId("currentLocation"),
-          position: LatLng(position.latitude, position.longitude),
+         // position: LatLng(position.latitude, position.longitude),
+          position: LatLng(latitude,longitude),
           icon: BitmapDescriptor.defaultMarker,
-          infoWindow: InfoWindow(title: "You are here"),
+          infoWindow: InfoWindow(title: "You are current Location"),
         );
       });
 
@@ -61,7 +77,6 @@ class _OrganizeMapScreenState extends State<OrganizeMapScreen> {
       print("Error getting location: $e");
     }
   }
-
 
 
 
@@ -97,7 +112,7 @@ class _OrganizeMapScreenState extends State<OrganizeMapScreen> {
                   },
                 ),
 
-                 Positioned.fill(
+           /*      Positioned.fill(
                   top: 30,
                    left: 12,
                    right: 12,
@@ -109,7 +124,7 @@ class _OrganizeMapScreenState extends State<OrganizeMapScreen> {
                         color: AppColors.black_60,
                       )
                   ),
-                ),
+                ),*/
               ],
             ),
           ),

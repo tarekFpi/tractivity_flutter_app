@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_icons/app_icons.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
+import 'package:tractivity_app/utils/toast.dart';
 import 'package:tractivity_app/view/components/custom_button/custom_button.dart';
 import 'package:tractivity_app/view/components/custom_from_card/custom_from_card.dart';
 import 'package:tractivity_app/view/components/custom_image/custom_image.dart';
@@ -12,6 +14,8 @@ import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:tractivity_app/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tractivity_app/view/components/nav_bar/nav_bar.dart';
 import 'package:tractivity_app/view/screens/home_screen/controller/home_controller.dart';
+import 'package:tractivity_app/view/screens/home_screen/donation/donation_controller.dart';
+import 'package:html/parser.dart' as htmlParser;
 
 class DonationScreen extends StatefulWidget {
   const DonationScreen({super.key});
@@ -24,6 +28,20 @@ class _DonationScreenState extends State<DonationScreen> {
 
   final  homeController = Get.find<HomeController>();
 
+  final  donationController = Get.put(DonationController());
+
+ @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    donationController.showDonationText();
+  }
+
+  String parseHtmlString(String htmlString) {
+    final document = htmlParser.parse(htmlString);
+    return document.body?.text ?? "";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +55,11 @@ class _DonationScreenState extends State<DonationScreen> {
         fontSize: 22,
         leftIcon: false,
       ),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
+      body: LayoutBuilder(builder: (context, constraints) {
+
           final isTablet = constraints.maxWidth > 600; // Detect if it's a tablet
 
-          return Obx(
-                  () {
+          return Obx(() {
                 return Padding(
                   padding: EdgeInsets.all(isTablet ? 20.0 : 12.0), // Adjust padding
                   child: SingleChildScrollView(
@@ -50,24 +67,42 @@ class _DonationScreenState extends State<DonationScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
 
-                        SizedBox(height: isTablet ? 20 : 12),
+                        SizedBox(height: isTablet ? 20 : 12.h),
 
-                        /// Donation Description**
-                        /*   CustomText(
+                    /// Donation Description
+
+                   /*
+                    CustomText(
                         text: "100% of your donation will go towards building the infrastructure  of Serve Out. We have no paid staff.building the infrastructure  of Serve Out. We have no paid staff.",
                         fontSize: isTablet ? 8.sp : 18.sp,
                         fontWeight: FontWeight.w500,
                         textAlign: TextAlign.start,
                         maxLines: 3,
-                      ),*/
+                      ),
+                      */
 
-                        CustomText(
-                          text: longText,
+                       /* CustomText(
+                          text: "${donationController.donationText.value}",
                           fontSize:isTablet?6.sp: 14.sp,
                           fontWeight: FontWeight.w500,
                           textAlign: TextAlign.start,
                           maxLines: 3,
                         ),
+                        */
+
+                        Text(
+                          parseHtmlString(donationController.donationText.value),
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: isTablet ? 6.sp : 14.sp,
+                          ),
+                        ),
+
+                       /*
+                        HtmlWidget('${donationController.donationText.value}',textStyle: TextStyle(color: Colors.black,fontSize:isTablet?6.sp:14.sp,)
+                        ),*/
 
                         SizedBox(height: 4.h),
                         // Show more/less button
@@ -78,12 +113,12 @@ class _DonationScreenState extends State<DonationScreen> {
 
                             if(isTablet){
 
-                              showAlertDialog(context, longText,longText.length,isTablet);
+                              showAlertDialog(context, donationController.donationText.value.toString(),donationController.donationText.value.length,isTablet);
 
                             }else{
 
                               ///Show BottomSheet when clicking on the text
-                              showBottomSheet(context, longText,longText.length,isTablet);
+                              showBottomSheet(context, donationController.donationText.value.toString(),donationController.donationText.value.length,isTablet);
                             }
 
                           },
@@ -109,7 +144,7 @@ class _DonationScreenState extends State<DonationScreen> {
                           hintText: AppStrings.enterYourEmail,
                           fontSize: isTablet?16:16,
                           hasBackgroundColor: true,
-                          controller: TextEditingController(),
+                          controller: donationController.emailController.value,
                         ),
 
                         SizedBox(height: isTablet ? 16 : 8),
@@ -123,7 +158,7 @@ class _DonationScreenState extends State<DonationScreen> {
                                 hintText: AppStrings.enterFristName,
                                 fontSize: isTablet?16:16,
                                 hasBackgroundColor: true,
-                                controller: TextEditingController(),
+                                controller: donationController.fristNameController.value,
                               ),
                             ),
                             SizedBox(width: isTablet ? 16 : 8),
@@ -133,38 +168,12 @@ class _DonationScreenState extends State<DonationScreen> {
                                 hintText: AppStrings.enterLastName,
                                 fontSize: isTablet?16:16,
                                 hasBackgroundColor: true,
-                                controller: TextEditingController(),
+                                controller: donationController.lastNameController.value,
                               ),
                             ),
                           ],
                         ),
 
-                        SizedBox(height: isTablet ? 16 : 8),
-
-                        ///Country & State**
-                        /*     Row(
-                        children: [
-                          Expanded(
-                            child: CustomFormCard(
-                              title: AppStrings.country,
-                              hintText: AppStrings.enterCountry,
-                              hasBackgroundColor: true,
-                              fontSize: isTablet?16:16,
-                              controller: TextEditingController(),
-                            ),
-                          ),
-                          SizedBox(width: isTablet ? 16 : 8),
-                          Expanded(
-                            child: CustomFormCard(
-                              title: AppStrings.state,
-                              hintText: AppStrings.enterState,
-                              hasBackgroundColor: true,
-                              fontSize: isTablet?16:16,
-                              controller: TextEditingController(),
-                            ),
-                          ),
-                        ],
-                      ),*/
 
                         SizedBox(height: isTablet ? 16 : 8),
 
@@ -182,7 +191,7 @@ class _DonationScreenState extends State<DonationScreen> {
                           hasBackgroundColor: true,
                           fontSize: isTablet?16:16,
                           keyboardType: TextInputType.number,
-                          controller: TextEditingController(),
+                          controller: donationController.amountController.value,
                         ),
 
                         SizedBox(height: isTablet ? 20 : 12),
@@ -214,6 +223,7 @@ class _DonationScreenState extends State<DonationScreen> {
                                     fillColor: AppColors.white,
                                     hintText: "1234 1234 1234 1234",
                                     keyboardType: TextInputType.number,
+                                    textEditingController:donationController.cardNumberController.value,
                                   ),
                                 ),
                                 CustomImage(imageSrc: AppIcons.cardImage)
@@ -233,7 +243,7 @@ class _DonationScreenState extends State<DonationScreen> {
                                 hintText: AppStrings.enterDay,
                                 hasBackgroundColor: true,
                                 fontSize: isTablet?16:16,
-                                controller: TextEditingController(),
+                                controller: donationController.expirationDateController.value,
                               ),
                             ),
                             SizedBox(width: isTablet ? 16 : 8),
@@ -243,7 +253,7 @@ class _DonationScreenState extends State<DonationScreen> {
                                 hintText: AppStrings.enterSecurity,
                                 fontSize: isTablet?16:16,
                                 hasBackgroundColor: true,
-                                controller: TextEditingController(),
+                                controller: donationController.securityCodeController.value,
                               ),
                             ),
                           ],
@@ -276,10 +286,10 @@ class _DonationScreenState extends State<DonationScreen> {
                               fillColor:
                               WidgetStateColor.resolveWith((states) =>
                               AppColors.primary),
-                              groupValue: homeController.donationStatues.value,
+                              groupValue: donationController.donationStatues.value,
                               onChanged:(bool? value) {
 
-                                homeController.donationStatues.value = value!;
+                                donationController.donationStatues.value = value!;
 
                               },
                             ),
@@ -299,9 +309,9 @@ class _DonationScreenState extends State<DonationScreen> {
                               fillColor:
                               WidgetStateColor.resolveWith((states) =>
                               AppColors.primary),
-                              groupValue: homeController.donationStatues.value,
+                              groupValue: donationController.donationStatues.value,
                               onChanged:(bool? value) {
-                                homeController.donationStatues.value = value!;
+                                donationController.donationStatues.value = value!;
                               },
                             ),
 
@@ -318,11 +328,37 @@ class _DonationScreenState extends State<DonationScreen> {
                             ),
                           ],
                         ),
-
                         SizedBox(height: isTablet ? 16.h : 8.h),
+
                         /// **Submit Button**
+                        donationController.donationLoading.value?Center(child: CircularProgressIndicator(color: Colors.amber,)):
                         CustomButton(
-                          onTap: () {},
+                          onTap: () {
+
+
+                            if(donationController.emailController.value.text==""){
+
+                              Toast.errorToast("Email is Empty!!");
+
+                            }else if(donationController.fristNameController.value.text==""){
+                              Toast.errorToast("Frist Name is Empty!!");
+
+                            }else if(donationController.lastNameController.value.text==""){
+                              Toast.errorToast("Last Name is Empty!!");
+
+                            }else if(donationController.amountController.value.text==""){
+                              Toast.errorToast("Amount is Empty!!");
+
+                            }else if(donationController.cardNumberController.value.text==""){
+                              Toast.errorToast("Card number is Empty!!");
+
+                            }else if(donationController.securityCodeController.value.text==""){
+                              Toast.errorToast("Security Code is Empty!!");
+                            }else{
+
+                              donationController.donationCreate();
+                            }
+                          },
                           title: "Submit",
                           height: isTablet ? 70 : 50,
                           fontSize: isTablet ? 16 : 16,
@@ -342,7 +378,7 @@ class _DonationScreenState extends State<DonationScreen> {
   }
 
 
-  // Function to show the full text in a BottomSheet
+  ///Function to show the full text in a BottomSheet
   void showBottomSheet(BuildContext context, String longText,int maxLines, bool isTablet) {
     showModalBottomSheet(
       context: context,
@@ -377,13 +413,15 @@ class _DonationScreenState extends State<DonationScreen> {
                   ),
                   SizedBox(height: 12.h),
 
-                  CustomText(
+                  HtmlWidget('${longText}',textStyle: TextStyle(color: Colors.black,fontSize:isTablet?6.sp:14.sp)),
+
+              /*    CustomText(
                     text: longText,
                     fontSize:isTablet?6.sp:14.sp,
                     fontWeight: FontWeight.w500,
                     textAlign: TextAlign.start,
                     maxLines: maxLines,
-                  ),
+                  ),*/
                   SizedBox(height: 10),
 
                 ],
@@ -442,13 +480,15 @@ class _DonationScreenState extends State<DonationScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
 
-                CustomText(
+                HtmlWidget('${longText}',textStyle: TextStyle(color: Colors.black,fontSize:isTablet?6.sp:14.sp)),
+
+              /*  CustomText(
                   text: longText,
                   fontSize:isTablet?6.sp:14.sp,
                   fontWeight: FontWeight.w500,
                   textAlign: TextAlign.start,
                   maxLines: maxLines,
-                ),
+                ),*/
                 SizedBox(height: 10),
 
               ],

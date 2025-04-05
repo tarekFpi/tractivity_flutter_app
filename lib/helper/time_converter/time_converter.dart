@@ -24,6 +24,42 @@ class DateConverter {
     }
   }
 
+
+  static String timeDateFormetString(String? dateTimeStr) {
+    try {
+      if (dateTimeStr == null || dateTimeStr.isEmpty) {
+        throw FormatException("Input date is null or empty.");
+      }
+
+      // Parse the input string to a DateTime object
+      DateTime dateTime = DateTime.parse(dateTimeStr);
+
+      // Format the DateTime object
+      return DateFormat('yyyy-MM-dd').format(dateTime);
+    } catch (e) {
+      // Return a default message or handle the error
+      return 'Invalid date format';
+    }
+  }
+
+
+  static String timeFormetString2(String? dateTimeStr) {
+    try {
+      if (dateTimeStr == null || dateTimeStr.isEmpty) {
+        throw FormatException("Input date is null or empty.");
+      }
+
+      // Parse the input string to a DateTime object
+      DateTime dateTime = DateTime.parse(dateTimeStr);
+
+      // Format the DateTime object
+      return DateFormat('yyyy-MM-dd').format(dateTime);
+    } catch (e) {
+      // Return a default message or handle the error
+      return 'Invalid date format';
+    }
+  }
+
   ///=============== Calculate Time of Day ===============
 
   static String getTimePeriod() {

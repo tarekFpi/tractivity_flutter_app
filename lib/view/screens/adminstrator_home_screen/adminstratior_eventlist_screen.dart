@@ -12,10 +12,7 @@ import 'package:tractivity_app/utils/toast.dart';
 import 'package:tractivity_app/view/components/custom_button/custom_button.dart';
 import 'package:tractivity_app/view/components/custom_loader/custom_loader.dart';
 import 'package:tractivity_app/view/components/custom_netwrok_image/custom_network_image.dart';
-import 'package:tractivity_app/view/components/custom_royel_appbar/custom_royel_appbar.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
-import 'package:tractivity_app/view/components/custom_text_field/custom_text_field.dart';
-import 'package:tractivity_app/view/screens/adminstrator_home_screen/alert_dialog_event.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/controller/administratior_controller.dart';
 
 
@@ -77,12 +74,14 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
           ),
 
         ),
-        body: Obx(
-           () {
+        body: RefreshIndicator(child: ListView(
+          children: [
+            Obx(() {
+              var hours = administratorController.missionDetailsShowList.value.report?.hours;
 
+              var mileage = administratorController.missionDetailsShowList.value.report?.mileage;
 
-            return SingleChildScrollView(
-              child: Padding(
+              return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
                 child:administratorController.missionDetailsShowList.toString().isEmpty?
                 SizedBox(
@@ -96,7 +95,7 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                     ),
                   ),
                 ):
-                administratorController.missionDetailsShowLoading.value?CustomLoader():
+                administratorController.missionDetailsShowLoading.value?Center(child: CircularProgressIndicator(color: Colors.orange,)):
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,16 +198,16 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                     ),
 
                     if((administratorController.missionDetailsShowList.value.connectedOrganizers?.isNotEmpty ??true)  && (administratorController.missionDetailsShowList.value.requestedOrganizers?.isNotEmpty ??true))
-                     CustomText(
-                      textAlign: TextAlign.start,
-                      text: "Organizers",
-                      fontSize:isTablet?6.sp: 16.sp,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.primary,
-                      bottom: 8.h,
-                    ),
+                      CustomText(
+                        textAlign: TextAlign.start,
+                        text: "Organizers",
+                        fontSize:isTablet?6.sp: 16.sp,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.primary,
+                        bottom: 8.h,
+                      ),
 
-                ///Organizers connectedOrganizers
+                    ///Organizers connectedOrganizers
                     ListView.builder(
                         itemCount: administratorController.missionDetailsShowList.value.connectedOrganizers?.length,
                         shrinkWrap: true, //
@@ -240,7 +239,7 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                  
+
                                       Column(
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -270,7 +269,7 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                                         ),
                                         child:  GestureDetector(
                                           onTap: (){
-                                           administratorController.removeSpecificOrganizer(connectedOrganizers!.id.toString(),missionId);
+                                            administratorController.removeSpecificOrganizer(connectedOrganizers!.id.toString(),missionId);
 
                                           },
                                           child:  Center(
@@ -282,7 +281,7 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                                               )),
                                         ),
                                       ),
-                                  
+
                                     ],
                                   ),
                                 )
@@ -326,29 +325,29 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                                     SizedBox(
                                       width: 10.w,
                                     ),
-                                   Row(
-                                     children: [
+                                    Row(
+                                      children: [
 
-                                     Column(
-                                       mainAxisAlignment: MainAxisAlignment.start,
-                                       crossAxisAlignment: CrossAxisAlignment.start,
-                                       children: [
-                                         CustomText(
-                                           text: "${requestedOrganizers?.fullName}",
-                                           fontSize:isTablet?8.sp:12.sp,
-                                           fontWeight: FontWeight.w600,
-                                           color: AppColors.black,
-                                         ),
-                                         CustomText(
-                                           text: "${requestedOrganizers?.profession}",
-                                           fontSize:isTablet?6.sp: 12.sp,
-                                           fontWeight: FontWeight.w400,
-                                           color: AppColors.black_80,
-                                         ),
-                                       ],
-                                     ),
+                                        Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            CustomText(
+                                              text: "${requestedOrganizers?.fullName}",
+                                              fontSize:isTablet?8.sp:12.sp,
+                                              fontWeight: FontWeight.w600,
+                                              color: AppColors.black,
+                                            ),
+                                            CustomText(
+                                              text: "${requestedOrganizers?.profession}",
+                                              fontSize:isTablet?6.sp: 12.sp,
+                                              fontWeight: FontWeight.w400,
+                                              color: AppColors.black_80,
+                                            ),
+                                          ],
+                                        ),
 
-                                   ],),
+                                      ],),
                                   ],
                                 ),
 
@@ -376,8 +375,8 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                                     SizedBox(
                                       width: 8.w,
                                     ),
-                                   administratorController.specificOrganizerDeleteLoading.value?CustomLoader():
-                                   Container(
+                                    administratorController.specificOrganizerDeleteLoading.value?CustomLoader():
+                                    Container(
                                       padding: EdgeInsets.all(6),
                                       decoration: BoxDecoration(
                                         color: AppColors.primary,
@@ -386,7 +385,7 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                                       ),
                                       child:  GestureDetector(
                                         onTap: (){
-                                        administratorController.removeSpecificOrganizer(requestedOrganizers!.id.toString(),missionId);
+                                          administratorController.removeSpecificOrganizer(requestedOrganizers!.id.toString(),missionId);
 
                                         },
                                         child:  Center(
@@ -420,7 +419,7 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                           decoration: BoxDecoration(
                             color: AppColors.neutral02,
                             borderRadius: BorderRadius.circular(10),
-                          ),child: CustomText(text: "Hours: ${administratorController.missionDetailsShowList.value.report?.hours}",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
+                          ),child: CustomText(text: "Hours: ${hours != null ? hours.round() : 0} H",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
                         ),
 
                         SizedBox(
@@ -431,7 +430,7 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                           decoration: BoxDecoration(
                             color: AppColors.neutral02,
                             borderRadius: BorderRadius.circular(10),
-                          ),child: CustomText(text: "Millage: ${administratorController.missionDetailsShowList.value.report?.mileage}",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
+                          ),child: CustomText(text: "Millage: ${mileage != null ? mileage.round() : 0} km",fontSize:isTablet?6: 12.sp,fontWeight: FontWeight.w600,),
                         ),
                       ],
                     ),
@@ -491,7 +490,7 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                         ),
                       ),
                     ):
-                    administratorController.missionEventShowLoading.value?CustomLoader():
+                    administratorController.missionEventShowLoading.value?Center(child: CircularProgressIndicator(color: Colors.orange,)):
                     ListView.builder(
                         itemCount: administratorController.missionEventShowList.length,
                         shrinkWrap: true,
@@ -505,13 +504,16 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                             child: Row(
                               children: [
 
+                                model.images?.isNotEmpty??true?
                                 CustomNetworkImage(
                                   /// imageUrl: AppConstants.eventImage,
                                   imageUrl:"${ApiUrl.imageUrl}${model.images?[0]}",
                                   height: isTablet ? 200.h : 170.h,
-                                  width: isTablet ? 180.w : 180.w,
+                                  width: isTablet ? 160.w : 160.w,
                                   borderRadius: BorderRadius.circular(10),
-                                ),
+                                ):Image.asset("assets/images/event_image.png",
+                                  height: isTablet ? 200.h : 170.h,
+                                  width: isTablet ? 160.w : 160.w,fit: BoxFit.fill,),
 
                                 const SizedBox(
                                   width: 10,
@@ -527,7 +529,7 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                                         textAlign: TextAlign.start,
                                         text: "${model.name}",
                                         maxLines: 3,
-                                        fontSize:isTablet?8.sp: 14.sp,
+                                        fontSize:isTablet?8.sp: 12.sp,
                                         fontWeight: FontWeight.w600,
                                         bottom: 5,
                                       ),
@@ -550,7 +552,7 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                                             fontWeight: FontWeight.w400,
                                             maxLines: 3,
                                             textAlign: TextAlign.start,
-                                            overflow: TextOverflow.clip,
+                                            overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
                                       ],
@@ -568,15 +570,18 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
                                           width: 30,
                                           boxShape: BoxShape.circle,
                                         ),
-                                        CustomText(
-                                          text: "${model.creator?.name}",
-                                          fontSize:isTablet?6.sp: 12.sp,
-                                          color: AppColors.black,
-                                          fontWeight: FontWeight.w600,
-                                          overflow: TextOverflow.ellipsis, // Show "..." for overflowing text
-                                          maxLines: 2,
-                                          textAlign: TextAlign.start,
-                                          left: 4,
+                                        SizedBox(
+                                          width: 100.w,
+                                          child: CustomText(
+                                            text: "${model.creator?.name}",
+                                            fontSize:isTablet?6.sp: 12.sp,
+                                            color: AppColors.black,
+                                            fontWeight: FontWeight.w600,
+                                            overflow: TextOverflow.ellipsis, // Show "..." for overflowing text
+                                            maxLines: 1,
+                                            textAlign: TextAlign.start,
+                                            left: 4,
+                                          ),
                                         ),
 
                                         CustomText(
@@ -633,10 +638,15 @@ class _AdminstratiorEventListScreenState extends State<AdminstratiorEventListScr
 
                   ],
                 ),
-              ),
-            );
-          }
-        ),
+              );
+            }
+            )
+          ],
+        ), onRefresh: ()async{
+
+          await administratorController.retriveSpecificMissionByMissionShow(missionId);
+          await  administratorController.retriveAllEventByMissionShow(missionId);
+        })
       );
     });
   }

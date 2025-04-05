@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:tractivity_app/helper/shared_prefe/shared_prefe.dart';
@@ -483,7 +484,16 @@ class OrganizerController extends GetxController{
     }
   }
 
+/*  final RxList<String> selectedImages = <String>[].obs;
+  final ImagePicker _picker = ImagePicker();
 
+// Pick multiple images from the gallery
+  Future<void> pickImagesFromGallery() async {
+    final List<XFile> images = await _picker.pickMultiImage();
+    if (images.isNotEmpty) {
+      selectedImages.addAll(images.map((image) => image.path));
+    }
+  }*/
 
   ///========= Image Picker GetX Controller Code ===========//
 
@@ -506,6 +516,7 @@ class OrganizerController extends GetxController{
       print('Error picking images: $e');
     }
   }
+
 
 
   // Observable list to store selected PDF files
@@ -588,11 +599,7 @@ class OrganizerController extends GetxController{
 
   Rx<TextEditingController> longitudeController = TextEditingController().obs;
 
-  Rx<TextEditingController> startTimeController = TextEditingController().obs;
-
-  Rx<TextEditingController> endTimeController = TextEditingController().obs;
-
-  Rx<TextEditingController> dateController = TextEditingController().obs;
+  ///Rx<TextEditingController> dateController = TextEditingController().obs;
 
   Rx<TextEditingController> volunteersRoleController = TextEditingController().obs;
 
@@ -628,27 +635,32 @@ class OrganizerController extends GetxController{
       "endTime": timeClosePicker.value,
       "date": selectedDate.value,
       "mode": eventAccessmode.value,
-      "invitedVolunteer": volunteersRoleList,
+      "invitedVolunteer": jsonEncode(volunteersRoleList.value),
     };
 
-    debugPrint("createEvent:${body}");
+    debugPrint("createEvent:${jsonEncode(body)}");
 
-  ///var response = await ApiClient.postMultipartData(ApiUrl.createEvent, jsonEncode(body));
 
+    List<MultipartBody>? multipartBody = [];
+
+    multipartBody.addAll(selectedImages.map((image)=>MultipartBody("images", image)).toList());
+    multipartBody.addAll(pickedFiles.map((pdf)=>MultipartBody("documents", pdf)).toList());
+    debugPrint("multipartBody:${multipartBody}");
 
     var response = await ApiClient.postMultipartData(ApiUrl.createEvent, body,
-        multipartBody: [MultipartBody('images', selectedImages.value as File),MultipartBody('documents', selectedImages.value as File)]);
+        multipartBody:multipartBody
+    );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
 
       createEventLoading.value = false;
 
-      Toast.successToast(response.body['message']!);
+      Toast.successToast("Event creation successfull");
 
       debugPrint("response:${body}");
 
-      missionEditNameController.value.clear();
-      missionEditDescriptionController.value.clear();
+      Get.back();
+      clearData();
 
     } else {
 
@@ -664,6 +676,24 @@ class OrganizerController extends GetxController{
         return;
       }
     }
+  }
+
+
+  void clearData(){
+
+    volunteersRoleList.clear();
+    eventNameController.value.clear();
+    eventDescriptionController.value.clear();
+    stateController.value.clear();
+    cityController.value.clear();
+    zipController.value.clear();
+    latitudeController.value.clear();
+    longitudeController.value.clear();
+    eventAccessmode.value="";
+    volunteersIdList.clear();
+    volunteersSelectedList.clear();
+    selectedImages.clear();
+    pickedFiles.clear();
   }
 
  void setSelectedVolunteersToggle(){
@@ -897,6 +927,8 @@ class OrganizerController extends GetxController{
     // TODO: implement onInit
     super.onInit();
 
+
+
      retriveInvitedMissionsShow();
 
     retrieveMissionsActive();
@@ -907,4 +939,8 @@ class OrganizerController extends GetxController{
 
     volunteersRoleList.clear();
   }
+
+
+
+
 }

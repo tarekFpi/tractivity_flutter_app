@@ -154,11 +154,11 @@ class ApiClient extends GetxService {
 
       var request =
       http.MultipartRequest('POST', Uri.parse(ApiUrl.baseUrl + uri));
-      request.fields.addAll(body);
-
-      if (multipartBody!.isNotEmpty) {
+       request.fields.addAll(body);
+      if (multipartBody!=null) {
         // ignore: avoid_function_literals_in_foreach_calls
         multipartBody.forEach((element) async {
+
           debugPrint("path : ${element.file.path}");
 
           var mimeType = lookupMimeType(element.file.path);

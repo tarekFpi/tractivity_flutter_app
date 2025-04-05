@@ -27,6 +27,7 @@ class VerificationMailScreen extends StatelessWidget {
       return Scaffold(
         ///appBar: CustomRoyelAppbar(titleName:  AppStrings.serveOut,),
         appBar: AppBar(
+          scrolledUnderElevation: 0,
           title: Text(
             AppStrings.serveOut,
             style: TextStyle(
@@ -34,7 +35,15 @@ class VerificationMailScreen extends StatelessWidget {
                 fontSize: 22.sp,
                 fontWeight: FontWeight.w600),
           ),
-
+          leading: Builder(
+            builder: (context) {
+              return IconButton(
+                onPressed: () => Get.back(),
+                icon: Icon(Icons.arrow_back_rounded, color: AppColors.black,size: isTablet?28.w:32.w
+                  ,),
+              );
+            },
+          ),
         ),
 
         body: SingleChildScrollView(

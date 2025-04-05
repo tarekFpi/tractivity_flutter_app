@@ -47,6 +47,8 @@ class _MissionToVolunteersInviteScreenState extends State<MissionToVolunteersInv
 
   String query = "";
 
+  var missionId="";
+
   @override
   void initState() {
     // TODO: implement initState
@@ -58,6 +60,7 @@ class _MissionToVolunteersInviteScreenState extends State<MissionToVolunteersInv
     }
 
     missionToVoluntController.retrieveVolunteersToMissionsInvite(administratorController.missionDetailsShowList.value.id.toString());
+
   }
 
   @override
@@ -71,146 +74,146 @@ class _MissionToVolunteersInviteScreenState extends State<MissionToVolunteersInv
             titleName: "Invite Volunteers",
             leftIcon: true,
           ),
-          body:SingleChildScrollView(
-            child: Obx(
-              () {
-                return Padding(
-                  padding: EdgeInsets.all(12.0),
-                  child:Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+          body:ListView(
+            children: [
+              Obx(() {
 
-                      CustomText(
-                        textAlign: TextAlign.start,
-                        text: "Organizations",
-                        fontSize:isTablet?6.sp: 16.sp,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.primary,
-                        bottom: 5,
-                      ),
+                    missionId= administratorController.missionDetailsShowList.value.id.toString();
 
-                      ListView.builder(
-                          itemCount: administratorController.missionDetailsShowList.value.connectedOrganizations?.length,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: EdgeInsets.all(12.0),
+                      child:Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
 
-                            final connectedOrganizations =administratorController.missionDetailsShowList.value.connectedOrganizations?[index];
+                          CustomText(
+                            textAlign: TextAlign.start,
+                            text: "Organizations",
+                            fontSize:isTablet?6.sp: 16.sp,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.primary,
+                            bottom: 5,
+                          ),
 
-                            return  Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CustomText(
-                                  text: "${connectedOrganizations?.name}",
-                                  fontSize:isTablet?6.sp: 16.sp,
-                                  color: AppColors.black_80,
-                                  fontWeight: FontWeight.w600,
-                                  bottom: 6.h,
-                                  textAlign: TextAlign.start,
-                                ),
+                          ListView.builder(
+                              itemCount: administratorController.missionDetailsShowList.value.connectedOrganizations?.length,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemBuilder: (BuildContext context, int index) {
 
-                                CustomText(
-                                  text: "${connectedOrganizations?.description}",
-                                  fontSize: 12,
-                                  color: AppColors.black_02,
-                                  fontWeight: FontWeight.w400,
-                                  textAlign: TextAlign.start,
-                                  overflow: TextOverflow.clip,
-                                  maxLines: 3,
-                                  bottom: 4.h,// Add ellipsis at the end if the text overflows.
-                                ),
-                              ],
-                            );
-                          }),
+                                final connectedOrganizations =administratorController.missionDetailsShowList.value.connectedOrganizations?[index];
 
-                      SizedBox(
-                        height: 12.h,
-                      ),
-                      const Divider(
-                        color: Colors.black54,
-                        // height: 16.h,
-                      ),
-                      CustomText(
-                        textAlign: TextAlign.start,
-                        text: "Mission",
-                        fontSize:isTablet?6.sp: 16.sp,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.primary,
-                        bottom: 5,
-                      ),
-                      CustomText(
-                        text: "${administratorController.missionDetailsShowList.value.name}",
-                        fontSize:isTablet?6.sp: 16.sp,
-                        color: AppColors.black_80,
-                        fontWeight: FontWeight.w600,
-                        bottom: 6.h,
-                      ),
+                                return  Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CustomText(
+                                      text: "${connectedOrganizations?.name}",
+                                      fontSize:isTablet?6.sp: 16.sp,
+                                      color: AppColors.black_80,
+                                      fontWeight: FontWeight.w600,
+                                      bottom: 6.h,
+                                      textAlign: TextAlign.start,
+                                    ),
 
-                      SizedBox(
-                        height: 8.h,
-                      ),
-                      ///============ search ======================================
+                                    CustomText(
+                                      text: "${connectedOrganizations?.description}",
+                                      fontSize: 12,
+                                      color: AppColors.black_02,
+                                      fontWeight: FontWeight.w400,
+                                      textAlign: TextAlign.start,
+                                      overflow: TextOverflow.clip,
+                                      maxLines: 3,
+                                      bottom: 4.h,// Add ellipsis at the end if the text overflows.
+                                    ),
+                                  ],
+                                );
+                              }),
 
-                      CustomTextField(
-                        textEditingController:queryEditingController,
-                        fillColor: AppColors.neutral02,
-                        //  hintText: AppStrings.search,
-                        hintText: "Search for name...",
-                        onChanged: (value){
-                          setState(() {
-                            query = value;
-                          });
-                          missionToVoluntController.searchVolunteersList(query);
-                        },
+                          SizedBox(
+                            height: 12.h,
+                          ),
+                          const Divider(
+                            color: Colors.black54,
+                            // height: 16.h,
+                          ),
+                          CustomText(
+                            textAlign: TextAlign.start,
+                            text: "Mission",
+                            fontSize:isTablet?6.sp: 16.sp,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.primary,
+                            bottom: 5,
+                          ),
+                          CustomText(
+                            text: "${administratorController.missionDetailsShowList.value.name}",
+                            fontSize:isTablet?6.sp: 16.sp,
+                            color: AppColors.black_80,
+                            fontWeight: FontWeight.w600,
+                            bottom: 6.h,
+                          ),
 
-                        suffixIcon: query.isBlank == true || query.isEmpty
-                            ? Icon(
-                          FluentIcons.search_24_regular,
-                          size: 24,
-                        )
-                            : IconButton(
-                            icon: Icon(Icons.close,size: 24,),
-                            onPressed: () {
+                          SizedBox(
+                            height: 8.h,
+                          ),
+                          ///============ search ======================================
+
+                          CustomTextField(
+                            textEditingController:queryEditingController,
+                            fillColor: AppColors.neutral02,
+                            //  hintText: AppStrings.search,
+                            hintText: "Search for name...",
+                            onChanged: (value){
                               setState(() {
-                                query = "";
+                                query = value;
                               });
-                              queryEditingController.clear();
-                              FocusScope.of(context).unfocus();
+                              missionToVoluntController.searchVolunteersList(query);
+                            },
 
-                              missionToVoluntController.searchVolunteersList("");
+                            suffixIcon: query.isBlank == true || query.isEmpty
+                                ? Icon(
+                              FluentIcons.search_24_regular,
+                              size: 24,
+                            )
+                                : IconButton(
+                                icon: Icon(Icons.close,size: 24,),
+                                onPressed: () {
+                                  setState(() {
+                                    query = "";
+                                  });
+                                  queryEditingController.clear();
+                                  FocusScope.of(context).unfocus();
 
-                            }),
+                                  missionToVoluntController.searchVolunteersList("");
 
-                      ),
+                                }),
+
+                          ),
 
 
-                      const SizedBox(
-                        height: 12,
-                      ),
-                        SizedBox(
-                        height: 12.h,
-                      ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          SizedBox(
+                            height: 12.h,
+                          ),
 
-                      missionToVoluntController.obx((state){
-
-                        if (state == null || state.isEmpty) {
-
-                          return SizedBox(
-                            height: MediaQuery.of(context).size.height/2,
+                          missionToVoluntController.retriveVolunteersMissionsList.isEmpty?
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height/4,
                             child: Center(
                               child: CustomText(
-                                text: "No volunteers yet!!",
+                                text: "No invite volunteers yet!!",
                                 fontSize:isTablet?12.sp: 24.sp,
                                 fontWeight: FontWeight.w700,
                                 color: AppColors.lightRed,
                               ),
                             ),
-                          );
+                          ):
+                          missionToVoluntController.obx((state){
 
-                        }else{
-                          return ListView.builder(
+                            return ListView.builder(
                               itemCount:state?.length,
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
@@ -300,16 +303,16 @@ class _MissionToVolunteersInviteScreenState extends State<MissionToVolunteersInv
                                     ),
                                   ),
                                 );
-                              });
-                        }
+                              },);
 
-                      }),
+                          }),
 
-                    ],
-                  ),
-                );
-              }
-            ),
+                        ],
+                      ),
+                    );
+                  }
+              )
+            ],
           ),
 
           bottomNavigationBar: Column(

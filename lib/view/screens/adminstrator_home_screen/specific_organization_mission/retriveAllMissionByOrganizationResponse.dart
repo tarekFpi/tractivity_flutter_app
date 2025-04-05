@@ -133,8 +133,8 @@ class Creator {
 }
 
 class Report {
-  int? hours;
-  int? mileage;
+  dynamic? hours;
+  dynamic? mileage;
 
   Report({
     this.hours,

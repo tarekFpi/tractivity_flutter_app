@@ -39,27 +39,31 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             },
             child: Row(
               children: [
-                eventController.userProfileShowLoading.value?CustomLoader():
+                eventController.userProfileShowLoading.value?Center(child: CircularProgressIndicator(color: Colors.orange,)):
                 CustomNetworkImage(
-                  imageUrl:eventController.userProfileShowList.value.image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}/${eventController.userProfileShowList.value.image}",
+                  imageUrl:eventController.userProfileShowList.value.image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}${eventController.userProfileShowList.value.image}",
                   height: 100.h,
                   width: 100.w,
                   boxShape: BoxShape.circle,
                   border: Border.all(color: AppColors.primary, width: 3),
                 ),
                 SizedBox(
-                  width: 10.w,
+                  width: 8.w,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+
                     CustomText(
                       text: "${eventController.userProfileShowList.value.fullName}",
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
                     ),
                     Row(
+
                       children: [
+
                         Icon(
                           Icons.location_on,
                           color: AppColors.primary,
@@ -74,7 +78,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             color: AppColors.primary,
                             fontWeight: FontWeight.w400,
                             overflow: TextOverflow.ellipsis,
-                            maxLines: 3,
+                            maxLines:eventController.userProfileShowList.value.address?.length,
                             textAlign: TextAlign.start,
                           ),
                         ),
