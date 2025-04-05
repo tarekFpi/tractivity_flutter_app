@@ -27,14 +27,11 @@ void main() async{
   ));
 
   await GetStorage.init();
-
   runApp(const MyApp());
-
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
-
 
   await initNotifications();
 }
