@@ -64,7 +64,7 @@ class AuthController extends GetxController {
 
     if (response.statusCode == 200) {
 
-      Toast.successToast("User profile change successfull");
+      Toast.successToast("User profile change successfully");
 
       changeProfileLoading.value =false;
 
@@ -187,7 +187,7 @@ class AuthController extends GetxController {
 
     if (response.statusCode == 200) {
 
-      Toast.successToast("User modified successfull");
+      Toast.successToast("User modified successfully");
       Get.back();
 
       refresh();
@@ -312,7 +312,6 @@ class AuthController extends GetxController {
 
     userRegisterLoading.value = true;
 
-
    var body = json.encode({
       "fullName": fullNameController.value.text,
       "profession": talentSkillController.value.text,
@@ -335,7 +334,13 @@ class AuthController extends GetxController {
     if (response.statusCode == 201) {
 
       Toast.successToast(response.body['message']);
-      Get.toNamed(AppRoutes.loginScreen);
+
+      Get.toNamed(AppRoutes.verificationEmail_Screen, arguments: [
+        {
+          "email":emailController.value.text
+        }
+      ]);
+
 
       clearUserRegisterTextFields();
       refresh();
@@ -370,7 +375,11 @@ class AuthController extends GetxController {
   }
 
   ///======================VALITATION CONTROLLER=====================
+
   Rx<TextEditingController> otpController = TextEditingController().obs;
+
+  Rx<TextEditingController> EmailOtpController = TextEditingController().obs;
+
   ///=====================VALITATION METHOD=====================
 
   RxBool otpLoading = false.obs;
@@ -418,6 +427,7 @@ class AuthController extends GetxController {
   }
 
 
+
   RxBool otpResetLoading = false.obs;
 
   Future<void> otpResetValidation(String email) async {
@@ -455,6 +465,87 @@ class AuthController extends GetxController {
     }
   }
 
+
+  ///===================== verification email singUp  =====================
+
+  RxBool verificationEmailLoading = false.obs;
+
+  Future<void> verificationEmail(String email,String code) async {
+
+    verificationEmailLoading.value = true;
+
+    var body = {
+      "email": email,
+      "code": code,
+    };
+
+    var response = await ApiClient.postData(ApiUrl.verify_email, jsonEncode(body));
+
+    if (response.statusCode == 200) {
+
+      verificationEmailLoading.value = false;
+      refresh();
+
+      Toast.successToast(response.body['message']);
+
+      Get.toNamed(AppRoutes.loginScreen);
+
+    } else {
+
+      if (response.statusText == ApiClient.somethingWentWrong) {
+
+        Toast.errorToast(AppStrings.checknetworkconnection);
+        verificationEmailLoading.value = false;
+        refresh();
+        return;
+
+      } else {
+        ApiChecker.checkApi(response);
+        verificationEmailLoading.value = false;
+        refresh();
+        return;
+      }
+    }
+  }
+
+  ///===================== verification otpReset  singUp  =====================
+
+  RxBool otpResetEmailOtpLoading = false.obs;
+
+  Future<void> otpResetEmailOtpValidation(String email) async {
+
+    otpResetEmailOtpLoading.value = true;
+
+    var body = {
+      "email": email,
+    };
+
+    var response = await ApiClient.postData(ApiUrl.verify_otp, jsonEncode(body));
+    if (response.statusCode == 200) {
+      otpResetEmailOtpLoading.value = false;
+      refresh();
+
+      Toast.successToast(response.body['message']);
+
+
+
+    } else {
+
+      if (response.statusText == ApiClient.somethingWentWrong) {
+
+        Toast.errorToast(AppStrings.checknetworkconnection);
+        otpResetEmailOtpLoading.value = false;
+        refresh();
+        return;
+
+      } else {
+        ApiChecker.checkApi(response);
+        otpResetEmailOtpLoading.value = false;
+        refresh();
+        return;
+      }
+    }
+  }
 
   ///====================FORGET PASSWORD CONTROLLER==================
   Rx<TextEditingController> forgetEmailController = TextEditingController().obs;
@@ -573,6 +664,20 @@ class AuthController extends GetxController {
       refresh();
     ///  showCustomSnackBar(response.body['message']!, isError: false);
 
+     /* if(response.body["data"]["isEmailVerified"]==true){
+
+      }else{
+
+        Toast.errorToast("Email is not verified..!!");
+
+        Get.toNamed(AppRoutes.verificationEmail_Screen,arguments: [
+          {
+            "email":loginEmailController.value.text
+          }
+        ]);
+
+      }*/
+
       SharePrefsHelper.setString(AppConstants.bearerToken, response.body["data"]["accessToken"]);
 
       SharePrefsHelper.setString(AppConstants.userId, response.body["data"]["_id"]);
@@ -583,6 +688,7 @@ class AuthController extends GetxController {
       Get.toNamed(AppRoutes.homeScreen);
 
       Toast.successToast(response.body['message']!);
+
       SocketApi.init();
 
     } else {

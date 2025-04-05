@@ -380,7 +380,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
                             debugPrint("rolesList:${jsonEncode(authController.rolesList.value)} :address:${authController.address}");
 
-                            if (formKey.currentState!.validate()) {
+                           if (formKey.currentState!.validate()) {
 
                               if(authController.passwordController.value.text!= authController.confirmPasswordController.value.text){
 
@@ -393,7 +393,6 @@ class _SignupScreenState extends State<SignupScreen> {
 
                                 authController.userRegister();
                               }
-
                             }
 
                           },

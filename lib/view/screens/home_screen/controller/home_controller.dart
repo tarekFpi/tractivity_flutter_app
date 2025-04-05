@@ -34,7 +34,7 @@ class HomeController extends GetxController with StateMixin<List<OrganizationRes
 
   RxList<String> nameList = [
     "My Events",
-    "My Organization",
+    "Organizations",
   ].obs;
 
   RxBool donationStatues = false.obs;

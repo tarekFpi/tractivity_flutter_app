@@ -8,6 +8,7 @@ import 'package:tractivity_app/view/screens/adminstrator_home_screen/adminstrato
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/event_complete_screen.dart';
 import 'package:tractivity_app/view/screens/adminstrator_home_screen/member/adminstrator_member.dart';
 import 'package:tractivity_app/view/screens/auth_screen/signup_screen/location_map_screen.dart';
+import 'package:tractivity_app/view/screens/auth_screen/signup_screen/verification_email_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/chart/single_message_screen.dart';
 import 'package:tractivity_app/view/screens/home_screen/chart/message_list/massage_list_screen.dart';
 import 'package:tractivity_app/view/screens/auth_screen/forgot_password/forgot_password.dart';
@@ -65,11 +66,9 @@ class AppRoutes {
   static const String onboardingScreen = "/OnboardingScreen";
   static const String loginScreen = "/LoginScreen";
   static const String locationMapScreen = "/LocationMapScreen";
+  static const String verificationEmail_Screen = "/VerificationEmail_Screen";
 
 
-
-
-  ////============ Mededi =================
 
   static const String settingScreen = "/SettingScreen";
   static const String aboutUsScreen = "/AboutUsScreen";
@@ -139,6 +138,7 @@ class AppRoutes {
     GetPage(name: loginScreen, page: () => LoginScreen()),
     GetPage(name: signupScreen, page: () => SignupScreen()),
     GetPage(name: locationMapScreen, page: () => LocationMapScreen()),
+    GetPage(name: verificationEmail_Screen, page: () => VerificationEmail_Screen()),
 
     GetPage(name: verificationMailScreen, page: () => VerificationMailScreen()),
     GetPage(name: verificationScreen, page: () => VerificationScreen()),

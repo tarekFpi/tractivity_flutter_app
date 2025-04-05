@@ -1,10 +1,12 @@
 class ApiUrl {
 
-  ///static const String baseUrl = "http://10.0.60.55:5001/v1";
+   static const String baseUrl = "http://10.0.60.55:5001/v1";
 
-  static const String baseUrl = "https://joinup-tracactivity-server.onrender.com/v1";
+  //static const String baseUrl = "https://joinup-tracactivity-server.onrender.com/v1";
 
-  static const String imageUrl = "https://joinup-tracactivity-server.onrender.com/v1/";
+  //static const String imageUrl = "https://joinup-tracactivity-server.onrender.com/v1/";
+
+  static const String imageUrl = "http://10.0.60.55:5001/v1/";
 
   static  String socketUrl({required String id}) => "https://joinup-tracactivity-server.onrender.com?userId=$id";
 
@@ -28,7 +30,11 @@ class ApiUrl {
 
   static const String termsCondition = "/terms-condition/retrive";
 
+/// Verify user email singUp
+   static const String verify_email = "/user/auth/verify-email";
 
+   /// Resend email verification code singUp
+   static const String verify_otp = "/user/auth/email-verification/resend-code";
 
   ///============= Profile Apis ===============
   static String getUserProfile({required String userId}) => "/user/$userId";

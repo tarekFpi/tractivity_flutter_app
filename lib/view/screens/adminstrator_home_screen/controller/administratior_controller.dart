@@ -317,6 +317,8 @@ class AdministratiorController extends GetxController {
 
   RxList<String> organizationIdList= <String>[].obs;
 
+  RxBool isExpanded=false.obs;
+
   RxList<String> createLeaderIdList= <String>[].obs;
 
   RxBool selectedOranization = false.obs;
