@@ -24,6 +24,7 @@ class _VerificationEmail_ScreenState extends State<VerificationEmail_Screen> {
   String? email;
 
   final authController = Get.put(AuthController());
+
   final newTextEditingController = TextEditingController();
 
   @override
@@ -159,7 +160,7 @@ class _VerificationEmail_ScreenState extends State<VerificationEmail_Screen> {
                         authController.verificationEmailLoading.value?Center(child: CircularProgressIndicator()): CustomButton(
                           onTap: () {
 
-                          authController.verificationEmail(email.toString(),newTextEditingController.toString());
+                          authController.verificationEmail(email.toString(),newTextEditingController.value.text.toString());
                           },
                           title: AppStrings.confirm,
                           height: isTablet?60.h:60.h,

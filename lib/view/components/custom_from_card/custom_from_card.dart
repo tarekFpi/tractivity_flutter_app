@@ -40,7 +40,8 @@ class CustomFormCard extends StatelessWidget {
     this.maxLine,
     this.fontSize,
     this.titleColor,
-    this.prefixIcon, this.keyboardType,
+    this.prefixIcon,
+    this.keyboardType,
   });
 
   @override
@@ -57,6 +58,7 @@ class CustomFormCard extends StatelessWidget {
           bottom: 12.h,
           maxLines: 2,
         ),
+
         CustomTextField(
           prefixIcon: prefixIcon,
           validator: validator,

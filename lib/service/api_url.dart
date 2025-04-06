@@ -1,17 +1,15 @@
 class ApiUrl {
 
-   static const String baseUrl = "http://10.0.60.55:5001/v1";
+   //static const String baseUrl = "http://10.0.60.55:5001/v1";
 
-  //static const String baseUrl = "https://joinup-tracactivity-server.onrender.com/v1";
+  static const String baseUrl = "https://joinup-tracactivity-server.onrender.com/v1";
 
-  //static const String imageUrl = "https://joinup-tracactivity-server.onrender.com/v1/";
+  static const String imageUrl = "https://joinup-tracactivity-server.onrender.com/v1/";
 
-  static const String imageUrl = "http://10.0.60.55:5001/v1/";
+ // static const String imageUrl = "http://10.0.60.55:5001/v1/";
 
+  //I am just resolving my git issues right now
   static  String socketUrl({required String id}) => "https://joinup-tracactivity-server.onrender.com?userId=$id";
-
-  // server url : http://115.127.156.14:5002/api/v1
-  // local url : http://192.168.12.31:5003/api/v1
 
 ///========================= Authentication =========================
 
