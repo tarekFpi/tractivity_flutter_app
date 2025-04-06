@@ -18,6 +18,7 @@ import 'package:tractivity_app/view/components/custom_netwrok_image/custom_netwo
 import 'package:tractivity_app/view/components/custom_royel_appbar/custom_royel_appbar.dart';
 import 'package:tractivity_app/view/components/custom_text/custom_text.dart';
 import 'package:tractivity_app/view/screens/auth_screen/controller/auth_controller.dart';
+import 'package:tractivity_app/view/screens/auth_screen/signup_screen/CapitalizeWordsFormatter.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -42,7 +43,6 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,6 +63,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       () {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
 
                         /// Title
@@ -218,7 +219,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
                         /// Form Fields
                         ///============ Last Name ============
-                        CustomFormCard(
+                    /*    CustomFormCard(
                           title: AppStrings.yourName,
                           hintText: AppStrings.enterYourName,
                           fontSize: isTablet?16:16,
@@ -230,13 +231,57 @@ class _SignupScreenState extends State<SignupScreen> {
                             }
                             return null;
                           },
+                        ),*/
+
+                        CustomText(
+                          text: AppStrings.yourName,
+                          color:  AppColors.black,
+                          fontWeight: FontWeight.w600,
+                          fontSize:isTablet? 16:16,
+                          bottom: 8.h,
+                          maxLines: 2,
+                        ),
+
+                        TextFormField(
+                          textCapitalization: TextCapitalization.words,
+                          controller: authController.fullNameController.value,
+                          keyboardType: TextInputType.text,
+                          inputFormatters: [CapitalizeWordsFormatter()],
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return AppStrings.fieldCantBeEmpty;
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            //labelText: 'Email',
+                            hintText: AppStrings.enterYourName,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16), // 👈 Circular corners
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16), // 👈 Keep consistent
+                              borderSide: BorderSide(color: Colors.black, width: 1),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16),
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+
+                          ),
+                        ),
+
+                        SizedBox(
+                          height: 12.h,
                         ),
 
                         ///============ Talent/skill ============
                         CustomFormCard(
+                          maxLine: 1,
+                          keyboardType: TextInputType.emailAddress,
                           title: AppStrings.talentSkill,
                           hintText: AppStrings.enterSkill,
-                          fontSize: isTablet?16:16,
+                          fontSize: isTablet?16:14,
                           hasBackgroundColor: true,
                           controller: authController.talentSkillController.value,
                           validator: (value) {
@@ -264,7 +309,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
 
                         ///============ email ============
-                        CustomFormCard(
+                     /*   CustomFormCard(
                           title: AppStrings.email,
                           hintText: AppStrings.enterYourEmail,
                           fontSize: isTablet?16:16,
@@ -276,6 +321,46 @@ class _SignupScreenState extends State<SignupScreen> {
                             }
                             return null;
                           },
+                        ),*/
+
+                        CustomText(
+                          text: AppStrings.email,
+                          color:  AppColors.black,
+                          fontWeight: FontWeight.w600,
+                          fontSize:isTablet? 16:16,
+                          bottom: 8.h,
+                          maxLines: 2,
+                        ),
+
+                        TextFormField(
+                          controller: authController.emailController.value,
+                          keyboardType: TextInputType.emailAddress,
+                        validator: (value) {
+                        if (value == null || value.isEmpty) {
+                        return AppStrings.fieldCantBeEmpty;
+                        }
+                        return null;
+                        },
+                          decoration: InputDecoration(
+                            //labelText: 'Email',
+                            hintText: 'example@email.com',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16), // 👈 Circular corners
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16), // 👈 Keep consistent
+                              borderSide: BorderSide(color: Colors.black, width: 1),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16),
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+
+                          ),
+                        ),
+
+                        SizedBox(
+                          height: 8.h,
                         ),
 
                         ///============ Location ============
@@ -373,14 +458,13 @@ class _SignupScreenState extends State<SignupScreen> {
 
                         /// Sign Up Button
 
-                      authController.userRegisterLoading.value?CustomLoader():
+                    //  authController.userRegisterLoading.value?CustomLoader():
                       CustomButton(
                           height: isTablet?70:60,
                           onTap: () {
 
-                            debugPrint("rolesList:${jsonEncode(authController.rolesList.value)} :address:${authController.address}");
 
-                           if (formKey.currentState!.validate()) {
+                        if (formKey.currentState!.validate()) {
 
                               if(authController.passwordController.value.text!= authController.confirmPasswordController.value.text){
 

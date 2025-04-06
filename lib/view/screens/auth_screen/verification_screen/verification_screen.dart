@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
@@ -26,6 +27,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
   final authController = Get.put(AuthController());
 
+  final newTextEditingController = TextEditingController();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -36,6 +39,14 @@ class _VerificationScreenState extends State<VerificationScreen> {
       email = Get.arguments[0]["email"];
     }
   }
+
+  @override
+  void dispose() {
+    newTextEditingController.dispose();
+
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +104,35 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         bottom: 30.h,
                         color: AppColors.black,
                       ),
-                      CustomPinCode(controller: authController.otpController.value),
+
+                     ///CustomPinCode(controller: authController.otpController.value),
+
+                      Padding(
+                        padding: const EdgeInsets.only(left: 30, right: 30),
+                        child: PinCodeTextField(
+                          textStyle: TextStyle(color: Colors.white),
+                          keyboardType: TextInputType.number,
+                          appContext: context,
+                          length: 4,
+                          enableActiveFill: true,
+                          animationType: AnimationType.fade,
+                          animationDuration: Duration(milliseconds: 300),
+                          controller: newTextEditingController,
+                          pinTheme: PinTheme(
+                            shape: PinCodeFieldShape.box,
+                            borderRadius: BorderRadius.circular(16),
+                            fieldHeight: isTablet?70.h:60.h,
+                            fieldWidth: 60.0,
+                            inactiveColor: AppColors.grey_1,
+                            activeColor: AppColors.grey_1,
+                            activeFillColor: AppColors.grey_1,
+                            inactiveFillColor: AppColors.grey_1,
+                            selectedFillColor: AppColors.grey_1,
+                            disabledColor: AppColors.grey_1,
+                            selectedColor: AppColors.grey_1,
+                          ),
+                        ),
+                      ),
 
                       SizedBox(height: 20.h),
 
@@ -130,7 +169,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   authController.otpLoading.value?CustomLoader(): CustomButton(
                     onTap: () {
 
-                    authController.otpValidation(email.toString());
+                    authController.otpValidation(email.toString(),newTextEditingController.value.text.toString());
                     },
                     title: AppStrings.confirm,
                     height: isTablet?60.h:60.h,

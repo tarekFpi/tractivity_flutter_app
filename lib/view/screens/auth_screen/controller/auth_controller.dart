@@ -311,9 +311,13 @@ class AuthController extends GetxController {
   Future<void> userRegister() async {
 
     userRegisterLoading.value = true;
+    final nameToFullName = formatName(fullNameController.value.text);
+
+    //debugPrint("fullNameController:${nameToSave}");
+
 
    var body = json.encode({
-      "fullName": fullNameController.value.text,
+      "fullName": nameToFullName,
       "profession": talentSkillController.value.text,
       "email": emailController.value.text,
       "phone": phoneNumberController.value.text,
@@ -335,7 +339,7 @@ class AuthController extends GetxController {
 
       Toast.successToast(response.body['message']);
 
-      Get.toNamed(AppRoutes.verificationEmail_Screen, arguments: [
+      Get.offNamed(AppRoutes.verificationEmail_Screen, arguments: [
         {
           "email":emailController.value.text
         }
@@ -364,6 +368,17 @@ class AuthController extends GetxController {
   }
 
 
+  String formatName(String name) {
+    return name
+        .trim()
+        .split(' ')
+        .map((word) => word.isNotEmpty
+        ? word[0].toUpperCase() + word.substring(1).toLowerCase()
+        : '')
+        .join(' ');
+  }
+
+
   ///=========== CLEAR USER REGITER TEXT FIELDS =============
   clearUserRegisterTextFields() {
     fullNameController.value.clear();
@@ -384,14 +399,14 @@ class AuthController extends GetxController {
 
   RxBool otpLoading = false.obs;
 
-  Future<void> otpValidation(String email) async {
+  Future<void> otpValidation(String email,String code) async {
 
     otpLoading.value = true;
 
     refresh();
     var body = {
       "email": email,
-      "otp": otpController.value.text,
+      "otp": code,
     };
     var response = await ApiClient.postData(ApiUrl.otp_verify, jsonEncode(body));
     if (response.statusCode == 200) {
@@ -639,7 +654,7 @@ class AuthController extends GetxController {
   ///======================LOGIN CONTROLLER=====================
 
   Rx<TextEditingController> loginEmailController = TextEditingController(
-    text: kDebugMode ? "taleg84804@citdaca.com" : "", ///fahadhossain0503@gmail.com //taleg84804@citdaca.com
+    text: kDebugMode ? "peraso6002@buides.com" : "", ///fahadhossain0503@gmail.com //taleg84804@citdaca.com
   ).obs;
 
   Rx<TextEditingController> loginPasswordController = TextEditingController(
@@ -664,19 +679,7 @@ class AuthController extends GetxController {
       refresh();
     ///  showCustomSnackBar(response.body['message']!, isError: false);
 
-     /* if(response.body["data"]["isEmailVerified"]==true){
-
-      }else{
-
-        Toast.errorToast("Email is not verified..!!");
-
-        Get.toNamed(AppRoutes.verificationEmail_Screen,arguments: [
-          {
-            "email":loginEmailController.value.text
-          }
-        ]);
-
-      }*/
+      if(response.body["data"]["isEmailVerified"]==true){
 
       SharePrefsHelper.setString(AppConstants.bearerToken, response.body["data"]["accessToken"]);
 
@@ -688,6 +691,18 @@ class AuthController extends GetxController {
       Get.toNamed(AppRoutes.homeScreen);
 
       Toast.successToast(response.body['message']!);
+
+      }else{
+
+        Toast.errorToast("Email is not verified..!!");
+
+        Get.toNamed(AppRoutes.verificationEmail_Screen,arguments: [
+          {
+            "email":loginEmailController.value.text
+          }
+        ]);
+
+      }
 
       SocketApi.init();
 
