@@ -47,72 +47,77 @@ class VerificationMailScreen extends StatelessWidget {
         ),
 
         body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 80),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-
-
-                Column(
+          child: Obx(
+              () {
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 80),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CustomText(
-                      top: 80.h,
-                      text: AppStrings.emailConfirmation,
-                      fontSize: 32,
-                      fontWeight: FontWeight.w600,
-                      bottom: 20.h,
+
+
+                    Column(
+                      children: [
+                        CustomText(
+                          top: 80.h,
+                          text: AppStrings.emailConfirmation,
+                          fontSize: 32,
+                          fontWeight: FontWeight.w600,
+                          bottom: 20.h,
+                        ),
+                        CustomText(
+                          text: AppStrings.enterYourEmailForVerification,
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w400,
+                          maxLines: 2,
+                          bottom: 32.h,
+                          color: AppColors.black,
+                        ),
+
+                        ///============ Email ============ forgetEmailController
+                        CustomFormCard(
+                          title: AppStrings.email,
+                          // hasBackgroundColor: true,
+                          titleColor: Colors.black,
+                          fontSize: isTablet?16:16,
+                          hintText: AppStrings.enterYourEmail,
+                          controller:authController.forgetEmailController.value,
+
+                        ),
+
+                        SizedBox(
+                          height: 12,
+                        ),
+
+                        ///============ sendVerificationCode  Button ============
+                         authController.forgetPasswordLoading.value?Center(child: CircularProgressIndicator(color: AppColors.primary,)):
+                         CustomButton(
+                          onTap: () {
+
+                            if(authController.forgetEmailController.value.text==""){
+
+                              Toast.errorToast("Your email is Empty!!..");
+
+                            }else{
+
+                             authController.forgetPassword();
+                            }
+
+
+                          },
+                          title: AppStrings.sendVerificationCode,
+                          height: isTablet?60.h:60.h,
+                          fontSize: isTablet ? 10.sp : 14.sp,
+                        ),
+                      ],
                     ),
-                    CustomText(
-                      text: AppStrings.enterYourEmailForVerification,
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                      maxLines: 2,
-                      bottom: 32.h,
-                      color: AppColors.black,
-                    ),
-
-                    ///============ Email ============ forgetEmailController
-                    CustomFormCard(
-                      title: AppStrings.email,
-                      // hasBackgroundColor: true,
-                      titleColor: Colors.black,
-                      fontSize: isTablet?16:16,
-                      hintText: AppStrings.enterYourEmail,
-                      controller:authController.forgetEmailController.value,
-
-                    ),
-
-                    SizedBox(
-                      height: 12,
-                    ),
-
-                    ///============ Login Button ============
-                  authController.forgetPasswordLoading.value?CircularProgressIndicator(color: AppColors.primary,):  CustomButton(
-                      onTap: () {
-
-                        if(authController.forgetEmailController.value.text==""){
-
-                          Toast.errorToast("Your email is Empty!!..");
-
-                        }else{
-
-                         authController.forgetPassword();
-                        }
 
 
-                      },
-                      title: AppStrings.sendVerificationCode,
-                      height: isTablet?60.h:60.h,
-                      fontSize: isTablet ? 10.sp : 14.sp,
-                    ),
                   ],
                 ),
-
-
-              ],
-            ),
+              );
+            }
           ),
         ),
       );

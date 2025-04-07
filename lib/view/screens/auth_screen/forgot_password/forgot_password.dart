@@ -128,8 +128,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         authController.restPassword(email.toString());
                       }
 
-
-
                       },
                       title: AppStrings.updatePasswordText,
                       height: isTablet?60.h:60.h,

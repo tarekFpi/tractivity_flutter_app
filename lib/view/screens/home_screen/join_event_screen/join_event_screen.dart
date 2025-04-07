@@ -146,7 +146,7 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
                                 child: Center(
                                   child: CustomText(
                                     text: "No event invitation  yet!!",
-                                    fontSize:isTablet?12.sp: 24.sp,
+                                    fontSize:isTablet?12.sp: 18.sp,
                                     fontWeight: FontWeight.w700,
                                     color: AppColors.lightRed,
                                   ),
@@ -427,7 +427,7 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
                                child: Center(
                                  child: CustomText(
                                    text: "No event yet!!",
-                                   fontSize:isTablet?12.sp: 24.sp,
+                                   fontSize:isTablet?12.sp: 18.sp,
                                    fontWeight: FontWeight.w700,
                                    color: AppColors.lightRed,
                                  ),

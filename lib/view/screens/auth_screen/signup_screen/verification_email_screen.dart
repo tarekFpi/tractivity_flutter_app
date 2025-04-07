@@ -133,17 +133,18 @@ class _VerificationEmail_ScreenState extends State<VerificationEmail_Screen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
 
-                            CustomText(
+                            const CustomText(
                               text: AppStrings.ididntFind,
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
                               color: AppColors.black_04,
                               right: 10,
                             ),
+                            authController.otpResetEmailOtpLoading.value?Center(child: CircularProgressIndicator()):
                             GestureDetector(
                               onTap: (){
 
-                                authController.otpResetEmailOtpLoading.value?Center(child: CircularProgressIndicator()): authController.otpResetEmailOtpValidation(email.toString());
+                                 authController.otpResetEmailOtpValidation(email.toString());
                               },
                               child: CustomText(
                                 text: AppStrings.sendAgain,

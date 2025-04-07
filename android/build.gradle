@@ -17,8 +17,9 @@ tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
 
-/*dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "com.google.android.gms:play-services-location:21.0.1"
-    implementation 'com.google.android.gms:play-services-maps:18.1.0'
-}*/
+/* dependencies {
+     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+//    implementation "com.google.android.gms:play-services-location:21.0.1"
+//    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+ }*/

@@ -108,7 +108,7 @@ class _MassageListScreenState extends State<MassageListScreen> {
                           child: Center(
                             child: CustomText(
                               text: "No conversations user yet!!",
-                              fontSize:isTablet?12.sp: 24.sp,
+                              fontSize:isTablet?12.sp: 18.sp,
                               fontWeight: FontWeight.w700,
                               color: AppColors.lightRed,
                             ),

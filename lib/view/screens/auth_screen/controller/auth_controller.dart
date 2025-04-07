@@ -415,10 +415,10 @@ class AuthController extends GetxController {
 
       Toast.successToast(response.body['message']);
 
-      Get.toNamed(AppRoutes.forgotPassword,
+      Get.offNamed(AppRoutes.forgotPassword,
           arguments: [
             {
-              "email":forgetEmailController.value.text
+              "email":email
             }
           ]
       );
@@ -460,7 +460,6 @@ class AuthController extends GetxController {
 
       Toast.successToast(response.body['message']);
 
-      Get.toNamed(AppRoutes.forgotPassword);
 
     } else {
 
@@ -542,8 +541,6 @@ class AuthController extends GetxController {
 
       Toast.successToast(response.body['message']);
 
-
-
     } else {
 
       if (response.statusText == ApiClient.somethingWentWrong) {
@@ -563,7 +560,9 @@ class AuthController extends GetxController {
   }
 
   ///====================FORGET PASSWORD CONTROLLER==================
+  ///
   Rx<TextEditingController> forgetEmailController = TextEditingController().obs;
+
   ///================= FORGET PASSWORD METHOD================
 
   RxBool forgetPasswordLoading = false.obs;
@@ -572,6 +571,7 @@ class AuthController extends GetxController {
 
     forgetPasswordLoading.value = true;
     refresh();
+
     var body = {"email": forgetEmailController.value.text};
 
     var response = await ApiClient.postData(ApiUrl.forget_password, jsonEncode(body));
@@ -579,16 +579,28 @@ class AuthController extends GetxController {
     if (response.statusCode == 200) {
 
       forgetPasswordLoading.value = false;
+      schedulController
+          .scheduleDaySlotList
+          .value
+          .timeSlot
+          ?.add(schedulController
+          .createTimeSchedulePicker
+          .value);
 
+      schedulController
+          .scheduleDaySlotList
+          .refresh();
       refresh();
 
       Toast.successToast(response.body['message']);
 
-      Get.toNamed(AppRoutes.verificationScreen,arguments: [
+      Get.offNamed(AppRoutes.verificationScreen,arguments: [
         {
           "email":forgetEmailController.value.text
         }
       ]);
+
+      forgetEmailController.value.clear();
 
     } else {
 
@@ -660,6 +672,7 @@ class AuthController extends GetxController {
   Rx<TextEditingController> loginPasswordController = TextEditingController(
     text: kDebugMode ? "12345678" : "", ///12345678
   ).obs;
+
 
   ///=====================LOGIN METHOD=====================
   RxBool loginLoading = false.obs;

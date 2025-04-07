@@ -128,13 +128,13 @@ class _FriendScreenState extends State<FriendScreen> {
                                   if(value.isEmpty){
                                     FocusScope.of(context).unfocus();
 
-                                    Future.delayed(Duration(seconds: 2), () {
+                                    Future.delayed(Duration(seconds: 1), () {
                                       friendsController.searchMyFriendFriends("");
                                     });
 
                                   }else{
 
-                                    Future.delayed(Duration(seconds: 2), () {
+                                    Future.delayed(Duration(seconds: 1), () {
                                       friendsController.searchMyFriendFriends(value);
                                     });
 
@@ -252,13 +252,13 @@ class _FriendScreenState extends State<FriendScreen> {
                                   if(value.isEmpty){
                                     FocusScope.of(context).unfocus();
 
-                                    Future.delayed(Duration(seconds: 2), () {
+                                    Future.delayed(Duration(seconds: 1), () {
                                       friendsController.searchInviteFriends("");
                                     });
 
                                   }else{
 
-                                    Future.delayed(Duration(seconds: 2), () {
+                                    Future.delayed(Duration(seconds: 1), () {
                                       friendsController.searchInviteFriends(value);
                                     });
 
@@ -389,13 +389,13 @@ class _FriendScreenState extends State<FriendScreen> {
                                   if(value.isEmpty){
                                     FocusScope.of(context).unfocus();
 
-                                    Future.delayed(Duration(seconds: 2), () {
+                                    Future.delayed(Duration(seconds: 1), () {
                                       friendsController.searchRequestedFriends("");
                                     });
 
                                   }else{
 
-                                    Future.delayed(Duration(seconds: 2), () {
+                                    Future.delayed(Duration(seconds: 1), () {
                                       friendsController.searchRequestedFriends(value);
                                     });
 
