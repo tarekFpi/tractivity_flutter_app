@@ -780,6 +780,7 @@ class OrganizerController extends GetxController{
 
 
   RxString eventAccessmode="".obs;
+  Rx missionStatues="".obs;
 
   // Observable variables for button selection
   var isButton1Selected = false.obs;

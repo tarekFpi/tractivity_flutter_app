@@ -579,18 +579,6 @@ class AuthController extends GetxController {
     if (response.statusCode == 200) {
 
       forgetPasswordLoading.value = false;
-      schedulController
-          .scheduleDaySlotList
-          .value
-          .timeSlot
-          ?.add(schedulController
-          .createTimeSchedulePicker
-          .value);
-
-      schedulController
-          .scheduleDaySlotList
-          .refresh();
-      refresh();
 
       Toast.successToast(response.body['message']);
 

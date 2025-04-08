@@ -405,6 +405,86 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                     ),
 
                     Row(
+                      mainAxisAlignment:
+                      MainAxisAlignment
+                          .start,
+                      children: [
+
+                        CustomText(
+                          text:
+                          "Access mode:",
+                          fontSize:
+                          14,
+                          color: AppColors
+                              .primary,
+                          fontWeight:
+                          FontWeight
+                              .w600,
+                        ),
+
+                        Radio<bool>(
+                          value:
+                          false, // Value for "No"
+                          fillColor:
+                          WidgetStateColor.resolveWith((states) =>
+                          AppColors.primary),
+                          groupValue: administratorController
+                              .missionStatues
+                              .value,
+                          onChanged:
+                              (bool?
+                          value) {
+                            administratorController
+                                .missionStatues
+                                .value = value!;
+
+
+                          },
+                        ),
+                        const CustomText(
+                          text:
+                          "private",
+                          fontSize:
+                          14,
+                          color: AppColors
+                              .black,
+                          fontWeight:
+                          FontWeight
+                              .w600,
+                        ),
+                        Radio<bool>(
+                          value:
+                          true, // Value for "Yes"
+                          fillColor:
+                          WidgetStateColor.resolveWith((states) =>
+                          AppColors.primary),
+                          groupValue: administratorController
+                              .missionStatues
+                              .value,
+                          onChanged:(bool? value) {
+
+                            administratorController
+                                .missionStatues
+                                .value = value!;
+
+                          },
+                        ),
+
+                        const CustomText(
+                          text:
+                          "public",
+                          fontSize:
+                          14,
+                          color: AppColors
+                              .black,
+                          fontWeight:
+                          FontWeight
+                              .w600,
+                        ),
+                      ],
+                    ),
+
+                    Row(
                       children: [
 
                         CustomButton(onTap: (){

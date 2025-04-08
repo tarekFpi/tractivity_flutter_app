@@ -200,6 +200,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
 
                                                 ///exiting organizationIdList clear
                                                 administratorController.organizationIdList.clear();
+                                                administratorController.organizationIdList.add(model.id.toString());
 
                                                 showDialog(
                                                   context: context,
@@ -243,7 +244,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                     ),
                                                        content: Obx(
                                                             () {
-                                                         administratorController.organizationIdList.add(model.id.toString());
+
 
                                                           return SingleChildScrollView(
                                                             child: Column(
@@ -616,7 +617,7 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                                 ),
                                                                 Padding(
                                                                   padding: const EdgeInsets.only(left: 12,right: 12,bottom: 12),
-                                                                  child:administratorController.createMissionLoading.value?CustomLoader():
+                                                                  child: //administratorController.createMissionLoading.value?CustomLoader():
                                                                   CustomButton(
                                                                     onTap: () {
 
@@ -633,15 +634,13 @@ class _AdminstratorHomeScreenState extends State<AdminstratorHomeScreen> {
                                                                         Toast.errorToast("Mission description is Empty!!");
                                                                       }else{
 
-                                                                        administratorController.organizationIdList.add(model.id.toString());
 
-                                                                        administratorController.createMission();
+                                                                      administratorController.createMission();
 
                                                                         if(administratorController.createMissionLoading.value){
                                                                           Navigator.of(context).pop();
                                                                         }
                                                                       }
-
                                                                     },
                                                                     title: "create",
                                                                     height: 60.h,
