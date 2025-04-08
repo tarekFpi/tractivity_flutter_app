@@ -112,11 +112,12 @@ class _SingleMessageScreenState extends State<SingleMessageScreen> {
               Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomText(
-                        text: "${messageController.conversationtUserShowList.value.receiver?.name}",
-                        fontSize:isTablet?10.sp: 20.sp,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.black),
+                    Obx(()=> CustomText(
+                          text: "${messageController.conversationtUserShowList.value.receiver?.name}",
+                          fontSize:isTablet?10.sp: 20.sp,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.black),
+                    ),
                   ]),
             ],
           ),

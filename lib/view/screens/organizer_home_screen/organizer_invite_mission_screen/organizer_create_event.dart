@@ -225,6 +225,7 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                         ),
                       ],
                     ),
+
                    /* SizedBox(
                       height: 4.h,
                     ),
@@ -428,19 +429,17 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                           fillColor:
                           WidgetStateColor.resolveWith((states) =>
                           AppColors.primary),
-                          groupValue: administratorController
-                              .missionStatues
+                          groupValue: organizerController
+                              .eventAccessModeStatues
                               .value,
-                          onChanged:
-                              (bool?
-                          value) {
-                            administratorController
-                                .missionStatues
-                                .value = value!;
+                          onChanged:(bool? value) {
 
-
+                                organizerController
+                               .eventAccessModeStatues
+                               .value=value!;
                           },
                         ),
+
                         const CustomText(
                           text:
                           "private",
@@ -458,13 +457,13 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                           fillColor:
                           WidgetStateColor.resolveWith((states) =>
                           AppColors.primary),
-                          groupValue: administratorController
-                              .missionStatues
+                          groupValue: organizerController
+                              .eventAccessModeStatues
                               .value,
                           onChanged:(bool? value) {
 
-                            administratorController
-                                .missionStatues
+                            organizerController
+                                .eventAccessModeStatues
                                 .value = value!;
 
                           },
@@ -484,10 +483,12 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                       ],
                     ),
 
-                    Row(
+
+                  /*  Row(
                       children: [
 
                         CustomButton(onTap: (){
+
                           organizerController.toggleButton(1);
                           organizerController.eventAccessmode.value="private";
 
@@ -522,7 +523,7 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
 
                       ],
                     ),
-
+*/
                     SizedBox(
                       height:isTablet?16.h: 12.h,
                     ),
@@ -546,229 +547,233 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                         ),
                         builder: (BuildContext context) {
                           ///UDE : SizedBox instead of Container for whitespaces
-                          return SizedBox(
-                            height: MediaQuery.sizeOf(context).height/1,
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child:Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-
-                                 Column(
-                                   children: [
-
-                                     Row(
-                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                       children: [
-
-                                         const Text(
-                                           'Invite Volunteers',
-                                           style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                                         ),
-
-                                         InkWell(
-                                             onTap: (){
-
-                                               Navigator.pop(context);
-
-                                               organizerController.volunteersSelectedList.clear();
-
-                                               organizerController.selectedVolunteers.value=false;
-                                             },
-                                             child: Icon(Icons.clear,size: 32,))
-                                       ],
-                                     ),
-                                     SizedBox(
-                                       height: 12.h,
-                                     ),
-                                     ///============ search ======================================
-                                     CustomTextField(
-                                       textEditingController:queryEditingController,
-                                       fillColor: AppColors.neutral02,
-                                       //  hintText: AppStrings.search,
-                                       hintText: "Search for name...",
-                                       onChanged: (value){
-                                         setState(() {
-                                           query = value;
-                                         });
-                                         invitedController.searchVolunteersList(query);
-                                       },
-
-                                       suffixIcon: query.isBlank == true || query.isEmpty
-                                           ? Icon(
-                                         FluentIcons.search_24_regular,
-                                         size: 24,
-                                       )
-                                           : IconButton(
-                                           icon: Icon(Icons.close,size: 24,),
-                                           onPressed: () {
-                                             setState(() {
-                                               query = "";
-                                             });
-                                             queryEditingController.clear();
-                                             FocusScope.of(context).unfocus();
-
-                                             invitedController.searchVolunteersList("");
-
-                                           }),
-
-                                     ),
-
-
-                                     SizedBox(
-                                       height: 12.h,
-                                     ),
-
-                                     invitedController.obx((state){
-
-                                       if (state == null || state.isEmpty) {
-
-                                         return SizedBox(
-                                           height: MediaQuery.of(context).size.height/2,
-                                           child: Center(
-                                             child: CustomText(
-                                               text: "No volunteers yet!!",
-                                               fontSize:isTablet?12.sp: 24.sp,
-                                               fontWeight: FontWeight.w700,
-                                               color: AppColors.lightRed,
-                                             ),
+                          return SingleChildScrollView(
+                            child: SizedBox(
+                            height: MediaQuery.sizeOf(context).height/2,
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child:Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                            
+                                   Column(
+                                     children: [
+                            
+                                       Row(
+                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                         children: [
+                            
+                                           const Text(
+                                             'Invite Volunteers',
+                                             style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                                            ),
-                                         );
-
-                                       }else{
-                                         return ListView.builder(
-                                             itemCount:state.length,
-                                             shrinkWrap: true,
-                                             physics: NeverScrollableScrollPhysics(),
-                                             itemBuilder: (BuildContext context, int index) {
-
-                                               final model = state[index];
-
-                                               return Card(
-                                                 elevation: 0.5,
-                                                 color: Colors.white,
-                                                 child: Padding(
-                                                   padding: EdgeInsets.only(bottom: 10.h,left: 8,right: 8),
-                                                   child: Row(
-                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                     children: [
-                                                       GestureDetector(
-                                                         onTap: (){},
-                                                         child: Row(
-                                                           children: [
-
-                                                             model.image==""? CustomNetworkImage(
-                                                               imageUrl: AppConstants.profileImage,
-                                                               height:isTablet?64.h: 60.h,
-                                                               width:isTablet?64.w: 60.w,
-                                                               boxShape: BoxShape.circle,
-                                                             ):CustomNetworkImage(
-                                                               imageUrl: "${ApiUrl.imageUrl}${model?.image}",
-                                                               height:isTablet?64.h: 60.h,
-                                                               width:isTablet?64.w: 60.w,
-                                                               boxShape: BoxShape.circle,
-                                                             ),
-
-                                                             SizedBox(
-                                                               width: 10.w,
-                                                             ),
-                                                             Column(
-                                                               mainAxisAlignment: MainAxisAlignment.start,
-                                                               crossAxisAlignment: CrossAxisAlignment.start,
-                                                               children: [
-                                                                 CustomText(
-                                                                   text: "${model.fullName}",
-                                                                   fontSize: 16,
-                                                                   fontWeight: FontWeight.w600,
-                                                                   color: AppColors.black,
-                                                                 ),
-                                                                 CustomText(
-                                                                   text: "${model?.profession}",
-                                                                   fontSize: 12,
-                                                                   fontWeight: FontWeight.w400,
-                                                                   color: AppColors.black_80,
-                                                                 ),
-                                                               ],
-                                                             ),
-                                                           ],
+                            
+                                           InkWell(
+                                               onTap: (){
+                            
+                                                 Navigator.pop(context);
+                            
+                                                 organizerController.volunteersSelectedList.clear();
+                            
+                                                 organizerController.selectedVolunteers.value=false;
+                                               },
+                                               child: Icon(Icons.clear,size: 32,))
+                                         ],
+                                       ),
+                                       SizedBox(
+                                         height: 12.h,
+                                       ),
+                                       
+                                       ///============ search ======================================
+                                       CustomTextField(
+                                         textEditingController:queryEditingController,
+                                         fillColor: AppColors.neutral02,
+                                         //  hintText: AppStrings.search,
+                                         hintText: "Search for name...",
+                                         onChanged: (value){
+                                           setState(() {
+                                             query = value;
+                                           });
+                                           invitedController.searchVolunteersList(query);
+                                         },
+                            
+                                         suffixIcon: query.isBlank == true || query.isEmpty
+                                             ? Icon(
+                                           FluentIcons.search_24_regular,
+                                           size: 24,
+                                         )
+                                             : IconButton(
+                                             icon: Icon(Icons.close,size: 24,),
+                                             onPressed: () {
+                                               setState(() {
+                                                 query = "";
+                                               });
+                                               queryEditingController.clear();
+                                               FocusScope.of(context).unfocus();
+                            
+                                               invitedController.searchVolunteersList("");
+                            
+                                             }),
+                            
+                                       ),
+                            
+                            
+                                       SizedBox(
+                                         height: 12.h,
+                                       ),
+                            
+                                       invitedController.obx((state){
+                            
+                                         if (state == null || state.isEmpty) {
+                            
+                                           return SizedBox(
+                                             height: MediaQuery.of(context).size.height/2,
+                                             child: Center(
+                                               child: CustomText(
+                                                 text: "No volunteers yet!!",
+                                                 fontSize:isTablet?12.sp: 24.sp,
+                                                 fontWeight: FontWeight.w700,
+                                                 color: AppColors.lightRed,
+                                               ),
+                                             ),
+                                           );
+                            
+                                         }else{
+                                           
+                                           return ListView.builder(
+                                               itemCount:state.length,
+                                               shrinkWrap: true,
+                                               physics: NeverScrollableScrollPhysics(),
+                                               itemBuilder: (BuildContext context, int index) {
+                            
+                                                 final model = state[index];
+                            
+                                                 return Card(
+                                                   elevation: 0.5,
+                                                   color: Colors.white,
+                                                   child: Padding(
+                                                     padding: EdgeInsets.only(bottom: 10.h,left: 8,right: 8),
+                                                     child: Row(
+                                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                       children: [
+                                                         GestureDetector(
+                                                           onTap: (){},
+                                                           child: Row(
+                                                             children: [
+                            
+                                                               model.image==""? CustomNetworkImage(
+                                                                 imageUrl: AppConstants.profileImage,
+                                                                 height:isTablet?64.h: 60.h,
+                                                                 width:isTablet?64.w: 60.w,
+                                                                 boxShape: BoxShape.circle,
+                                                               ):CustomNetworkImage(
+                                                                 imageUrl: "${ApiUrl.imageUrl}${model?.image}",
+                                                                 height:isTablet?64.h: 60.h,
+                                                                 width:isTablet?64.w: 60.w,
+                                                                 boxShape: BoxShape.circle,
+                                                               ),
+                            
+                                                               SizedBox(
+                                                                 width: 10.w,
+                                                               ),
+                                                               Column(
+                                                                 mainAxisAlignment: MainAxisAlignment.start,
+                                                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                                                 children: [
+                                                                   CustomText(
+                                                                     text: "${model.fullName}",
+                                                                     fontSize: 16,
+                                                                     fontWeight: FontWeight.w600,
+                                                                     color: AppColors.black,
+                                                                   ),
+                                                                   CustomText(
+                                                                     text: "${model?.profession}",
+                                                                     fontSize: 12,
+                                                                     fontWeight: FontWeight.w400,
+                                                                     color: AppColors.black_80,
+                                                                   ),
+                                                                 ],
+                                                               ),
+                                                             ],
+                                                           ),
                                                          ),
-                                                       ),
-                                                       Obx(()=> Checkbox(
-                                                         checkColor: AppColors.white,
-                                                         activeColor: AppColors.primary,
-                                                         shape: RoundedRectangleBorder(
-                                                           borderRadius: BorderRadius.circular(3.0),
+                                                         Obx(()=> Checkbox(
+                                                           checkColor: AppColors.white,
+                                                           activeColor: AppColors.primary,
+                                                           shape: RoundedRectangleBorder(
+                                                             borderRadius: BorderRadius.circular(3.0),
+                                                           ),
+                                                           side: const BorderSide(
+                                                             // ======> CHANGE THE BORDER COLOR HERE <======
+                                                             color: AppColors.primary,
+                                                             // Give your checkbox border a custom width
+                                                             width: 1.4,
+                                                           ),
+                                                           ///value: administratorController.selectedOranization.value,
+                                                           value: organizerController.volunteersIdList.contains(model.id),
+                                                           onChanged: (bool? value) {
+                            
+                                                             organizerController.selectedVolunteers.value = value!;
+                            
+                            
+                                                             if(organizerController.selectedVolunteers.value){
+                            
+                                                                organizerController.volunteersIdList.add(model.id.toString());
+                            
+                                                                if (!organizerController.volunteersSelectedList.contains(model.id.toString())) {
+                            
+                                                                  InviteVolunteerResponeModel addItem = InviteVolunteerResponeModel(
+                                                                      id: model.id.toString(),
+                                                                      fullName: model.fullName.toString(),
+                                                                      image: model.image.toString(),
+                                                                      profession:model.profession
+                                                                  );
+                                                                  organizerController.volunteersSelectedList.add(addItem);
+                                                                }
+                            
+                                                                debugPrint(":${jsonEncode(organizerController.volunteersSelectedList)}");
+                                                             }else{
+                            
+                                                               organizerController.volunteersIdList.remove(model.id.toString());
+                                                               organizerController.volunteersSelectedList.value.removeWhere(((item)=>item.id == model.id.toString()));
+                            
+                            
+                                                             }
+                            
+                                                           },
                                                          ),
-                                                         side: const BorderSide(
-                                                           // ======> CHANGE THE BORDER COLOR HERE <======
-                                                           color: AppColors.primary,
-                                                           // Give your checkbox border a custom width
-                                                           width: 1.4,
                                                          ),
-                                                         ///value: administratorController.selectedOranization.value,
-                                                         value: organizerController.volunteersIdList.contains(model.id),
-                                                         onChanged: (bool? value) {
-
-                                                           organizerController.selectedVolunteers.value = value!;
-
-
-                                                           if(organizerController.selectedVolunteers.value){
-
-                                                              organizerController.volunteersIdList.add(model.id.toString());
-
-                                                              if (!organizerController.volunteersSelectedList.contains(model.id.toString())) {
-
-                                                                InviteVolunteerResponeModel addItem = InviteVolunteerResponeModel(
-                                                                    id: model.id.toString(),
-                                                                    fullName: model.fullName.toString(),
-                                                                    image: model.image.toString(),
-                                                                    profession:model.profession
-                                                                );
-                                                                organizerController.volunteersSelectedList.add(addItem);
-                                                              }
-
-                                                              debugPrint(":${jsonEncode(organizerController.volunteersSelectedList)}");
-                                                           }else{
-
-                                                             organizerController.volunteersIdList.remove(model.id.toString());
-                                                             organizerController.volunteersSelectedList.value.removeWhere(((item)=>item.id == model.id.toString()));
-
-
-                                                           }
-
-                                                         },
-                                                       ),
-                                                       ),
-                                                     ],
+                                                       ],
+                                                     ),
                                                    ),
-                                                 ),
-                                               );
-                                             });
-                                         }
-                                     }),
-                                   ],
-                                 ),
-
-                                  Align(
-                                     alignment: Alignment.bottomCenter,
-                                    child: CustomButton(onTap: (){
-
-                                      if(organizerController.volunteersSelectedList.isEmpty){
-
-                                        Toast.errorToast("Please Select Volunteer..!!");
-
-                                      }else{
-
-                                        Navigator.pop(context);
-                                        organizerController.setSelectedVolunteersToggle();
-
-                                        debugPrint("volunteersIdList:${jsonEncode(organizerController.volunteersIdList)}");
-                                        debugPrint("volunteersSelectedList:${jsonEncode(organizerController.volunteersSelectedList)}");
-                                      }
-
-                                    }, title: "Done",fontSize: 12,),
-                                  ),
-                                ],
+                                                 );
+                                               });
+                                           }
+                                       }),
+                                     ],
+                                   ),
+                            
+                                    Align(
+                                       alignment: Alignment.bottomCenter,
+                                      child: CustomButton(onTap: (){
+                            
+                                        if(organizerController.volunteersSelectedList.isEmpty){
+                            
+                                          Toast.errorToast("Please Select Volunteer..!!");
+                            
+                                        }else{
+                            
+                                          Navigator.pop(context);
+                                          organizerController.setSelectedVolunteersToggle();
+                            
+                                          debugPrint("volunteersIdList:${jsonEncode(organizerController.volunteersIdList)}");
+                                          debugPrint("volunteersSelectedList:${jsonEncode(organizerController.volunteersSelectedList)}");
+                                        }
+                            
+                                      }, title: "Done",fontSize: 12,),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           );
@@ -785,7 +790,6 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
 
                     CustomButton(onTap: (){
 
-                     // Get.toNamed(AppRoutes.memberScreen);
 
                       // adding some properties
                       showModalBottomSheet(
@@ -1176,7 +1180,6 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                         }else{
 
                           organizerController.createEvent(administratorController.missionDetailsShowList.value.id.toString());
-
 
                         }
 

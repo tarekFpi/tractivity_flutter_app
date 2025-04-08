@@ -40,7 +40,7 @@ class ApiUrl {
   static String friendSearch({required String cetagory, required String query}) => "/user/search?$cetagory=$query";
 
 
-  ///=========================== adminstrator api  ===========================
+
 
   ///=========================== organization create api  ===========================
   static String createOranizer = "/organization/create";

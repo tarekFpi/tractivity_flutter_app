@@ -619,6 +619,16 @@ class OrganizerController extends GetxController{
 
     var userId = await SharePrefsHelper.getString(AppConstants.userId);
 
+    ///private public
+    if(eventAccessModeStatues.value==false){
+
+      eventAccessmode.value="private";
+
+    }if(eventAccessModeStatues.value==true){
+
+      eventAccessmode.value="public";
+    }
+
     var body = {
       "creatorId": userId,
       "missionId": missionId,
@@ -661,6 +671,10 @@ class OrganizerController extends GetxController{
 
       Get.back();
       clearData();
+
+        timeOpenPicker = "start Time".obs;
+        timeClosePicker = "end Time".obs;
+        selectedDate="00/00/0000".obs;
 
     } else {
 
@@ -780,7 +794,8 @@ class OrganizerController extends GetxController{
 
 
   RxString eventAccessmode="".obs;
-  Rx missionStatues="".obs;
+
+  RxBool eventAccessModeStatues= false.obs;
 
   // Observable variables for button selection
   var isButton1Selected = false.obs;
@@ -804,6 +819,7 @@ class OrganizerController extends GetxController{
       }
     }
   }
+
 
   ///===================== Retrieve  Inactive to active missions by organizer =====================
   RxBool updateInActiveMissionLoading = false.obs;

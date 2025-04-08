@@ -220,7 +220,9 @@ class MessagelistController extends GetxController with StateMixin<List<Conversa
       "type": "direct"
     });
 
-    var response = await ApiClient.postData(ApiUrl.createConversation, body);
+    debugPrint("groupIntoSingleUser:${body}");
+
+  /*  var response = await ApiClient.postData(ApiUrl.createConversation, body);
 
     if (response.statusCode == 200) {
 
@@ -228,7 +230,7 @@ class MessagelistController extends GetxController with StateMixin<List<Conversa
 
       conversationtUserShowList.value = ConversationResponseModel.fromJson(response.body["data"]);
 
-      debugPrint("groupIntoSingleUser:${conversationtUserShowList.value}");
+      debugPrint("groupIntoSingleUser:${jsonEncode(conversationtUserShowList)}");
 
       refresh();
       conversationUserLoading.value = false;
@@ -250,7 +252,7 @@ class MessagelistController extends GetxController with StateMixin<List<Conversa
         refresh();
         return;
       }
-    }
+    }*/
   }
 
 

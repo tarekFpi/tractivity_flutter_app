@@ -214,7 +214,8 @@ class _FriendScreenState extends State<FriendScreen> {
                                             InkWell(
                                               onTap: (){
 
-                                              messageListController.groupIntoSingleUser(myModel.requester?.requesterId?.fullName.toString()??"",myModel.requester?.requesterId?.id.toString()??"");
+                                             messageListController.groupIntoSingleUser(myModel.responder?.responderId?.fullName.toString()??"",
+                                                  myModel.responder?.responderId?.id.toString()??"");
 
                                               },
                                               child: Padding(
@@ -512,13 +513,13 @@ class _FriendScreenState extends State<FriendScreen> {
           ],
         ), onRefresh: ()async{
 
-          if(friendsController.currentIndex.value == 0)
+          //if(friendsController.currentIndex.value == 0)
             await friendsController.inviteFriendsFetchList();
 
-           if(friendsController.currentIndex.value == 1)
+          /// if(friendsController.currentIndex.value == 1)
             await  friendsController.requestFriendsFetchList();
 
-          if(friendsController.currentIndex.value == 2)
+         // if(friendsController.currentIndex.value == 2)
            await friendsController.myFriendsFetchList();
         });
       }),
