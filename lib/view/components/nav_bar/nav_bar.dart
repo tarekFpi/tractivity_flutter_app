@@ -141,7 +141,7 @@ class _NavBarState extends State<NavBar> {
               text: userNavText[index],
               color: AppColors.white,
               fontWeight: FontWeight.w600,
-              fontSize: isTablet ? 6.sp : 12.w,
+              fontSize: isTablet ? 6.sp : 10.sp,
             ),
           ],
         ),
@@ -164,7 +164,7 @@ class _NavBarState extends State<NavBar> {
           text: userNavText[index],
           color: AppColors.black,
           fontWeight: FontWeight.w600,
-          fontSize: isTablet ? 6.sp : 12.sp,
+          fontSize: isTablet ? 6.sp : 10.sp,
         ),
       ],
     );

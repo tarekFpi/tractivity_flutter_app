@@ -145,7 +145,6 @@ class AppRoutes {
     GetPage(name: forgotPassword, page: () => ForgotPassword()),
 
 
-
     GetPage(name: settingScreen, page: () => SettingScreen()),
     GetPage(name: aboutUsScreen, page: () => AboutUsScreen()),
     GetPage(name: privacyPolicyScreen, page: () => PrivacyPolicyScreen()),

@@ -128,13 +128,13 @@ class _FriendScreenState extends State<FriendScreen> {
                                   if(value.isEmpty){
                                     FocusScope.of(context).unfocus();
 
-                                    Future.delayed(Duration(seconds: 2), () {
+                                    Future.delayed(Duration(seconds: 1), () {
                                       friendsController.searchMyFriendFriends("");
                                     });
 
                                   }else{
 
-                                    Future.delayed(Duration(seconds: 2), () {
+                                    Future.delayed(Duration(seconds: 1), () {
                                       friendsController.searchMyFriendFriends(value);
                                     });
 
@@ -214,7 +214,8 @@ class _FriendScreenState extends State<FriendScreen> {
                                             InkWell(
                                               onTap: (){
 
-                                              messageListController.groupIntoSingleUser(myModel.requester?.requesterId?.fullName.toString()??"",myModel.requester?.requesterId?.id.toString()??"");
+                                             messageListController.groupIntoSingleUser(myModel.responder?.responderId?.fullName.toString()??"",
+                                                  myModel.responder?.responderId?.id.toString()??"");
 
                                               },
                                               child: Padding(
@@ -252,13 +253,13 @@ class _FriendScreenState extends State<FriendScreen> {
                                   if(value.isEmpty){
                                     FocusScope.of(context).unfocus();
 
-                                    Future.delayed(Duration(seconds: 2), () {
+                                    Future.delayed(Duration(seconds: 1), () {
                                       friendsController.searchInviteFriends("");
                                     });
 
                                   }else{
 
-                                    Future.delayed(Duration(seconds: 2), () {
+                                    Future.delayed(Duration(seconds: 1), () {
                                       friendsController.searchInviteFriends(value);
                                     });
 
@@ -389,13 +390,13 @@ class _FriendScreenState extends State<FriendScreen> {
                                   if(value.isEmpty){
                                     FocusScope.of(context).unfocus();
 
-                                    Future.delayed(Duration(seconds: 2), () {
+                                    Future.delayed(Duration(seconds: 1), () {
                                       friendsController.searchRequestedFriends("");
                                     });
 
                                   }else{
 
-                                    Future.delayed(Duration(seconds: 2), () {
+                                    Future.delayed(Duration(seconds: 1), () {
                                       friendsController.searchRequestedFriends(value);
                                     });
 
@@ -512,13 +513,13 @@ class _FriendScreenState extends State<FriendScreen> {
           ],
         ), onRefresh: ()async{
 
-          if(friendsController.currentIndex.value == 0)
+          //if(friendsController.currentIndex.value == 0)
             await friendsController.inviteFriendsFetchList();
 
-           if(friendsController.currentIndex.value == 1)
+          /// if(friendsController.currentIndex.value == 1)
             await  friendsController.requestFriendsFetchList();
 
-          if(friendsController.currentIndex.value == 2)
+         // if(friendsController.currentIndex.value == 2)
            await friendsController.myFriendsFetchList();
         });
       }),

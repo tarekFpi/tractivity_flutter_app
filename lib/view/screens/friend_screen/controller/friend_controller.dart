@@ -133,7 +133,7 @@ class FriendController extends GetxController{
 
       var userId = await SharePrefsHelper.getString(AppConstants.userId);
 
-      searchMyFriendsLoading.value = true;
+      inviteFriendsShowListLoading.value = true;
 
       var response = await ApiClient.getData(ApiUrl.searchInviteFriends(query: query,userId: userId));
 
@@ -143,13 +143,13 @@ class FriendController extends GetxController{
 
         inviteFriendsShowList.value = List.from(response.body["data"].map((m)=> InviteFriendsResponeModel.fromJson(m)));
 
-        searchMyFriendsLoading.value =false;
+        inviteFriendsShowListLoading.value =false;
 
         refresh();
 
       } else {
 
-        searchMyFriendsLoading.value =false;
+        inviteFriendsShowListLoading.value =false;
 
         if (response.statusText == ApiClient.somethingWentWrong) {
           Toast.errorToast(AppStrings.checknetworkconnection);
