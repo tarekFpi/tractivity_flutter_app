@@ -112,11 +112,29 @@ class _SingleMessageScreenState extends State<SingleMessageScreen> {
               Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Obx(()=> CustomText(
-                          text: "${messageController.conversationtUserShowList.value.receiver?.name}",
-                          fontSize:isTablet?10.sp: 20.sp,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.black),
+                    Obx((){
+
+
+                     if(messageController.userId.value!=messageController.conversationtUserShowList.value.receiver?.receiverId){
+
+                       return CustomText(
+                           text: "${messageController.conversationtUserShowList.value.receiver?.name}",
+                           fontSize:isTablet?10.sp: 20.sp,
+                           fontWeight: FontWeight.w700,
+                           color: AppColors.black);
+
+                     }if(messageController.userId.value!=messageController.conversationtUserShowList.value.sender?.senderId){
+
+                       return CustomText(
+                           text: "${messageController.conversationtUserShowList.value.sender?.name}",
+                           fontSize:isTablet?10.sp: 20.sp,
+                           fontWeight: FontWeight.w700,
+                           color: AppColors.black);
+                      }
+
+                     return Text("");
+
+                    },
                     ),
                   ]),
             ],
@@ -281,196 +299,200 @@ class CustomInboxMassage extends StatelessWidget {
                   width: 45.w,
                   boxShape: BoxShape.circle,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: MediaQuery.sizeOf(context).width / 1.5,
-                      decoration: BoxDecoration(
-                        color:
-                        alignment ? AppColors.grey_3 : AppColors.primary,
-                        borderRadius: alignment
-                            ? const BorderRadius.only(
-                          bottomRight: Radius.circular(16),
-                          topLeft: Radius.circular(16),
-                          topRight: Radius.circular(16),
-                        )
-                            : const BorderRadius.only(
+                Padding(
+                  padding: const EdgeInsets.only(left: 4),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+
+                        width: MediaQuery.sizeOf(context).width / 1.5,
+                        decoration: BoxDecoration(
+                          color:
+                          alignment ? AppColors.grey_3 : AppColors.primary,
+                          borderRadius: alignment
+                              ? const BorderRadius.only(
+                            bottomRight: Radius.circular(16),
                             topLeft: Radius.circular(16),
                             topRight: Radius.circular(16),
-                            bottomLeft: Radius.circular(16)),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 14.0.h, vertical: 10.h),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CustomText(
-                              textAlign: TextAlign.left,
-                              text: message,
-                              fontSize:isTablet?14: 14.sp,
-                              color: alignment
-                                  ? AppColors.black
-                                  : AppColors.white,
-                              fontWeight: FontWeight.w400,
-                              maxLines: 20,
-                            ),
+                          )
+                              : const BorderRadius.only(
+                              topLeft: Radius.circular(16),
+                              topRight: Radius.circular(16),
+                              bottomLeft: Radius.circular(16)),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 14.0.h, vertical: 10.h),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CustomText(
+                                textAlign: TextAlign.left,
+                                text: message,
+                                fontSize:isTablet?14: 14.sp,
+                                color: alignment
+                                    ? AppColors.black
+                                    : AppColors.white,
+                                fontWeight: FontWeight.w400,
+                                maxLines: 20,
+                              ),
 
-                            // Image Gallery (if multiple images exist)
-                            if ((attachments.isNotEmpty))
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 8.0.h, vertical: 8.h),
-                                child: Wrap(
-                                  spacing: 8,
-                                  runSpacing: 8,
-                                  children: attachments
-                                      .map((imageUrl) => GestureDetector(
+                              // Image Gallery (if multiple images exist)
+                              if ((attachments.isNotEmpty))
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 8.0.h, vertical: 8.h),
+                                  child: Wrap(
+                                    spacing: 8,
+                                    runSpacing: 8,
+                                    children: attachments
+                                        .map((imageUrl) => GestureDetector(
 
-                                    onTap: () {
-                                      // Handle image click (open full view)
-                                      debugPrint("Open image: $imageUrl");
+                                      onTap: () {
+                                        // Handle image click (open full view)
+                                        debugPrint("Open image: $imageUrl");
 
 
-                                      ///adding some properties
-                                      showModalBottomSheet(
-                                        context: context,
-                                        ///background color for modal bottom screen
-                                        backgroundColor: Colors.white,
-                                        ///elevates modal bottom screen
-                                        elevation: 10,
-                                        /// gives rounded corner to modal bottom screen
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10.0),
-                                        ),
-                                        builder: (BuildContext context) {
-                                          ///UDE : SizedBox instead of Container for whitespaces
-                                          return SizedBox(
-                                            height: MediaQuery.sizeOf(context).height/2.5,
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(16.0),
-                                              child:Column(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
+                                        ///adding some properties
+                                        showModalBottomSheet(
+                                          context: context,
+                                          ///background color for modal bottom screen
+                                          backgroundColor: Colors.white,
+                                          ///elevates modal bottom screen
+                                          elevation: 10,
+                                          /// gives rounded corner to modal bottom screen
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(10.0),
+                                          ),
+                                          builder: (BuildContext context) {
+                                            ///UDE : SizedBox instead of Container for whitespaces
+                                            return SizedBox(
+                                              height: MediaQuery.sizeOf(context).height/2.5,
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(16.0),
+                                                child:Column(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
 
-                                                  Column(
-                                                    children: [
+                                                    Column(
+                                                      children: [
 
-                                                      Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                        children: [
-                                                          const Text(
-                                                            '',
-                                                            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                                                        Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            const Text(
+                                                              '',
+                                                              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                                                            ),
+                                                            InkWell(
+                                                                onTap: (){
+                                                                  Navigator.pop(context);
+                                                                },
+                                                                child: Icon(Icons.clear,size: 32,))
+                                                          ],
+                                                        ),
+
+
+                                                        CarouselSlider.builder(
+                                                          options: CarouselOptions(
+                                                            initialPage: messageController.sliderChatCurrentIndex.value,
+                                                            autoPlay: true,
+                                                            aspectRatio: 2.0,
+                                                            enlargeCenterPage: true,
+                                                            height: MediaQuery.sizeOf(context).height / 5,
+                                                            onPageChanged: (index, reason) {
+
+                                                              messageController.sliderChatCurrentIndex.value = index;
+                                                            },
                                                           ),
-                                                          InkWell(
-                                                              onTap: (){
-                                                                Navigator.pop(context);
-                                                              },
-                                                              child: Icon(Icons.clear,size: 32,))
-                                                        ],
-                                                      ),
+                                                          itemCount: attachments.length??0,
+                                                          itemBuilder: (context, index, realIndex) {
 
-
-                                                      CarouselSlider.builder(
-                                                        options: CarouselOptions(
-                                                          initialPage: messageController.sliderChatCurrentIndex.value,
-                                                          autoPlay: true,
-                                                          aspectRatio: 2.0,
-                                                          enlargeCenterPage: true,
-                                                          height: MediaQuery.sizeOf(context).height / 5,
-                                                          onPageChanged: (index, reason) {
-
-                                                            messageController.sliderChatCurrentIndex.value = index;
+                                                            return  CustomNetworkImage(
+                                                              //imageUrl: AppConstants.profileImage,
+                                                              imageUrl:"${ApiUrl.imageUrl}$imageUrl",
+                                                              height:isTablet?200.h: 180.h,
+                                                              width: MediaQuery.of(context).size.width,
+                                                              borderRadius: BorderRadius.circular(10),
+                                                            );
                                                           },
                                                         ),
-                                                        itemCount: attachments.length??0,
-                                                        itemBuilder: (context, index, realIndex) {
 
-                                                          return  CustomNetworkImage(
-                                                            //imageUrl: AppConstants.profileImage,
-                                                            imageUrl:"${ApiUrl.imageUrl}$imageUrl",
-                                                            height:isTablet?200.h: 180.h,
-                                                            width: MediaQuery.of(context).size.width,
-                                                            borderRadius: BorderRadius.circular(10),
-                                                          );
-                                                        },
-                                                      ),
-
-                                                      SizedBox(
-                                                        height: 16.h,
-                                                      ),
-
-                                                      ///======== Dots ===========
-                                                      Row(
-                                                        mainAxisAlignment: MainAxisAlignment.center,
-                                                        children: List.generate(
-                                                          attachments.length??0,
-                                                              (index) => buildDot(index, context),
+                                                        SizedBox(
+                                                          height: 16.h,
                                                         ),
-                                                      ),
 
-                                                    ],
-                                                  ),
+                                                        ///======== Dots ===========
+                                                        Row(
+                                                          mainAxisAlignment: MainAxisAlignment.center,
+                                                          children: List.generate(
+                                                            attachments.length??0,
+                                                                (index) => buildDot(index, context),
+                                                          ),
+                                                        ),
 
-                                                ],
+                                                      ],
+                                                    ),
+
+                                                  ],
+                                                ),
                                               ),
+                                            );
+                                          },
+                                        );
+                                      },
+                                      child: ClipRRect(
+                                        borderRadius:
+                                        BorderRadius.circular(12),
+                                        child: Stack(
+                                          clipBehavior: Clip.none,
+                                          children: [
+
+                                            Image.network(
+                                              "${ApiUrl.imageUrl}$imageUrl",
+                                              width: 100.w,
+                                              height: 100.h,
+                                              fit: BoxFit.cover,
                                             ),
-                                          );
-                                        },
-                                      );
-                                    },
-                                    child: ClipRRect(
-                                      borderRadius:
-                                      BorderRadius.circular(12),
-                                      child: Stack(
-                                        clipBehavior: Clip.none,
-                                        children: [
 
-                                          Image.network(
-                                            "${ApiUrl.imageUrl}$imageUrl",
-                                            width: 100.w,
-                                            height: 100.h,
-                                            fit: BoxFit.cover,
-                                          ),
+                                            Positioned(
+                                                right: 0,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.only(top: 4,right: 2),
+                                                  child: InkWell(
+                                                      onTap: (){
 
-                                          Positioned(
-                                              right: 0,
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(top: 4,right: 2),
-                                                child: InkWell(
-                                                    onTap: (){
-
-                                                      messageController.startImageDownload("${ApiUrl.baseUrl}/${imageUrl}","${imageUrl.split("\\").last}");
-                                                    },
-                                                    child: Icon(Icons.download,color: Colors.green,size: 28,)),
-                                              )),
-                                        ],
+                                                        messageController.startImageDownload("${ApiUrl.baseUrl}/${imageUrl}","${imageUrl.split("\\").last}");
+                                                      },
+                                                      child: Icon(Icons.download,color: Colors.green,size: 28,)),
+                                                )),
+                                          ],
+                                        ),
                                       ),
                                     ),
+                                    )
+                                        .toList(),
                                   ),
-                                  )
-                                      .toList(),
                                 ),
-                              ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
 
 
-                    Padding(
-                      padding: const EdgeInsets.only(left: 14.0),
-                      child: CustomText(
-                        text: messageTime ?? '',
-                        fontSize:isTablet?14: 12.sp,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.black,
+                      Padding(
+                        padding: const EdgeInsets.only(left: 14.0),
+                        child: CustomText(
+                          text: messageTime ?? '',
+                          fontSize:isTablet?14: 12.sp,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.black,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             )

@@ -63,6 +63,8 @@ class _HomeScreenState extends State<HomeScreen> {
       myEventController.myEventShow();
 
       myOrganizationController.myOrganizationShow();
+      eventController.userProfileShow();
+
     });
   }
 

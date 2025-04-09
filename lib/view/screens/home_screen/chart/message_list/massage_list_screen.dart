@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
+import 'package:tractivity_app/helper/shared_prefe/shared_prefe.dart';
 import 'package:tractivity_app/helper/time_converter/time_converter.dart';
 import 'package:tractivity_app/service/api_url.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
@@ -36,15 +37,18 @@ class _MassageListScreenState extends State<MassageListScreen> {
   final queryEditingController = TextEditingController();
 
   String query = "";
+  var userId="";
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async{
 
-      messageListController.conversationBySpecificUserShow();
+      userId = await SharePrefsHelper.getString(AppConstants.userId);
+
+       messageListController.conversationBySpecificUserShow();
     });
 
   }
@@ -116,6 +120,7 @@ class _MassageListScreenState extends State<MassageListScreen> {
                         ):
                         messageListController.obx((state){
 
+
                           return ListView.builder(
                               itemCount: state?.length,
                               shrinkWrap: true,
@@ -124,51 +129,103 @@ class _MassageListScreenState extends State<MassageListScreen> {
 
                                 final model=state?[index];
 
-                                return GestureDetector(
-                                  onTap: (){
+                                if((model?.sender?.senderId?.id!=userId) && (model?.type=="direct")){
 
-                                    if(model?.type=="group"){
+                                  return GestureDetector(
+                                    onTap: (){
 
-                                      homeController.groupIntoEvent(model?.receiver?.name.toString()??"",model!.id.toString());
-                                    }if(model?.type=="direct"){
+                                      if(model?.type=="group"){
 
-                                      messageListController.groupIntoSingleUser(model?.receiver?.name.toString()??"",model?.receiver?.receiverId?.id.toString()??"");
-                                    }
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
+                                        homeController.groupIntoEvent(model?.sender?.name.toString()??"",model!.id.toString());
+                                      }if(model?.type=="direct"){
 
-                                        Row(
-                                          children: [
-                                            model?.type=="group"?Image.asset("assets/icons/group.png",width: 45,height: 45,color: Colors.black,):
-                                            CustomNetworkImage(
-                                              //   imageUrl: AppConstants.profileImage,
-                                              imageUrl:model?.receiver?.receiverId?.image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}${model?.receiver?.receiverId?.image}",
-                                              height: 50,
-                                              width: 50,
-                                              boxShape: BoxShape.circle,
-                                            ),
-                                            CustomText(
-                                              text: "${model?.receiver?.name}",
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w600,
-                                              left: 10,
-                                            ),
-                                          ],
-                                        ),
-                                        CustomText(
-                                          text: "${DateConverter.timeFormetString(model?.createdAt.toString())}",
-                                          fontSize: 12,
-                                          color: AppColors.primary,
-                                          fontWeight: FontWeight.w600,
-                                        )
-                                      ],
+                                        messageListController.groupIntoSingleUser(model?.sender?.name.toString()??"",model?.sender?.senderId?.id.toString()??"");
+                                      }
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+
+                                          Row(
+                                            children: [
+                                              model?.type=="group"?Image.asset("assets/icons/group.png",width: 45,height: 45,color: Colors.black,):
+                                              CustomNetworkImage(
+                                                //   imageUrl: AppConstants.profileImage,
+                                                imageUrl:model?.sender?.senderId?.image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}${model?.sender?.senderId?.image}",
+                                                height: 50,
+                                                width: 50,
+                                                boxShape: BoxShape.circle,
+                                              ),
+                                              CustomText(
+                                                text: "${model?.sender?.name}",
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w600,
+                                                left: 10,
+                                              ),
+                                            ],
+                                          ),
+                                          CustomText(
+                                            text: "${DateConverter.timeFormetString(model?.createdAt.toString())}",
+                                            fontSize: 12,
+                                            color: AppColors.primary,
+                                            fontWeight: FontWeight.w600,
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                );
+                                  );
+
+                                }if((model?.receiver?.receiverId?.id!=userId) && (model?.type=="direct")){
+
+                                  return GestureDetector(
+                                    onTap: (){
+
+                                      if(model?.type=="group"){
+
+                                        homeController.groupIntoEvent(model?.receiver?.name.toString()??"",model!.id.toString());
+                                      }if(model?.type=="direct"){
+
+                                        messageListController.groupIntoSingleUser(model?.receiver?.name.toString()??"",model?.receiver?.receiverId?.id.toString()??"");
+                                      }
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+
+                                          Row(
+                                            children: [
+                                              model?.type=="group"?Image.asset("assets/icons/group.png",width: 45,height: 45,color: Colors.black,):
+                                              CustomNetworkImage(
+                                                //   imageUrl: AppConstants.profileImage,
+                                                imageUrl:model?.receiver?.receiverId?.image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}${model?.receiver?.receiverId?.image}",
+                                                height: 50,
+                                                width: 50,
+                                                boxShape: BoxShape.circle,
+                                              ),
+                                              CustomText(
+                                                text: "${model?.receiver?.name}",
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w600,
+                                                left: 10,
+                                              ),
+                                            ],
+                                          ),
+                                          CustomText(
+                                            text: "${DateConverter.timeFormetString(model?.createdAt.toString())}",
+                                            fontSize: 12,
+                                            color: AppColors.primary,
+                                            fontWeight: FontWeight.w600,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                }
+
                               });
                         })
 

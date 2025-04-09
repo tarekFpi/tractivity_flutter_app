@@ -198,20 +198,22 @@ class MessagelistController extends GetxController with StateMixin<List<Conversa
   /// in join to user to user group
 
   RxBool conversationUserLoading = false.obs;
+  RxString userId="".obs;
+
   Rx<ConversationResponseModel> conversationtUserShowList = ConversationResponseModel().obs;
 
   Future<void> groupIntoSingleUser(String receiverName,String receiverId) async {
 
     conversationUserLoading.value = true;
 
-    var userId = await SharePrefsHelper.getString(AppConstants.userId);
+      userId.value = await SharePrefsHelper.getString(AppConstants.userId);
 
     var fullName = await SharePrefsHelper.getString(AppConstants.fullName);
 
     var body = json.encode({
       "sender": {
         "name": "$fullName",
-        "senderId": "$userId"
+        "senderId": "${userId.value}"
       },
       "receiver": {
         "name": "$receiverName",
@@ -222,7 +224,7 @@ class MessagelistController extends GetxController with StateMixin<List<Conversa
 
     debugPrint("groupIntoSingleUser:${body}");
 
-  /*  var response = await ApiClient.postData(ApiUrl.createConversation, body);
+   var response = await ApiClient.postData(ApiUrl.createConversation, body);
 
     if (response.statusCode == 200) {
 
@@ -252,7 +254,7 @@ class MessagelistController extends GetxController with StateMixin<List<Conversa
         refresh();
         return;
       }
-    }*/
+    }
   }
 
 
@@ -314,7 +316,6 @@ class MessagelistController extends GetxController with StateMixin<List<Conversa
       );
 
       if (response.statusCode == 201) {
-
 
 
         messageController.value.text="";

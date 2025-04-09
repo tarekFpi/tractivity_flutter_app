@@ -81,6 +81,9 @@ class FriendController extends GetxController{
 
   RxBool inviteFriendsShowListLoading = false.obs;
 
+
+
+//bool isPagination = false
   Future<void> inviteFriendsFetchList() async{
 
     inviteFriendsShowListLoading.value = true;
@@ -115,6 +118,9 @@ class FriendController extends GetxController{
       }
     }
   }
+
+
+
 
   /// organic users by specific user invite friends search
   RxBool searchMyFriendsLoading = false.obs;
@@ -451,7 +457,7 @@ class FriendController extends GetxController{
 
      inviteFriendsFetchList();
      requestFriendsFetchList();
-     myFriendsFetchList();
+    // myFriendsFetchList();
   }
 
 }

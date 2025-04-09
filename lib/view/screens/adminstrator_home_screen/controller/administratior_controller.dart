@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:storage_permission_handler/storage_permission_handler.dart';
 import 'package:tractivity_app/helper/shared_prefe/shared_prefe.dart';
 import 'package:tractivity_app/service/api_check.dart';
 import 'package:tractivity_app/service/api_client.dart';
@@ -876,14 +877,24 @@ class AdministratiorController extends GetxController {
 
 
 
-  ///===================== retrive Specific event by Id event download  =====================
+  ///===================== retrieve Specific event by Id event download  =====================
   void startDownload(String url ,String fileName) async {
 
-    String filePath = await downloadPDF(url, fileName);
+    if (Platform.isAndroid) {
+      if (await Permission.storage.isGranted) {
+        // Proceed with the download
 
-    if (filePath.isNotEmpty) {
-      await showDownloadNotification(filePath);
+        String filePath = await downloadPDF(url, fileName);
+
+        if (filePath.isNotEmpty) {
+          await showDownloadNotification(filePath);
+        }
+
+      } else {
+        await Permission.storage.request();
+      }
     }
+
   }
 
   Future<void> showDownloadNotification(String filePath) async {
@@ -913,19 +924,64 @@ class AdministratiorController extends GetxController {
   }
 
 
-  Future<String> downloadPDF(String url, String fileName) async {
+ /* Future<String> downloadPDF(String url, String fileName) async {
     try {
-      Directory tempDir = await getApplicationDocumentsDirectory();
-      String filePath = '${tempDir.path}/$fileName';
+      // Ask for storage permission (required on Android 10 and below)
+      final hasStoragePermission = await StoragePermissionHandler.hasStoragePermission();
+      if (hasStoragePermission) {
+        // call method for saving files or other
+      } else {
+        final status = await StoragePermissionHandler.requestStoragePermission();
+        if (status == true) {
+          // For Android, use external storage directory
+          Directory? dir = await getExternalStorageDirectory();
+          String newPath = "";
+          List<String> paths = dir!.path.split("/");
+          for (int x = 1; x < paths.length; x++) {
+            String folder = paths[x];
+            if (folder != "Android") {
+              newPath += "/" + folder;
+            } else {
+              break;
+            }
+          }
+          newPath = "$newPath/Download";
+          Directory downloadDir = Directory(newPath);
+          if (!await downloadDir.exists()) {
+            await downloadDir.create(recursive: true);
+          }
 
-      await Dio().download(url, filePath);
+          String filePath = '${downloadDir.path}/$fileName';
 
-      return filePath;
+          await Dio().download(url, filePath);
+
+          return filePath;
+        } else {
+          debugPrint("Please grant storage permission");
+        }
+        return "";
+      }
+      return '';
     } catch (e) {
       print('Download error: $e');
       return '';
     }
-  }
+  }*/
+
+
+    Future<String> downloadPDF(String url, String fileName) async {
+      try {
+        Directory tempDir = await getApplicationDocumentsDirectory();
+        String filePath = '${tempDir.path}/$fileName';
+
+      await Dio().download(url, filePath);
+
+      return filePath;
+     } catch (e) {
+       print('Download error: $e');
+       return '';
+      }
+    }
 
 
 
