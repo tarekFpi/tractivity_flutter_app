@@ -122,111 +122,77 @@ class _MassageListScreenState extends State<MassageListScreen> {
 
 
                           return ListView.builder(
-                              itemCount: state?.length,
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemBuilder: (BuildContext context,index){
+                            itemCount: state?.length ?? 0,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (BuildContext context, int index) {
+                              final model = state![index];
 
-                                final model=state?[index];
+                              // Filter: Direct or Group where user is involved
+                              bool showItem = false;
 
-                                if((model?.sender?.senderId?.id!=userId) && (model?.type=="direct")){
+                              if (model.type == "direct") {
+                                showItem = (model.sender?.senderId?.id == userId || model.receiver?.receiverId?.id == userId);
+                              } else if (model.type == "group") {
+                                showItem = (model.conversationMembers != null && model.conversationMembers!.contains(userId));
+                              }
 
-                                  return GestureDetector(
-                                    onTap: (){
+                              if (!showItem) return SizedBox.shrink();
 
-                                      if(model?.type=="group"){
+                              return GestureDetector(
+                                onTap: () {
+                                  if (model.type == "group") {
+                                    homeController.groupIntoEvent(model.receiver?.name ?? model.sender?.name ?? "", model.id ?? "");
+                                  } else if (model.type == "direct") {
+                                    String name = (model.sender?.senderId?.id == userId)
+                                        ? model.receiver?.name ?? ""
+                                        : model.sender?.name ?? "";
+                                    String id = (model.sender?.senderId?.id == userId)
+                                        ? model.receiver?.receiverId?.id ?? ""
+                                        : model.sender?.senderId?.id ?? "";
 
-                                        homeController.groupIntoEvent(model?.sender?.name.toString()??"",model!.id.toString());
-                                      }if(model?.type=="direct"){
-
-                                        messageListController.groupIntoSingleUser(model?.sender?.name.toString()??"",model?.sender?.senderId?.id.toString()??"");
-                                      }
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    messageListController.groupIntoSingleUser(name, id);
+                                  }
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
                                         children: [
-
-                                          Row(
-                                            children: [
-                                              model?.type=="group"?Image.asset("assets/icons/group.png",width: 45,height: 45,color: Colors.black,):
-                                              CustomNetworkImage(
-                                                //   imageUrl: AppConstants.profileImage,
-                                                imageUrl:model?.sender?.senderId?.image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}${model?.sender?.senderId?.image}",
-                                                height: 50,
-                                                width: 50,
-                                                boxShape: BoxShape.circle,
-                                              ),
-                                              CustomText(
-                                                text: "${model?.sender?.name}",
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.w600,
-                                                left: 10,
-                                              ),
-                                            ],
+                                          model.type == "group"
+                                              ? Image.asset("assets/icons/group.png", width: 45, height: 45, color: Colors.black)
+                                              : CustomNetworkImage(
+                                            imageUrl: model.sender?.senderId?.id == userId
+                                                ? "${ApiUrl.imageUrl}${model.receiver?.receiverId?.image ?? AppConstants.profileImage}"
+                                                : "${ApiUrl.imageUrl}${model.sender?.senderId?.image ?? AppConstants.profileImage}",
+                                            height: 50,
+                                            width: 50,
+                                            boxShape: BoxShape.circle,
                                           ),
                                           CustomText(
-                                            text: "${DateConverter.timeFormetString(model?.createdAt.toString())}",
-                                            fontSize: 12,
-                                            color: AppColors.primary,
+                                            text: model.sender?.senderId?.id == userId
+                                                ? model.receiver?.name ?? ""
+                                                : model.sender?.name ?? "",
+                                            fontSize: 18,
                                             fontWeight: FontWeight.w600,
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  );
-
-                                }if((model?.receiver?.receiverId?.id!=userId) && (model?.type=="direct")){
-
-                                  return GestureDetector(
-                                    onTap: (){
-
-                                      if(model?.type=="group"){
-
-                                        homeController.groupIntoEvent(model?.receiver?.name.toString()??"",model!.id.toString());
-                                      }if(model?.type=="direct"){
-
-                                        messageListController.groupIntoSingleUser(model?.receiver?.name.toString()??"",model?.receiver?.receiverId?.id.toString()??"");
-                                      }
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-
-                                          Row(
-                                            children: [
-                                              model?.type=="group"?Image.asset("assets/icons/group.png",width: 45,height: 45,color: Colors.black,):
-                                              CustomNetworkImage(
-                                                //   imageUrl: AppConstants.profileImage,
-                                                imageUrl:model?.receiver?.receiverId?.image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}${model?.receiver?.receiverId?.image}",
-                                                height: 50,
-                                                width: 50,
-                                                boxShape: BoxShape.circle,
-                                              ),
-                                              CustomText(
-                                                text: "${model?.receiver?.name}",
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.w600,
-                                                left: 10,
-                                              ),
-                                            ],
+                                            left: 10,
                                           ),
-                                          CustomText(
-                                            text: "${DateConverter.timeFormetString(model?.createdAt.toString())}",
-                                            fontSize: 12,
-                                            color: AppColors.primary,
-                                            fontWeight: FontWeight.w600,
-                                          )
                                         ],
                                       ),
-                                    ),
-                                  );
-                                }
-
-                              });
+                                      CustomText(
+                                        text: DateConverter.timeFormetString(model.createdAt.toString()),
+                                        fontSize: 12,
+                                        color: AppColors.primary,
+                                        fontWeight: FontWeight.w600,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          );
                         })
 
 

@@ -27,6 +27,7 @@ class MessagelistController extends GetxController with StateMixin<List<Conversa
 
 
   /// Retrive conversations by specific user list home page
+
   RxList<ConversationBySpecificUserResponseModel> conversationBySpecificUserShowList = <ConversationBySpecificUserResponseModel>[].obs;
   RxBool conversationBySpecificMessageLoading = false.obs;
 
@@ -48,16 +49,22 @@ class MessagelistController extends GetxController with StateMixin<List<Conversa
 
         conversationBySpecificMessageLoading.value =false;
 
-        change(conversationBySpecificUserShowList.value, status: RxStatus.success());
+        change(conversationBySpecificUserShowList, status: RxStatus.success());
 
+        refresh();
         if(conversationBySpecificUserShowList.isEmpty){
 
           change(null, status: RxStatus.empty());
           refresh();
         }
 
-        debugPrint("conversationBySpecificUserShowList:${jsonEncode(conversationBySpecificUserShowList)}");
-        refresh();
+
+      /*  conversationBySpecificUserShowList.forEach((model) {
+          debugPrint("User is part of conversation: ${model.conversationMembers?.length}");
+        });
+*/
+        debugPrint("conversationBySpecificUserShowList11:${conversationBySpecificUserShowList.value}");
+
 
       } else {
 

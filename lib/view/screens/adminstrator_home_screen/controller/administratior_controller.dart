@@ -849,7 +849,7 @@ class AdministratiorController extends GetxController {
 
       retriveSpecificByEventShowList.value = SpecificIdEventsResponeModel.fromJson(response.body["data"]);
 
-      debugPrint("retriveSpecificByEventShowList:${organizationShowList.value}");
+      debugPrint("retrieveSpecificByEventShowList:${organizationShowList.value}");
 
 
       retriveSpecificByEventShowLoading.value =false;
