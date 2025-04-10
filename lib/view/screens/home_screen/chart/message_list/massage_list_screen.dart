@@ -120,8 +120,7 @@ class _MassageListScreenState extends State<MassageListScreen> {
                         ):
                         messageListController.obx((state){
 
-
-                          return ListView.builder(
+                          /*return ListView.builder(
                             itemCount: state?.length ?? 0,
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
@@ -192,7 +191,125 @@ class _MassageListScreenState extends State<MassageListScreen> {
                                 ),
                               );
                             },
-                          );
+                          );*/
+
+
+
+                          return ListView.builder(
+                              itemCount: state?.length,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemBuilder: (BuildContext context,index){
+
+                                final model=state?[index];
+
+                             //   final bool shouldShow = model?.conversationMembers?.contains(userId) ?? false;
+
+                                debugPrint("shouldShow:${model?.conversationMembers}");
+
+                                if((model?.type=="direct") && (model?.sender?.senderId?.id!=userId || model?.receiver?.receiverId?.id!=userId)){
+
+                               return GestureDetector(
+                                 onTap: (){
+
+                                   if(model?.type=="group"){
+
+                                     homeController.groupIntoEvent(model?.sender?.name.toString()??"",model!.id.toString());
+                                   }if(model?.type=="direct"){
+
+                                     messageListController.groupIntoSingleUser(model?.sender?.name.toString()??"",model?.sender?.senderId?.id.toString()??"");
+                                   }
+                                 },
+                                 child: Padding(
+                                   padding: const EdgeInsets.all(8.0),
+                                   child: Row(
+                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                     children: [
+
+                                       Row(
+                                         children: [
+                                           model?.type=="group"?Image.asset("assets/icons/group.png",width: 45,height: 45,color: Colors.black,):
+                                           CustomNetworkImage(
+                                             //   imageUrl: AppConstants.profileImage,
+                                             imageUrl:model?.sender?.senderId?.image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}${model?.sender?.senderId?.image}",
+                                             height: 50,
+                                             width: 50,
+                                             boxShape: BoxShape.circle,
+                                           ),
+                                           CustomText(
+                                             text: "${model?.sender?.name}",
+                                             fontSize: 18,
+                                             fontWeight: FontWeight.w600,
+                                             left: 10,
+                                           ),
+                                         ],
+                                       ),
+                                       CustomText(
+                                         text: "${DateConverter.timeFormetString(model?.createdAt.toString())}",
+                                         fontSize: 12,
+                                         color: AppColors.primary,
+                                         fontWeight: FontWeight.w600,
+                                       )
+                                     ],
+                                   ),
+                                 ),
+                               );
+
+                                 }else {
+
+                                //  Toast.successToast("else:${model?.conversationMembers?.contains(userId) ?? true}");
+
+                                  if ((model?.conversationMembers?.contains(userId)) ?? true){
+
+                                   Toast.successToast("userId");
+                                     return GestureDetector(
+                                       onTap: (){
+
+                                         if(model?.type=="group"){
+
+                                           homeController.groupIntoEvent(model?.receiver?.name.toString()??"",model!.id.toString());
+                                         }
+                                       },
+                                       child: Padding(
+                                         padding: const EdgeInsets.all(8.0),
+                                         child: Row(
+                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                           children: [
+
+                                             Row(
+                                               children: [
+                                                 model?.type=="group"?Image.asset("assets/icons/group.png",width: 45,height: 45,color: Colors.black,):
+                                                 CustomNetworkImage(
+                                                   //   imageUrl: AppConstants.profileImage,
+                                                   imageUrl:model?.receiver?.receiverId?.image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}${model?.receiver?.receiverId?.image}",
+                                                   height: 50,
+                                                   width: 50,
+                                                   boxShape: BoxShape.circle,
+                                                 ),
+                                                 CustomText(
+                                                   text: "${model?.receiver?.name}",
+                                                   fontSize: 18,
+                                                   fontWeight: FontWeight.w600,
+                                                   left: 10,
+                                                 ),
+                                               ],
+                                             ),
+                                             CustomText(
+                                               text: "${DateConverter.timeFormetString(model?.createdAt.toString())}",
+                                               fontSize: 12,
+                                               color: AppColors.primary,
+                                               fontWeight: FontWeight.w600,
+                                             )
+                                           ],
+                                         ),
+                                       ),
+                                     );
+
+                                   }
+                                 }
+
+
+                              });
                         })
 
 
