@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:storage_permission_handler/storage_permission_handler.dart';
 import 'package:tractivity_app/helper/shared_prefe/shared_prefe.dart';
 import 'package:tractivity_app/service/api_check.dart';
 import 'package:tractivity_app/service/api_client.dart';
@@ -848,7 +849,7 @@ class AdministratiorController extends GetxController {
 
       retriveSpecificByEventShowList.value = SpecificIdEventsResponeModel.fromJson(response.body["data"]);
 
-      debugPrint("retriveSpecificByEventShowList:${organizationShowList.value}");
+      debugPrint("retrieveSpecificByEventShowList:${organizationShowList.value}");
 
 
       retriveSpecificByEventShowLoading.value =false;
@@ -876,14 +877,54 @@ class AdministratiorController extends GetxController {
 
 
 
-  ///===================== retrive Specific event by Id event download  =====================
+  ///===================== retrieve Specific event by Id event download  =====================
   void startDownload(String url ,String fileName) async {
 
-    String filePath = await downloadPDF(url, fileName);
+      if (Platform.isAndroid) {
 
-    if (filePath.isNotEmpty) {
-      await showDownloadNotification(filePath);
+        final status = await Permission.manageExternalStorage.request();
+
+        if (status.isGranted) {
+          // Proceed with the download
+
+          String filePath = await downloadPDF(url, fileName);
+
+          if (filePath.isNotEmpty) {
+            await showDownloadNotification(filePath);
+          }
+
+        } else {
+
+          requestStoragePermission();
+
+          /*  wait Permission.manageExternalStorage.request();
+          debugPrint("Permission not ${Permission.manageExternalStorage.request()}");*/
+        }
+      }
+  }
+
+  Future<bool> requestStoragePermission() async {
+    if (Platform.isAndroid) {
+      Permission storagePermission = Permission.storage;
+
+      // Check if permission is granted
+      if (await storagePermission.isGranted) {
+        return true;
+      }
+
+      // Request permission
+    //  final status = await storagePermission.request();
+      final status = await Permission.manageExternalStorage.request();
+      if (status.isGranted) {
+        Toast.successToast("Permission granted");
+        return true;
+      } else {
+        // Handle if permission is not granted
+        debugPrint("Permission not granted");
+        return false;
+      }
     }
+    return true;  // For iOS or other platforms
   }
 
   Future<void> showDownloadNotification(String filePath) async {
@@ -913,19 +954,20 @@ class AdministratiorController extends GetxController {
   }
 
 
-  Future<String> downloadPDF(String url, String fileName) async {
-    try {
-      Directory tempDir = await getApplicationDocumentsDirectory();
-      String filePath = '${tempDir.path}/$fileName';
+
+    Future<String> downloadPDF(String url, String fileName) async {
+      try {
+        Directory tempDir = await getApplicationDocumentsDirectory();
+        String filePath = '${tempDir.path}/$fileName';
 
       await Dio().download(url, filePath);
 
       return filePath;
-    } catch (e) {
-      print('Download error: $e');
-      return '';
+     } catch (e) {
+       print('Download error: $e');
+       return '';
+      }
     }
-  }
 
 
 

@@ -63,6 +63,8 @@ class _HomeScreenState extends State<HomeScreen> {
       myEventController.myEventShow();
 
       myOrganizationController.myOrganizationShow();
+      eventController.userProfileShow();
+
     });
   }
 
@@ -104,12 +106,14 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               icon: Padding(
                 padding: const EdgeInsets.only(right: 12),
-                child:SvgPicture.asset(
+                child:Icon(Icons.notifications_active,color: Colors.amber,size: isTablet?42.h:32.h,)
+
+              /*  SvgPicture.asset(
                   AppIcons.event_notification,
                   semanticsLabel: 'My SVG Image',
                   height:  isTablet?42.h:32.h,
                   width:  isTablet?42.w:32.w,
-                ),
+                ),*/
               ),
             )
           ],

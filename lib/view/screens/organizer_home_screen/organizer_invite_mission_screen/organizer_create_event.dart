@@ -1171,11 +1171,11 @@ class _OrganizerEventCreateScreenState extends State<OrganizerEventCreateScreen>
                         } else if (organizerController.selectedDate.value=="00/00/0000") {
 
                           Toast.errorToast("Date is empty!!");
-                        } else if (organizerController.eventAccessmode.value.isEmpty) {
-
+                        }
+                        /*else if (organizerController.eventAccessmode.value.isEmpty) {
                           Toast.errorToast("Event access mode is empty!!");
-
-                        }else if (organizerController.volunteersRoleList.isEmpty) {
+                        }*/
+                        else if (organizerController.volunteersRoleList.isEmpty) {
                           Toast.errorToast("volunteer role is empty!!");
                         }else{
 

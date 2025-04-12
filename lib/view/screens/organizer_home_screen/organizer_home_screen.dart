@@ -983,7 +983,7 @@ class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
                                                                                     ),
 
                                                                                     CustomText(
-                                                                                      text: "mark as Inactive",
+                                                                                      text: "mark as active",
                                                                                       fontSize:isTablet?8.sp: 14.sp,
                                                                                       fontWeight: FontWeight.w600,
                                                                                       color: AppColors.primary,

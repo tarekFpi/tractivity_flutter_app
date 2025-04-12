@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tractivity_app/core/app_routes/app_routes.dart';
+import 'package:tractivity_app/helper/shared_prefe/shared_prefe.dart' show SharePrefsHelper;
 import 'package:tractivity_app/service/api_url.dart';
 import 'package:tractivity_app/utils/app_colors/app_colors.dart';
 import 'package:tractivity_app/utils/app_const/app_const.dart';
 import 'package:tractivity_app/utils/app_icons/app_icons.dart';
 import 'package:tractivity_app/utils/app_strings/app_strings.dart';
+import 'package:tractivity_app/utils/toast.dart';
 import 'package:tractivity_app/view/components/custom_button/custom_button.dart';
 import 'package:tractivity_app/view/components/custom_image/custom_image.dart';
 import 'package:tractivity_app/view/components/custom_netwrok_image/custom_network_image.dart';
@@ -34,16 +36,21 @@ class _FriendScreenState extends State<FriendScreen> {
 
   final messageListController =Get.put(MessagelistController());
 
-/*  @override
+  var userId="";
+
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async{
 
+     userId = await SharePrefsHelper.getString(AppConstants.userId);
+
+     friendsController.myFriendsFetchList();
     });
 
-  }*/
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -165,69 +172,140 @@ class _FriendScreenState extends State<FriendScreen> {
                                   itemBuilder: (BuildContext context,index){
 
                                     final myModel = friendsController.myFriendsShowList[index];
+                                      if(myModel.requester?.requesterId?.id!=userId){
+                                        return Card(
+                                          color: Colors.white,
+                                          child: Padding(
+                                            padding: EdgeInsets.only(bottom: 10.h),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
 
-                                    return Card(
-                                      color: Colors.white,
-                                      child: Padding(
-                                        padding: EdgeInsets.only(bottom: 10.h),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-
-                                            Padding(
-                                              padding: const EdgeInsets.all(6.0),
-                                              child: Row(
-                                                children: [
-
-                                                  CustomNetworkImage(
-                                                    imageUrl:myModel.requester?.requesterId?.image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}${myModel.requester?.requesterId?.image}",
-                                                    height: 60.h,
-                                                    width: 60.w,
-                                                    boxShape: BoxShape.circle,
-                                                    border: Border.all(color: AppColors.primary, width: 3),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 10.w,
-                                                  ),
-                                                  Column(
-                                                    mainAxisAlignment: MainAxisAlignment.start,
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                Padding(
+                                                  padding: const EdgeInsets.all(6.0),
+                                                  child: Row(
                                                     children: [
-                                                      CustomText(
-                                                        text: "${myModel.requester?.requesterId?.fullName}",
-                                                        fontSize: 16,
-                                                        fontWeight: FontWeight.w600,
-                                                        color: AppColors.black,
+
+                                                      CustomNetworkImage(
+                                                        imageUrl:myModel.requester?.requesterId?.image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}${myModel.requester?.requesterId?.image}",
+                                                        height: 60.h,
+                                                        width: 60.w,
+                                                        boxShape: BoxShape.circle,
+                                                        border: Border.all(color: AppColors.primary, width: 3),
                                                       ),
-                                                      CustomText(
-                                                        text: "${myModel.requester?.requesterId?.profession}",
-                                                        fontSize: 12,
-                                                        fontWeight: FontWeight.w400,
-                                                        color: AppColors.black_80,
+                                                      SizedBox(
+                                                        width: 10.w,
+                                                      ),
+                                                      Column(
+                                                        mainAxisAlignment: MainAxisAlignment.start,
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                          CustomText(
+                                                            text: "${myModel.requester?.requesterId?.fullName}",
+                                                            fontSize: 16,
+                                                            fontWeight: FontWeight.w600,
+                                                            color: AppColors.black,
+                                                          ),
+                                                          CustomText(
+                                                            text: "${myModel.requester?.requesterId?.profession}",
+                                                            fontSize: 12,
+                                                            fontWeight: FontWeight.w400,
+                                                            color: AppColors.black_80,
+                                                          ),
+                                                        ],
                                                       ),
                                                     ],
                                                   ),
-                                                ],
-                                              ),
+                                                ),
+
+                                                InkWell(
+                                                  onTap: (){
+
+                                                    messageListController.groupIntoSingleUser(myModel.requester?.requesterId?.fullName.toString()??"",
+                                                        myModel.requester?.requesterId?.id.toString()??"");
+
+                                                    ///Toast.successToast(myModel.responder?.responderId?.fullName.toString()??"");
+
+                                                  },
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.only(right: 4),
+                                                    child: CustomImage(imageSrc: AppIcons.chart),
+                                                  ),
+                                                )
+
+                                              ],
                                             ),
-                                      
-                                            InkWell(
-                                              onTap: (){
+                                          ),
+                                        );
 
-                                             messageListController.groupIntoSingleUser(myModel.responder?.responderId?.fullName.toString()??"",
-                                                  myModel.responder?.responderId?.id.toString()??"");
+                                     } if(myModel.responder?.responderId?.id!=userId){
 
-                                              },
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(right: 4),
-                                                child: CustomImage(imageSrc: AppIcons.chart),
-                                              ),
-                                            )
+                                        return Card(
+                                          color: Colors.white,
+                                          child: Padding(
+                                            padding: EdgeInsets.only(bottom: 10.h),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
 
-                                          ],
-                                        ),
-                                      ),
-                                    );
+                                                Padding(
+                                                  padding: const EdgeInsets.all(6.0),
+                                                  child: Row(
+                                                    children: [
+
+                                                      CustomNetworkImage(
+                                                        imageUrl:myModel.responder?.responderId?.image==""? AppConstants.profileImage:"${ApiUrl.imageUrl}${myModel.requester?.requesterId?.image}",
+                                                        height: 60.h,
+                                                        width: 60.w,
+                                                        boxShape: BoxShape.circle,
+                                                        border: Border.all(color: AppColors.primary, width: 3),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 10.w,
+                                                      ),
+                                                      Column(
+                                                        mainAxisAlignment: MainAxisAlignment.start,
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                          CustomText(
+                                                            text: "${myModel.responder?.responderId?.fullName}",
+                                                            fontSize: 16,
+                                                            fontWeight: FontWeight.w600,
+                                                            color: AppColors.black,
+                                                          ),
+                                                          CustomText(
+                                                            text: "${myModel.responder?.responderId?.profession}",
+                                                            fontSize: 12,
+                                                            fontWeight: FontWeight.w400,
+                                                            color: AppColors.black_80,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+
+                                                InkWell(
+                                                  onTap: (){
+
+                                                    messageListController.groupIntoSingleUser(myModel.responder?.responderId?.fullName.toString()??"",
+                                                        myModel.responder?.responderId?.id.toString()??"");
+
+                                                    ///Toast.successToast(myModel.responder?.responderId?.fullName.toString()??"");
+
+                                                  },
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.only(right: 4),
+                                                    child: CustomImage(imageSrc: AppIcons.chart),
+                                                  ),
+                                                )
+
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      }
+
                                   }),
                             ],
                           ),

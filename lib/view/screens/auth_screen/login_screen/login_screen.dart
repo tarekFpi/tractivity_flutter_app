@@ -128,7 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               CustomText(
                                 text: "Remember me",
                                 fontSize: isTablet ? 14 : 12,
-                                fontWeight: FontWeight.w400,
+                                fontWeight: FontWeight.w600,
                                 color: AppColors.primary,
                               ),
                             ],
@@ -142,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: CustomText(
                               text: AppStrings.forgotPassword,
                               fontSize: isTablet ? 14 : 12,
-                              fontWeight: FontWeight.w400,
+                              fontWeight: FontWeight.w600,
                               color: AppColors.primary,
                             ),
                           ),

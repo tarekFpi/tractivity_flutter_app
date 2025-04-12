@@ -18,6 +18,7 @@ class ConversationBySpecificUserResponseModel {
   DateTime? createdAt;
   DateTime? updatedAt;
   int? v;
+  List<String>? conversationMembers;
 
   ConversationBySpecificUserResponseModel({
     this.sender,
@@ -29,6 +30,7 @@ class ConversationBySpecificUserResponseModel {
     this.createdAt,
     this.updatedAt,
     this.v,
+    this.conversationMembers,
   });
 
   factory ConversationBySpecificUserResponseModel.fromJson(Map<String, dynamic> json) => ConversationBySpecificUserResponseModel(
@@ -41,6 +43,7 @@ class ConversationBySpecificUserResponseModel {
     createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
     updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
     v: json["__v"],
+    conversationMembers: json["conversationMembers"] == null ? [] : List<String>.from(json["conversationMembers"]!.map((x) => x)),
   );
 
   Map<String, dynamic> toJson() => {
@@ -53,6 +56,7 @@ class ConversationBySpecificUserResponseModel {
     "createdAt": createdAt?.toIso8601String(),
     "updatedAt": updatedAt?.toIso8601String(),
     "__v": v,
+    "conversationMembers": conversationMembers == null ? [] : List<dynamic>.from(conversationMembers!.map((x) => x)),
   };
 }
 
