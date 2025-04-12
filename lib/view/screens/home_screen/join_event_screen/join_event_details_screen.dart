@@ -211,7 +211,7 @@ class _JoinEventDetailsScreenState extends State<JoinEventDetailsScreen> {
                                                SizedBox(width: 4,),
 
                                                CustomText(
-                                                 text: "${homeController.retriveSpecificByEventShowList.value.documents?[index].split("/").last}",
+                                                 text: "${homeController.retriveSpecificByEventShowList.value.documents?[index].split(RegExp(r'[\\/]')).last}}",
                                                  fontSize: 14,
                                                  fontWeight: FontWeight.w500,
                                                  color: AppColors.black_80,
@@ -223,7 +223,8 @@ class _JoinEventDetailsScreenState extends State<JoinEventDetailsScreen> {
                                                    child: GestureDetector(
                                                      onTap: (){
 
-                                                       homeController.startDownload("${ApiUrl.baseUrl}/${homeController.retriveSpecificByEventShowList.value.documents?[index]}","${homeController.retriveSpecificByEventShowList.value.documents?[index].split("\\").last}");
+
+                                                      homeController.startDownload("${ApiUrl.baseUrl}/${homeController.retriveSpecificByEventShowList.value.documents?[index]}","${homeController.retriveSpecificByEventShowList.value.documents?[index].split(RegExp(r'[\\/]')).last}}");
                                                      },
                                                      child: const CustomText(
                                                        text: "Download",

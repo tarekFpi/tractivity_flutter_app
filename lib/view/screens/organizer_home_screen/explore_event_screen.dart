@@ -160,7 +160,7 @@ class _ExploreEventScreenState extends State<ExploreEventScreen> {
                                             SizedBox(width: 4,),
 
                                             CustomText(
-                                              text: "${administratorController.retriveSpecificByEventShowList.value.documents?[index].split("\\").last}",
+                                              text: "${administratorController.retriveSpecificByEventShowList.value.documents?[index].split(RegExp(r'[\\/]')).last}}",
                                               fontSize: 14,
                                               fontWeight: FontWeight.w500,
                                               color: AppColors.black_80,

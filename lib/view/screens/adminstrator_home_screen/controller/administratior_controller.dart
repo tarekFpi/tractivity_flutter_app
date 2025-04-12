@@ -880,21 +880,51 @@ class AdministratiorController extends GetxController {
   ///===================== retrieve Specific event by Id event download  =====================
   void startDownload(String url ,String fileName) async {
 
-    if (Platform.isAndroid) {
-      if (await Permission.storage.isGranted) {
-        // Proceed with the download
+      if (Platform.isAndroid) {
 
-        String filePath = await downloadPDF(url, fileName);
+        final status = await Permission.manageExternalStorage.request();
 
-        if (filePath.isNotEmpty) {
-          await showDownloadNotification(filePath);
+        if (status.isGranted) {
+          // Proceed with the download
+
+          String filePath = await downloadPDF(url, fileName);
+
+          if (filePath.isNotEmpty) {
+            await showDownloadNotification(filePath);
+          }
+
+        } else {
+
+          requestStoragePermission();
+
+          /*  wait Permission.manageExternalStorage.request();
+          debugPrint("Permission not ${Permission.manageExternalStorage.request()}");*/
         }
+      }
+  }
 
+  Future<bool> requestStoragePermission() async {
+    if (Platform.isAndroid) {
+      Permission storagePermission = Permission.storage;
+
+      // Check if permission is granted
+      if (await storagePermission.isGranted) {
+        return true;
+      }
+
+      // Request permission
+    //  final status = await storagePermission.request();
+      final status = await Permission.manageExternalStorage.request();
+      if (status.isGranted) {
+        Toast.successToast("Permission granted");
+        return true;
       } else {
-        await Permission.storage.request();
+        // Handle if permission is not granted
+        debugPrint("Permission not granted");
+        return false;
       }
     }
-
+    return true;  // For iOS or other platforms
   }
 
   Future<void> showDownloadNotification(String filePath) async {
@@ -923,50 +953,6 @@ class AdministratiorController extends GetxController {
     );
   }
 
-
- /* Future<String> downloadPDF(String url, String fileName) async {
-    try {
-      // Ask for storage permission (required on Android 10 and below)
-      final hasStoragePermission = await StoragePermissionHandler.hasStoragePermission();
-      if (hasStoragePermission) {
-        // call method for saving files or other
-      } else {
-        final status = await StoragePermissionHandler.requestStoragePermission();
-        if (status == true) {
-          // For Android, use external storage directory
-          Directory? dir = await getExternalStorageDirectory();
-          String newPath = "";
-          List<String> paths = dir!.path.split("/");
-          for (int x = 1; x < paths.length; x++) {
-            String folder = paths[x];
-            if (folder != "Android") {
-              newPath += "/" + folder;
-            } else {
-              break;
-            }
-          }
-          newPath = "$newPath/Download";
-          Directory downloadDir = Directory(newPath);
-          if (!await downloadDir.exists()) {
-            await downloadDir.create(recursive: true);
-          }
-
-          String filePath = '${downloadDir.path}/$fileName';
-
-          await Dio().download(url, filePath);
-
-          return filePath;
-        } else {
-          debugPrint("Please grant storage permission");
-        }
-        return "";
-      }
-      return '';
-    } catch (e) {
-      print('Download error: $e');
-      return '';
-    }
-  }*/
 
 
     Future<String> downloadPDF(String url, String fileName) async {

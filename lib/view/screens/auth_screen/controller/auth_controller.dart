@@ -654,11 +654,11 @@ class AuthController extends GetxController {
   ///======================LOGIN CONTROLLER=====================
 
   Rx<TextEditingController> loginEmailController = TextEditingController(
-    text: kDebugMode ? "peraso6002@buides.com" : "", ///fahadhossain0503@gmail.com //taleg84804@citdaca.com
+    text: kDebugMode ? "" : "", ///fahadhossain0503@gmail.com //taleg84804@citdaca.com //peraso6002@buides.com
   ).obs;
 
   Rx<TextEditingController> loginPasswordController = TextEditingController(
-    text: kDebugMode ? "12345678" : "", ///12345678
+    text: kDebugMode ? "" : "", ///12345678
   ).obs;
 
 

@@ -49,10 +49,6 @@ class _OrganizerActiveMissionDetailsState extends State<OrganizerActiveMissionDe
 
 
 
-
-
-
-
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context,constraints){

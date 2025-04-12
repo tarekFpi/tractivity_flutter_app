@@ -182,7 +182,7 @@ class _ExoloreCompleteDetailsScreenState extends State<ExoloreCompleteDetailsScr
                                           SizedBox(width: 4,),
 
                                           CustomText(
-                                            text: "${administratorController.retriveSpecificByEventShowList.value.documents?[index].split("/").last}",
+                                            text: "${administratorController.retriveSpecificByEventShowList.value.documents?[index].split(RegExp(r'[\\/]')).last}}",
                                             fontSize: 14,
                                             fontWeight: FontWeight.w500,
                                             color: AppColors.black_80,
@@ -194,7 +194,7 @@ class _ExoloreCompleteDetailsScreenState extends State<ExoloreCompleteDetailsScr
                                               child: GestureDetector(
                                                 onTap: (){
 
-                                                  administratorController.startDownload("${ApiUrl.baseUrl}/${administratorController.retriveSpecificByEventShowList.value.documents?[index]}","${administratorController.retriveSpecificByEventShowList.value.documents?[index].split("/").last}");
+                                                  administratorController.startDownload("${ApiUrl.baseUrl}/${administratorController.retriveSpecificByEventShowList.value.documents?[index]}","${administratorController.retriveSpecificByEventShowList.value.documents?[index].split(RegExp(r'[\\/]')).last}}");
                                                 },
                                                 child: const CustomText(
                                                   text: "Download",
